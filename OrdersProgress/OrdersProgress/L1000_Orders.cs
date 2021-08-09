@@ -204,9 +204,21 @@ namespace OrdersProgress
             string order_index = Convert.ToString(dgvData.CurrentRow.Cells["Index"].Value);
             Models.Order order = Program.dbOperations.GetOrderAsync(order_index);
             if (Program.dbOperations.GetOrder_LevelAsync(order.CurrentLevel_Index).OrderCanChange)
+            {
                 new L2100_OneOrder(order_index).ShowDialog();
+
+                Models.Order order1 = Program.dbOperations.GetOrderAsync(order_index);
+                // در صورت به وجود آمدن تغییری در سفارش ، جدول را بروز کن
+                if (!order.Title.Equals(order1.Title)
+                    || (order.Customer_Index != order1.Customer_Index)
+                    || (order.DateTime_mi != order1.DateTime_mi))
+                {
+                    lstOrders = new List<Models.Order>();
+                    dgvData.DataSource = GetData();
+                }
+            }
             else
-                new L2120_OneOrder_Items(order_index,true).ShowDialog();
+                new L2120_OneOrder_Items(order_index, true).ShowDialog();
         }
 
         private void TxtST_Enter(object sender, EventArgs e)
