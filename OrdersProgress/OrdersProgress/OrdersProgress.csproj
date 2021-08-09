@@ -1,0 +1,540 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{63B60A4A-E459-4972-BE0D-551ABD305A7F}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>OrdersProgress</RootNamespace>
+    <AssemblyName>OrdersProgress</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>E:\_PRG\Visual Studio\_Projects\_Publishing\23 orders_progress\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>6359865.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>20D17E72AF6F567389C023789015F131A81A90C3</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>OrdersProgress_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="SQLite-net, Version=1.7.335.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\sqlite-net-pcl.1.7.335\lib\netstandard2.0\SQLite-net.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLitePCLRaw.batteries_v2, Version=2.0.3.851, Culture=neutral, PublicKeyToken=8226ea5df37bcae9, processorArchitecture=MSIL">
+      <HintPath>..\packages\SQLitePCLRaw.bundle_green.2.0.3\lib\net461\SQLitePCLRaw.batteries_v2.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLitePCLRaw.core, Version=2.0.3.851, Culture=neutral, PublicKeyToken=1488e028ca7ab535, processorArchitecture=MSIL">
+      <HintPath>..\packages\SQLitePCLRaw.core.2.0.3\lib\netstandard2.0\SQLitePCLRaw.core.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLitePCLRaw.nativelibrary, Version=2.0.3.851, Culture=neutral, PublicKeyToken=502ed628492ab262, processorArchitecture=MSIL">
+      <HintPath>..\packages\SQLitePCLRaw.bundle_green.2.0.3\lib\net461\SQLitePCLRaw.nativelibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLitePCLRaw.provider.dynamic_cdecl, Version=2.0.3.851, Culture=neutral, PublicKeyToken=b68184102cba0b3b, processorArchitecture=MSIL">
+      <HintPath>..\packages\SQLitePCLRaw.provider.dynamic_cdecl.2.0.3\lib\netstandard2.0\SQLitePCLRaw.provider.dynamic_cdecl.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.4.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.3\lib\netstandard2.0\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.4.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="J1950_Login.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="J1950_Login.Designer.cs">
+      <DependentUpon>J1950_Login.cs</DependentUpon>
+    </Compile>
+    <Compile Include="J1960_LoginsHistory.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="J1960_LoginsHistory.Designer.cs">
+      <DependentUpon>J1960_LoginsHistory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="J2000_Users.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="J2000_Users.Designer.cs">
+      <DependentUpon>J2000_Users.cs</DependentUpon>
+    </Compile>
+    <Compile Include="J2110_ChangePassword.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="J2110_ChangePassword.Designer.cs">
+      <DependentUpon>J2110_ChangePassword.cs</DependentUpon>
+    </Compile>
+    <Compile Include="J2200_Users_Levels.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="J2200_Users_Levels.Designer.cs">
+      <DependentUpon>J2200_Users_Levels.cs</DependentUpon>
+    </Compile>
+    <Compile Include="J2202_UL_See_ULs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="J2202_UL_See_ULs.Designer.cs">
+      <DependentUpon>J2202_UL_See_ULs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="J2210_UL_Features.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="J2210_UL_Features.Designer.cs">
+      <DependentUpon>J2210_UL_Features.cs</DependentUpon>
+    </Compile>
+    <Compile Include="J2220_User_Level_UL_Feature.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="J2220_User_Level_UL_Feature.Designer.cs">
+      <DependentUpon>J2220_User_Level_UL_Feature.cs</DependentUpon>
+    </Compile>
+    <Compile Include="K1200_Properties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="K1200_Properties.Designer.cs">
+      <DependentUpon>K1200_Properties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="K1300_Items.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="K1300_Items.Designer.cs">
+      <DependentUpon>K1300_Items.cs</DependentUpon>
+    </Compile>
+    <Compile Include="K1320_Modules.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="K1320_Modules.Designer.cs">
+      <DependentUpon>K1320_Modules.cs</DependentUpon>
+    </Compile>
+    <Compile Include="K1322_Module_Diagram.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="K1322_Module_Diagram.Designer.cs">
+      <DependentUpon>K1322_Module_Diagram.cs</DependentUpon>
+    </Compile>
+    <Compile Include="K1330_Item_Properties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="K1330_Item_Properties.Designer.cs">
+      <DependentUpon>K1330_Item_Properties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="K1400_Actions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="K1400_Actions.Designer.cs">
+      <DependentUpon>K1400_Actions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="L0900_Orders_and_Details.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="L0900_Orders_and_Details.Designer.cs">
+      <DependentUpon>L0900_Orders_and_Details.cs</DependentUpon>
+    </Compile>
+    <Compile Include="L1000_Orders.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="L1000_Orders.Designer.cs">
+      <DependentUpon>L1000_Orders.cs</DependentUpon>
+    </Compile>
+    <Compile Include="L1110_Order_Levels.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="L1110_Order_Levels.Designer.cs">
+      <DependentUpon>L1110_Order_Levels.cs</DependentUpon>
+    </Compile>
+    <Compile Include="L1120_OL_Prerequisites.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="L1120_OL_Prerequisites.Designer.cs">
+      <DependentUpon>L1120_OL_Prerequisites.cs</DependentUpon>
+    </Compile>
+    <Compile Include="L1130_OL_UL.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="L1130_OL_UL.Designer.cs">
+      <DependentUpon>L1130_OL_UL.cs</DependentUpon>
+    </Compile>
+    <Compile Include="L2140_OneOrder_History.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="L2140_OneOrder_History.Designer.cs">
+      <DependentUpon>L2140_OneOrder_History.cs</DependentUpon>
+    </Compile>
+    <Compile Include="J2230_UL_See_OL.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="J2230_UL_See_OL.Designer.cs">
+      <DependentUpon>J2230_UL_See_OL.cs</DependentUpon>
+    </Compile>
+    <Compile Include="L2150_OneOrder_Change_OrderLevel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="L2150_OneOrder_Change_OrderLevel.Designer.cs">
+      <DependentUpon>L2150_OneOrder_Change_OrderLevel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="M2100_OrdersPriority.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="M2100_OrdersPriority.Designer.cs">
+      <DependentUpon>M2100_OrdersPriority.cs</DependentUpon>
+    </Compile>
+    <Compile Include="M1100_StockInventory.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="M1100_StockInventory.Designer.cs">
+      <DependentUpon>M1100_StockInventory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="M2200_Order_StockItems.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="M2200_Order_StockItems.Designer.cs">
+      <DependentUpon>M2200_Order_StockItems.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Mm100_Priorities.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Mm100_Priorities.Designer.cs">
+      <DependentUpon>Mm100_Priorities.cs</DependentUpon>
+    </Compile>
+    <Compile Include="L2100_OneOrder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="L2100_OneOrder.Designer.cs">
+      <DependentUpon>L2100_OneOrder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="L2120_OneOrder_Items.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="L2120_OneOrder_Items.Designer.cs">
+      <DependentUpon>L2120_OneOrder_Items.cs</DependentUpon>
+    </Compile>
+    <Compile Include="L2130_OneOrder_Item_Properties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="L2130_OneOrder_Item_Properties.Designer.cs">
+      <DependentUpon>L2130_OneOrder_Item_Properties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="L3100_Customers.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="L3100_Customers.Designer.cs">
+      <DependentUpon>L3100_Customers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Mm210_StockInventory.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Mm210_StockInventory.Designer.cs">
+      <DependentUpon>Mm210_StockInventory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Mm110_Progress_by_UserPriorities.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Mm110_Progress_by_UserPriorities.Designer.cs">
+      <DependentUpon>Mm110_Progress_by_UserPriorities.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Mm120_Progress_by_SuggestedPriorities.cs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Mm120_Progress_by_SuggestedPriorities.cs.Designer.cs">
+      <DependentUpon>Mm120_Progress_by_SuggestedPriorities.cs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\dbOperations.cs" />
+    <Compile Include="Models\Tables.cs" />
+    <Compile Include="Stack.cs" />
+    <Compile Include="ThisProject.cs" />
+    <Compile Include="ViewModels\VM.cs" />
+    <Compile Include="X100_ChooseOneItem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="X100_ChooseOneItem.Designer.cs">
+      <DependentUpon>X100_ChooseOneItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="J1000_MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="J1000_MainForm.Designer.cs">
+      <DependentUpon>J1000_MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="X210_ExampleForm_Normal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="X210_ExampleForm_Normal.Designer.cs">
+      <DependentUpon>X210_ExampleForm_Normal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="X220_InputBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="X220_InputBox.Designer.cs">
+      <DependentUpon>X220_InputBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="zForm1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="zForm1.Designer.cs">
+      <DependentUpon>zForm1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="J2204_User_UL.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="J2204_User_UL.Designer.cs">
+      <DependentUpon>J2204_User_UL.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="J1950_Login.resx">
+      <DependentUpon>J1950_Login.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="J1960_LoginsHistory.resx">
+      <DependentUpon>J1960_LoginsHistory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="J2000_Users.resx">
+      <DependentUpon>J2000_Users.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="J2110_ChangePassword.resx">
+      <DependentUpon>J2110_ChangePassword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="J2200_Users_Levels.resx">
+      <DependentUpon>J2200_Users_Levels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="J2202_UL_See_ULs.resx">
+      <DependentUpon>J2202_UL_See_ULs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="J2204_User_UL.resx">
+      <DependentUpon>J2204_User_UL.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="J2210_UL_Features.resx">
+      <DependentUpon>J2210_UL_Features.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="J2220_User_Level_UL_Feature.resx">
+      <DependentUpon>J2220_User_Level_UL_Feature.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="K1200_Properties.resx">
+      <DependentUpon>K1200_Properties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="K1300_Items.resx">
+      <DependentUpon>K1300_Items.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="K1320_Modules.resx">
+      <DependentUpon>K1320_Modules.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="K1322_Module_Diagram.resx">
+      <DependentUpon>K1322_Module_Diagram.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="K1330_Item_Properties.resx">
+      <DependentUpon>K1330_Item_Properties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="K1400_Actions.resx">
+      <DependentUpon>K1400_Actions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="L0900_Orders_and_Details.resx">
+      <DependentUpon>L0900_Orders_and_Details.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="L1000_Orders.resx">
+      <DependentUpon>L1000_Orders.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="L1110_Order_Levels.resx">
+      <DependentUpon>L1110_Order_Levels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="L1120_OL_Prerequisites.resx">
+      <DependentUpon>L1120_OL_Prerequisites.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="L1130_OL_UL.resx">
+      <DependentUpon>L1130_OL_UL.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="L2140_OneOrder_History.resx">
+      <DependentUpon>L2140_OneOrder_History.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="J2230_UL_See_OL.resx">
+      <DependentUpon>J2230_UL_See_OL.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="L2150_OneOrder_Change_OrderLevel.resx">
+      <DependentUpon>L2150_OneOrder_Change_OrderLevel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="M1100_StockInventory.resx">
+      <DependentUpon>M1100_StockInventory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="M2100_OrdersPriority.resx">
+      <DependentUpon>M2100_OrdersPriority.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="M2200_Order_StockItems.resx">
+      <DependentUpon>M2200_Order_StockItems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Mm100_Priorities.resx">
+      <DependentUpon>Mm100_Priorities.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="L2100_OneOrder.resx">
+      <DependentUpon>L2100_OneOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="L2120_OneOrder_Items.resx">
+      <DependentUpon>L2120_OneOrder_Items.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="L2130_OneOrder_Item_Properties.resx">
+      <DependentUpon>L2130_OneOrder_Item_Properties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="L3100_Customers.resx">
+      <DependentUpon>L3100_Customers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Mm210_StockInventory.resx">
+      <DependentUpon>Mm210_StockInventory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Mm110_Progress_by_UserPriorities.resx">
+      <DependentUpon>Mm110_Progress_by_UserPriorities.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Mm120_Progress_by_SuggestedPriorities.cs.resx">
+      <DependentUpon>Mm120_Progress_by_SuggestedPriorities.cs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="X100_ChooseOneItem.resx">
+      <DependentUpon>X100_ChooseOneItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="J1000_MainForm.resx">
+      <DependentUpon>J1000_MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="X210_ExampleForm_Normal.resx">
+      <DependentUpon>X210_ExampleForm_Normal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="X220_InputBox.resx">
+      <DependentUpon>X220_InputBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="zForm1.resx">
+      <DependentUpon>zForm1.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="OrdersProgress_TemporaryKey.pfx" />
+    <None Include="packages.config" />
+    <None Include="Properties\DataSources\OrdersProgress.Models.Property.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <None Include="XMLSchema1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Interop.Excel">
+      <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>7</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="6359865.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\SQLitePCLRaw.lib.e_sqlite3.2.0.3\build\net461\SQLitePCLRaw.lib.e_sqlite3.targets" Condition="Exists('..\packages\SQLitePCLRaw.lib.e_sqlite3.2.0.3\build\net461\SQLitePCLRaw.lib.e_sqlite3.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\SQLitePCLRaw.lib.e_sqlite3.2.0.3\build\net461\SQLitePCLRaw.lib.e_sqlite3.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SQLitePCLRaw.lib.e_sqlite3.2.0.3\build\net461\SQLitePCLRaw.lib.e_sqlite3.targets'))" />
+  </Target>
+</Project>

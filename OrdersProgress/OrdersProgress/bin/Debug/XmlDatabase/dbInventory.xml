@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StockInventory xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Id>1</Id>
+  <Code>111</Code>
+  <Name>aaa</Name>
+  <Quantity_Real>0</Quantity_Real>
+  <Quantity_x>0</Quantity_x>
+  <Significance_Factor>0</Significance_Factor>
+  <Weight>0</Weight>
+</StockInventory><?xml version="1.0" encoding="utf-8"?>
+<StockInventory xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Id>2</Id>
+  <Code>222</Code>
+  <Name>bbb</Name>
+  <Quantity_Real>0</Quantity_Real>
+  <Quantity_x>0</Quantity_x>
+  <Significance_Factor>0</Significance_Factor>
+  <Weight>0</Weight>
+</StockInventory>
