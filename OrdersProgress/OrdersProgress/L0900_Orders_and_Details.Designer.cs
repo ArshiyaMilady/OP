@@ -220,7 +220,6 @@
             this.dgvData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvData.Location = new System.Drawing.Point(3, 2);
             this.dgvData.Name = "dgvData";
-            this.dgvData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvData.Size = new System.Drawing.Size(548, 268);
             this.dgvData.TabIndex = 50;
             this.dgvData.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvData_CellMouseDown);
@@ -237,39 +236,39 @@
             this.tsmiChangeOrderLevel});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.contextMenuStrip1.Size = new System.Drawing.Size(193, 158);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 136);
             // 
             // tsmiOrderHistory
             // 
             this.tsmiOrderHistory.Name = "tsmiOrderHistory";
-            this.tsmiOrderHistory.Size = new System.Drawing.Size(192, 22);
+            this.tsmiOrderHistory.Size = new System.Drawing.Size(180, 22);
             this.tsmiOrderHistory.Text = "تاریخچه سفارش";
             // 
             // tsmiOrderDetails
             // 
             this.tsmiOrderDetails.Name = "tsmiOrderDetails";
-            this.tsmiOrderDetails.Size = new System.Drawing.Size(192, 22);
+            this.tsmiOrderDetails.Size = new System.Drawing.Size(180, 22);
             this.tsmiOrderDetails.Text = "مشاهده جزییات سفارش";
             this.tsmiOrderDetails.Visible = false;
             // 
             // tsmiWarehouseChecklist
             // 
             this.tsmiWarehouseChecklist.Name = "tsmiWarehouseChecklist";
-            this.tsmiWarehouseChecklist.Size = new System.Drawing.Size(192, 22);
+            this.tsmiWarehouseChecklist.Size = new System.Drawing.Size(180, 22);
             this.tsmiWarehouseChecklist.Text = "مشاهده چک لیست انبار";
             this.tsmiWarehouseChecklist.Visible = false;
             // 
             // tsmiChangeOrder
             // 
             this.tsmiChangeOrder.Name = "tsmiChangeOrder";
-            this.tsmiChangeOrder.Size = new System.Drawing.Size(192, 22);
+            this.tsmiChangeOrder.Size = new System.Drawing.Size(180, 22);
             this.tsmiChangeOrder.Text = "تغییر سفارش";
             this.tsmiChangeOrder.Visible = false;
             // 
             // tsmiDelete
             // 
             this.tsmiDelete.Name = "tsmiDelete";
-            this.tsmiDelete.Size = new System.Drawing.Size(192, 22);
+            this.tsmiDelete.Size = new System.Drawing.Size(180, 22);
             this.tsmiDelete.Text = "حذف";
             this.tsmiDelete.Visible = false;
             // 
@@ -279,21 +278,21 @@
             this.tsmiOrderSentOut,
             this.tsmiSentToCompany});
             this.tsmiChangeOrderLevel.Name = "tsmiChangeOrderLevel";
-            this.tsmiChangeOrderLevel.Size = new System.Drawing.Size(192, 22);
+            this.tsmiChangeOrderLevel.Size = new System.Drawing.Size(180, 22);
             this.tsmiChangeOrderLevel.Text = "تغییر وضعیت سفارش";
             this.tsmiChangeOrderLevel.Visible = false;
             // 
             // tsmiOrderSentOut
             // 
             this.tsmiOrderSentOut.Name = "tsmiOrderSentOut";
-            this.tsmiOrderSentOut.Size = new System.Drawing.Size(207, 22);
+            this.tsmiOrderSentOut.Size = new System.Drawing.Size(197, 22);
             this.tsmiOrderSentOut.Text = "اعلام تکمیل و خروج سفارش";
             this.tsmiOrderSentOut.Visible = false;
             // 
             // tsmiSentToCompany
             // 
             this.tsmiSentToCompany.Name = "tsmiSentToCompany";
-            this.tsmiSentToCompany.Size = new System.Drawing.Size(207, 22);
+            this.tsmiSentToCompany.Size = new System.Drawing.Size(197, 22);
             this.tsmiSentToCompany.Text = "ارسال سفارش به شرکت";
             this.tsmiSentToCompany.Visible = false;
             // 

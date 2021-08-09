@@ -22,10 +22,6 @@ namespace OrdersProgress.Models
         public string Mobile { get; set; }  // شماره همراه رابط
         public string Phone { get; set; }       // تلفن ثابت رابط شرکت
         public string EMail { get; set; }       // ایمیل شرکت
-        //public string Address { get; set; }
-        //public long UserLevel_Index { get; set; }     // شناسۀ سطح دسترسی کاربر
-        //public string UserLevel_Description { get; set; }     // شرح سطح دسترسی کاربر
-        //public bool IsDefault { get; set; }    // آیا این کاربر پیش فرض است؟
         public DateTime DateTime_mi { get; set; }   // زمان ثبت به میلادی
         public string DateTime_sh { get; set; }   // زمان ثبت به شمسی
 

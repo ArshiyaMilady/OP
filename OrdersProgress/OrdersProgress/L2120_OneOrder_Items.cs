@@ -12,17 +12,20 @@ namespace OrdersProgress
 {
     public partial class L2120_OneOrder_Items : X210_ExampleForm_Normal
     {
-        string OrderIndex = null;
+        Models.Order order = new Models.Order();
+        //string OrderIndex = null;
         bool bOrderReadOnly = false;
 
         public L2120_OneOrder_Items(string _OrderIndex, bool _bOrderReadOnly = false)
         {
             InitializeComponent();
 
-            OrderIndex = _OrderIndex;
+            //OrderIndex = _OrderIndex;
             bOrderReadOnly = _bOrderReadOnly;
 
-            Text = Program.dbOperations.GetOrderAsync(OrderIndex).Title;
+            order = Program.dbOperations.GetOrderAsync(_OrderIndex);
+            lblTitle.Text = order.Title;
+            lblCustomerName.Text = order.Customer_Name;
         }
 
         private void L2120_OneOrder_Items_Shown(object sender, EventArgs e)
@@ -30,7 +33,6 @@ namespace OrdersProgress
             cmbST_Name.SelectedIndex = 0;
             cmbST_SmallCode.SelectedIndex = 0;
 
-            Models.Order order = Program.dbOperations.GetOrderAsync(OrderIndex);
             Models.Order_Level ol = Program.dbOperations.GetOrder_LevelAsync(order.CurrentLevel_Index);
             btnSave.Text = ol.MessageText;
             btnSave.Visible = ol.OrderCanChange;
@@ -42,7 +44,7 @@ namespace OrdersProgress
         // NeedToCorrect_C_B1 : آیا نیاز به بروز رسانی پارامتر «سی-بی 1» می باشد؟
         private List<Models.Order_Item> GetData()//bool NeedToCorrect_C_B1 = true)
         {
-            return Program.dbOperations.GetAllOrder_ItemsAsync(Stack.Company_Index,OrderIndex);
+            return Program.dbOperations.GetAllOrder_ItemsAsync(Stack.Company_Index,order.Index);
         }
 
         private void ShowData()//bool ChangeHeaderTexts = true)
@@ -190,6 +192,7 @@ namespace OrdersProgress
 
         private void DgvData_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            return;
             if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
 
             TsmiItemProperties_Click(null, null);
@@ -197,10 +200,13 @@ namespace OrdersProgress
 
         private void BtnSave_Click(object sender, EventArgs e)
         {
-            Models.Order order = Program.dbOperations.GetOrderAsync(OrderIndex);
+            Models.Order_Level order_level = Program.dbOperations.GetOrder_LevelAsync(order.CurrentLevel_Index);
+
             ThisProject this_project = new ThisProject();
-            Models.Order_Level order_level = Program.dbOperations.GetOrder_LevelAsync(this_project.Next_OrderLevel_Indexes(order.Index).First());
-            if (order.CurrentLevel_Index != order_level.Index)
+            Models.Order_Level next_order_level = Program.dbOperations.GetOrder_LevelAsync
+                (this_project.Next_OrderLevel_Indexes(order.Index).First());
+
+            if (order.CurrentLevel_Index != next_order_level.Index)
             {
                 if (MessageBox.Show("آیا از  " + order_level.MessageText + " اطمینان دارید؟"
                     , "", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
@@ -214,27 +220,18 @@ namespace OrdersProgress
                 // ثبت در تاریخچه و مراحل گذرانده
                 this_project.Create_OrderHistory(order);
                 this_project.AddOrder_OrderLevel(order);
+            }
+            MessageBox.Show(order_level.MessageText + " با موفقیت انجام گردید");
 
+            order_level = Program.dbOperations.GetOrder_LevelAsync(order.CurrentLevel_Index);
+            if (!order_level.OrderCanChange)
+                btnSave.Visible = false;
+            else
+            {
                 if (!btnSave.Text.Equals(Program.dbOperations.GetOrder_LevelAsync(order.CurrentLevel_Index).MessageText))
                     btnSave.Text = Program.dbOperations.GetOrder_LevelAsync(order.CurrentLevel_Index).MessageText;
             }
 
-            //if (MessageBox.Show("سفارش با موفقیت ثبت گردید."
-            //    + "\n" + "آیا مایل به ارسال سفارش به شرکت می باشید؟"
-            //    + "\n" + "در صورت ارسال سفارش به شرکت ، امکان تغییر سفارش وجود نخواهد داشت"
-            //    ,"",MessageBoxButtons.YesNo)
-            //    == DialogResult.No) return;
-
-            //order.PreviousLevel_Index = order.CurrentLevel_Index;
-            //order.CurrentLevel_Index = this_project.Next_OrderLevel_Indexes(order.Index).First();
-            //order.NextLevel_Index = Stack.OrderLevel_SaleConfirmed;
-            ////order.Level_Description = "در انتظار تأیید واحد فروش";
-            //Program.dbOperations.UpdateOrderAsync(order);
-            //// ثبت در تاریخچه
-            //new ThisProject().Create_OrderHistory(order);
-            //this_project.AddOrder_OrderLevel(order);
-
-            MessageBox.Show(order_level.MessageText + " با موفقیت انجام گردید");
         }
 
         private void TxtST_Enter(object sender, EventArgs e)
@@ -250,9 +247,9 @@ namespace OrdersProgress
         private void TsmiItemProperties_Click(object sender, EventArgs e)
         {
             long ItemIndex = Convert.ToInt64(dgvData.CurrentRow.Cells["Item_Index"].Value);
-            if (Program.dbOperations.GetAllOrder_Item_PropertiesAsync(OrderIndex, ItemIndex).Any())
+            if (Program.dbOperations.GetAllOrder_Item_PropertiesAsync(order.Index, ItemIndex).Any())
             {
-                Models.Order_Item oi = Program.dbOperations.GetOrder_ItemAsync(OrderIndex, ItemIndex);
+                Models.Order_Item oi = Program.dbOperations.GetOrder_ItemAsync(order.Index, ItemIndex);
                 //MessageBox.Show(oi.Item_SmallCode);
                 new L2130_OneOrder_Item_Properties(oi, bOrderReadOnly).ShowDialog();
             }

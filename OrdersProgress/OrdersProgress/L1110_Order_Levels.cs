@@ -185,7 +185,7 @@ namespace OrdersProgress
         private void DgvData_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             bool bSaveChange = true;   // آیا تغییر ذخیره شود؟
-            bool bEnable_is_false = false;    
+            //bool bEnable_is_false = false;    
 
             if (e.RowIndex < 0 || e.ColumnIndex < 0) bSaveChange = false;
             if (dgvData[e.ColumnIndex, e.RowIndex].Value == InitailValue) bSaveChange = false;
@@ -206,13 +206,13 @@ namespace OrdersProgress
                     break;
                 case "Enabled":
                     order_level.Enabled = Convert.ToBoolean(dgvData["Enabled", e.RowIndex].Value);
-                    if(!order_level.Enabled)
-                    {
-                        if (MessageBox.Show("با غیر فعال کردن این مرحله ، ارتباط این مرحله با سایر جداول از بین خواهد رفت"
-                            + "\n" + "آیا از ثبت تغییرات اطمینان دارید؟", "", MessageBoxButtons.YesNo)
-                            != DialogResult.Yes) bSaveChange = false;
-                        else bEnable_is_false = true;
-                    }
+                    //if(!order_level.Enabled)
+                    //{
+                    //    if (MessageBox.Show("با غیر فعال کردن این مرحله ، ارتباط این مرحله با سایر جداول از بین خواهد رفت"
+                    //        + "\n" + "آیا از ثبت تغییرات اطمینان دارید؟", "", MessageBoxButtons.YesNo)
+                    //        != DialogResult.Yes) bSaveChange = false;
+                    //    else bEnable_is_false = true;
+                    //}
                     break;
                 case "Description":
                     order_level.Description = Convert.ToString(dgvData["Description", e.RowIndex].Value);
@@ -264,14 +264,14 @@ namespace OrdersProgress
             {
                 Program.dbOperations.UpdateOrder_LevelAsync(order_level);
 
-                if(bEnable_is_false)
-                {
-                    foreach(Models.OL_Prerequisite olp in Program.dbOperations.GetAllOL_PrerequisitesAsync(Stack.Company_Index))
-                    {
-                        if ((olp.OL_Index == order_level.Index) || (olp.Prerequisite_Index == order_level.Index))
-                            Program.dbOperations.DeleteOL_Prerequisite(olp);
-                    }
-                }
+                //if(bEnable_is_false)
+                //{
+                //    foreach(Models.OL_Prerequisite olp in Program.dbOperations.GetAllOL_PrerequisitesAsync(Stack.Company_Index))
+                //    {
+                //        if ((olp.OL_Index == order_level.Index) || (olp.Prerequisite_Index == order_level.Index))
+                //            Program.dbOperations.DeleteOL_Prerequisite(olp);
+                //    }
+                //}
             }
             else dgvData[e.ColumnIndex, e.RowIndex].Value = InitailValue;
 

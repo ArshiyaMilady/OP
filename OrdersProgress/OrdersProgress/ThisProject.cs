@@ -112,17 +112,18 @@ namespace OrdersProgress
             if (!lstOOL.Any()) return new List<long>();
 
             // شناسه های مراحل فعال 
-            //List<long> lstEnabled_OL = Program.dbOperations.GetAllOrder_LevelsAsync(Stack.Company_Index).Select(d=>d.Index).ToList();
+            List<long> lstEnabled_OL = Program.dbOperations.GetAllOrder_LevelsAsync(Stack.Company_Index).Select(d=>d.Index).ToList();
             List<long> lstPassed_OL_Indexes = Program.dbOperations
                 .GetAllOrder_OLsAsync(Stack.Company_Index, order_index)
-                //.Where(b=>lstEnabled_OL.Contains(b.OrderLevel_Index))
+                .Where(b=>lstEnabled_OL.Contains(b.OrderLevel_Index))
                 .Select(d=>d.OrderLevel_Index).ToList();
 
             List<long> lstResult = new List<long>();
             // تمام مراحلی که آخرین مرحله گذرانده شده، پیش نیاز آنهاست
             foreach (Models.OL_Prerequisite olp in Program.dbOperations
                 .GetAllOL_PrerequisitesAsync(Stack.Company_Index)
-                //.Where(b => lstEnabled_OL.Contains(b.Prerequisite_Index))
+                .Where(b => lstEnabled_OL.Contains(b.Prerequisite_Index))
+                .Where(b => lstEnabled_OL.Contains(b.OL_Index))
                 .Where(d=>d.Prerequisite_Index == lstPassed_OL_Indexes.Last()).ToList())
             {
                 // آیا تمام پیش نیازهای این مرحله توسط سفارش گذرانده شده است

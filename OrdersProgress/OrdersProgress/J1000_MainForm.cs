@@ -150,7 +150,7 @@ namespace OrdersProgress
             menuStrip.Enabled = true;
             btnClose.Visible = true;
 
-            new zForm1().ShowDialog();
+            //new zForm1().ShowDialog();
 
         }
 

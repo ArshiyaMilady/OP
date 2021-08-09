@@ -136,21 +136,23 @@ namespace OrdersProgress
                         //    break;
                         case "Title":
                             col.HeaderText = "عنوان سفارش";
-                            //col.Width = 50;
+                            col.Width = 150;
                             break;
                         case "Customer_Name":
                             col.HeaderText = "نام خریدار";
+                            col.Width = 150;
                             //col.DefaultCellStyle.BackColor = Color.LightGray;
                             break;
                         case "Date_sh":
                             col.HeaderText = "تاریخ ثبت";
                             //col.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                            col.Width = 100;
                             break;
                         case "Level_Description":
                             col.HeaderText = "وضعیت سفارش";
                             //col.ReadOnly = true;
                             //col.DefaultCellStyle.BackColor = Color.LightGray;
-                            //col.Width = 50;
+                            col.Width = 200;
                             break;
                         default: col.Visible = false; break;
                     }
@@ -200,7 +202,11 @@ namespace OrdersProgress
         private void TsmiOrderDetails_Click(object sender, EventArgs e)
         {
             string order_index = Convert.ToString(dgvData.CurrentRow.Cells["Index"].Value);
-            new L2120_OneOrder_Items(order_index,true).ShowDialog();
+            Models.Order order = Program.dbOperations.GetOrderAsync(order_index);
+            if (Program.dbOperations.GetOrder_LevelAsync(order.CurrentLevel_Index).OrderCanChange)
+                new L2100_OneOrder(order_index).ShowDialog();
+            else
+                new L2120_OneOrder_Items(order_index,true).ShowDialog();
         }
 
         private void TxtST_Enter(object sender, EventArgs e)
