@@ -339,6 +339,7 @@ namespace OrdersProgress
             }
             #endregion
 
+            #region پیغام های اطمینان از ثبت
             if (string.IsNullOrEmpty(OrderIndex))
             {
                 if (MessageBox.Show("آیا از ثبت اطلاعات این سفارش اطمینان دارید؟", ""
@@ -349,7 +350,7 @@ namespace OrdersProgress
                 if (MessageBox.Show("آیا از ثبت تغییرات سفارش اطمینان دارید؟", ""
                     , MessageBoxButtons.YesNo) == DialogResult.No) return;
             }
-
+            #endregion
 
             panel1.Enabled = false;
             progressBar1.Visible = true;
@@ -363,19 +364,7 @@ namespace OrdersProgress
                     order.Index = Stack.UserIndex + Stack_Methods.DateTimeNow_Shamsi("/", ":", true);
                 else order.Index = OrderIndex;
 
-                //Program.dbOperations.AddOrder_OLAsync(new Models.Order_OL
-                //{
-                //    Company_Index = Stack.Company_Index,
-                //    Order_Index = order.Index,
-                //    OrderLevel_Index = first_level_index,
-                //});
-
                 string sDateTime_sh = Stack_Methods.DateTimeNow_Shamsi();
-                //List<long> lstNO = new ThisProject().Next_OrderLevel_Indexes(OrderIndex);
-                //if (lstNO.Any()) current_level_index = lstNO.First();
-                //else current_level_index = Program.dbOperations.GetAllOrder_LevelsAsync(Stack.Company_Index).First(d => d.LastLevel).Index;
-
-                //Models.Order order = new Models.Order();
                 order.Company_Index = Stack.Company_Index;
                 order.Title = txtOrderTitle.Text;
                 order.User_Index = Stack.UserIndex;
@@ -476,15 +465,15 @@ namespace OrdersProgress
                 ThisProject this_project = new ThisProject();
                 this_project.Create_OrderHistory(order);
                 // ثبت جدول مراحل گذرانده سفارش
-                this_project.AddOrder_OrderLevel(order);
-                //Program.dbOperations.AddOrder_OLAsync(new Models.Order_OL
-                //{
-                //    Company_Index = Stack.Company_Index,
-                //    Order_Index = OrderIndex,
-                //    OrderLevel_Index = first_level_index,
-                //});
-
-                //MessageBox.Show("سفارش با موفقیت ثبت گردید");
+                if (this_project.AddOrder_OrderLevel(order))
+                {
+                    // تعیین مرحله بعدی
+                    if (this_project.Next_OrderLevel_Indexes(order.Index).Any())
+                    {
+                        order.NextLevel_Index = this_project.Next_OrderLevel_Indexes(order.Index).First();
+                        Program.dbOperations.UpdateOrderAsync(order);
+                    }
+                }
             }
 
             Hide();

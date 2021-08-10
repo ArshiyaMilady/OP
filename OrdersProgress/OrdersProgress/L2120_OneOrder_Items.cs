@@ -212,15 +212,9 @@ namespace OrdersProgress
                     , "", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
 
                 // در انتظار ارسال سفارش به واحد
-                order.PreviousLevel_Index = order.CurrentLevel_Index;
-                order.CurrentLevel_Index = this_project.Next_OrderLevel_Indexes(order.Index).First();
-                //order.NextLevel_Index = Stack.OrderLevel_SendToCompany;
-                order.Level_Description = Program.dbOperations.GetOrder_LevelAsync(order.CurrentLevel_Index).Description2;
-                Program.dbOperations.UpdateOrderAsync(order);
-                // ثبت در تاریخچه و مراحل گذرانده
-                this_project.Create_OrderHistory(order);
-                this_project.AddOrder_OrderLevel(order);
+                this_project.Change_Order_Level(order, next_order_level.Index);
             }
+
             MessageBox.Show(order_level.MessageText + " با موفقیت انجام گردید");
 
             order_level = Program.dbOperations.GetOrder_LevelAsync(order.CurrentLevel_Index);

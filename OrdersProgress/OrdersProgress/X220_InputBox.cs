@@ -16,6 +16,8 @@ namespace OrdersProgress
         {
             InitializeComponent();
 
+            Stack.sx = null;
+
             if (string.IsNullOrEmpty(_Label_msg)) label1.Text = "";
             else label1.Text = _Label_msg;
         }
@@ -28,7 +30,15 @@ namespace OrdersProgress
                 return;
             }
             else
+            {
                 Stack.sx = textBox1.Text;
+                Close();
+            }
+        }
+
+        private void BtnCancel_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

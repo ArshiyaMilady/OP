@@ -24,7 +24,7 @@ namespace OrdersProgress
             //dgvData.DataSource = Program.dbOperations.GetAllUL_FeaturesAsync(Stack.Company_Index);
             //dgvData.DataSource = Program.dbOperations.GetAllUser_Level_UL_FeaturesAsync(Stack.Company_Index);
             //dgvData.DataSource = Program.dbOperations.GetAllOrder_Item_PropertiesAsync();
-            //dgvData.DataSource = Program.dbOperations.GetAllOrdersAsync(Stack.Company_Index);
+            dgvData.DataSource = Program.dbOperations.GetAllOrdersAsync(Stack.Company_Index);
             //dgvData.DataSource = Program.dbOperations.GetAllUsersAsync(Stack.Company_Index);
             //dgvData.DataSource = Program.dbOperations.GetAllLoginHistorysAsync(Stack.Company_Index)
             //    .OrderByDescending(d=>d.DateTime_mi).ToList();
@@ -35,8 +35,8 @@ namespace OrdersProgress
             //    .Where(b => lstEnabled_OL.Contains(b.OrderLevel_Index)).ToList();
 
             //dgvData.DataSource = Program.dbOperations.GetAllOrder_OLsAsync(Stack.Company_Index);
-            dgvData.DataSource = Program.dbOperations
-                   .GetAllUser_Level_UL_FeaturesAsync(Stack.Company_Index, Stack.UserLevel_Index).ToList();
+            //dgvData.DataSource = Program.dbOperations
+            //       .GetAllUser_Level_UL_FeaturesAsync(Stack.Company_Index, Stack.UserLevel_Index).ToList();
             //dgvData.DataSource = new ThisProject().AllSubRelations("KK_002");
         }
 
@@ -58,7 +58,18 @@ namespace OrdersProgress
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            foreach(Models.User  user in Program.dbOperations.GetAllUsersAsync(0,0))//Stack.Company_Index))
+            #region حذف تمام سفارشها
+            //Program.dbOperations.DeleteAllOrdersAsync();
+            //Program.dbOperations.DeleteAllOrder_ItemsAsync();
+            //Program.dbOperations.DeleteAllOrder_Item_PropertiesAsync();
+            //Program.dbOperations.DeleteAllOrder_HistorysAsync();
+            //Program.dbOperations.DeleteAllOrder_OLsAsync();
+            //Program.dbOperations.DeleteAllOrders_StockItemsAsync();
+            //Program.dbOperations.DeleteAllOrderPrioritysAsync();
+            #endregion
+
+
+            foreach (Models.User  user in Program.dbOperations.GetAllUsersAsync(0,0))//Stack.Company_Index))
             {
                 //Program.dbOperations.DeleteUser(user);
                 //user.IsDefault = false;

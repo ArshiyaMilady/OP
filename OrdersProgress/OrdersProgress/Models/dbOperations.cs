@@ -721,14 +721,26 @@ namespace OrdersProgress.Models
             UpdateOrderAsync(order);
         }
 
-        public int DeleteAllOrdersAsync()
+        public int DeleteAllOrdersAsync(long company_index = 0)
         {
-            return _db.DeleteAllAsync<Order>().Result;
+            if (company_index > 0)
+            {
+                foreach (Order order in GetAllOrdersAsync(company_index))
+                    DeleteOrderAsync(order);
+                return 1;
+            }
+            else
+                return _db.DeleteAllAsync<Order>().Result;
         }
 
         public int UpdateOrderAsync(Order order)
         {
             return _db.UpdateAsync(order).Result;
+        }
+
+        public void UpdateOrder(Order order)
+        {
+            _db.UpdateAsync(order).Wait();
         }
         #endregion Order
 
@@ -1073,6 +1085,13 @@ namespace OrdersProgress.Models
             order_ol.Index = GetNewIndex_Order_OL();
             _db.InsertAsync(order_ol);
             return order_ol.Id;
+        }
+
+        public long AddOrder_OL(Order_OL order_ol)
+        {
+            order_ol.Index = GetNewIndex_Order_OL();
+            _db.InsertAsync(order_ol).Wait();
+            return order_ol.Index;
         }
 
         public int DeleteOrder_OLAsync(Order_OL order_ol)

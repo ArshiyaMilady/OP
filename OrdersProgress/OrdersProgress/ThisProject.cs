@@ -35,9 +35,46 @@ namespace OrdersProgress
             }); ;
         }
 
+        // شناسه سفارشهایی که پیش نیازهای آنها گذرانده شده و سفارش می تواند وارد مرحله آنها شود
+        public List<long> Next_OrderLevel_Indexes(string order_index)
+        {
+            // مراحلی که سفارش گذرانده است
+            List<Models.Order_OL> lstOOL = Program.dbOperations
+                .GetAllOrder_OLsAsync(Stack.Company_Index, order_index);
+            if (!lstOOL.Any()) return new List<long>();
+
+            // شناسه های مراحل فعال 
+            List<long> lstEnabled_OL = Program.dbOperations.GetAllOrder_LevelsAsync(Stack.Company_Index).Select(d => d.Index).ToList();
+            List<long> lstPassed_OL_Indexes = Program.dbOperations
+                .GetAllOrder_OLsAsync(Stack.Company_Index, order_index)
+                .Where(b => lstEnabled_OL.Contains(b.OrderLevel_Index))
+                .Select(d => d.OrderLevel_Index).ToList();
+
+            List<long> lstResult = new List<long>();
+            // تمام مراحلی که آخرین مرحله گذرانده شده، پیش نیاز آنهاست
+            foreach (Models.OL_Prerequisite olp in Program.dbOperations
+                .GetAllOL_PrerequisitesAsync(Stack.Company_Index)
+                .Where(b => lstEnabled_OL.Contains(b.Prerequisite_Index))
+                .Where(b => lstEnabled_OL.Contains(b.OL_Index))
+                .Where(d => d.Prerequisite_Index == lstPassed_OL_Indexes.Last()).ToList())
+            {
+                // آیا تمام پیش نیازهای این مرحله توسط سفارش گذرانده شده است
+                bool b = false;
+                foreach (long olp_i in Program.dbOperations.GetAllOL_PrerequisitesAsync
+                    (Stack.Company_Index, olp.OL_Index)
+                    //.Where(d => lstEnabled_OL.Contains(d.Prerequisite_Index))
+                    .Select(j => j.Prerequisite_Index).ToList())
+                    if (!(b = lstPassed_OL_Indexes.Contains(olp_i))) break;
+
+                if (b) lstResult.Add(olp.OL_Index);
+            }
+
+            return lstResult;
+        }
+
         // ثبت مراحل گذرانده
         // تفاوت با تاریخچه: در صورت یک یا چند برگشت سفارش ، مراحل را می توان از این جدول حذف نمود
-        public void AddOrder_OrderLevel(Models.Order order,long order_level_index = 0)
+        public bool AddOrder_OrderLevel(Models.Order order,long order_level_index = 0)
         {
             if (order_level_index == 0) order_level_index = order.CurrentLevel_Index;
             // اگر مرحله سفارش در لیست مراحل این سفارش نباشد، آنرا وارد کن
@@ -45,13 +82,91 @@ namespace OrdersProgress
                 .Any(d => d.OrderLevel_Index == order_level_index))
             {
                 // ثبت جدول مراحل گذرانده سفارش
-                Program.dbOperations.AddOrder_OLAsync(new Models.Order_OL
+                Program.dbOperations.AddOrder_OL(new Models.Order_OL
                 {
                     Company_Index = Stack.Company_Index,
                     Order_Index = order.Index,
                     OrderLevel_Index = order_level_index,
                 });
+                return true;
             }
+            else return false;
+        }
+
+        // سفارش را کنسل کن
+        public bool CancelOrder(Models.Order order,string cancel_description = null)
+        {
+            if (!Program.dbOperations.GetAllOrder_LevelsAsync(Stack.Company_Index).Any(d => d.CancelingLevel))
+                return false;
+
+            Models.Order_Level order_level = Program.dbOperations.GetAllOrder_LevelsAsync
+                (Stack.Company_Index).First(d => d.CancelingLevel);
+
+            foreach (Models.Order_OL order_ol in Program.dbOperations.GetAllOrder_OLsAsync
+                                        (Stack.Company_Index, order.Index))
+                Program.dbOperations.DeleteOrder_OLAsync(order_ol);
+
+            if (Program.dbOperations.GetAllOrder_LevelsAsync
+                (Stack.Company_Index).Any(d => d.CancelingLevel))
+            {
+                order.CurrentLevel_Index = Program.dbOperations.GetAllOrder_LevelsAsync
+                    (Stack.Company_Index).First(d => d.CancelingLevel).Index;
+            }
+            else order.CurrentLevel_Index = 0;
+            order.Level_Description = order_level.Description2;
+            Program.dbOperations.UpdateOrderAsync(order);
+
+            Create_OrderHistory(order, cancel_description);
+            return true;
+        }
+
+        // سفارش را برگشت بده
+        public bool ReturnOrder(Models.Order order,string return_description = null)
+        {
+            if (!Program.dbOperations.GetAllOrder_LevelsAsync(Stack.Company_Index).Any(d => d.ReturningLevel))
+                return false;
+
+            Models.Order_Level order_level = Program.dbOperations.GetAllOrder_LevelsAsync
+                (Stack.Company_Index).First(d => d.ReturningLevel);
+
+            // حذف آخرین مرحله انجام شده از مراحل سفارش
+            Models.Order_OL order_ol = Program.dbOperations.GetAllOrder_OLsAsync
+                (Stack.Company_Index, order.Index).OrderBy(d => d.Id).ToList().Last();
+            Program.dbOperations.DeleteOrder_OLAsync(order_ol);
+            order.CurrentLevel_Index = order.PreviousLevel_Index;
+            // پیدا کردن مرحله قبلی از جدول مراحل گذرانده سفارش
+            order.PreviousLevel_Index = Program.dbOperations.GetAllOrder_OLsAsync
+                (Stack.Company_Index, order.Index)
+                .Where(d => d.OrderLevel_Index != order.CurrentLevel_Index)
+                .OrderBy(d => d.Id).ToList().Last().OrderLevel_Index;
+            order.Level_Description = order_level.Description2;
+            Program.dbOperations.UpdateOrderAsync(order);
+
+            Create_OrderHistory(order, return_description);
+
+            return true;
+        }
+
+        // تغییر مرحله سفارش
+        public bool Change_Order_Level(Models.Order order,long order_level_index)
+        {
+            order.PreviousLevel_Index = order.CurrentLevel_Index;
+            order.CurrentLevel_Index = order_level_index;
+            order.Level_Description = Program.dbOperations.GetOrder_LevelAsync(order_level_index).Description2;
+            Program.dbOperations.UpdateOrder(order);
+
+            Create_OrderHistory(order);
+            if (AddOrder_OrderLevel(order))
+            {                
+                // تعیین مرحله بعدی
+                if (Next_OrderLevel_Indexes(order.Index).Any())
+                {
+                    order.NextLevel_Index = Next_OrderLevel_Indexes(order.Index).First();
+                    Program.dbOperations.UpdateOrderAsync(order);
+                }
+            }
+
+            return true;
         }
 
         #region تمام زیرشاخه های یک کالا به همراه سطح آنها
@@ -96,54 +211,6 @@ namespace OrdersProgress
         }
         #endregion
 
-
-        // شناسه سفارشهایی که پیش نیازهای آنها گذرانده شده و سفارش می تواند وارد مرحله آنها شود
-        public List<long> Next_OrderLevel_Indexes(string order_index)
-        {
-            // شناسه مراحل سفارش که سفارش آنها را گذرانده است
-            //List<long> lstPassed_OL_Indexes = new List<long>();
-
-            //foreach (Models.Order_OL ooh in Program.dbOperations
-            //    .GetAllOrder_OLsAsync(Stack.Company_Index, order_index)
-            //    .OrderBy(d=>d.Index).ToList())
-            //{
-            //    Models.Order_Level ol = Program.dbOperations.GetOrder_LevelAsync(ooh.OrderLevel_Index);
-            //    if (ol.CancelingLevel || ol.RemovingLevel) return new List<long>();
-            //    lstPassed_OL_Indexes.Add(ooh.OrderLevel_Index);
-            //}
-
-            List<Models.Order_OL> lstOOL = Program.dbOperations
-                .GetAllOrder_OLsAsync(Stack.Company_Index, order_index);
-            if (!lstOOL.Any()) return new List<long>();
-
-            // شناسه های مراحل فعال 
-            List<long> lstEnabled_OL = Program.dbOperations.GetAllOrder_LevelsAsync(Stack.Company_Index).Select(d=>d.Index).ToList();
-            List<long> lstPassed_OL_Indexes = Program.dbOperations
-                .GetAllOrder_OLsAsync(Stack.Company_Index, order_index)
-                .Where(b=>lstEnabled_OL.Contains(b.OrderLevel_Index))
-                .Select(d=>d.OrderLevel_Index).ToList();
-
-            List<long> lstResult = new List<long>();
-            // تمام مراحلی که آخرین مرحله گذرانده شده، پیش نیاز آنهاست
-            foreach (Models.OL_Prerequisite olp in Program.dbOperations
-                .GetAllOL_PrerequisitesAsync(Stack.Company_Index)
-                .Where(b => lstEnabled_OL.Contains(b.Prerequisite_Index))
-                .Where(b => lstEnabled_OL.Contains(b.OL_Index))
-                .Where(d=>d.Prerequisite_Index == lstPassed_OL_Indexes.Last()).ToList())
-            {
-                // آیا تمام پیش نیازهای این مرحله توسط سفارش گذرانده شده است
-                bool b = false;
-                foreach (long olp_i in Program.dbOperations.GetAllOL_PrerequisitesAsync
-                    (Stack.Company_Index, olp.OL_Index)
-                    //.Where(d => lstEnabled_OL.Contains(d.Prerequisite_Index))
-                    .Select(j => j.Prerequisite_Index).ToList())
-                    if (!(b = lstPassed_OL_Indexes.Contains(olp_i))) break;
-
-                if (b) lstResult.Add(olp.OL_Index);
-            }
-
-            return lstResult;
-        }
 
 
         // ایجاد یک فایل اکسل از یک دیتاگرید- در این تابع فقط ستونها 

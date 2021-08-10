@@ -20,6 +20,7 @@ namespace OrdersProgress
             InitializeComponent();
 
             order_index = _order_index;
+            Stack.bx = false;
         }
 
         private void L2150_OneOrder_Change_OrderLevel_Shown(object sender, EventArgs e)
@@ -34,12 +35,12 @@ namespace OrdersProgress
         {
             if (!lstOLs.Any())
             {
+                // شناسه مراحل سفارش که کاربر (با سطح خودش) می تواند تأیید کند
                 List<long> lstOL_indexes = new List<long>();
                 if (Stack.UserLevel_Type != 0)
                     lstOL_indexes.AddRange(Program.dbOperations.GetAllOrder_LevelsAsync
                         (Stack.Company_Index).Select(d => d.Index).ToList());
                 else
-                    // مراحل سفارش که کاربر (با سطح خودش) می تواند تأیید کند
                     lstOL_indexes = Program.dbOperations.GetAllOL_ULsAsync(Stack.Company_Index
                         , 0, Stack.UserLevel_Index).Select(d => d.OL_Index).ToList();
         
@@ -49,7 +50,7 @@ namespace OrdersProgress
                 foreach (long ol_index in lstOL_indexes)
                 {
                     Models.Order_Level ol = Program.dbOperations.GetOrder_LevelAsync(ol_index);
-                    if (ol.ReturningLevel || lstNext_OLs.Contains(ol_index)) lstOLs.Add(ol);
+                    if (ol.ReturningLevel || ol.CancelingLevel || lstNext_OLs.Contains(ol_index)) lstOLs.Add(ol);
                 }
             }
 
@@ -126,47 +127,37 @@ namespace OrdersProgress
                 long ol_index = Convert.ToInt64(row.Cells["Index"].Value);
                 Models.Order order = Program.dbOperations.GetOrderAsync(order_index);
                 Models.Order_Level order_level = Program.dbOperations.GetOrder_LevelAsync(ol_index);
-                if(order_level.ReturningLevel)
+                // اگر سفارش برگشت داده شود
+                if (order_level.ReturningLevel)
                 {
                     if (MessageBox.Show("آیا از برگشت سفارش اطمینان دارید؟", "مهم"
                         , MessageBoxButtons.YesNo) != DialogResult.Yes) return;
 
-                    Stack.sx = null;
                     new X220_InputBox("علت برگشت").ShowDialog();
                     if(!string.IsNullOrEmpty(Stack.sx))
-                    {
-                        // حذف آخرین مرحله انجام شده از مراحل سفارش
-                        Models.Order_OL order_ol = Program.dbOperations.GetAllOrder_OLsAsync
-                            (Stack.Company_Index, order_index).OrderBy(d=>d.Id).ToList().Last();
-                        Program.dbOperations.DeleteOrder_OLAsync(order_ol);
-                        order.CurrentLevel_Index = order.PreviousLevel_Index;
-                        // پیدا کردن مرحله قبلی از جدول مراحل گذرانده سفارش
-                        order.PreviousLevel_Index = Program.dbOperations.GetAllOrder_OLsAsync
-                            (Stack.Company_Index, order_index)
-                            .Where(d=>d.OrderLevel_Index!=order.CurrentLevel_Index)
-                            .OrderBy(d => d.Id).ToList().Last().OrderLevel_Index;
-                        Program.dbOperations.UpdateOrderAsync(order);
-
-                        this_project.Create_OrderHistory(order, "سفارش برگشت شد. علت برگشت : " + Stack.sx);
-                    }
+                        this_project.ReturnOrder(order, "سفارش برگشت شد. علت برگشت : " + Stack.sx);
                 }
+                // اگر سفارش کنسل شود
                 else if (order_level.CancelingLevel)
                 {
                     if (MessageBox.Show("آیا از لغو سفارش اطمینان دارید؟", "مهم"
                        , MessageBoxButtons.YesNo) != DialogResult.Yes) return;
 
-                    Stack.sx = null;
                     new X220_InputBox("علت لغو").ShowDialog();
                     if (!string.IsNullOrEmpty(Stack.sx))
-                    {
-                        foreach (Models.Order_OL order_ol in Program.dbOperations.GetAllOrder_OLsAsync
-                            (Stack.Company_Index, order_index))
-                            Program.dbOperations.DeleteOrder_OLAsync(order_ol);
+                        this_project.CancelOrder(order, "سفارش لغو شد. علت لغو : " + Stack.sx);
+                }
+                else
+                {
+                    if (MessageBox.Show("آیا از تغییر مرحله سفارش اطمینان دارید؟", "مهم"
+                       , MessageBoxButtons.YesNo) != DialogResult.Yes) return;
 
-                        this_project.Create_OrderHistory(order, "سفارش لغو شد. علت لغو : " + Stack.sx);
-                    }
+                    this_project.Change_Order_Level(order, ol_index);
                 }
 
+                MessageBox.Show("تغییر مرحله سفارش انجام شد");
+                Stack.bx = true;
+                Close();
             }
         }
     }

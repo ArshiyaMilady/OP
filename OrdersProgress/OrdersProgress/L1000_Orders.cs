@@ -111,7 +111,20 @@ namespace OrdersProgress
                     (Stack.Company_Index, 0, Stack.UserLevel_Index).Select(d => d.OL_Index).ToList();
                 // علامت گذاری سفارشهایی که قابل تأیید توسط کاربر جاری می باشند
                 foreach (Models.Order order in lstOrders)
-                    order.C_B1 = (Stack.UserLevel_Type!=0) || lstOL_Indexes_CanConfirm.Contains(order.CurrentLevel_Index);
+                {
+                    if (Stack.UserLevel_Type != 0) order.C_B1 = true;
+                    else
+                    {
+                        // برای سفارشهایی که امکان تغییر دارند، فقط سفارش دهنده اجازه تغییر را دارد
+                        if (Program.dbOperations.GetOrder_LevelAsync(order.NextLevel_Index).OrderCanChange)
+                        {
+                            if (Stack.UserIndex != order.User_Index) continue;
+                                //order.C_B1 = lstOL_Indexes_CanConfirm.Contains(order.NextLevel_Index);
+                        }
+
+                        order.C_B1 = lstOL_Indexes_CanConfirm.Contains(order.NextLevel_Index);
+                    }
+                }
                 #endregion
             }
             #endregion
@@ -683,13 +696,19 @@ namespace OrdersProgress
         {
             string order_index = Convert.ToString(dgvData.CurrentRow.Cells["Index"].Value);
             Models.Order order = Program.dbOperations.GetOrderAsync(order_index);
+            if(Program.dbOperations.GetOrder_LevelAsync(order.CurrentLevel_Index).CancelingLevel)
+            {
+                MessageBox.Show("سفارش لغو شده است. امکان تغییر وضعیت آن از این طریف ممکن نمی باشد",order.Title);
+                return;
+            }
 
             new L2150_OneOrder_Change_OrderLevel(order_index).ShowDialog();
 
             Models.Order order1 = Program.dbOperations.GetOrderAsync(order_index);
             // در صورت به وجود آمدن تغییری در سفارش ، جدول را بروز کن
-            if ((order.CurrentLevel_Index != order1.CurrentLevel_Index)
-                || (order.PreviousLevel_Index != order1.PreviousLevel_Index))
+            //if ((order.CurrentLevel_Index != order1.CurrentLevel_Index)
+            //    || (order.PreviousLevel_Index != order1.PreviousLevel_Index))
+            if(Stack.bx)
             {
                 lstOrders = new List<Models.Order>();
                 dgvData.DataSource = GetData();
