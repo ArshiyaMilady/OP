@@ -56,15 +56,11 @@ namespace OrdersProgress
             }
             #endregion
 
-            //Program.dbOperations.DeleteAllOrder_LevelsAsync();
-            //new J2110_ChangePassword().ShowDialog();
-            //MessageBox.Show(Stack.Company_Index.ToString());
-            //new zForm1().ShowDialog();
-            //new K1322_Module_Diagram("KK_002").ShowDialog();
-            //MessageBox.Show((Stack.UserLevel+22).ToString());
-            //MessageBox.Show((Path.Combine(Application.StartupPath, "sqlDB.db3")));
-
-
+            if (Stack.UserLevel_Type == 1)
+                toolStripStatusLabel.Text = "";
+            else
+                toolStripStatusLabel.Text = Program.dbOperations.GetUserAsync(Stack.UserIndex).Real_Name + " / "
+                    + Program.dbOperations.GetUser_LevelAsync(Stack.UserLevel_Index).Description;
 
             SetCompanies();
             //CreateUser_RealAdmin();
@@ -112,11 +108,13 @@ namespace OrdersProgress
             }
             #endregion
 
+            #region قابل مشاهده بودن یا نبودن منوها و زیرمنوها
+            
             #region منوی ابزارهای جانبی و زیرمنوهایش
             tsmiInternalFeatures.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jk0000");
 
-            tsmiUsers.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jk0900");
-            tsmiUsers_Show_Change.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jk1000");
+            tsmiUsers.Visible = (Stack.UserLevel_Type == 1) || Stack.lstUser_ULF_UniquePhrase.Contains("jk0900");
+            tsmiUsers_Show_Change.Visible = (Stack.UserLevel_Type == 1) || Stack.lstUser_ULF_UniquePhrase.Contains("jk1000");
             if(!Stack.lstUser_ULF_UniquePhrase.Contains("jk1000")) tsmiUsers_Show_Change.ShortcutKeys = Keys.None;
             tsmiUsersLevels.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jk2000");
             tsmiUserLevelsFeatures.Visible= Stack.lstUser_ULF_UniquePhrase.Contains("dj1000");
@@ -124,6 +122,7 @@ namespace OrdersProgress
             tsmiOrdersFeatures.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jl3000");
             tsmiOrdersLevels.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jl3100");
             tsmiOrders_and_Details.Visible = Stack.UserLevel_Type == 1;
+            tsmiLoginsHistory.Visible = (Stack.UserLevel_Type == 1) || Stack.lstUser_ULF_UniquePhrase.Contains("jk4000");
             #endregion
 
             #region منوی سفارشها و زیرمنوهایش
@@ -144,6 +143,7 @@ namespace OrdersProgress
             tsmiItems.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jn2000");
             #endregion
 
+            #endregion
 
             Application.DoEvents();
             menuStrip.Visible = true;

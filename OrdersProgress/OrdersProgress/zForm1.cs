@@ -29,13 +29,14 @@ namespace OrdersProgress
             //dgvData.DataSource = Program.dbOperations.GetAllLoginHistorysAsync(Stack.Company_Index)
             //    .OrderByDescending(d=>d.DateTime_mi).ToList();
 
-            List<long> lstEnabled_OL = Program.dbOperations.GetAllOrder_LevelsAsync(Stack.Company_Index).Select(d => d.Index).ToList();
-            dgvData.DataSource = Program.dbOperations
-                .GetAllOrder_OLsAsync(Stack.Company_Index)
-                .Where(b => lstEnabled_OL.Contains(b.OrderLevel_Index)).ToList();
+            //List<long> lstEnabled_OL = Program.dbOperations.GetAllOrder_LevelsAsync(Stack.Company_Index).Select(d => d.Index).ToList();
+            //dgvData.DataSource = Program.dbOperations
+            //    .GetAllOrder_OLsAsync(Stack.Company_Index)
+            //    .Where(b => lstEnabled_OL.Contains(b.OrderLevel_Index)).ToList();
 
             //dgvData.DataSource = Program.dbOperations.GetAllOrder_OLsAsync(Stack.Company_Index);
-            //dgvData.DataSource = Stack.lstUser_ULF_UniquePhrase;
+            dgvData.DataSource = Program.dbOperations
+                   .GetAllUser_Level_UL_FeaturesAsync(Stack.Company_Index, Stack.UserLevel_Index).ToList();
             //dgvData.DataSource = new ThisProject().AllSubRelations("KK_002");
         }
 

@@ -68,6 +68,7 @@ namespace OrdersProgress
             #region چه سفارشهایی توسط کاربر قابل مشاهده می باشد
             if (!lstOrders.Any())
             {
+                // شناسه کاربران ادمین و کاربران ارشد
                 List<long> lstStandardUserIndex = Stack_Methods.GetStandardUsersIndex(1);
 
                 if (Stack.UserLevel_Type == 0)
@@ -75,7 +76,7 @@ namespace OrdersProgress
                     // مراحلی از سفارش که کاربر وارد شونده می تواند آنها را «مشاهده» کند
 
                     // تمام سفارشهای کاربران ، به جز ادمین ها و کاربران ارشد
-                    //if (Stack.lstUser_ULF_UniquePhrase.Contains("jm2220"))
+                    if (Stack.lstUser_ULF_UniquePhrase.Contains("jm2220"))
                     {
                         List<long> lstOL_Indexes_CanSee = Program.dbOperations.GetAllUL_See_OLsAsync
                            (Stack.Company_Index, Stack.UserLevel_Index).Select(d => d.OL_Index).ToList();
@@ -84,8 +85,8 @@ namespace OrdersProgress
                             .Where(b => !lstStandardUserIndex.Contains(b.User_Index))
                             .Where(d => lstOL_Indexes_CanSee.Contains(d.CurrentLevel_Index)).ToList();
                     }
-                    //else   // فقط سفارشهایی که توسط کاربر وارد شونده ثبت شده اند، امکان مشاهده دارند
-                    //    lstOrders = Program.dbOperations.GetAllOrders(Stack.Company_Index, Stack.UserIndex);
+                    else   // فقط سفارشهایی که توسط کاربر وارد شونده ثبت شده اند، امکان مشاهده دارند
+                        lstOrders = Program.dbOperations.GetAllOrders(Stack.Company_Index, Stack.UserIndex);
                 }
                 else if (Stack.UserLevel_Type == 1)
                     lstOrders = Program.dbOperations.GetAllOrders(Stack.Company_Index);

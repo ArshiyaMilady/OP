@@ -136,6 +136,7 @@
             this.tsmiLoginsHistory.Name = "tsmiLoginsHistory";
             this.tsmiLoginsHistory.Size = new System.Drawing.Size(235, 24);
             this.tsmiLoginsHistory.Text = "تاریخچه ورودها";
+            this.tsmiLoginsHistory.Visible = false;
             this.tsmiLoginsHistory.Click += new System.EventHandler(this.TsmiLoginsHistory_Click);
             // 
             // tsmiOrdersFeatures
@@ -200,6 +201,7 @@
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(167, 6);
+            this.toolStripSeparator1.Visible = false;
             // 
             // tsmiOrders_Show
             // 
@@ -213,6 +215,7 @@
             this.tsmiOrders_Priorities.Name = "tsmiOrders_Priorities";
             this.tsmiOrders_Priorities.Size = new System.Drawing.Size(170, 24);
             this.tsmiOrders_Priorities.Text = "- اولویتها";
+            this.tsmiOrders_Priorities.Visible = false;
             this.tsmiOrders_Priorities.Click += new System.EventHandler(this.TsmiOrders_Priorities_Click);
             // 
             // tsmiOrders_ReportProgress
@@ -224,6 +227,7 @@
             this.tsmiOrders_ReportProgress.Name = "tsmiOrders_ReportProgress";
             this.tsmiOrders_ReportProgress.Size = new System.Drawing.Size(170, 24);
             this.tsmiOrders_ReportProgress.Text = "- گزارش پیشرفت";
+            this.tsmiOrders_ReportProgress.Visible = false;
             this.tsmiOrders_ReportProgress.Click += new System.EventHandler(this.TsmiOrders_ReportProgress_Click);
             // 
             // tsmiUserPriorities

@@ -33,6 +33,7 @@ namespace OrdersProgress
             List<Models.User_Level> lstULs = Program.dbOperations.GetAllUser_LevelsAsync(Stack.Company_Index, 1);
             //MessageBox.Show(Stack.UserLevel_Type.ToString());
             //if (Stack.UserLevel_Type != 1)
+            //lstULs = lstULs.Where(d => (d.Type == 0)|| (d.Type == 3)).ToList();
             lstULs = lstULs.Where(d => d.Type == 0).ToList();
 
             if (Program.dbOperations.GetAllOL_ULsAsync(Stack.Company_Index, order_level_index).Any())

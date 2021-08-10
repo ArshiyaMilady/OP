@@ -19,6 +19,15 @@ namespace OrdersProgress
 
         private void L1110_Order_Levels_Shown(object sender, EventArgs e)
         {
+            if(Stack.UserLevel_Type==1)
+            {
+                panel2.Visible = true;
+                btnAddNew.Visible = true;
+                panel3.Visible = true;
+                tsmiDelete.Visible = true;
+                tsmiDeleteAllOL_Prerequisites.Visible = true;
+            }
+
             dgvData.DataSource = GetData();
             ShowData();
         }
@@ -50,7 +59,8 @@ namespace OrdersProgress
                         else col.Visible = false;
                         break;
                     case "Sequence":
-                        if ((Stack.UserLevel_Type == 1) || (Stack.UserLevel_Type == 2))
+                        //if ((Stack.UserLevel_Type == 1) || (Stack.UserLevel_Type == 2))
+                        if (Stack.UserLevel_Type == 1)
                         {
                             col.HeaderText = "ترتیب";
                             col.Width = 50;
@@ -58,8 +68,12 @@ namespace OrdersProgress
                         else col.Visible = false;
                         break;
                     case "Enabled":
-                        col.HeaderText = "فعال؟";
-                        col.Width = 50;
+                        if (Stack.UserLevel_Type == 1)
+                        {
+                            col.HeaderText = "فعال؟";
+                            col.Width = 50;
+                        }
+                        else col.Visible = false;
                         //col.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                         break;
                     case "Description":
@@ -71,9 +85,12 @@ namespace OrdersProgress
                         col.Width = 200;
                         break;
                     case "OrderCanChange":
-                        col.HeaderText = "امکان تغییر؟";
-                        col.Width = 50;
-                        //col.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        if (Stack.UserLevel_Type == 1)
+                        {
+                            col.HeaderText = "امکان تغییر؟";
+                            col.Width = 50;
+                        }
+                        else col.Visible = false;
                         break;
                     case "FirstLevel":
                         col.HeaderText = "مرحله شروع؟";

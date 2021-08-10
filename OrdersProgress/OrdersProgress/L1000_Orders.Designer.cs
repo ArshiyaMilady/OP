@@ -311,7 +311,7 @@
             this.tsmiCancel});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 180);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 158);
             // 
             // tsmiOrderHistory
             // 
@@ -392,6 +392,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnReturn;
             this.ClientSize = new System.Drawing.Size(843, 309);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.progressBar1);

@@ -40,13 +40,18 @@ namespace OrdersProgress
         public void AddOrder_OrderLevel(Models.Order order,long order_level_index = 0)
         {
             if (order_level_index == 0) order_level_index = order.CurrentLevel_Index;
-            // ثبت جدول مراحل گذرانده سفارش
-            Program.dbOperations.AddOrder_OLAsync(new Models.Order_OL
+            // اگر مرحله سفارش در لیست مراحل این سفارش نباشد، آنرا وارد کن
+            if (!Program.dbOperations.GetAllOrder_OLsAsync(Stack.Company_Index, order.Index)
+                .Any(d => d.OrderLevel_Index == order_level_index))
             {
-                Company_Index = Stack.Company_Index,
-                Order_Index = order.Index,
-                OrderLevel_Index = order_level_index,
-            });
+                // ثبت جدول مراحل گذرانده سفارش
+                Program.dbOperations.AddOrder_OLAsync(new Models.Order_OL
+                {
+                    Company_Index = Stack.Company_Index,
+                    Order_Index = order.Index,
+                    OrderLevel_Index = order_level_index,
+                });
+            }
         }
 
         #region تمام زیرشاخه های یک کالا به همراه سطح آنها
