@@ -88,6 +88,7 @@
             // 
             // panel3
             // 
+            this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.panel3.Controls.Add(this.radAll);
             this.panel3.Controls.Add(this.radEnabledLevel);
             this.panel3.Controls.Add(this.radDisabledLevel);
@@ -351,7 +352,7 @@
             this.tsmiDelete});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.contextMenuStrip1.Size = new System.Drawing.Size(208, 114);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(208, 92);
             // 
             // tsmiOL_Prerequisites
             // 

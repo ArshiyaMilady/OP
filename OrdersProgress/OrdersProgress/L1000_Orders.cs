@@ -681,11 +681,19 @@ namespace OrdersProgress
 
         private void TsmiChangeOrderLevel_Click(object sender, EventArgs e)
         {
-            string OrderIndex = Convert.ToString(dgvData.CurrentRow.Cells["Index"].Value);
-            Models.Order order = Program.dbOperations.GetOrderAsync(OrderIndex);
+            string order_index = Convert.ToString(dgvData.CurrentRow.Cells["Index"].Value);
+            Models.Order order = Program.dbOperations.GetOrderAsync(order_index);
 
-            new L2150_OneOrder_Change_OrderLevel(OrderIndex).ShowDialog();
+            new L2150_OneOrder_Change_OrderLevel(order_index).ShowDialog();
 
+            Models.Order order1 = Program.dbOperations.GetOrderAsync(order_index);
+            // در صورت به وجود آمدن تغییری در سفارش ، جدول را بروز کن
+            if ((order.CurrentLevel_Index != order1.CurrentLevel_Index)
+                || (order.PreviousLevel_Index != order1.PreviousLevel_Index))
+            {
+                lstOrders = new List<Models.Order>();
+                dgvData.DataSource = GetData();
+            }
         }
 
         private void TsmiWarehouseChecklist_Click(object sender, EventArgs e)
