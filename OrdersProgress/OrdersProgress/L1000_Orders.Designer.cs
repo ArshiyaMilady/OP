@@ -311,7 +311,7 @@
             this.tsmiCancel});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 158);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 180);
             // 
             // tsmiOrderHistory
             // 
@@ -364,6 +364,7 @@
             this.tsmiCancel.Name = "tsmiCancel";
             this.tsmiCancel.Size = new System.Drawing.Size(180, 22);
             this.tsmiCancel.Text = "لغو سفارش";
+            this.tsmiCancel.Visible = false;
             this.tsmiCancel.Click += new System.EventHandler(this.TsmiCancel_Click);
             // 
             // pictureBox1

@@ -59,13 +59,13 @@ namespace OrdersProgress
         private void Button1_Click(object sender, EventArgs e)
         {
             #region حذف تمام سفارشها
-            //Program.dbOperations.DeleteAllOrdersAsync();
-            //Program.dbOperations.DeleteAllOrder_ItemsAsync();
-            //Program.dbOperations.DeleteAllOrder_Item_PropertiesAsync();
-            //Program.dbOperations.DeleteAllOrder_HistorysAsync();
-            //Program.dbOperations.DeleteAllOrder_OLsAsync();
-            //Program.dbOperations.DeleteAllOrders_StockItemsAsync();
-            //Program.dbOperations.DeleteAllOrderPrioritysAsync();
+            Program.dbOperations.DeleteAllOrdersAsync();
+            Program.dbOperations.DeleteAllOrder_ItemsAsync();
+            Program.dbOperations.DeleteAllOrder_Item_PropertiesAsync();
+            Program.dbOperations.DeleteAllOrder_HistorysAsync();
+            Program.dbOperations.DeleteAllOrder_OLsAsync();
+            Program.dbOperations.DeleteAllOrders_StockItemsAsync();
+            Program.dbOperations.DeleteAllOrderPrioritysAsync();
             #endregion
 
 
