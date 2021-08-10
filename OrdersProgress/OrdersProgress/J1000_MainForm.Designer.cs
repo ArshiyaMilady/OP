@@ -282,21 +282,21 @@
             // tsmiProperties
             // 
             this.tsmiProperties.Name = "tsmiProperties";
-            this.tsmiProperties.Size = new System.Drawing.Size(130, 24);
+            this.tsmiProperties.Size = new System.Drawing.Size(180, 24);
             this.tsmiProperties.Text = "مشخصات";
             this.tsmiProperties.Click += new System.EventHandler(this.TsmiProperties_Click);
             // 
             // tsmiItems
             // 
             this.tsmiItems.Name = "tsmiItems";
-            this.tsmiItems.Size = new System.Drawing.Size(130, 24);
+            this.tsmiItems.Size = new System.Drawing.Size(180, 24);
             this.tsmiItems.Text = "قطعات";
             this.tsmiItems.Click += new System.EventHandler(this.tsmiItems_Click);
             // 
             // tsmiModules
             // 
             this.tsmiModules.Name = "tsmiModules";
-            this.tsmiModules.Size = new System.Drawing.Size(130, 24);
+            this.tsmiModules.Size = new System.Drawing.Size(180, 24);
             this.tsmiModules.Text = "ماژول ها";
             this.tsmiModules.Visible = false;
             this.tsmiModules.Click += new System.EventHandler(this.TsmiModules_Click);
@@ -304,7 +304,7 @@
             // tsmiOPC
             // 
             this.tsmiOPC.Name = "tsmiOPC";
-            this.tsmiOPC.Size = new System.Drawing.Size(130, 24);
+            this.tsmiOPC.Size = new System.Drawing.Size(180, 24);
             this.tsmiOPC.Text = "OPC";
             this.tsmiOPC.Visible = false;
             this.tsmiOPC.Click += new System.EventHandler(this.TsmiOPC_Click);
@@ -312,7 +312,7 @@
             // tsmiActions
             // 
             this.tsmiActions.Name = "tsmiActions";
-            this.tsmiActions.Size = new System.Drawing.Size(130, 24);
+            this.tsmiActions.Size = new System.Drawing.Size(180, 24);
             this.tsmiActions.Text = "فعالیت ها";
             this.tsmiActions.Visible = false;
             this.tsmiActions.Click += new System.EventHandler(this.TsmiActions_Click);

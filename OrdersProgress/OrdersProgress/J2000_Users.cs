@@ -126,6 +126,14 @@ namespace OrdersProgress
                         col.HeaderText = "فعال؟";
                         col.Width = 50;
                         break;
+                    case "Index":
+                        if (Stack.UserLevel_Type == 1)
+                        {
+                            col.HeaderText = "Id";
+                            col.Width = 50;
+                        }
+                        else col.Visible = false;
+                        break;
                     case "Name":
                         col.HeaderText = "شناسه";
                         col.Width = 150;

@@ -17,6 +17,9 @@ namespace OrdersProgress
 
             menuStrip.Visible = false;
             statusStrip.Visible = false;
+
+            //tsmiStock.Visible = false;
+            //tsmiProducts.Visible = false;
         }
 
         private void ShowNewForm(Form childForm)//(object sender, EventArgs e)
@@ -46,12 +49,6 @@ namespace OrdersProgress
                     Close();
                     System.Environment.Exit(1);
                     return;
-                }
-                else
-                {
-                    menuStrip.Visible = true;
-                    statusStrip.Visible = true;
-                    btnClose.Enabled = true;
                 }
             }
             #endregion
@@ -147,10 +144,11 @@ namespace OrdersProgress
 
             Application.DoEvents();
             menuStrip.Visible = true;
+            statusStrip.Visible = true;
             menuStrip.Enabled = true;
             btnClose.Visible = true;
 
-            if(Stack.UserLevel_Type==1)
+            if (Stack.UserLevel_Type==1)
                 new zForm1().ShowDialog();
 
         }
