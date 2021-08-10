@@ -126,20 +126,21 @@ namespace OrdersProgress
             if (!Program.dbOperations.GetAllOrder_LevelsAsync(Stack.Company_Index).Any(d => d.ReturningLevel))
                 return false;
 
-            Models.Order_Level order_level = Program.dbOperations.GetAllOrder_LevelsAsync
-                (Stack.Company_Index).First(d => d.ReturningLevel);
+            //Models.Order_Level order_level = Program.dbOperations.GetAllOrder_LevelsAsync
+            //    (Stack.Company_Index).First(d => d.ReturningLevel);
 
             // حذف آخرین مرحله انجام شده از مراحل سفارش
             Models.Order_OL order_ol = Program.dbOperations.GetAllOrder_OLsAsync
                 (Stack.Company_Index, order.Index).OrderBy(d => d.Id).ToList().Last();
             Program.dbOperations.DeleteOrder_OLAsync(order_ol);
+            order.NextLevel_Index = order.CurrentLevel_Index;
             order.CurrentLevel_Index = order.PreviousLevel_Index;
             // پیدا کردن مرحله قبلی از جدول مراحل گذرانده سفارش
             order.PreviousLevel_Index = Program.dbOperations.GetAllOrder_OLsAsync
                 (Stack.Company_Index, order.Index)
                 .Where(d => d.OrderLevel_Index != order.CurrentLevel_Index)
                 .OrderBy(d => d.Id).ToList().Last().OrderLevel_Index;
-            order.Level_Description = order_level.Description2;
+            order.Level_Description = Program.dbOperations.GetOrder_LevelAsync(order.CurrentLevel_Index).Description2;
             Program.dbOperations.UpdateOrderAsync(order);
 
             Create_OrderHistory(order, return_description);
