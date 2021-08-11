@@ -148,6 +148,7 @@ namespace OrdersProgress.Models
         public long Index { get; set; }
         public string Description { get; set; }
         public string Unique_Phrase { get; set; }   // عبارت منحصر بفرد برای راحت تر پیدا کردن یک قابلیت
+        public bool Enabled { get; set; }
     }
 
     // تعریف امکانات هر سطح کاربری = ارتباط هر سطح با امکانات آن
@@ -158,7 +159,8 @@ namespace OrdersProgress.Models
         public long Company_Index { get; set; }
         public long User_Level_Index { get; set; }  // شناسه سطح کاربری
         public long UL_Feature_Index { get; set; }    // شناسه امکانات
-        public string UL_Feature_Unique_Phrase { get; set; }   
+        public string UL_Feature_Unique_Phrase { get; set; }
+        public bool UL_Feature_Enabled { get; set; }
     }
 
     public class User_File

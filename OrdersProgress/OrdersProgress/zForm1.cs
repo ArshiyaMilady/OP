@@ -58,23 +58,28 @@ namespace OrdersProgress
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            #region حذف تمام سفارشها
-            Program.dbOperations.DeleteAllOrdersAsync();
-            Program.dbOperations.DeleteAllOrder_ItemsAsync();
-            Program.dbOperations.DeleteAllOrder_Item_PropertiesAsync();
-            Program.dbOperations.DeleteAllOrder_HistorysAsync();
-            Program.dbOperations.DeleteAllOrder_OLsAsync();
-            Program.dbOperations.DeleteAllOrders_StockItemsAsync();
-            Program.dbOperations.DeleteAllOrderPrioritysAsync();
+            #region فعال کردن تمام امکانات کاربران به صورت پیش فرض
+            //foreach (Models.UL_Feature ulf in Program.dbOperations.GetAllUL_FeaturesAsync(Stack.Company_Index))
+            //{
+            //    ulf.Enabled = true;
+            //    Program.dbOperations.UpdateUL_FeatureAsync(ulf);
+            //}
+            //foreach (Models.User_Level_UL_Feature ul_ulf in Program.dbOperations.GetAllUser_Level_UL_FeaturesAsync(Stack.Company_Index))
+            //{
+            //    ul_ulf.UL_Feature_Enabled = true;
+            //    Program.dbOperations.UpdateUser_Level_UL_FeatureAsync(ul_ulf);
+            //}
             #endregion
 
-
-            foreach (Models.User  user in Program.dbOperations.GetAllUsersAsync(0,0))//Stack.Company_Index))
-            {
-                //Program.dbOperations.DeleteUser(user);
-                //user.IsDefault = false;
-                //Program.dbOperations.UpdateUserAsync(user);
-            }
+            #region حذف تمام سفارشها
+            //Program.dbOperations.DeleteAllOrdersAsync();
+            //Program.dbOperations.DeleteAllOrder_ItemsAsync();
+            //Program.dbOperations.DeleteAllOrder_Item_PropertiesAsync();
+            //Program.dbOperations.DeleteAllOrder_HistorysAsync();
+            //Program.dbOperations.DeleteAllOrder_OLsAsync();
+            //Program.dbOperations.DeleteAllOrders_StockItemsAsync();
+            //Program.dbOperations.DeleteAllOrderPrioritysAsync();
+            #endregion
 
             //Program.dbOperations.DeleteAllOrder_LevelsAsync();
 
@@ -277,25 +282,25 @@ namespace OrdersProgress
             //    x.Company_Index = 1;
             //    Program.dbOperations.UpdateItem_OPCAsync(x);
             //}
-            
+
             //foreach (var x in Program.dbOperations.GetAllModulesAsync(0,0))
             //{
             //    x.Company_Index = 1;
             //    Program.dbOperations.UpdateModuleAsync(x);
             //}
-            
+
             //foreach (var x in Program.dbOperations.GetAllActionsAsync(0))
             //{
             //    x.Company_Index = 1;
             //    Program.dbOperations.UpdateActionAsync(x);
             //}
-            
+
             //foreach (var x in Program.dbOperations.GetAllOPCsAsync(0))
             //{
             //    x.Company_Index = 1;
             //    Program.dbOperations.UpdateOPCAsync(x);
             //}
-            
+
             //foreach (var x in Program.dbOperations.GetAllOPC_AcionsAsync(0))
             //{
             //    x.Company_Index = 1;

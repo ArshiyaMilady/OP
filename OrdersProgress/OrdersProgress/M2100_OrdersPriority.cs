@@ -267,7 +267,7 @@ namespace OrdersProgress
         {
             if(!Program.dbOperations.GetAllOrderPrioritysAsync(Stack.Company_Index).Any())
             {
-                MessageBox.Show("دقیقا برای چه چیزی اولویت پیش فرض تعیین شود؟");
+                MessageBox.Show("سفارشی جهت تعیین اولویت وجود ندارد");
                 return;
             }
 

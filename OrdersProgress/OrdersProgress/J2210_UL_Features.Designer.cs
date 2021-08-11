@@ -30,7 +30,16 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(J2210_UL_Features));
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmiDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.btnReturn = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.radAll = new System.Windows.Forms.RadioButton();
+            this.radEnabled = new System.Windows.Forms.RadioButton();
+            this.radDisabled = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnShowAll = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
@@ -45,27 +54,69 @@
             this.chkShowUpdateMessage = new System.Windows.Forms.CheckBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.btnImportDataFromExcel = new System.Windows.Forms.Button();
-            this.btnReturn = new System.Windows.Forms.Button();
             this.btnDeleteAll = new System.Windows.Forms.Button();
             this.btnAddNew = new System.Windows.Forms.Button();
             this.dgvData = new System.Windows.Forms.DataGridView();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.tsmiDelete = new System.Windows.Forms.ToolStripMenuItem();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.contextMenuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
-            this.contextMenuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiDelete});
+            this.contextMenuStrip1.Name = "tsmiDelete";
+            this.contextMenuStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.contextMenuStrip1.Size = new System.Drawing.Size(96, 26);
+            // 
+            // tsmiDelete
+            // 
+            this.tsmiDelete.Name = "tsmiDelete";
+            this.tsmiDelete.Size = new System.Drawing.Size(95, 22);
+            this.tsmiDelete.Text = "حذف";
+            this.tsmiDelete.Click += new System.EventHandler(this.tsmiDelete_Click);
+            // 
+            // timer1
+            // 
+            this.timer1.Interval = 400;
+            this.timer1.Tick += new System.EventHandler(this.Timer1_Tick);
+            // 
+            // btnReturn
+            // 
+            this.btnReturn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnReturn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnReturn.Location = new System.Drawing.Point(3, 288);
+            this.btnReturn.Name = "btnReturn";
+            this.btnReturn.Size = new System.Drawing.Size(75, 29);
+            this.btnReturn.TabIndex = 80;
+            this.btnReturn.Text = "بازگشت";
+            this.btnReturn.UseVisualStyleBackColor = true;
+            this.btnReturn.Click += new System.EventHandler(this.BtnReturn_Click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.pictureBox1.BackColor = System.Drawing.SystemColors.Window;
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(378, 133);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(49, 54);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 92;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Visible = false;
             // 
             // panel1
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.panel3);
             this.panel1.Controls.Add(this.groupBox1);
             this.panel1.Controls.Add(this.panel2);
             this.panel1.Controls.Add(this.btnImportDataFromExcel);
@@ -75,8 +126,60 @@
             this.panel1.Controls.Add(this.dgvData);
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(805, 266);
+            this.panel1.Size = new System.Drawing.Size(805, 321);
             this.panel1.TabIndex = 3;
+            // 
+            // panel3
+            // 
+            this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel3.Controls.Add(this.radAll);
+            this.panel3.Controls.Add(this.radEnabled);
+            this.panel3.Controls.Add(this.radDisabled);
+            this.panel3.Location = new System.Drawing.Point(557, 64);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(244, 83);
+            this.panel3.TabIndex = 92;
+            // 
+            // radAll
+            // 
+            this.radAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.radAll.AutoSize = true;
+            this.radAll.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radAll.Location = new System.Drawing.Point(137, 55);
+            this.radAll.Name = "radAll";
+            this.radAll.Size = new System.Drawing.Size(104, 19);
+            this.radAll.TabIndex = 59;
+            this.radAll.Text = "نمایش تمام امکانات";
+            this.radAll.UseVisualStyleBackColor = true;
+            this.radAll.CheckedChanged += new System.EventHandler(this.RadEnabled_CheckedChanged);
+            // 
+            // radEnabled
+            // 
+            this.radEnabled.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.radEnabled.AutoSize = true;
+            this.radEnabled.Checked = true;
+            this.radEnabled.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radEnabled.Location = new System.Drawing.Point(132, 5);
+            this.radEnabled.Name = "radEnabled";
+            this.radEnabled.Size = new System.Drawing.Size(107, 19);
+            this.radEnabled.TabIndex = 57;
+            this.radEnabled.TabStop = true;
+            this.radEnabled.Text = "نمایش امکانات فعال";
+            this.radEnabled.UseVisualStyleBackColor = true;
+            this.radEnabled.CheckedChanged += new System.EventHandler(this.RadEnabled_CheckedChanged);
+            // 
+            // radDisabled
+            // 
+            this.radDisabled.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.radDisabled.AutoSize = true;
+            this.radDisabled.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radDisabled.Location = new System.Drawing.Point(116, 30);
+            this.radDisabled.Name = "radDisabled";
+            this.radDisabled.Size = new System.Drawing.Size(126, 19);
+            this.radDisabled.TabIndex = 58;
+            this.radDisabled.Text = "نمایش امکانات غیر فعال";
+            this.radDisabled.UseVisualStyleBackColor = true;
+            this.radDisabled.CheckedChanged += new System.EventHandler(this.RadEnabled_CheckedChanged);
             // 
             // groupBox1
             // 
@@ -89,7 +192,7 @@
             this.groupBox1.Controls.Add(this.cmbST_Description);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Location = new System.Drawing.Point(511, 67);
+            this.groupBox1.Location = new System.Drawing.Point(511, 150);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(288, 128);
             this.groupBox1.TabIndex = 20;
@@ -250,29 +353,17 @@
             this.btnImportDataFromExcel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnImportDataFromExcel.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnImportDataFromExcel.BackgroundImage")));
             this.btnImportDataFromExcel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnImportDataFromExcel.Location = new System.Drawing.Point(325, 229);
+            this.btnImportDataFromExcel.Location = new System.Drawing.Point(325, 284);
             this.btnImportDataFromExcel.Name = "btnImportDataFromExcel";
             this.btnImportDataFromExcel.Size = new System.Drawing.Size(34, 34);
             this.btnImportDataFromExcel.TabIndex = 80;
             this.btnImportDataFromExcel.UseVisualStyleBackColor = true;
             this.btnImportDataFromExcel.Visible = false;
             // 
-            // btnReturn
-            // 
-            this.btnReturn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnReturn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnReturn.Location = new System.Drawing.Point(3, 233);
-            this.btnReturn.Name = "btnReturn";
-            this.btnReturn.Size = new System.Drawing.Size(75, 29);
-            this.btnReturn.TabIndex = 80;
-            this.btnReturn.Text = "بازگشت";
-            this.btnReturn.UseVisualStyleBackColor = true;
-            this.btnReturn.Click += new System.EventHandler(this.BtnReturn_Click);
-            // 
             // btnDeleteAll
             // 
             this.btnDeleteAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnDeleteAll.Location = new System.Drawing.Point(84, 233);
+            this.btnDeleteAll.Location = new System.Drawing.Point(84, 288);
             this.btnDeleteAll.Name = "btnDeleteAll";
             this.btnDeleteAll.Size = new System.Drawing.Size(75, 29);
             this.btnDeleteAll.TabIndex = 75;
@@ -284,7 +375,7 @@
             // btnAddNew
             // 
             this.btnAddNew.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAddNew.Location = new System.Drawing.Point(365, 230);
+            this.btnAddNew.Location = new System.Drawing.Point(365, 285);
             this.btnAddNew.Name = "btnAddNew";
             this.btnAddNew.Size = new System.Drawing.Size(141, 32);
             this.btnAddNew.TabIndex = 70;
@@ -301,52 +392,19 @@
             this.dgvData.Location = new System.Drawing.Point(2, 2);
             this.dgvData.Name = "dgvData";
             this.dgvData.ReadOnly = true;
-            this.dgvData.Size = new System.Drawing.Size(504, 225);
+            this.dgvData.Size = new System.Drawing.Size(504, 280);
             this.dgvData.TabIndex = 90;
             this.dgvData.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.DgvData_CellBeginEdit);
             this.dgvData.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvData_CellEndEdit);
             this.dgvData.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvData_CellMouseDown);
             this.dgvData.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvData_MouseDown);
             // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmiDelete});
-            this.contextMenuStrip1.Name = "tsmiDelete";
-            this.contextMenuStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.contextMenuStrip1.Size = new System.Drawing.Size(96, 26);
-            // 
-            // tsmiDelete
-            // 
-            this.tsmiDelete.Name = "tsmiDelete";
-            this.tsmiDelete.Size = new System.Drawing.Size(95, 22);
-            this.tsmiDelete.Text = "حذف";
-            this.tsmiDelete.Click += new System.EventHandler(this.tsmiDelete_Click);
-            // 
-            // timer1
-            // 
-            this.timer1.Interval = 400;
-            this.timer1.Tick += new System.EventHandler(this.Timer1_Tick);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.pictureBox1.BackColor = System.Drawing.SystemColors.Window;
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(378, 106);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(49, 54);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 92;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Visible = false;
-            // 
             // J2210_UL_Features
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnReturn;
-            this.ClientSize = new System.Drawing.Size(804, 266);
+            this.ClientSize = new System.Drawing.Size(804, 321);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.panel1);
             this.Name = "J2210_UL_Features";
@@ -354,14 +412,16 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.J2210_UL_Features_FormClosing);
             this.Shown += new System.EventHandler(this.J2210_UL_Features_Shown);
+            this.contextMenuStrip1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel1.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).EndInit();
-            this.contextMenuStrip1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -391,5 +451,9 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiDelete;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.RadioButton radAll;
+        private System.Windows.Forms.RadioButton radEnabled;
+        private System.Windows.Forms.RadioButton radDisabled;
     }
 }

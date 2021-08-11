@@ -430,10 +430,18 @@ namespace OrdersProgress.Models
 
         // ********** UL_Feature *************
         #region UL_Feature
-        public List<UL_Feature> GetAllUL_FeaturesAsync(long company_index)
+        public List<UL_Feature> GetAllUL_FeaturesAsync(long company_index, int EnableType = 1)
         {
-            //return _db.Table<UL_Feature>().ToListAsync().Result;
-            return _db.Table<UL_Feature>().Where(b => b.Company_Index == company_index).ToListAsync().Result;
+            List<UL_Feature> lstULF = _db.Table<UL_Feature>()
+                .Where(b => b.Company_Index == company_index).ToListAsync().Result;
+
+            if (EnableType == 1)  // فقط امکانات فعال
+                lstULF = lstULF.Where(d => d.Enabled).ToList();
+            else if (EnableType == -1)  // فقط امکانات غیرفعال
+                lstULF = lstULF.Where(d => !d.Enabled).ToList();
+            // else // تمام امکانات
+
+            return lstULF;
         }
 
         //public List<UL_Feature> GetAllUL_Features(long company_index)
@@ -497,14 +505,23 @@ namespace OrdersProgress.Models
 
         // ********** User_Level_UL_Feature *************
         #region User_Level_UL_Feature
-        public List<User_Level_UL_Feature> GetAllUser_Level_UL_FeaturesAsync(long company_index, long user_level_index = 0)
+        public List<User_Level_UL_Feature> GetAllUser_Level_UL_FeaturesAsync(long company_index
+            , long user_level_index = 0,int EnableType=1)
         {
-            if (user_level_index <= 0)
-                return _db.Table<User_Level_UL_Feature>().Where(b => b.Company_Index == company_index).ToListAsync().Result;
-            else
-                return _db.Table<User_Level_UL_Feature>()
-                    .Where(b => b.Company_Index == company_index)
-                    .Where(d => d.User_Level_Index == user_level_index).ToListAsync().Result;
+            List<User_Level_UL_Feature> lstUL_ULF = _db.Table<User_Level_UL_Feature>()
+                .Where(b => b.Company_Index == company_index).ToListAsync().Result;
+
+            if (EnableType == 1)  // فقط امکانات فعال
+                lstUL_ULF = lstUL_ULF.Where(d => d.UL_Feature_Enabled).ToList();
+            else if (EnableType == -1)  // فقط امکانات غیرفعال
+                lstUL_ULF = lstUL_ULF.Where(d => !d.UL_Feature_Enabled).ToList();
+            //else  // if(EnableType == 0) همه ی امکانات
+            //    return lstUL_ULF = lstUL_ULF.Where(b => b.Company_Index == company_index).OrderBy(j => j.UL_Feature_Enabled).ToListAsync().Result;
+
+            if (user_level_index > 0)
+                lstUL_ULF = lstUL_ULF.Where(d => d.User_Level_Index == user_level_index).ToList();
+
+            return lstUL_ULF;
         }
 
         public List<User_Level_UL_Feature> GetAllUser_Level_UL_FeaturesAsync(string user_level_unique_phrase)

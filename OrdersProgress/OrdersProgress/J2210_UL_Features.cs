@@ -24,11 +24,17 @@ namespace OrdersProgress
 
             dgvData.DataSource = GetData();
             ShowData();
+            ColorDgv();
         }
 
         private List<Models.UL_Feature> GetData()
         {
-            return Program.dbOperations.GetAllUL_FeaturesAsync(Stack.Company_Index).OrderBy(d=>d.Unique_Phrase).ToList();
+            int nEnableType = 1;
+            if (radDisabled.Checked) nEnableType = -1;
+            if (radAll.Checked) nEnableType = 0;
+
+            return Program.dbOperations.GetAllUL_FeaturesAsync
+                (Stack.Company_Index, nEnableType).OrderBy(d=>d.Unique_Phrase).ToList();
         }
 
         private void ShowData()
@@ -51,11 +57,11 @@ namespace OrdersProgress
                         //col.ReadOnly = true;
                         col.Width = 100;
                         break;
-                    //case "Enabled":
-                    //    col.HeaderText = "فعال؟";
-                    //    col.Width = 50;
-                    //    //col.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                    //    break;
+                    case "Enabled":
+                        col.HeaderText = "فعال؟";
+                        col.Width = 50;
+                        //col.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        break;
 
                     default: col.Visible = false; break;
                 }
@@ -64,6 +70,14 @@ namespace OrdersProgress
                 else col.DefaultCellStyle.BackColor = Color.White;
             }
             #endregion
+        }
+
+        // رنگ بندی امکانات
+        private void ColorDgv()
+        {
+            foreach (DataGridViewRow row in dgvData.Rows.Cast<DataGridViewRow>()
+                .Where(d => d.Cells["Unique_Phrase"].Value.ToString().Substring(2).Equals("0000")).ToList())
+                row.DefaultCellStyle.BackColor = Color.Yellow;
         }
 
         private void BtnAddNew_Click(object sender, EventArgs e)
@@ -83,11 +97,13 @@ namespace OrdersProgress
                 Index = index,
                 Unique_Phrase = "xx-" + index,
                 Description = "؟",
+                Enabled=true,
             });
 
             if (index > 0)
             {
                 dgvData.DataSource = GetData();
+                ColorDgv();
                 ShowData();
                 int iNewRow = dgvData.Rows.Count - 1;
                 dgvData.CurrentCell = dgvData["Unique_Phrase", iNewRow];
@@ -140,6 +156,7 @@ namespace OrdersProgress
         private void DgvData_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             bool bSaveChange = true;   // آیا تغییر ذخیره شود؟
+            bool bEnbaled_Changed = false;
 
             if (e.RowIndex < 0 || e.ColumnIndex < 0) bSaveChange = false;
             if (dgvData[e.ColumnIndex, e.RowIndex].Value == InitailValue) bSaveChange = false;
@@ -161,6 +178,10 @@ namespace OrdersProgress
                 case "Description":
                     ul_feature.Description = Convert.ToString(dgvData["Description", e.RowIndex].Value);
                     break;
+                case "Enabled":
+                    ul_feature.Enabled = Convert.ToBoolean(dgvData["Enabled", e.RowIndex].Value);
+                    bEnbaled_Changed = true;
+                    break;
             }
 
             if (bSaveChange)
@@ -179,6 +200,24 @@ namespace OrdersProgress
             if (bSaveChange)
             {
                 Program.dbOperations.UpdateUL_FeatureAsync(ul_feature);
+
+                #region اگر فعال بودن امکانی تغییر نماید
+                if (bEnbaled_Changed)
+                {
+                    panel1.Enabled = false;
+                    Application.DoEvents();
+                    foreach(Models.User_Level_UL_Feature ul_ulf in Program
+                        .dbOperations.GetAllUser_Level_UL_FeaturesAsync(Stack.Company_Index,0,0)
+                        .Where(d=>d.UL_Feature_Index == ul_feature.Index).ToList())
+                    {
+                        ul_ulf.UL_Feature_Enabled = ul_feature.Enabled;
+                        Program.dbOperations.UpdateUser_Level_UL_FeatureAsync(ul_ulf);
+                    }
+                    Application.DoEvents();
+                    panel1.Enabled = true;
+
+                }
+                #endregion
             }
             else dgvData[e.ColumnIndex, e.RowIndex].Value = InitailValue;
 
@@ -198,6 +237,7 @@ namespace OrdersProgress
             Program.dbOperations.DeleteAllUL_FeaturesAsync();
             Program.dbOperations.DeleteAllUser_Level_UL_FeaturesAsync();
             dgvData.DataSource = GetData();
+            ColorDgv();
         }
 
         private void BtnReturn_Click(object sender, EventArgs e)
@@ -280,6 +320,7 @@ namespace OrdersProgress
 
             Program.dbOperations.DeleteUL_FeatureAsync(uL_Feature);
             dgvData.DataSource = GetData();
+            ColorDgv();
 
             pictureBox1.Visible = true;
             Application.DoEvents();
@@ -297,9 +338,16 @@ namespace OrdersProgress
             btnReturn.Focus();
         }
 
+        private void RadEnabled_CheckedChanged(object sender, EventArgs e)
+        {
+            dgvData.DataSource = GetData();
+            ColorDgv();
+        }
+
         private void BtnShowAll_Click(object sender, EventArgs e)
         {
             dgvData.DataSource = GetData();
+            ColorDgv();
         }
 
     }
