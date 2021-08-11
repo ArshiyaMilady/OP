@@ -19,6 +19,8 @@ namespace OrdersProgress
         public J2200_Users_Levels()
         {
             InitializeComponent();
+
+            Height = 500;
         }
 
         private void J2200_Users_Levels_Shown(object sender, EventArgs e)

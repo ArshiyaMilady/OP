@@ -69,24 +69,24 @@ namespace OrdersProgress
             if (!lstOrders.Any())
             {
                 // شناسه مرحله سفارش که مربوط به حذف است
-                long removed_order_level_index = 0;
-                if (Stack.UserLevel_Type == 1)
+                //long removed_order_level_index = 0;
+                if ((Stack.UserLevel_Type == 1) || (Stack.UserLevel_Type == 2))
                 {
                     lstOrders = Program.dbOperations.GetAllOrders(Stack.Company_Index);
                 }
                 else
                 {
-                    if (Program.dbOperations.GetAllOrder_LevelsAsync
-                        (Stack.Company_Index).Any(d => d.RemovingLevel))
-                    {
-                        removed_order_level_index = Program.dbOperations.GetAllOrder_LevelsAsync
-                            (Stack.Company_Index).First(d => d.RemovingLevel).Index;
-                    }
+                    //if (Program.dbOperations.GetAllOrder_LevelsAsync
+                    //    (Stack.Company_Index).Any(d => d.RemovingLevel))
+                    //{
+                    //    removed_order_level_index = Program.dbOperations.GetAllOrder_LevelsAsync
+                    //        (Stack.Company_Index).First(d => d.RemovingLevel).Index;
+                    //}
 
                     // شناسه کاربران ادمین و کاربران ارشد
                     List<long> lstStandardUserIndex = Stack_Methods.GetStandardUsersIndex(1);
 
-                    if (Stack.UserLevel_Type == 0)
+                    //if (Stack.UserLevel_Type == 0)
                     {
                         // مراحلی از سفارش که کاربر وارد شونده می تواند آنها را «مشاهده» کند
 
@@ -100,43 +100,52 @@ namespace OrdersProgress
                                 .Where(b => !lstStandardUserIndex.Contains(b.User_Index))
                                 .Where(d => lstOL_Indexes_CanSee.Contains(d.CurrentLevel_Index)).ToList();
                         }
-                        else   // فقط سفارشهایی که توسط کاربر وارد شونده ثبت شده اند، امکان مشاهده دارند
+                        // فقط سفارشهایی که توسط کاربر وارد شونده ثبت شده اند، امکان مشاهده دارند
+                        else if (Stack.lstUser_ULF_UniquePhrase.Contains("jm2270"))
                             lstOrders = Program.dbOperations.GetAllOrders(Stack.Company_Index, Stack.UserIndex);
                     }
-                    else
-                    {
-                        // سفارشهای حذف شده ، نمایش داده نشود
-                        lstOrders = Program.dbOperations.GetAllOrders(Stack.Company_Index)
-                            .Where(d => !lstStandardUserIndex.Contains(d.User_Index)).ToList();
-                    }
+                    //else
+                    //{
+                    //    lstOrders = Program.dbOperations.GetAllOrders(Stack.Company_Index)
+                    //        .Where(d => !lstStandardUserIndex.Contains(d.User_Index)).ToList();
+                    //}
 
-                    lstOrders = lstOrders.Where(b => b.CurrentLevel_Index != removed_order_level_index).ToList();
+                    // سفارشهای حذف شده ، نمایش داده نشود
+                    //lstOrders = lstOrders.Where(b => b.CurrentLevel_Index != removed_order_level_index).ToList();
                 }
-                
+
                 #region با سطح کاربری این کاربر چه مراحلی از سفارش را می توان تأیید نمود
                 List<long> lstOL_Indexes_CanConfirm = Program.dbOperations.GetAllOL_ULsAsync
                     (Stack.Company_Index, 0, Stack.UserLevel_Index).Select(d => d.OL_Index).ToList();
                 // علامت گذاری سفارشهایی که قابل تأیید توسط کاربر جاری می باشند
-                foreach (Models.Order order in lstOrders)
+                long last_order_level_index = 0;
+                if (Program.dbOperations.GetAllOrder_LevelsAsync(Stack.Company_Index).Any(d => d.LastLevel))
                 {
-                    if (Stack.UserLevel_Type != 0) order.C_B1 = true;
-                    else
+                    last_order_level_index = Program.dbOperations.GetAllOrder_LevelsAsync
+                        (Stack.Company_Index).First(d => d.LastLevel).Index;
+                }
+
+                if (Stack.UserLevel_Type != 0)
+                {
+                    if(Stack.UserLevel_Type == 1)
+                        foreach (Models.Order order in lstOrders)
+                            order.C_B1 = true;
+                    else   // به جز سفارشهای تکمیل شده
+                        foreach (Models.Order order in lstOrders.Where(d => d.CurrentLevel_Index != last_order_level_index).ToList())
+                            order.C_B1 = true;
+                }
+                else
+                {
+                    foreach (Models.Order order in lstOrders.Where(d=>d.CurrentLevel_Index != last_order_level_index).ToList())
                     {
                         // برای سفارشهایی که امکان تغییر دارند، فقط سفارش دهنده اجازه تغییر را دارد
                         if (Program.dbOperations.GetOrder_LevelAsync(order.CurrentLevel_Index).OrderCanChange)
                         {
-                            //MessageBox.Show("Stack.UserIndex = " + Stack.UserIndex
-                            //+ "\n" + "order.User_Index = " + order.User_Index
-                            //+ "\n" + "order.NextLevel = " + Program.dbOperations.GetOrder_LevelAsync(order.NextLevel_Index).Description
-                            //, order.Title);
                             if (Stack.UserIndex == order.User_Index)
-                            //{
-                            //    continue;
-                            //}
                                 order.C_B1 = lstOL_Indexes_CanConfirm.Contains(order.NextLevel_Index);
                         }
-                        else 
-                        order.C_B1 = lstOL_Indexes_CanConfirm.Contains(order.NextLevel_Index);
+                        else
+                            order.C_B1 = lstOL_Indexes_CanConfirm.Contains(order.NextLevel_Index);
                     }
                 }
                 #endregion

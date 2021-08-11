@@ -116,7 +116,11 @@ namespace OrdersProgress
             order.Level_Description = order_level.Description2;
             Program.dbOperations.UpdateOrderAsync(order);
 
+            #region ثبت در تاریخچه
+            order.CurrentLevel_Index = Program.dbOperations.GetAllOrder_LevelsAsync
+                (Stack.Company_Index).First(d => d.CancelingLevel).Index;
             Create_OrderHistory(order, cancel_description);
+            #endregion
             return true;
         }
 
@@ -143,7 +147,11 @@ namespace OrdersProgress
             order.Level_Description = Program.dbOperations.GetOrder_LevelAsync(order.CurrentLevel_Index).Description2;
             Program.dbOperations.UpdateOrderAsync(order);
 
+            #region ثبت در تاریخچه
+            order.CurrentLevel_Index = Program.dbOperations.GetAllOrder_LevelsAsync
+                (Stack.Company_Index).First(d => d.ReturningLevel).Index;
             Create_OrderHistory(order, return_description);
+            #endregion
 
             return true;
         }

@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnChooseAll = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.btnDeleteAll = new System.Windows.Forms.Button();
             this.btnReturn = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.dgvData = new System.Windows.Forms.DataGridView();
-            this.btnChooseAll = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             this.SuspendLayout();
@@ -53,8 +53,18 @@
             this.panel1.Controls.Add(this.dgvData);
             this.panel1.Location = new System.Drawing.Point(-1, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(556, 333);
+            this.panel1.Size = new System.Drawing.Size(733, 333);
             this.panel1.TabIndex = 0;
+            // 
+            // btnChooseAll
+            // 
+            this.btnChooseAll.Location = new System.Drawing.Point(13, 3);
+            this.btnChooseAll.Name = "btnChooseAll";
+            this.btnChooseAll.Size = new System.Drawing.Size(127, 26);
+            this.btnChooseAll.TabIndex = 96;
+            this.btnChooseAll.Text = "انتخاب همه";
+            this.btnChooseAll.UseVisualStyleBackColor = true;
+            this.btnChooseAll.Click += new System.EventHandler(this.BtnChooseAll_Click);
             // 
             // label2
             // 
@@ -63,7 +73,7 @@
             this.label2.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(177, 7);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(365, 22);
+            this.label2.Size = new System.Drawing.Size(542, 22);
             this.label2.TabIndex = 95;
             this.label2.Text = "لطفا از جدول زیر امکانات سطح کاربری انتخاب شده را مشخص نمایید";
             // 
@@ -95,7 +105,7 @@
             // btnSave
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSave.Location = new System.Drawing.Point(444, 300);
+            this.btnSave.Location = new System.Drawing.Point(621, 300);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(98, 30);
             this.btnSave.TabIndex = 94;
@@ -111,18 +121,8 @@
             this.dgvData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvData.Location = new System.Drawing.Point(12, 32);
             this.dgvData.Name = "dgvData";
-            this.dgvData.Size = new System.Drawing.Size(530, 262);
+            this.dgvData.Size = new System.Drawing.Size(707, 262);
             this.dgvData.TabIndex = 93;
-            // 
-            // btnChooseAll
-            // 
-            this.btnChooseAll.Location = new System.Drawing.Point(13, 3);
-            this.btnChooseAll.Name = "btnChooseAll";
-            this.btnChooseAll.Size = new System.Drawing.Size(127, 26);
-            this.btnChooseAll.TabIndex = 96;
-            this.btnChooseAll.Text = "انتخاب همه";
-            this.btnChooseAll.UseVisualStyleBackColor = true;
-            this.btnChooseAll.Click += new System.EventHandler(this.BtnChooseAll_Click);
             // 
             // J2220_User_Level_UL_Feature
             // 
@@ -131,7 +131,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.CancelButton = this.btnReturn;
-            this.ClientSize = new System.Drawing.Size(554, 333);
+            this.ClientSize = new System.Drawing.Size(731, 333);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "J2220_User_Level_UL_Feature";
