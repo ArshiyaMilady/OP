@@ -282,13 +282,14 @@ namespace OrdersProgress
             panel1.Enabled = false;
 
             // حذف رابطه این سطح کاربری با تمام کاربران دارای این سطح
-            foreach (Models.User_UL user_ul in Program.dbOperations.GetAllUser_ULsAsync(Stack.Company_Index)
-                .Where(d => d.UL_Index == ul_index).ToList())
+            foreach (Models.User_UL user_ul in Program.dbOperations.GetAllUser_ULsAsync(Stack.Company_Index,0,ul_index).ToList())
                     Program.dbOperations.DeleteUser_ULAsync(user_ul);
-            Program.dbOperations.DeleteUser_LevelAsync(user_level);
             // حذف تمام رابطه های این سطح با امکانات آن
-            foreach (Models.User_Level_UL_Feature ul_ulf in Program.dbOperations.GetAllUser_Level_UL_FeaturesAsync(Stack.Company_Index, ul_index))
-                Program.dbOperations.DeleteUser_Level_UL_Feature(ul_ulf);
+            foreach (Models.User_Level_UL_Feature ul_ulf in Program.dbOperations
+                .GetAllUser_Level_UL_FeaturesAsync(Stack.Company_Index, ul_index,0))
+                    Program.dbOperations.DeleteUser_Level_UL_Feature(ul_ulf);
+            // حذف سطح کاربری
+            Program.dbOperations.DeleteUser_LevelAsync(user_level);
 
             dgvData.DataSource = GetData();
 
@@ -335,6 +336,12 @@ namespace OrdersProgress
         {
             long user_level_index = Convert.ToInt64(dgvData.CurrentRow.Cells["Index"].Value);
             new J2230_UL_See_OL(user_level_index).ShowDialog();
+        }
+
+        private void TsmiSetOL_UL_Click(object sender, EventArgs e)
+        {
+            long user_level_index = Convert.ToInt64(dgvData.CurrentRow.Cells["Index"].Value);
+            new J2240_UL_Confirm_OLs(user_level_index).ShowDialog();
         }
 
         private void BtnShowAll_Click(object sender, EventArgs e)

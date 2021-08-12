@@ -96,26 +96,10 @@ namespace OrdersProgress
 
             List<Models.Order_Level> lstOL = (List<Models.Order_Level>)dgvData.DataSource;
 
-            #region اضافه کردن سطح کاربری جدید و حذف سطوح انتخاب نشده
+
+            #region حذف شود : قبلا بوده است، اما در جدول انتخاب نشده است 
             if (Program.dbOperations.GetAllUL_See_OLsAsync(Stack.Company_Index, ul_index).Any())
             {
-                #region اضافه شود : در جدول انتخاب شده ، اما قبلا نبوده است
-                foreach (Models.Order_Level ol in lstOL.Where(d => d.C_B1).ToList())
-                {
-                    if (!Program.dbOperations.GetAllUL_See_OLsAsync(Stack.Company_Index, ul_index)
-                        .Any(d => d.OL_Index == ol.Index))
-                    {
-                        Program.dbOperations.AddUL_See_OL(new Models.UL_See_OL
-                        {
-                            Company_Index = Stack.Company_Index,
-                            UL_Index = ul_index,
-                            OL_Index = ol.Index,
-                        });
-                    }
-                }
-                #endregion
-
-                #region حذف شود : قبلا بوده است، اما در جدول انتخاب نشده است 
                 foreach (Models.UL_See_OL ul_see_ol
                     in Program.dbOperations.GetAllUL_See_OLsAsync(Stack.Company_Index, ul_index))
                 {
@@ -124,25 +108,22 @@ namespace OrdersProgress
                         Program.dbOperations.DeleteUL_See_OLAsync(ul_see_ol);
                     }
                 }
-                #endregion
             }
-            else
+            #endregion
+
+            #region موارد جدید اضافه شود 
+            foreach (Models.Order_Level ol in lstOL.Where(d => d.C_B1).ToList())
             {
-                #region اضافه شود 
-                foreach (Models.Order_Level ol in lstOL.Where(d => d.C_B1).ToList())
+                if (!Program.dbOperations.GetAllUL_See_OLsAsync(Stack.Company_Index, ul_index)
+                    .Any(d => d.OL_Index == ol.Index))
                 {
-                    if (!Program.dbOperations.GetAllUL_See_OLsAsync(Stack.Company_Index, ul_index)
-                        .Any(d => d.OL_Index == ol.Index))
+                    Program.dbOperations.AddUL_See_OL(new Models.UL_See_OL
                     {
-                        Program.dbOperations.AddUL_See_OL(new Models.UL_See_OL
-                        {
-                            Company_Index = Stack.Company_Index,
-                            UL_Index = ul_index,
-                            OL_Index = ol.Index,
-                        });
-                    }
+                        Company_Index = Stack.Company_Index,
+                        UL_Index = ul_index,
+                        OL_Index = ol.Index,
+                    });
                 }
-                #endregion
             }
             #endregion
 

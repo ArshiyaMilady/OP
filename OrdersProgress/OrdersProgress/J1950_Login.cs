@@ -81,7 +81,11 @@ namespace OrdersProgress
                 }
                 else
                 {
-                    Stack_Methods.GetAllUserData(user.Name);
+                    if(!Stack_Methods.GetAllUserData(user.Name))
+                    {
+                        MessageBox.Show("جهت بررسی مشکل با شرکت تماس بگیرید", "خطا در اطلاعات کاربری");
+                        return;
+                    }
 
                     #region کاربر پیش فرض
                     if (!user.IsDefault)
@@ -118,6 +122,7 @@ namespace OrdersProgress
                     {
                         Company_Index = user.Company_Index,
                         User_Index = user.Index,
+                        User_RealName = user.Real_Name,
                         DateTime_mi = DateTime.Now,
                         Date_sh = Stack_Methods.Miladi_to_Shamsi_YYYYMMDD(DateTime.Now),
                         Time = Stack_Methods.NowTime_HHMMSSFFF().Substring(0,8),

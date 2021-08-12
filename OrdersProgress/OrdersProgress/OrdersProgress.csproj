@@ -157,6 +157,12 @@
     <Compile Include="J2220_User_Level_UL_Feature.Designer.cs">
       <DependentUpon>J2220_User_Level_UL_Feature.cs</DependentUpon>
     </Compile>
+    <Compile Include="J2240_UL_Confirm_OLs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="J2240_UL_Confirm_OLs.Designer.cs">
+      <DependentUpon>J2240_UL_Confirm_OLs.cs</DependentUpon>
+    </Compile>
     <Compile Include="K1200_Properties.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -376,6 +382,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="J2220_User_Level_UL_Feature.resx">
       <DependentUpon>J2220_User_Level_UL_Feature.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="J2240_UL_Confirm_OLs.resx">
+      <DependentUpon>J2240_UL_Confirm_OLs.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="K1200_Properties.resx">
       <DependentUpon>K1200_Properties.cs</DependentUpon>

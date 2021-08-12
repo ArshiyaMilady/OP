@@ -55,10 +55,11 @@
             this.tsmiUL_Features_Edit = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiDeleteAllFeatures = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiUL_See_ULs = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiUL_See_OL = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.tsmiUL_See_OL = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiSetOL_UL = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -336,10 +337,11 @@
             this.tsmiUL_Features,
             this.tsmiUL_See_ULs,
             this.tsmiUL_See_OL,
+            this.tsmiSetOL_UL,
             this.tsmiDelete});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.contextMenuStrip1.Size = new System.Drawing.Size(203, 114);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(212, 136);
             // 
             // tsmiUL_Features
             // 
@@ -347,7 +349,7 @@
             this.tsmiUL_Features_Edit,
             this.tsmiDeleteAllFeatures});
             this.tsmiUL_Features.Name = "tsmiUL_Features";
-            this.tsmiUL_Features.Size = new System.Drawing.Size(202, 22);
+            this.tsmiUL_Features.Size = new System.Drawing.Size(211, 22);
             this.tsmiUL_Features.Text = "امکانات";
             // 
             // tsmiUL_Features_Edit
@@ -367,14 +369,21 @@
             // tsmiUL_See_ULs
             // 
             this.tsmiUL_See_ULs.Name = "tsmiUL_See_ULs";
-            this.tsmiUL_See_ULs.Size = new System.Drawing.Size(202, 22);
+            this.tsmiUL_See_ULs.Size = new System.Drawing.Size(211, 22);
             this.tsmiUL_See_ULs.Text = "مشاهده سطوح کاربری دیگر";
             this.tsmiUL_See_ULs.Click += new System.EventHandler(this.tsmiUL_See_ULs_Click);
+            // 
+            // tsmiUL_See_OL
+            // 
+            this.tsmiUL_See_OL.Name = "tsmiUL_See_OL";
+            this.tsmiUL_See_OL.Size = new System.Drawing.Size(211, 22);
+            this.tsmiUL_See_OL.Text = "مشاهده مراحل سفارش";
+            this.tsmiUL_See_OL.Click += new System.EventHandler(this.TsmiUL_See_OL_Click);
             // 
             // tsmiDelete
             // 
             this.tsmiDelete.Name = "tsmiDelete";
-            this.tsmiDelete.Size = new System.Drawing.Size(202, 22);
+            this.tsmiDelete.Size = new System.Drawing.Size(211, 22);
             this.tsmiDelete.Text = "حذف";
             this.tsmiDelete.Click += new System.EventHandler(this.TsmiDelete_Click);
             // 
@@ -396,12 +405,12 @@
             this.timer1.Interval = 400;
             this.timer1.Tick += new System.EventHandler(this.Timer1_Tick);
             // 
-            // tsmiUL_See_OL
+            // tsmiSetOL_UL
             // 
-            this.tsmiUL_See_OL.Name = "tsmiUL_See_OL";
-            this.tsmiUL_See_OL.Size = new System.Drawing.Size(202, 22);
-            this.tsmiUL_See_OL.Text = "مشاهده مراحل سفارش";
-            this.tsmiUL_See_OL.Click += new System.EventHandler(this.TsmiUL_See_OL_Click);
+            this.tsmiSetOL_UL.Name = "tsmiSetOL_UL";
+            this.tsmiSetOL_UL.Size = new System.Drawing.Size(211, 22);
+            this.tsmiSetOL_UL.Text = "تعیین مراحل سفارش قابل تأیید";
+            this.tsmiSetOL_UL.Click += new System.EventHandler(this.TsmiSetOL_UL_Click);
             // 
             // J2200_Users_Levels
             // 
@@ -457,5 +466,6 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiUL_Features_Edit;
         private System.Windows.Forms.ToolStripMenuItem tsmiUL_See_ULs;
         private System.Windows.Forms.ToolStripMenuItem tsmiUL_See_OL;
+        private System.Windows.Forms.ToolStripMenuItem tsmiSetOL_UL;
     }
 }

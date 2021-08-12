@@ -98,7 +98,7 @@ namespace OrdersProgress
         }
 
         // شناسه، سطح دسترسی و ... را برای یک کاربر با معلوم بودن نام بر میگرداند
-        public static void GetAllUserData(string user_name)
+        public static bool GetAllUserData(string user_name)
         {
             Stack.UserName = user_name;
             Models.User user = Program.dbOperations.GetUserAsync(user_name);
@@ -109,6 +109,8 @@ namespace OrdersProgress
                 Stack.UserLevel_Index = Program.dbOperations.GetAllUser_ULsAsync(Stack.Company_Index, Stack.UserIndex).First().UL_Index;
                 Stack.UserLevel_Type = Program.dbOperations.GetUser_LevelAsync(Stack.UserLevel_Index).Type;
             }
+
+            return ((Stack.UserIndex > 0) && (Stack.UserLevel_Index > 0) && (Stack.UserLevel_Type >= 0));
         }
 
         // شناسه تمام کاربران استاندارد مانند ادمین اصلی و ادمین و کاربر ارشد را بر میگرداند

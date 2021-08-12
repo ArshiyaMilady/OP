@@ -146,7 +146,7 @@ namespace OrdersProgress
             menuStrip.Visible = true;
             statusStrip.Visible = true;
             menuStrip.Enabled = true;
-            btnClose.Visible = true;
+            btnClose.Enabled = true;
 
             //if (Stack.UserLevel_Type==1) new zForm1().ShowDialog();
 

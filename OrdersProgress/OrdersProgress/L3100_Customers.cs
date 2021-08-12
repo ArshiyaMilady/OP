@@ -12,20 +12,23 @@ namespace OrdersProgress
 {
     public partial class L3100_Customers : X210_ExampleForm_Normal
     {
+        bool ChooseCustomer;
         //Models.Customer customer;
 
         // ChooseCustomer = true : از این فرم، خریداری انتخاب می شود
-        public L3100_Customers(bool ChooseCustomer = false)
+        public L3100_Customers(bool _ChooseCustomer = false)
         {
             InitializeComponent();
+
+            ChooseCustomer = _ChooseCustomer;
 
             if (ChooseCustomer)
             {
                 Text = "   انتخاب خریدار";
-                panel3.Visible = true;
+                //panel3.Visible = true;
                 tsmiConfirmSelection.Visible = true;
                 chkCanEdit.Checked = true;
-                btnAddNew.Enabled = true;
+                //btnAddNew.Enabled = true;
                 dgvData.ReadOnly = false;
             }
 
@@ -63,6 +66,14 @@ namespace OrdersProgress
                 {
                     switch (col.Name)
                     {
+                        case "colChoose":
+                            if (ChooseCustomer)
+                            {
+                                col.HeaderText = "-";
+                                col.Width = 75;
+                            }
+                            else col.Visible = false;
+                            break;
                         case "Index":
                             //if (Stack.UserLevel <= Stack.UserLevel_Admin)
                             if (Stack.UserLevel_Type == 1)
@@ -75,7 +86,7 @@ namespace OrdersProgress
                             break;
                         case "Name":
                             col.HeaderText = "نام";
-                            col.Width = 100;
+                            col.Width = 200;
                             break;
                         case "Mobile":
                             col.HeaderText = "شماره همراه";
@@ -355,7 +366,7 @@ namespace OrdersProgress
             else dgvData[e.ColumnIndex, e.RowIndex].Value = InitailValue;
         }
 
-        private void BtnConfirmSelection_Click(object sender, EventArgs e)
+        private void TsmiConfirmSelection_Click(object sender, EventArgs e)
         {
             try
             {
@@ -368,9 +379,11 @@ namespace OrdersProgress
             catch { MessageBox.Show("لطفا یک مورد را انتخاب نمایید"); }
         }
 
-        private void TsmiConfirmSelection_Click(object sender, EventArgs e)
+        private void DgvData_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            BtnConfirmSelection_Click(null, null);
+            if (e.ColumnIndex < 0 || e.RowIndex < 0) return;
+            if (dgvData.Columns[e.ColumnIndex].Name.Equals("colChoose"))
+                TsmiConfirmSelection_Click(null, null);
         }
 
         int iX = 0, iY = 0;

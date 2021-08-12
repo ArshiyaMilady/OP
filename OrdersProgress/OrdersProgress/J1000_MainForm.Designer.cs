@@ -44,6 +44,7 @@
             this.tsmiNewOrder = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiShowOrders = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiCustomers = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiOrdersPriority = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmiOrders_Show = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiOrders_Priorities = new System.Windows.Forms.ToolStripMenuItem();
@@ -64,7 +65,6 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnClose = new System.Windows.Forms.Button();
-            this.tsmiOrdersPriority = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -102,7 +102,7 @@
             this.tsmiUserLevelsFeatures,
             this.tsmiLoginsHistory});
             this.tsmiUsers.Name = "tsmiUsers";
-            this.tsmiUsers.Size = new System.Drawing.Size(122, 24);
+            this.tsmiUsers.Size = new System.Drawing.Size(180, 24);
             this.tsmiUsers.Text = "کاربران";
             // 
             // tsmiUsers_Show_Change
@@ -145,7 +145,7 @@
             this.tsmiOrdersLevels,
             this.tsmiOrders_and_Details});
             this.tsmiOrdersFeatures.Name = "tsmiOrdersFeatures";
-            this.tsmiOrdersFeatures.Size = new System.Drawing.Size(122, 24);
+            this.tsmiOrdersFeatures.Size = new System.Drawing.Size(180, 24);
             this.tsmiOrdersFeatures.Text = "سفارشها";
             // 
             // tsmiOrdersLevels
@@ -197,6 +197,14 @@
             this.tsmiCustomers.Size = new System.Drawing.Size(227, 24);
             this.tsmiCustomers.Text = "خریداران";
             this.tsmiCustomers.Click += new System.EventHandler(this.TsmiCustomers_Click);
+            // 
+            // tsmiOrdersPriority
+            // 
+            this.tsmiOrdersPriority.Name = "tsmiOrdersPriority";
+            this.tsmiOrdersPriority.Size = new System.Drawing.Size(227, 24);
+            this.tsmiOrdersPriority.Text = "تعیین اولویت ارسال سفارشها";
+            this.tsmiOrdersPriority.Visible = false;
+            this.tsmiOrdersPriority.Click += new System.EventHandler(this.TsmiOrdersPriority_Click);
             // 
             // toolStripSeparator1
             // 
@@ -256,7 +264,7 @@
             // tsmiStock_Inventory
             // 
             this.tsmiStock_Inventory.Name = "tsmiStock_Inventory";
-            this.tsmiStock_Inventory.Size = new System.Drawing.Size(180, 24);
+            this.tsmiStock_Inventory.Size = new System.Drawing.Size(121, 24);
             this.tsmiStock_Inventory.Text = "موجودی";
             this.tsmiStock_Inventory.Click += new System.EventHandler(this.TsmiStock_Inventory_Click);
             // 
@@ -356,13 +364,6 @@
             this.btnClose.Text = "خروج";
             this.btnClose.UseVisualStyleBackColor = false;
             this.btnClose.Click += new System.EventHandler(this.BtnClose_Click);
-            // 
-            // tsmiOrdersPriority
-            // 
-            this.tsmiOrdersPriority.Name = "tsmiOrdersPriority";
-            this.tsmiOrdersPriority.Size = new System.Drawing.Size(227, 24);
-            this.tsmiOrdersPriority.Text = "تعیین اولویت ارسال سفارشها";
-            this.tsmiOrdersPriority.Click += new System.EventHandler(this.TsmiOrdersPriority_Click);
             // 
             // J1000_MainForm
             // 

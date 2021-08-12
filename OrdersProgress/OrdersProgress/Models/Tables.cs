@@ -91,6 +91,7 @@ namespace OrdersProgress.Models
         public long Company_Index { get; set; }
 
         public long User_Index { get; set; } 
+        public string User_RealName { get; set; } 
         public DateTime DateTime_mi { get; set; } 
         public string Date_sh { get; set; } // تاریخ ورود
         public string Time { get; set; }    // ساعت ورود
@@ -257,6 +258,19 @@ namespace OrdersProgress.Models
         public string MessageText { get; set; }
         public string Description2 { get; set; }    // توضیحی که در جدول سفارشها نمایش داده می شود
     }
+
+    // در صورت بازگشت سفارش در هر مرحله، سفارش به کدام مرحله می تواند برود؟
+    public class Order_Level_on_Returning
+    {
+        [PrimaryKey, AutoIncrement]
+        public long Id { get; set; }
+        public long Company_Index { get; set; }
+        public long Index { get; set; }
+
+        public long OrderLevel_Index { get; set; }
+        public string OL_Retruned_Index { get; set; }
+    }
+
 
     // سفارش چه مراحلی گذرانده است
     // تفاوت با تاریخچه: در صورت یک یا چند برگشت سفارش ، مراحل را می توان از این جدول حذف نمود

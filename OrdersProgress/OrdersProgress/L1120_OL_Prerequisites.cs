@@ -88,38 +88,21 @@ namespace OrdersProgress
 
             List<Models.Order_Level> lstOL = (List<Models.Order_Level>)dgvData.DataSource;
 
-            #region اضافه کردن مراحل جدید و حذف مراحل انتخاب نشده
+            #region حذف شود : قبلا بوده است، اما در جدول انتخاب نشده است 
             if (Program.dbOperations.GetAllOL_PrerequisitesAsync(Stack.Company_Index, order_level_index).Any())
             {
-                #region اضافه شود : در جدول انتخاب شده ، اما قبلا نبوده است
-                foreach (Models.Order_Level ol in lstOL.Where(d => d.C_B1).ToList())
-                {
-                    if (!Program.dbOperations.GetAllOL_PrerequisitesAsync(Stack.Company_Index, order_level_index)
-                        .Any(d => d.Prerequisite_Index == ol.Index))
-                    {
-                        Program.dbOperations.AddOL_PrerequisiteAsync(new Models.OL_Prerequisite
-                        {
-                            Company_Index = Stack.Company_Index,
-                            OL_Index = order_level_index,
-                            Prerequisite_Index = ol.Index,
-                        });
-                    }
-                }
-                #endregion
 
-                #region حذف شود : قبلا بوده است، اما در جدول انتخاب نشده است 
                 foreach (Models.OL_Prerequisite olp
                     in Program.dbOperations.GetAllOL_PrerequisitesAsync(Stack.Company_Index, order_level_index))
                 {
                     if (!lstOL.Where(d => d.C_B1).Any(d => d.Index == olp.OL_Index))
                         Program.dbOperations.DeleteOL_PrerequisiteAsync(olp);
                 }
-                #endregion
             }
-            else
-            {
-                #region اضافه شود 
-                foreach (Models.Order_Level ol in lstOL.Where(d => d.C_B1).ToList())
+            #endregion
+
+            #region اضافه شود 
+            foreach (Models.Order_Level ol in lstOL.Where(d => d.C_B1).ToList())
                 {
                     if (!Program.dbOperations.GetAllOL_PrerequisitesAsync(Stack.Company_Index, order_level_index)
                         .Any(d => d.Prerequisite_Index == ol.Index))
@@ -133,8 +116,6 @@ namespace OrdersProgress
                     }
                 }
                 #endregion
-            }
-            #endregion
 
             MessageBox.Show("تغییرات با موفقیت ثبت گردید.");
             Close();

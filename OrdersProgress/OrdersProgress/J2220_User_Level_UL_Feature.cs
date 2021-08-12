@@ -102,41 +102,22 @@ namespace OrdersProgress
 
             List<Models.UL_Feature> lstUL_Feature = (List<Models.UL_Feature>) dgvData.DataSource;
 
-            #region اضافه کردن امکانات جدید و حذف امکانات انتخاب نشده
+            #region حذف شود : قبلا بوده است، اما در جدول انتخاب نشده است 
             if (Program.dbOperations.GetAllUser_Level_UL_FeaturesAsync(Stack.Company_Index,user_level_index).Any())
             {
-                #region اضافه شود : در جدول انتخاب شده ، اما قبلا نبوده است
-                foreach (Models.UL_Feature ulf in lstUL_Feature.Where(d => d.C_B1).ToList())
-                {
-                    if (!Program.dbOperations.GetAllUser_Level_UL_FeaturesAsync(Stack.Company_Index,user_level_index)
-                        .Any(d=>d.UL_Feature_Index == ulf.Index))
-                    {
-                        Program.dbOperations.AddUser_Level_UL_FeatureAsync(new Models.User_Level_UL_Feature
-                        {
-                            Company_Index = Stack.Company_Index,
-                            UL_Feature_Unique_Phrase = ulf.Unique_Phrase,
-                            User_Level_Index = user_level_index,
-                            UL_Feature_Index = ulf.Index,
-                        });
-                    }
-                }
-                #endregion
-
-                #region حذف شود : قبلا بوده است، اما در جدول انتخاب نشده است 
                 foreach (Models.User_Level_UL_Feature ul_ulf 
-                    in Program.dbOperations.GetAllUser_Level_UL_FeaturesAsync(Stack.Company_Index,user_level_index))
+                    in Program.dbOperations.GetAllUser_Level_UL_FeaturesAsync(Stack.Company_Index,user_level_index,0))
                 {
                     if (!lstUL_Feature.Where(d => d.C_B1).Any(d=>d.Index == ul_ulf.UL_Feature_Index))
                     {
                         Program.dbOperations.DeleteUser_Level_UL_Feature(ul_ulf);
                     }
                 }
-                #endregion
             }
-            else
-            {
-                #region اضافه شود 
-                foreach (Models.UL_Feature ulf in lstUL_Feature.Where(d => d.C_B1).ToList())
+            #endregion
+
+            #region اضافه شود 
+            foreach (Models.UL_Feature ulf in lstUL_Feature.Where(d => d.C_B1).ToList())
                 {
                     if (!Program.dbOperations.GetAllUser_Level_UL_FeaturesAsync(Stack.Company_Index,user_level_index)
                         .Any(d => d.UL_Feature_Index == ulf.Index))
@@ -147,12 +128,11 @@ namespace OrdersProgress
                             UL_Feature_Unique_Phrase = ulf.Unique_Phrase,
                             User_Level_Index = user_level_index,
                             UL_Feature_Index = ulf.Index,
+                            UL_Feature_Enabled=true,
                         });
                     }
                 }
                 #endregion
-            }
-            #endregion
 
             MessageBox.Show("تغییرات با موفقیت ثبت گردید.");
             Close();

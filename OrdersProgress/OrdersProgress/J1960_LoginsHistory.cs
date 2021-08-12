@@ -44,9 +44,13 @@ namespace OrdersProgress
             {
                 switch (col.Name)
                 {
-                    case "User_Index":
-                        col.HeaderText = "شناسه کاربر";
-                        col.Width = 150;
+                    //case "User_Index":
+                    //    col.HeaderText = "شناسه کاربر";
+                    //    col.Width = 150;
+                    //    break;
+                    case "User_RealName":
+                        col.HeaderText = "نام کاربر";
+                        col.Width = 200;
                         break;
                     case "Date_sh":
                         col.HeaderText = "تاریخ";

@@ -49,6 +49,7 @@ namespace OrdersProgress
             }
             #endregion
 
+            cmbST_OrderId.SelectedIndex = 0;
             cmbST_CustomerName.SelectedIndex = 0;
             cmbST_OrderTitle.SelectedIndex = 0;
 
@@ -76,13 +77,6 @@ namespace OrdersProgress
                 }
                 else
                 {
-                    //if (Program.dbOperations.GetAllOrder_LevelsAsync
-                    //    (Stack.Company_Index).Any(d => d.RemovingLevel))
-                    //{
-                    //    removed_order_level_index = Program.dbOperations.GetAllOrder_LevelsAsync
-                    //        (Stack.Company_Index).First(d => d.RemovingLevel).Index;
-                    //}
-
                     // شناسه کاربران ادمین و کاربران ارشد
                     List<long> lstStandardUserIndex = Stack_Methods.GetStandardUsersIndex(1);
 
@@ -104,14 +98,6 @@ namespace OrdersProgress
                         else if (Stack.lstUser_ULF_UniquePhrase.Contains("jm2270"))
                             lstOrders = Program.dbOperations.GetAllOrders(Stack.Company_Index, Stack.UserIndex);
                     }
-                    //else
-                    //{
-                    //    lstOrders = Program.dbOperations.GetAllOrders(Stack.Company_Index)
-                    //        .Where(d => !lstStandardUserIndex.Contains(d.User_Index)).ToList();
-                    //}
-
-                    // سفارشهای حذف شده ، نمایش داده نشود
-                    //lstOrders = lstOrders.Where(b => b.CurrentLevel_Index != removed_order_level_index).ToList();
                 }
 
                 #region با سطح کاربری این کاربر چه مراحلی از سفارش را می توان تأیید نمود
@@ -152,6 +138,10 @@ namespace OrdersProgress
             }
             #endregion
 
+            // اگر سفارشات مشتری خاصی مورد نظر باشد
+            if (!string.IsNullOrEmpty(CustumerIndex))
+                lstOrders = lstOrders.Where(d => d.Customer_Index.Equals(CustumerIndex)).ToList();
+
             if (radOrders_Need_Confirmation.Checked)
                 return lstOrders.Where(d => d.C_B1).OrderByDescending(d => d.DateTime_mi).ToList();
             else 
@@ -168,9 +158,10 @@ namespace OrdersProgress
                 {
                     switch (col.Name)
                     {
-                        //case "Index":
-                        //    col.HeaderText = "index";
-                        //    break;
+                        case "Id":
+                            col.HeaderText = "شماره سفارش";
+                            col.Width = 125;
+                            break;
                         case "Title":
                             col.HeaderText = "عنوان سفارش";
                             col.Width = 150;
@@ -413,7 +404,8 @@ namespace OrdersProgress
         private void BtnSearch_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtST_OrderTitle.Text)
-                && string.IsNullOrWhiteSpace(txtST_CustomerName.Text))
+                && string.IsNullOrWhiteSpace(txtST_CustomerName.Text)
+                && string.IsNullOrWhiteSpace(txtST_OrderId.Text))
             {
                 dgvData.DataSource = GetData();
                 return;
@@ -459,6 +451,17 @@ namespace OrdersProgress
         {
             switch (TextBoxName)
             {
+                case "txtST_OrderId":
+                    switch (cmbST_OrderId.SelectedIndex)
+                    {
+                        case 0:
+                            return lstOrders.Where(d => d.Id.ToString().Contains(txtST_OrderId.Text)).ToList();
+                        case 1:
+                            return lstOrders.Where(d => d.Id.ToString().StartsWith(txtST_OrderId.Text)).ToList();
+                        case 2:
+                            return lstOrders.Where(d => d.Id == Convert.ToInt64(txtST_OrderId.Text)).ToList();
+                        default: return lstOrders;
+                    }
                 case "txtST_OrderTitle":
                     switch (cmbST_OrderTitle.SelectedIndex)
                     {
@@ -735,6 +738,14 @@ namespace OrdersProgress
             {
                 lstOrders = new List<Models.Order>();
                 dgvData.DataSource = GetData();
+            }
+        }
+
+        private void TxtST_OrderId_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
             }
         }
 

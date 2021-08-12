@@ -20,6 +20,7 @@ namespace OrdersProgress
             InitializeComponent();
 
             order_index = _order_index;
+            Text = "    شماره سفارش : " + Program.dbOperations.GetOrderAsync(order_index).Id.ToString();
             Stack.bx = false;
         }
 

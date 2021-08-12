@@ -31,10 +31,9 @@ namespace OrdersProgress
                 // آیا سفارش قابل تغییر است؟
                 bOrderReadOnly = _bOrderReadOnly || !Program.dbOperations.GetOrder_LevelAsync
                     (order.CurrentLevel_Index).OrderCanChange;
-            }
-
-            if (order != null)
-            {
+            //}
+            //if (order != null)
+            //{
                 current_level_index = order.CurrentLevel_Index;
                 // اگر سفارش حذف شده یا کنسل شده بود، امکان مجدد سفارش زدن با شماره و تاریخ جدید را فراهم کنم
                 Models.Order_Level ol = Program.dbOperations.GetOrder_LevelAsync(current_level_index);
@@ -477,6 +476,7 @@ namespace OrdersProgress
             }
 
             Hide();
+            ForceClose = true;
             new L2120_OneOrder_Items(OrderIndex, bOrderReadOnly).ShowDialog();
             Close();
 
@@ -525,6 +525,18 @@ namespace OrdersProgress
             e.Cancel = false;
         }
 
+        private void DgvData_RowEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            string sc = Convert.ToString(dgvData["Code_Small", e.RowIndex].Value);
+            #region نمایش تصویر کالا در صورت وجود
+            Models.Item_File item_file = Program.dbOperations.GetItem_FileAsync(sc, 1, true);
+            if (item_file != null)
+                pictureBox2.Image = new ThisProject().ByteToImage
+                    (Program.dbOperations.GetFileAsync(item_file.File_Index).Content);
+            else pictureBox2.Image = null;
+            #endregion
+        }
+
         private void TsmiChangePropertiesValue_Click(object sender, EventArgs e)
         {
             //new L1120_Order_Item_Properties().ShowDialog();
@@ -552,6 +564,14 @@ namespace OrdersProgress
         private void TxtST_SmallCode_Enter(object sender, EventArgs e)
         {
             AcceptButton = btnSearch;
+        }
+
+        bool ForceClose = false;
+        private void L2100_OneOrder_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if(!ForceClose)
+                if (MessageBox.Show("آیا مایل به بستن صفحه می باشید؟",""
+                    ,MessageBoxButtons.YesNo) != DialogResult.Yes) e.Cancel = true;
         }
 
         private void TxtST_SmallCode_Leave(object sender, EventArgs e)

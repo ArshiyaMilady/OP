@@ -106,26 +106,9 @@ namespace OrdersProgress
 
             List<Models.User_Level> lstUL = (List<Models.User_Level>)dgvData.DataSource;
 
-            #region اضافه کردن سطح کاربری جدید و حذف سطوح انتخاب نشده
+            #region حذف شود : قبلا بوده است، اما در جدول انتخاب نشده است 
             if (Program.dbOperations.GetAllUL_See_ULsAsync(Stack.Company_Index, main_ul_index).Any())
             {
-                #region اضافه شود : در جدول انتخاب شده ، اما قبلا نبوده است
-                foreach (Models.User_Level ul in lstUL.Where(d => d.C_B1).ToList())
-                {
-                    if (!Program.dbOperations.GetAllUL_See_ULsAsync(Stack.Company_Index, main_ul_index)
-                        .Any(d => d.UL_Index == ul.Index))
-                    {
-                        Program.dbOperations.AddUL_See_UL(new Models.UL_See_UL
-                        {
-                            Company_Index = Stack.Company_Index,
-                            MainUL_Index = main_ul_index,
-                            UL_Index = ul.Index,
-                        });
-                    }
-                }
-                #endregion
-
-                #region حذف شود : قبلا بوده است، اما در جدول انتخاب نشده است 
                 foreach (Models.UL_See_UL ul_see_ul
                     in Program.dbOperations.GetAllUL_See_ULsAsync(Stack.Company_Index, main_ul_index))
                 {
@@ -134,12 +117,11 @@ namespace OrdersProgress
                         Program.dbOperations.DeleteUL_See_ULAsync(ul_see_ul);
                     }
                 }
-                #endregion
             }
-            else
-            {
-                #region اضافه شود 
-                foreach (Models.User_Level ul in lstUL.Where(d => d.C_B1).ToList())
+            #endregion
+
+            #region اضافه شود 
+            foreach (Models.User_Level ul in lstUL.Where(d => d.C_B1).ToList())
                 {
                     if (!Program.dbOperations.GetAllUL_See_ULsAsync(Stack.Company_Index, main_ul_index)
                         .Any(d => d.UL_Index == ul.Index))
@@ -153,8 +135,6 @@ namespace OrdersProgress
                     }
                 }
                 #endregion
-            }
-            #endregion
 
             MessageBox.Show("تغییرات با موفقیت ثبت گردید.");
             Close();

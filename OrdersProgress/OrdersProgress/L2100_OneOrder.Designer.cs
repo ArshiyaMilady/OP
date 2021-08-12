@@ -54,12 +54,14 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiChangePropertiesValue = new System.Windows.Forms.ToolStripMenuItem();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             this.panel2.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -67,6 +69,7 @@
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.pictureBox2);
             this.panel1.Controls.Add(this.panel3);
             this.panel1.Controls.Add(this.btnReturn);
             this.panel1.Controls.Add(this.btnSave);
@@ -264,11 +267,12 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvData.Location = new System.Drawing.Point(3, 48);
+            this.dgvData.Location = new System.Drawing.Point(165, 48);
             this.dgvData.Name = "dgvData";
-            this.dgvData.Size = new System.Drawing.Size(542, 228);
+            this.dgvData.Size = new System.Drawing.Size(380, 228);
             this.dgvData.TabIndex = 80;
             this.dgvData.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvData_CellEndEdit);
+            this.dgvData.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvData_RowEnter);
             // 
             // panel2
             // 
@@ -358,16 +362,28 @@
             this.progressBar1.TabIndex = 4;
             this.progressBar1.Visible = false;
             // 
+            // pictureBox2
+            // 
+            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pictureBox2.Location = new System.Drawing.Point(5, 48);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(154, 230);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox2.TabIndex = 92;
+            this.pictureBox2.TabStop = false;
+            // 
             // L2100_OneOrder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnReturn;
             this.ClientSize = new System.Drawing.Size(800, 318);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.panel1);
             this.Name = "L2100_OneOrder";
             this.Text = "   ثبت سفارش جدید";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.L2100_OneOrder_FormClosing);
             this.Shown += new System.EventHandler(this.L2100_OneOrder_Shown);
             this.panel1.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
@@ -378,6 +394,7 @@
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.contextMenuStrip1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -409,5 +426,6 @@
         private System.Windows.Forms.RadioButton radNotModule;
         private System.Windows.Forms.RadioButton radAll;
         private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.PictureBox pictureBox2;
     }
 }

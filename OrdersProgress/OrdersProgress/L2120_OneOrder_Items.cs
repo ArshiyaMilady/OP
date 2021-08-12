@@ -24,6 +24,7 @@ namespace OrdersProgress
             bOrderReadOnly = _bOrderReadOnly;
 
             order = Program.dbOperations.GetOrderAsync(_OrderIndex);
+            Text = "   شماره سفارش :" + order.Id.ToString();
             lblTitle.Text = order.Title;
             lblCustomerName.Text = order.Customer_Name;
         }
@@ -58,15 +59,19 @@ namespace OrdersProgress
                     {
                         case "Item_SmallCode":
                             col.HeaderText = "کد";
+                            col.Width = 100;
                             break;
                         case "Item_Name_Samll":
                             col.HeaderText = "نام کالا";
+                            col.Width = 150;
                             break;
                         case "Quantity":
                             col.HeaderText = "تعداد";
+                            col.Width = 50;
                             break;
                         case "SalesPrice":
                             col.HeaderText = "قیمت واحد (ریال)";
+                            col.Width = 100;
                             break;
                         default: col.Visible = false; break;
                     }
@@ -196,6 +201,18 @@ namespace OrdersProgress
             if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
 
             TsmiItemProperties_Click(null, null);
+        }
+
+        private void DgvData_RowEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            string sc = Convert.ToString(dgvData["Item_SmallCode", e.RowIndex].Value);
+            #region نمایش تصویر کالا در صورت وجود
+            Models.Item_File item_file = Program.dbOperations.GetItem_FileAsync(sc, 1, true);
+            if (item_file != null)
+                pictureBox2.Image = new ThisProject().ByteToImage
+                    (Program.dbOperations.GetFileAsync(item_file.File_Index).Content);
+            else pictureBox2.Image = null;
+            #endregion
         }
 
         private void BtnSave_Click(object sender, EventArgs e)
