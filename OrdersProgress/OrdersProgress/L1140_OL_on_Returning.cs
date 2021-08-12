@@ -33,14 +33,16 @@ namespace OrdersProgress
             List<Models.Order_Level> lstOLs = Program.dbOperations.GetAllOrder_LevelsAsync(Stack.Company_Index, 1)
                 .Where(d => d.Index != order_level_index).ToList();
 
-            if (Program.dbOperations.GetAllOL_PrerequisitesAsync(Stack.Company_Index, order_level_index).Any())
+            if (Program.dbOperations.GetAllOrder_Level_on_ReturningsAsync
+                (Stack.Company_Index, order_level_index).Any())
             {
-                foreach (Models.OL_Prerequisite olp in
-                    Program.dbOperations.GetAllOL_PrerequisitesAsync(Stack.Company_Index, order_level_index))
+                foreach (Models.Order_Level_on_Returning olr in
+                    Program.dbOperations.GetAllOrder_Level_on_ReturningsAsync
+                    (Stack.Company_Index, order_level_index))
                 {
-                    if (lstOLs.Any(d => d.Index == olp.Prerequisite_Index))
+                    if (lstOLs.Any(d => d.Index == olr.OL_Retruned_Index))
                     {
-                        Models.Order_Level ol = lstOLs.First(d => d.Index == olp.Prerequisite_Index);
+                        Models.Order_Level ol = lstOLs.First(d => d.Index == olr.OL_Retruned_Index);
                         ol.C_B1 = true;
                     }
                 }
@@ -88,14 +90,13 @@ namespace OrdersProgress
             List<Models.Order_Level> lstOL = (List<Models.Order_Level>)dgvData.DataSource;
 
             #region حذف شود : قبلا بوده است، اما در جدول انتخاب نشده است 
-            if (Program.dbOperations.GetAllOL_PrerequisitesAsync(Stack.Company_Index, order_level_index).Any())
+            if (Program.dbOperations.GetAllOrder_Level_on_ReturningsAsync(Stack.Company_Index, order_level_index).Any())
             {
-
-                foreach (Models.OL_Prerequisite olp
-                    in Program.dbOperations.GetAllOL_PrerequisitesAsync(Stack.Company_Index, order_level_index))
+                foreach (Models.Order_Level_on_Returning olr
+                    in Program.dbOperations.GetAllOrder_Level_on_ReturningsAsync(Stack.Company_Index, order_level_index))
                 {
-                    if (!lstOL.Where(d => d.C_B1).Any(d => d.Index == olp.OL_Index))
-                        Program.dbOperations.DeleteOL_PrerequisiteAsync(olp);
+                    if (!lstOL.Where(d => d.C_B1).Any(d => d.Index == olr.OL_Retruned_Index))
+                        Program.dbOperations.DeleteOrder_Level_on_ReturningAsync(olr);
                 }
             }
             #endregion
@@ -103,14 +104,15 @@ namespace OrdersProgress
             #region اضافه شود 
             foreach (Models.Order_Level ol in lstOL.Where(d => d.C_B1).ToList())
             {
-                if (!Program.dbOperations.GetAllOL_PrerequisitesAsync(Stack.Company_Index, order_level_index)
-                    .Any(d => d.Prerequisite_Index == ol.Index))
+                if (!Program.dbOperations.GetAllOrder_Level_on_ReturningsAsync
+                    (Stack.Company_Index, order_level_index)
+                    .Any(d => d.OL_Retruned_Index == ol.Index))
                 {
-                    Program.dbOperations.AddOL_PrerequisiteAsync(new Models.OL_Prerequisite
+                    Program.dbOperations.AddOrder_Level_on_ReturningAsync(new Models.Order_Level_on_Returning
                     {
                         Company_Index = Stack.Company_Index,
-                        OL_Index = order_level_index,
-                        Prerequisite_Index = ol.Index,
+                        OrderLevel_Index = order_level_index,
+                        OL_Retruned_Index = ol.Index,
                     });
                 }
             }

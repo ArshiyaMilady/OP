@@ -268,7 +268,7 @@ namespace OrdersProgress.Models
         public long Index { get; set; }
 
         public long OrderLevel_Index { get; set; }
-        public string OL_Retruned_Index { get; set; }
+        public long OL_Retruned_Index { get; set; }
     }
 
 

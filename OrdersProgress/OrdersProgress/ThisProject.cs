@@ -125,7 +125,7 @@ namespace OrdersProgress
         }
 
         // سفارش را برگشت بده
-        public bool ReturnOrder(Models.Order order,string return_description = null)
+        public bool ReturnOrder(Models.Order order,long ol_returned_index,string return_description = null)
         {
             if (!Program.dbOperations.GetAllOrder_LevelsAsync(Stack.Company_Index).Any(d => d.ReturningLevel))
                 return false;
@@ -136,14 +136,17 @@ namespace OrdersProgress
             // حذف آخرین مرحله انجام شده از مراحل سفارش
             Models.Order_OL order_ol = Program.dbOperations.GetAllOrder_OLsAsync
                 (Stack.Company_Index, order.Index).OrderBy(d => d.Id).ToList().Last();
-            Program.dbOperations.DeleteOrder_OLAsync(order_ol);
-            order.NextLevel_Index = order.CurrentLevel_Index;
-            order.CurrentLevel_Index = order.PreviousLevel_Index;
+            Program.dbOperations.DeleteOrder_OL(order_ol);
+
             // پیدا کردن مرحله قبلی از جدول مراحل گذرانده سفارش
             order.PreviousLevel_Index = Program.dbOperations.GetAllOrder_OLsAsync
                 (Stack.Company_Index, order.Index)
-                .Where(d => d.OrderLevel_Index != order.CurrentLevel_Index)
+                .Where(d => (d.OrderLevel_Index != order.CurrentLevel_Index)
+                && (d.OrderLevel_Index != ol_returned_index))
                 .OrderBy(d => d.Id).ToList().Last().OrderLevel_Index;
+
+            order.NextLevel_Index = order.CurrentLevel_Index;
+            order.CurrentLevel_Index = ol_returned_index;
             order.Level_Description = Program.dbOperations.GetOrder_LevelAsync(order.CurrentLevel_Index).Description2;
             Program.dbOperations.UpdateOrderAsync(order);
 

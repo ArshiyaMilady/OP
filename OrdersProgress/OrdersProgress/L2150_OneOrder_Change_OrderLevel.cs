@@ -131,12 +131,21 @@ namespace OrdersProgress
                 // اگر سفارش برگشت داده شود
                 if (order_level.ReturningLevel)
                 {
+                    #region اگر در جدول مراحل برگشتی ، مرحله ای برای مرحله جاری سفارش تعریف نشده باشد
+                    if (!Program.dbOperations.GetAllOrder_Level_on_ReturningsAsync
+                        (Stack.Company_Index, order.CurrentLevel_Index).Any())
+                    {
+                        MessageBox.Show("امکان برگشت سفارش وجود ندارد. لطفا با ادمین هماهنگ نمایید");
+                        return;
+                    }
+                    #endregion
+
                     if (MessageBox.Show("آیا از برگشت سفارش اطمینان دارید؟", "مهم"
                         , MessageBoxButtons.YesNo) != DialogResult.Yes) return;
 
-                    new X220_InputBox("علت برگشت").ShowDialog();
+                    new L1143_OL_on_Returning_Comment(order_index).ShowDialog();
                     if(!string.IsNullOrEmpty(Stack.sx))
-                        this_project.ReturnOrder(order, "سفارش برگشت شد. علت برگشت : " + Stack.sx);
+                        this_project.ReturnOrder(order,Stack.lx, "سفارش برگشت شد. علت برگشت : " + Stack.sx);
                 }
                 // اگر سفارش کنسل شود
                 else if (order_level.CancelingLevel)

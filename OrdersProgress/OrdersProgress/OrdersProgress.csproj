@@ -229,6 +229,18 @@
     <Compile Include="L1130_OL_UL.Designer.cs">
       <DependentUpon>L1130_OL_UL.cs</DependentUpon>
     </Compile>
+    <Compile Include="L1140_OL_on_Returning.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="L1140_OL_on_Returning.Designer.cs">
+      <DependentUpon>L1140_OL_on_Returning.cs</DependentUpon>
+    </Compile>
+    <Compile Include="L1143_OL_on_Returning_Comment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="L1143_OL_on_Returning_Comment.Designer.cs">
+      <DependentUpon>L1143_OL_on_Returning_Comment.cs</DependentUpon>
+    </Compile>
     <Compile Include="L2140_OneOrder_History.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -418,6 +430,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="L1130_OL_UL.resx">
       <DependentUpon>L1130_OL_UL.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="L1140_OL_on_Returning.resx">
+      <DependentUpon>L1140_OL_on_Returning.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="L1143_OL_on_Returning_Comment.resx">
+      <DependentUpon>L1143_OL_on_Returning_Comment.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="L2140_OneOrder_History.resx">
       <DependentUpon>L2140_OneOrder_History.cs</DependentUpon>

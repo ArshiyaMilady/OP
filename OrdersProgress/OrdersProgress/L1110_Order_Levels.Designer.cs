@@ -53,9 +53,10 @@
             this.dgvData = new System.Windows.Forms.DataGridView();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiOL_Prerequisites = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiVerifyingUsers = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiDeleteAllOL_Prerequisites = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiReturningOrderLevels = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiVerifyingUsers = new System.Windows.Forms.ToolStripMenuItem();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
@@ -347,12 +348,13 @@
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiOL_Prerequisites,
-            this.tsmiVerifyingUsers,
+            this.tsmiReturningOrderLevels,
             this.tsmiDeleteAllOL_Prerequisites,
-            this.tsmiDelete});
+            this.tsmiDelete,
+            this.tsmiVerifyingUsers});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.contextMenuStrip1.Size = new System.Drawing.Size(208, 92);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(208, 136);
             // 
             // tsmiOL_Prerequisites
             // 
@@ -360,13 +362,6 @@
             this.tsmiOL_Prerequisites.Size = new System.Drawing.Size(207, 22);
             this.tsmiOL_Prerequisites.Text = "تعریف پیش نیازها";
             this.tsmiOL_Prerequisites.Click += new System.EventHandler(this.tsmiOL_Prerequisites_Click);
-            // 
-            // tsmiVerifyingUsers
-            // 
-            this.tsmiVerifyingUsers.Name = "tsmiVerifyingUsers";
-            this.tsmiVerifyingUsers.Size = new System.Drawing.Size(207, 22);
-            this.tsmiVerifyingUsers.Text = "سطح کاربری تأیید کننده";
-            this.tsmiVerifyingUsers.Click += new System.EventHandler(this.tsmiVerifyingUsers_Click);
             // 
             // tsmiDeleteAllOL_Prerequisites
             // 
@@ -376,6 +371,13 @@
             this.tsmiDeleteAllOL_Prerequisites.Visible = false;
             this.tsmiDeleteAllOL_Prerequisites.Click += new System.EventHandler(this.TsmiDeleteAllOL_Prerequisites_Click);
             // 
+            // tsmiReturningOrderLevels
+            // 
+            this.tsmiReturningOrderLevels.Name = "tsmiReturningOrderLevels";
+            this.tsmiReturningOrderLevels.Size = new System.Drawing.Size(207, 22);
+            this.tsmiReturningOrderLevels.Text = "تعیین مراحل برگشت";
+            this.tsmiReturningOrderLevels.Click += new System.EventHandler(this.TsmiReturningOrderLevels_Click);
+            // 
             // tsmiDelete
             // 
             this.tsmiDelete.Name = "tsmiDelete";
@@ -383,6 +385,14 @@
             this.tsmiDelete.Text = "حذف";
             this.tsmiDelete.Visible = false;
             this.tsmiDelete.Click += new System.EventHandler(this.TsmiDelete_Click);
+            // 
+            // tsmiVerifyingUsers
+            // 
+            this.tsmiVerifyingUsers.Name = "tsmiVerifyingUsers";
+            this.tsmiVerifyingUsers.Size = new System.Drawing.Size(207, 22);
+            this.tsmiVerifyingUsers.Text = "سطح کاربری تأیید کننده";
+            this.tsmiVerifyingUsers.Visible = false;
+            this.tsmiVerifyingUsers.Click += new System.EventHandler(this.tsmiVerifyingUsers_Click);
             // 
             // timer1
             // 
@@ -460,5 +470,6 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiVerifyingUsers;
         private System.Windows.Forms.ToolStripMenuItem tsmiDeleteAllOL_Prerequisites;
         private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.ToolStripMenuItem tsmiReturningOrderLevels;
     }
 }

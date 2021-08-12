@@ -1085,7 +1085,7 @@ namespace OrdersProgress.Models
             if (ol_index==0)
                 return _db.Table<Order_Level_on_Returning>().Where(b => b.Company_Index == company_index).OrderBy(d=>d.Index).ToListAsync().Result;
             else return _db.Table<Order_Level_on_Returning>().Where(b => b.Company_Index == company_index)
-                    .Where(d => d.Index == ol_index).OrderBy(d => d.Index).ToListAsync().Result;
+                    .Where(d => d.OrderLevel_Index == ol_index).OrderBy(d => d.Index).ToListAsync().Result;
         }
 
         public Order_Level_on_Returning GetOrder_Level_on_ReturningAsync(long id)
@@ -1172,6 +1172,11 @@ namespace OrdersProgress.Models
         public int DeleteOrder_OLAsync(Order_OL order_ol)
         {
             return _db.DeleteAsync(order_ol).Result;
+        }
+
+        public void DeleteOrder_OL(Order_OL order_ol)
+        {
+            _db.DeleteAsync(order_ol).Wait();
         }
 
         public int DeleteAllOrder_OLsAsync()

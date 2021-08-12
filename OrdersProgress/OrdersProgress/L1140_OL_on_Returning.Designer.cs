@@ -77,6 +77,7 @@
             this.btnDeleteAll.Text = "حذف تمام رابطه ها";
             this.btnDeleteAll.UseVisualStyleBackColor = true;
             this.btnDeleteAll.Visible = false;
+            this.btnDeleteAll.Click += new System.EventHandler(this.BtnDeleteAll_Click);
             // 
             // btnReturn
             // 
@@ -88,6 +89,7 @@
             this.btnReturn.TabIndex = 94;
             this.btnReturn.Text = "بازگشت";
             this.btnReturn.UseVisualStyleBackColor = true;
+            this.btnReturn.Click += new System.EventHandler(this.BtnReturn_Click);
             // 
             // btnSave
             // 
@@ -98,6 +100,7 @@
             this.btnSave.TabIndex = 94;
             this.btnSave.Text = "ثبت تغییرات";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.BtnSave_Click);
             // 
             // dgvData
             // 
@@ -114,6 +117,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnReturn;
             this.ClientSize = new System.Drawing.Size(554, 333);
             this.Controls.Add(this.panel1);
             this.Name = "L1140_OL_on_Returning";
