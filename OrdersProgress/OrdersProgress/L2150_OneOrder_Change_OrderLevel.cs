@@ -116,7 +116,7 @@ namespace OrdersProgress
 
         private void BtnSave_Click(object sender, EventArgs e)
         {
-            if(!dgvData.Rows.Cast<DataGridViewRow>().Any(d=>Convert.ToBoolean(d.Cells["C_B1"].Value)))
+            if (!dgvData.Rows.Cast<DataGridViewRow>().Any(d => Convert.ToBoolean(d.Cells["C_B1"].Value)))
             {
                 MessageBox.Show("لطفا یک مرحله را انتخاب نمایید", "خطا");
             }
@@ -144,8 +144,11 @@ namespace OrdersProgress
                         , MessageBoxButtons.YesNo) != DialogResult.Yes) return;
 
                     new L1143_OL_on_Returning_Comment(order_index).ShowDialog();
-                    if(!string.IsNullOrEmpty(Stack.sx))
-                        this_project.ReturnOrder(order,Stack.lx, "سفارش برگشت شد. علت برگشت : " + Stack.sx);
+                    if (!string.IsNullOrEmpty(Stack.sx))
+                    {
+                        this_project.ReturnOrder(order, Stack.lx, "سفارش برگشت شد. علت برگشت : " + Stack.sx);
+                        Stack.bx = true;
+                    }
                 }
                 // اگر سفارش کنسل شود
                 else if (order_level.CancelingLevel)
@@ -155,7 +158,10 @@ namespace OrdersProgress
 
                     new X220_InputBox("علت لغو").ShowDialog();
                     if (!string.IsNullOrEmpty(Stack.sx))
+                    {
                         this_project.CancelOrder(order, "سفارش لغو شد. علت لغو : " + Stack.sx);
+                        Stack.bx = true;
+                    }
                 }
                 else
                 {
@@ -163,11 +169,14 @@ namespace OrdersProgress
                        , MessageBoxButtons.YesNo) != DialogResult.Yes) return;
 
                     this_project.Change_Order_Level(order, ol_index);
+                    Stack.bx = true;
                 }
 
-                MessageBox.Show("تغییر مرحله سفارش انجام شد");
-                Stack.bx = true;
-                Close();
+                if (Stack.bx)
+                {
+                    MessageBox.Show("تغییر مرحله سفارش انجام شد");
+                    Close();
+                }
             }
         }
     }

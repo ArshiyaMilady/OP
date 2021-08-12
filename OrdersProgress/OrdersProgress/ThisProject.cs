@@ -147,7 +147,7 @@ namespace OrdersProgress
 
             order.NextLevel_Index = order.CurrentLevel_Index;
             order.CurrentLevel_Index = ol_returned_index;
-            order.Level_Description = Program.dbOperations.GetOrder_LevelAsync(order.CurrentLevel_Index).Description2;
+            order.Level_Description = "سفارش برگشت شد";// Program.dbOperations.GetOrder_LevelAsync(order.CurrentLevel_Index).Description2;
             Program.dbOperations.UpdateOrderAsync(order);
 
             #region ثبت در تاریخچه

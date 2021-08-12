@@ -146,6 +146,8 @@ namespace OrdersProgress
                 return lstOrders.Where(d => d.C_B1).OrderByDescending(d => d.DateTime_mi).ToList();
             else 
                 return lstOrders.OrderByDescending(d=>d.DateTime_mi).ToList();
+
+            foreach()
         }
 
         private void ShowData(bool ChangeHeaderTexts = true)
@@ -746,6 +748,19 @@ namespace OrdersProgress
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
             {
                 e.Handled = true;
+            }
+        }
+
+        private void Timer1_Tick(object sender, EventArgs e)
+        {
+            //foreach(string order_index in lstOrders.Select(d=>d.Index).ToList())
+            foreach(DataGridViewRow row in dgvData.Rows.Cast<DataGridViewRow>().ToList())
+            {
+                long order_index = Convert.ToInt64(row.Cells["CurrentLevel_Index"].Value);
+                Models.Order order = Program.dbOperations.GetOrderAsync(order_index);
+
+                if(Program.dbOperations.GetAllOrder_HistorysAsync(Stack.Company_Index,order_index)
+                    .Last()
             }
         }
 

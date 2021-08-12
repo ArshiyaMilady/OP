@@ -37,10 +37,13 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnShowAll = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
+            this.txtST_OrderId = new System.Windows.Forms.TextBox();
             this.txtST_OrderTitle = new System.Windows.Forms.TextBox();
             this.txtST_CustomerName = new System.Windows.Forms.TextBox();
+            this.cmbST_OrderId = new System.Windows.Forms.ComboBox();
             this.cmbST_OrderTitle = new System.Windows.Forms.ComboBox();
             this.cmbST_CustomerName = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -58,9 +61,7 @@
             this.tsmiCancel = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.label1 = new System.Windows.Forms.Label();
-            this.cmbST_OrderId = new System.Windows.Forms.ComboBox();
-            this.txtST_OrderId = new System.Windows.Forms.TextBox();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -166,6 +167,19 @@
             this.btnSearch.UseVisualStyleBackColor = true;
             this.btnSearch.Click += new System.EventHandler(this.BtnSearch_Click);
             // 
+            // txtST_OrderId
+            // 
+            this.txtST_OrderId.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtST_OrderId.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtST_OrderId.Location = new System.Drawing.Point(7, 26);
+            this.txtST_OrderId.Name = "txtST_OrderId";
+            this.txtST_OrderId.Size = new System.Drawing.Size(103, 22);
+            this.txtST_OrderId.TabIndex = 15;
+            this.txtST_OrderId.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtST_OrderId.Enter += new System.EventHandler(this.TxtST_Enter);
+            this.txtST_OrderId.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtST_OrderId_KeyPress);
+            this.txtST_OrderId.Leave += new System.EventHandler(this.TxtST_Enter);
+            // 
             // txtST_OrderTitle
             // 
             this.txtST_OrderTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -189,6 +203,21 @@
             this.txtST_CustomerName.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtST_CustomerName.Enter += new System.EventHandler(this.TxtST_Enter);
             this.txtST_CustomerName.Leave += new System.EventHandler(this.TxtST_Enter);
+            // 
+            // cmbST_OrderId
+            // 
+            this.cmbST_OrderId.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbST_OrderId.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbST_OrderId.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbST_OrderId.FormattingEnabled = true;
+            this.cmbST_OrderId.Items.AddRange(new object[] {
+            "شامل",
+            "شروع شود با",
+            "برابر باشد با"});
+            this.cmbST_OrderId.Location = new System.Drawing.Point(115, 25);
+            this.cmbST_OrderId.Name = "cmbST_OrderId";
+            this.cmbST_OrderId.Size = new System.Drawing.Size(91, 23);
+            this.cmbST_OrderId.TabIndex = 10;
             // 
             // cmbST_OrderTitle
             // 
@@ -219,6 +248,17 @@
             this.cmbST_CustomerName.Name = "cmbST_CustomerName";
             this.cmbST_CustomerName.Size = new System.Drawing.Size(91, 23);
             this.cmbST_CustomerName.TabIndex = 20;
+            // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(209, 28);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(71, 15);
+            this.label1.TabIndex = 29;
+            this.label1.Text = "شماره سفارش :";
             // 
             // label5
             // 
@@ -395,44 +435,10 @@
             this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             this.progressBar1.TabIndex = 5;
             // 
-            // label1
+            // timer1
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(209, 28);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(71, 15);
-            this.label1.TabIndex = 29;
-            this.label1.Text = "شماره سفارش :";
-            // 
-            // cmbST_OrderId
-            // 
-            this.cmbST_OrderId.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmbST_OrderId.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbST_OrderId.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbST_OrderId.FormattingEnabled = true;
-            this.cmbST_OrderId.Items.AddRange(new object[] {
-            "شامل",
-            "شروع شود با",
-            "برابر باشد با"});
-            this.cmbST_OrderId.Location = new System.Drawing.Point(115, 25);
-            this.cmbST_OrderId.Name = "cmbST_OrderId";
-            this.cmbST_OrderId.Size = new System.Drawing.Size(91, 23);
-            this.cmbST_OrderId.TabIndex = 10;
-            // 
-            // txtST_OrderId
-            // 
-            this.txtST_OrderId.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtST_OrderId.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtST_OrderId.Location = new System.Drawing.Point(7, 26);
-            this.txtST_OrderId.Name = "txtST_OrderId";
-            this.txtST_OrderId.Size = new System.Drawing.Size(103, 22);
-            this.txtST_OrderId.TabIndex = 15;
-            this.txtST_OrderId.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txtST_OrderId.Enter += new System.EventHandler(this.TxtST_Enter);
-            this.txtST_OrderId.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtST_OrderId_KeyPress);
-            this.txtST_OrderId.Leave += new System.EventHandler(this.TxtST_Enter);
+            this.timer1.Interval = 10000;
+            this.timer1.Tick += new System.EventHandler(this.Timer1_Tick);
             // 
             // L1000_Orders
             // 
@@ -492,5 +498,6 @@
         private System.Windows.Forms.TextBox txtST_OrderId;
         private System.Windows.Forms.ComboBox cmbST_OrderId;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Timer timer1;
     }
 }
