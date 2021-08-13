@@ -146,7 +146,9 @@ namespace OrdersProgress
                     new L1143_OL_on_Returning_Comment(order_index).ShowDialog();
                     if (!string.IsNullOrEmpty(Stack.sx))
                     {
-                        this_project.ReturnOrder(order, Stack.lx, "سفارش برگشت شد. علت برگشت : " + Stack.sx);
+                        this_project.ReturnOrder(order, Stack.lx, "سفارش به مرحله «"
+                + Program.dbOperations.GetOrder_LevelAsync(order.CurrentLevel_Index).Description2
+                        + "» برگشت شد." + " علت برگشت : " + Stack.sx);
                         Stack.bx = true;
                     }
                 }

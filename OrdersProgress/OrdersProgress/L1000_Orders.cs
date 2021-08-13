@@ -103,7 +103,8 @@ namespace OrdersProgress
                 #region با سطح کاربری این کاربر چه مراحلی از سفارش را می توان تأیید نمود
                 List<long> lstOL_Indexes_CanConfirm = Program.dbOperations.GetAllOL_ULsAsync
                     (Stack.Company_Index, 0, Stack.UserLevel_Index).Select(d => d.OL_Index).ToList();
-                // علامت گذاری سفارشهایی که قابل تأیید توسط کاربر جاری می باشند
+
+                // پیدا کردن مرحله آخر
                 long last_order_level_index = 0;
                 if (Program.dbOperations.GetAllOrder_LevelsAsync(Stack.Company_Index).Any(d => d.LastLevel))
                 {
@@ -111,12 +112,14 @@ namespace OrdersProgress
                         (Stack.Company_Index).First(d => d.LastLevel).Index;
                 }
 
+                #region علامت گذاری سفارشهایی که قابل تأیید توسط کاربر جاری می باشند
                 if (Stack.UserLevel_Type != 0)
                 {
-                    if(Stack.UserLevel_Type == 1)
-                        foreach (Models.Order order in lstOrders)
-                            order.C_B1 = true;
-                    else   // به جز سفارشهای تکمیل شده
+                    //if(Stack.UserLevel_Type == 1)
+                    //    foreach (Models.Order order in lstOrders)
+                    //        order.C_B1 = true;
+                    //else   
+                        // به جز سفارشهای تکمیل شده
                         foreach (Models.Order order in lstOrders.Where(d => d.CurrentLevel_Index != last_order_level_index).ToList())
                             order.C_B1 = true;
                 }
@@ -135,6 +138,8 @@ namespace OrdersProgress
                     }
                 }
                 #endregion
+
+                #endregion
             }
             #endregion
 
@@ -142,19 +147,47 @@ namespace OrdersProgress
             if (!string.IsNullOrEmpty(CustumerIndex))
                 lstOrders = lstOrders.Where(d => d.Customer_Index.Equals(CustumerIndex)).ToList();
 
+            if (!backgroundWorker1.IsBusy)
+            {
+                //panel1.Enabled = false;
+                backgroundWorker1.RunWorkerAsync();
+            }
+
             if (radOrders_Need_Confirmation.Checked)
                 return lstOrders.Where(d => d.C_B1).OrderByDescending(d => d.DateTime_mi).ToList();
-            else 
+            else
                 return lstOrders.OrderByDescending(d=>d.DateTime_mi).ToList();
 
-            foreach()
+            //return lstOrders;
+
         }
 
-        private void ShowData(bool ChangeHeaderTexts = true)
+        private void BackgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+            foreach (Models.Order order1 in lstOrders)
+            {
+                long last_ol_in_history = Program.dbOperations.GetAllOrder_HistorysAsync
+                    (Stack.Company_Index, order1.Index).Last().OrderLevel_Index;
+                order1.C_B2 = Program.dbOperations.GetOrder_LevelAsync
+                    (last_ol_in_history).ReturningLevel;
+            }
+        }
+
+        private void BackgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            foreach (DataGridViewRow row in dgvData.Rows.Cast<DataGridViewRow>()
+                .Where(d => Convert.ToBoolean(d.Cells["C_B2"].Value)).ToList())
+                row.DefaultCellStyle.ForeColor = Color.Red;
+            //panel1.Enabled = true;
+            //backgroundWorker1.CancelAsync();
+            dgvData.CurrentCell = null;
+        }
+
+        private void ShowData(int ActionType = 1)
         {
 
             #region ترجمه سر ستونها و مخفی کردن بعضی ستونها
-            if (ChangeHeaderTexts)
+            if (ActionType==1)
             {
                 foreach (DataGridViewColumn col in dgvData.Columns)
                 {
@@ -182,7 +215,7 @@ namespace OrdersProgress
                             col.HeaderText = "وضعیت سفارش";
                             //col.ReadOnly = true;
                             //col.DefaultCellStyle.BackColor = Color.LightGray;
-                            col.Width = 200;
+                            col.Width = 300;
                             break;
                         default: col.Visible = false; break;
                     }
@@ -748,19 +781,6 @@ namespace OrdersProgress
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
             {
                 e.Handled = true;
-            }
-        }
-
-        private void Timer1_Tick(object sender, EventArgs e)
-        {
-            //foreach(string order_index in lstOrders.Select(d=>d.Index).ToList())
-            foreach(DataGridViewRow row in dgvData.Rows.Cast<DataGridViewRow>().ToList())
-            {
-                long order_index = Convert.ToInt64(row.Cells["CurrentLevel_Index"].Value);
-                Models.Order order = Program.dbOperations.GetOrderAsync(order_index);
-
-                if(Program.dbOperations.GetAllOrder_HistorysAsync(Stack.Company_Index,order_index)
-                    .Last()
             }
         }
 

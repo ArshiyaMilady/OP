@@ -44,10 +44,11 @@
             // btnCancel
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Location = new System.Drawing.Point(18, 183);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 33);
-            this.btnCancel.TabIndex = 5;
+            this.btnCancel.TabIndex = 10;
             this.btnCancel.Text = "انصراف";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
@@ -89,7 +90,7 @@
             this.comboBox1.Location = new System.Drawing.Point(61, 34);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(243, 27);
-            this.comboBox1.TabIndex = 7;
+            this.comboBox1.TabIndex = 1;
             // 
             // btnOK
             // 

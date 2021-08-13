@@ -1708,3 +1708,6 @@ E:\BOX\D\OrderProgress\OrdersProgress\OrdersProgress\OrdersProgress\obj\Debug\Or
 D:\Desktop\BOX\Personal\D\OrderProgress\OrderProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.J2240_UL_Confirm_OLs.resources
 D:\Desktop\BOX\Personal\D\OrderProgress\OrderProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.L1140_OL_on_Returning.resources
 D:\Desktop\BOX\Personal\D\OrderProgress\OrderProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.L1143_OL_on_Returning_Comment.resources
+E:\BOX\D\OrderProgress\OrdersProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.J2240_UL_Confirm_OLs.resources
+E:\BOX\D\OrderProgress\OrdersProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.L1140_OL_on_Returning.resources
+E:\BOX\D\OrderProgress\OrdersProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.L1143_OL_on_Returning_Comment.resources

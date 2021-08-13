@@ -65,7 +65,6 @@ namespace OrdersProgress
             //SetUsers();
             SetOrderLevels();   // در صورتیکه مراحل سفارش در دیتابیس تعریف نشده باشد، آنها را تعریف میکند
             //SetWareHouses();
-
         }
 
         private void J1000_MainForm_Shown(object sender, EventArgs e)
@@ -148,7 +147,7 @@ namespace OrdersProgress
             menuStrip.Enabled = true;
             btnClose.Enabled = true;
 
-            //if (Stack.UserLevel_Type==1) new zForm1().ShowDialog();
+            if (Stack.UserLevel_Type==1) new zForm1().ShowDialog();
 
         }
 
@@ -566,5 +565,6 @@ namespace OrdersProgress
         {
             new J1960_LoginsHistory().ShowDialog();
         }
+
     }
 }

@@ -224,8 +224,8 @@ namespace OrdersProgress.Models
         public long C_L2 { get; set; }
         public int C_I1 { get; set; }
         public int C_I2 { get; set; }
-        public bool C_B1 { get; set; }
-        public bool C_B2 { get; set; }
+        public bool C_B1 { get; set; }      // 1 استفاده کمکی
+        public bool C_B2 { get; set; }      // 2 استفاده کمکی
         public bool C_B3 { get; set; }
     }
 
@@ -334,11 +334,11 @@ namespace OrdersProgress.Models
 
         public long User_Index { get; set; }    // شناسۀ شخصی که مرحله را انجام داده است
         public long User_Level_Index { get; set; }    // شناسۀ شخصی که مرحله را انجام داده است
-        public string User_Name { get; set; }     // نام شخصی که مرحله را انجام داده است
 
         public string Order_Index { get; set; }
         public long OrderLevel_Index { get; set; }   //آخرین مرحله ای که سفارش گذرانده است
         public string OrderLevel_Description { get; set; }  // شرح مرحله ای که سفارش گذرانده است
+        public string User_Name { get; set; }     // نام شخصی که مرحله را انجام داده است
 
         public DateTime DateTime_mi { get; set; }   // زمان انجام مرحله به میلادی
         public string DateTime_sh { get; set; }     // زمان انجام مرحله به شمسی

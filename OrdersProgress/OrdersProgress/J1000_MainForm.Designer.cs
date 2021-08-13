@@ -102,7 +102,7 @@
             this.tsmiUserLevelsFeatures,
             this.tsmiLoginsHistory});
             this.tsmiUsers.Name = "tsmiUsers";
-            this.tsmiUsers.Size = new System.Drawing.Size(180, 24);
+            this.tsmiUsers.Size = new System.Drawing.Size(122, 24);
             this.tsmiUsers.Text = "کاربران";
             // 
             // tsmiUsers_Show_Change
@@ -145,7 +145,7 @@
             this.tsmiOrdersLevels,
             this.tsmiOrders_and_Details});
             this.tsmiOrdersFeatures.Name = "tsmiOrdersFeatures";
-            this.tsmiOrdersFeatures.Size = new System.Drawing.Size(180, 24);
+            this.tsmiOrdersFeatures.Size = new System.Drawing.Size(122, 24);
             this.tsmiOrdersFeatures.Text = "سفارشها";
             // 
             // tsmiOrdersLevels

@@ -45,11 +45,11 @@ namespace OrdersProgress
                     {
                         case "OrderLevel_Description":
                             col.HeaderText = "شرح مرحله انجام شده";
-                            col.Width = 400;
+                            col.Width = 500;
                             break;
                         case "User_Name":
                             col.HeaderText = "نام کاربر";
-                            col.Width = 300;
+                            col.Width = 200;
                             break;
                         case "DateTime_sh":
                             col.HeaderText = "تاریخ";

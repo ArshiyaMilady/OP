@@ -61,7 +61,7 @@
             this.tsmiCancel = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -291,7 +291,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(366, 18);
             this.label2.TabIndex = 3;
-            this.label2.Text = "برای استفاده از امکانات بیشتر بر روی مشخصه مورد نظر کلیک راست نمایید.";
+            this.label2.Text = "برای استفاده از امکانات بیشتر بر روی سفارش مورد نظر کلیک راست نمایید.";
             // 
             // btnReturn
             // 
@@ -357,26 +357,26 @@
             this.tsmiCancel});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 158);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(193, 158);
             // 
             // tsmiOrderHistory
             // 
             this.tsmiOrderHistory.Name = "tsmiOrderHistory";
-            this.tsmiOrderHistory.Size = new System.Drawing.Size(180, 22);
+            this.tsmiOrderHistory.Size = new System.Drawing.Size(192, 22);
             this.tsmiOrderHistory.Text = "تاریخچه سفارش";
             this.tsmiOrderHistory.Click += new System.EventHandler(this.TsmiOrderHistory_Click);
             // 
             // tsmiOrderDetails
             // 
             this.tsmiOrderDetails.Name = "tsmiOrderDetails";
-            this.tsmiOrderDetails.Size = new System.Drawing.Size(180, 22);
+            this.tsmiOrderDetails.Size = new System.Drawing.Size(192, 22);
             this.tsmiOrderDetails.Text = "مشاهده جزییات سفارش";
             this.tsmiOrderDetails.Click += new System.EventHandler(this.TsmiOrderDetails_Click);
             // 
             // tsmiWarehouseChecklist
             // 
             this.tsmiWarehouseChecklist.Name = "tsmiWarehouseChecklist";
-            this.tsmiWarehouseChecklist.Size = new System.Drawing.Size(180, 22);
+            this.tsmiWarehouseChecklist.Size = new System.Drawing.Size(192, 22);
             this.tsmiWarehouseChecklist.Text = "مشاهده چک لیست انبار";
             this.tsmiWarehouseChecklist.Visible = false;
             this.tsmiWarehouseChecklist.Click += new System.EventHandler(this.TsmiWarehouseChecklist_Click);
@@ -384,7 +384,7 @@
             // tsmiChangeOrder
             // 
             this.tsmiChangeOrder.Name = "tsmiChangeOrder";
-            this.tsmiChangeOrder.Size = new System.Drawing.Size(180, 22);
+            this.tsmiChangeOrder.Size = new System.Drawing.Size(192, 22);
             this.tsmiChangeOrder.Text = "تغییر سفارش";
             this.tsmiChangeOrder.Visible = false;
             this.tsmiChangeOrder.Click += new System.EventHandler(this.TsmiChangeOrder_Click);
@@ -392,7 +392,7 @@
             // tsmiChangeOrderLevel
             // 
             this.tsmiChangeOrderLevel.Name = "tsmiChangeOrderLevel";
-            this.tsmiChangeOrderLevel.Size = new System.Drawing.Size(180, 22);
+            this.tsmiChangeOrderLevel.Size = new System.Drawing.Size(192, 22);
             this.tsmiChangeOrderLevel.Text = "تغییر وضعیت سفارش";
             this.tsmiChangeOrderLevel.Visible = false;
             this.tsmiChangeOrderLevel.Click += new System.EventHandler(this.TsmiChangeOrderLevel_Click);
@@ -400,7 +400,7 @@
             // tsmiDelete
             // 
             this.tsmiDelete.Name = "tsmiDelete";
-            this.tsmiDelete.Size = new System.Drawing.Size(180, 22);
+            this.tsmiDelete.Size = new System.Drawing.Size(192, 22);
             this.tsmiDelete.Text = "حذف";
             this.tsmiDelete.Visible = false;
             this.tsmiDelete.Click += new System.EventHandler(this.TsmiDelete_Click);
@@ -408,7 +408,7 @@
             // tsmiCancel
             // 
             this.tsmiCancel.Name = "tsmiCancel";
-            this.tsmiCancel.Size = new System.Drawing.Size(180, 22);
+            this.tsmiCancel.Size = new System.Drawing.Size(192, 22);
             this.tsmiCancel.Text = "لغو سفارش";
             this.tsmiCancel.Visible = false;
             this.tsmiCancel.Click += new System.EventHandler(this.TsmiCancel_Click);
@@ -435,10 +435,11 @@
             this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             this.progressBar1.TabIndex = 5;
             // 
-            // timer1
+            // backgroundWorker1
             // 
-            this.timer1.Interval = 10000;
-            this.timer1.Tick += new System.EventHandler(this.Timer1_Tick);
+            this.backgroundWorker1.WorkerSupportsCancellation = true;
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BackgroundWorker1_DoWork);
+            this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BackgroundWorker1_RunWorkerCompleted);
             // 
             // L1000_Orders
             // 
@@ -498,6 +499,6 @@
         private System.Windows.Forms.TextBox txtST_OrderId;
         private System.Windows.Forms.ComboBox cmbST_OrderId;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Timer timer1;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }

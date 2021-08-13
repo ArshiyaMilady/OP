@@ -33,7 +33,7 @@ namespace OrdersProgress
                 (Stack.Company_Index, order.CurrentLevel_Index).Select(d=>d.OL_Retruned_Index).ToList();
 
             comboBox1.Items.AddRange(Program.dbOperations.GetAllOrder_LevelsAsync
-                (Stack.Company_Index).Where(d => lstOLs_can_return.Contains(d.Index)).Select(d => d.Description).ToArray());
+                (Stack.Company_Index).Where(d => lstOLs_can_return.Contains(d.Index)).Select(d => d.Description2).ToArray());
 
             if (comboBox1.Items.Count > 0)
             {
