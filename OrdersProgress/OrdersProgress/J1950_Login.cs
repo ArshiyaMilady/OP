@@ -153,7 +153,7 @@ namespace OrdersProgress
                 case 1:
                     if (txtNM.Text.Trim().Length < 10)
                     {
-                        MessageBox.Show("شماره همراه نادرست است", "خطا");
+                        //MessageBox.Show("شماره همراه نادرست است", "خطا");
                         return null ;
                     }
 

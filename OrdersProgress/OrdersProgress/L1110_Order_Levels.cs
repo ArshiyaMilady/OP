@@ -19,14 +19,19 @@ namespace OrdersProgress
 
         private void L1110_Order_Levels_Shown(object sender, EventArgs e)
         {
-            if(Stack.UserLevel_Type==1)
+            if ((Stack.UserLevel_Type == 1) || (Stack.UserLevel_Type == 2))
             {
                 panel2.Visible = true;
                 btnAddNew.Visible = true;
                 panel3.Visible = true;
-                tsmiDelete.Visible = true;
-                tsmiDeleteAllOL_Prerequisites.Visible = true;
+
+                if (Stack.UserLevel_Type == 1)
+                {
+                    tsmiDelete.Visible = true;
+                    tsmiDeleteAllOL_Prerequisites.Visible = true;
+                }
             }
+
 
             dgvData.DataSource = GetData();
             ShowData();

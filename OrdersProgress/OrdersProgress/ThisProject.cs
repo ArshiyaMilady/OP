@@ -55,8 +55,11 @@ namespace OrdersProgress
             foreach (Models.OL_Prerequisite olp in Program.dbOperations
                 .GetAllOL_PrerequisitesAsync(Stack.Company_Index)
                 .Where(b => lstEnabled_OL.Contains(b.Prerequisite_Index))
-                .Where(b => lstEnabled_OL.Contains(b.OL_Index))
-                .Where(d => d.Prerequisite_Index == lstPassed_OL_Indexes.Last()).ToList())
+                .Where(d => lstEnabled_OL.Contains(d.OL_Index))
+                //.Where(d => d.Prerequisite_Index == lstPassed_OL_Indexes.Last()
+                .Where(j => lstPassed_OL_Indexes.Contains(j.Prerequisite_Index))
+                .Where(n => !lstPassed_OL_Indexes.Contains(n.OL_Index))
+                .ToList())
             {
                 // آیا تمام پیش نیازهای این مرحله توسط سفارش گذرانده شده است
                 bool b = false;
@@ -125,7 +128,7 @@ namespace OrdersProgress
         }
 
         // سفارش را برگشت بده
-        public bool ReturnOrder(Models.Order order,long ol_returned_index,string return_description = null)
+        public bool ReturnOrder(Models.Order order,long ol_returned_index,string cause_of_returning)
         {
             if (!Program.dbOperations.GetAllOrder_LevelsAsync(Stack.Company_Index).Any(d => d.ReturningLevel))
                 return false;
@@ -137,6 +140,23 @@ namespace OrdersProgress
             Models.Order_OL order_ol = Program.dbOperations.GetAllOrder_OLsAsync
                 (Stack.Company_Index, order.Index).OrderBy(d => d.Id).ToList().Last();
             Program.dbOperations.DeleteOrder_OL(order_ol);
+            #region حذف تمام مراحل گذرانده ای که پیش نیاز آنها مرحله برگشت شده می باشد
+            //foreach(Models.Order_OL ool in Program.dbOperations.GetAllOrder_OLsAsync
+            //    (Stack.Company_Index, order.Index).OrderBy(d => d.Id).ToList())
+            //{
+                foreach (Models.OL_Prerequisite olp in Program.dbOperations.GetAllOL_PrerequisitesAsync
+                    (Stack.Company_Index).Where(d => d.Prerequisite_Index == ol_returned_index).ToList())
+                {
+                    if(Program.dbOperations.GetAllOrder_OLsAsync
+                        (Stack.Company_Index, order.Index).Any(d=>d.OrderLevel_Index == olp.OL_Index))
+                    {
+                        Models.Order_OL ool = Program.dbOperations.GetAllOrder_OLsAsync(Stack.Company_Index
+                            , order.Index).First(d => d.OrderLevel_Index == olp.OL_Index);
+                        Program.dbOperations.DeleteOrder_OL(ool);
+                    }
+                }
+            //}
+            #endregion
 
             // پیدا کردن مرحله قبلی از جدول مراحل گذرانده سفارش
             order.PreviousLevel_Index = Program.dbOperations.GetAllOrder_OLsAsync
@@ -145,15 +165,18 @@ namespace OrdersProgress
                 && (d.OrderLevel_Index != ol_returned_index))
                 .OrderBy(d => d.Id).ToList().Last().OrderLevel_Index;
 
-            order.NextLevel_Index = order.CurrentLevel_Index;
             order.CurrentLevel_Index = ol_returned_index;
             order.Level_Description = "سفارش برگشت شد";
-            Program.dbOperations.UpdateOrderAsync(order);
+            Program.dbOperations.UpdateOrder(order);
+            order.NextLevel_Index = Next_OrderLevel_Indexes(order.Index).First();// order.CurrentLevel_Index;
+            Program.dbOperations.UpdateOrder(order);
 
             #region ثبت در تاریخچه
             order.CurrentLevel_Index = Program.dbOperations.GetAllOrder_LevelsAsync
                 (Stack.Company_Index).First(d => d.ReturningLevel).Index;
-            Create_OrderHistory(order, return_description);
+            Create_OrderHistory(order, "سفارش به مرحله «"
+                + Program.dbOperations.GetOrder_LevelAsync(ol_returned_index).Description2
+                        + "» برگشت شد." + " علت برگشت : " + cause_of_returning);
             #endregion
 
             return true;

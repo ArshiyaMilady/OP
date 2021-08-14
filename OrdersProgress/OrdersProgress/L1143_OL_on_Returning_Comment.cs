@@ -51,14 +51,18 @@ namespace OrdersProgress
             }
             else
             {
-                Stack.lx = lstOLs_can_return[comboBox1.SelectedIndex];
+                Stack.lx = Program.dbOperations.GetAllOrder_LevelsAsync
+                    (Stack.Company_Index).First(d => d.Description2.Equals(comboBox1.Text)).Index;
                 Stack.sx = textBox1.Text;
+
+                //MessageBox.Show("ol_index = " + Stack.lx);
                 Close();
             }
         }
 
         private void BtnCancel_Click(object sender, EventArgs e)
         {
+            Stack.sx = null;
             Close();
         }
     }

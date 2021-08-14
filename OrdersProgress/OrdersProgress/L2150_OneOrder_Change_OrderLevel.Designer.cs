@@ -122,6 +122,7 @@
             this.dgvData.Size = new System.Drawing.Size(530, 262);
             this.dgvData.TabIndex = 93;
             this.dgvData.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvData_CellContentClick);
+            this.dgvData.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvData_CellEndEdit);
             // 
             // L2150_OneOrder_Change_OrderLevel
             // 

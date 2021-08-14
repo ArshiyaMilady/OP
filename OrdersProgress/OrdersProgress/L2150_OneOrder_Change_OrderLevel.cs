@@ -114,6 +114,21 @@ namespace OrdersProgress
             }
         }
 
+        private void DgvData_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
+
+            if (dgvData.Rows.Cast<DataGridViewRow>().Where(d=>Convert.ToBoolean(d.Cells["C_B1"].Value)).ToList().Count>1)
+            {
+                foreach (DataGridViewRow row in dgvData.Rows.Cast<DataGridViewRow>()
+                    .Where(b=>b.Index != e.RowIndex)
+                    .Where(d => Convert.ToBoolean(d.Cells["C_B1"].Value)).ToList())
+                {
+                    row.Cells["C_B1"].Value = false;
+                }
+            }
+        }
+
         private void BtnSave_Click(object sender, EventArgs e)
         {
             if (!dgvData.Rows.Cast<DataGridViewRow>().Any(d => Convert.ToBoolean(d.Cells["C_B1"].Value)))
@@ -146,9 +161,7 @@ namespace OrdersProgress
                     new L1143_OL_on_Returning_Comment(order_index).ShowDialog();
                     if (!string.IsNullOrEmpty(Stack.sx))
                     {
-                        this_project.ReturnOrder(order, Stack.lx, "سفارش به مرحله «"
-                + Program.dbOperations.GetOrder_LevelAsync(order.CurrentLevel_Index).Description2
-                        + "» برگشت شد." + " علت برگشت : " + Stack.sx);
+                        this_project.ReturnOrder(order, Stack.lx, Stack.sx);
                         Stack.bx = true;
                     }
                 }
@@ -181,5 +194,7 @@ namespace OrdersProgress
                 }
             }
         }
+
+ 
     }
 }
