@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnChooseAll = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.btnDeleteAll = new System.Windows.Forms.Button();
             this.btnReturn = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.dgvData = new System.Windows.Forms.DataGridView();
-            this.btnChooseAll = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             this.SuspendLayout();
@@ -56,6 +56,16 @@
             this.panel1.Size = new System.Drawing.Size(556, 333);
             this.panel1.TabIndex = 3;
             // 
+            // btnChooseAll
+            // 
+            this.btnChooseAll.Location = new System.Drawing.Point(13, 3);
+            this.btnChooseAll.Name = "btnChooseAll";
+            this.btnChooseAll.Size = new System.Drawing.Size(127, 26);
+            this.btnChooseAll.TabIndex = 97;
+            this.btnChooseAll.Text = "انتخاب همه";
+            this.btnChooseAll.UseVisualStyleBackColor = true;
+            this.btnChooseAll.Click += new System.EventHandler(this.BtnChooseAll_Click);
+            // 
             // label2
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -65,7 +75,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(396, 22);
             this.label2.TabIndex = 95;
-            this.label2.Text = "از جدول زیر مراحل سفارشی که این سطح کاربری می تواند مشاهد ه نماید را مشخص نمایید";
+            this.label2.Text = "از جدول زیر مراحل سفارشی که این سطح کاربری می تواند مشاهده نماید را مشخص نمایید";
             // 
             // btnDeleteAll
             // 
@@ -112,16 +122,6 @@
             this.dgvData.Name = "dgvData";
             this.dgvData.Size = new System.Drawing.Size(530, 262);
             this.dgvData.TabIndex = 93;
-            // 
-            // btnChooseAll
-            // 
-            this.btnChooseAll.Location = new System.Drawing.Point(13, 3);
-            this.btnChooseAll.Name = "btnChooseAll";
-            this.btnChooseAll.Size = new System.Drawing.Size(127, 26);
-            this.btnChooseAll.TabIndex = 97;
-            this.btnChooseAll.Text = "انتخاب همه";
-            this.btnChooseAll.UseVisualStyleBackColor = true;
-            this.btnChooseAll.Click += new System.EventHandler(this.BtnChooseAll_Click);
             // 
             // J2230_UL_See_OL
             // 

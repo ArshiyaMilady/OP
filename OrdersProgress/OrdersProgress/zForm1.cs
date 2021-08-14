@@ -25,8 +25,10 @@ namespace OrdersProgress
             //dgvData.DataSource = Program.dbOperations.GetAllUser_Level_UL_FeaturesAsync(Stack.Company_Index);
             //dgvData.DataSource = Program.dbOperations.GetAllOrder_Item_PropertiesAsync();
             //dgvData.DataSource = Program.dbOperations.GetAllOrder_Level_on_ReturningsAsync(Stack.Company_Index);
-            dgvData.DataSource = Program.dbOperations.GetAllOrdersAsync(Stack.Company_Index);
+            //dgvData.DataSource = Program.dbOperations.GetAllOrdersAsync(Stack.Company_Index);
             //dgvData.DataSource = Program.dbOperations.GetAllUsersAsync(Stack.Company_Index);
+            dgvData.DataSource = Program.dbOperations.GetAllItem_PropertiesAsync(Stack.Company_Index);
+            //dgvData.DataSource = Program.dbOperations.GetAllItemsAsync(Stack.Company_Index);
             //dgvData.DataSource = Program.dbOperations.GetAllLoginHistorysAsync(Stack.Company_Index)
             //    .OrderByDescending(d=>d.DateTime_mi).ToList();
 
@@ -59,6 +61,11 @@ namespace OrdersProgress
 
         private void Button1_Click(object sender, EventArgs e)
         {
+            #region حذف تمام روابط کالاها و مشخصه ها
+            Program.dbOperations.Properties_Reset_Values();
+            //Program.dbOperations.DeleteAllItem_PropertiesAsync();
+            #endregion
+
             #region فعال کردن تمام امکانات کاربران به صورت پیش فرض
             //foreach (Models.UL_Feature ulf in Program.dbOperations.GetAllUL_FeaturesAsync(Stack.Company_Index))
             //{
@@ -254,7 +261,7 @@ namespace OrdersProgress
             //    Program.dbOperations.UpdateOrderPriorityAsync(x);
             //}
 
-            //foreach (var x in Program.dbOperations.GetAllPropertiesAsync(0))
+            //foreach (var x in Program.dbOperations.GetAllPropertiesAsync(Stack.Company_Index,0))
             //{
             //    x.Company_Index = 1;
             //    Program.dbOperations.UpdatePropertyAsync(x);

@@ -20,6 +20,7 @@ namespace OrdersProgress
         {
             InitializeComponent();
 
+            Stack.bx = false;
             //OrderIndex = _OrderIndex;
             bOrderReadOnly = _bOrderReadOnly;
 
@@ -236,7 +237,12 @@ namespace OrdersProgress
 
             order_level = Program.dbOperations.GetOrder_LevelAsync(order.CurrentLevel_Index);
             if (!order_level.OrderCanChange)
+            {
                 btnSave.Visible = false;
+                Stack.bx = true;
+                Close();
+                return;
+            }
             else
             {
                 if (!btnSave.Text.Equals(Program.dbOperations.GetOrder_LevelAsync(order.CurrentLevel_Index).MessageText))
@@ -253,6 +259,12 @@ namespace OrdersProgress
         private void TxtST_Leave(object sender, EventArgs e)
         {
             AcceptButton = null;
+        }
+
+        private void BtnReturn_Click(object sender, EventArgs e)
+        {
+            Stack.bx = false;
+            Close();
         }
 
         private void TsmiItemProperties_Click(object sender, EventArgs e)

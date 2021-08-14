@@ -37,7 +37,8 @@ namespace OrdersProgress
             {
                 MessageBox.Show(Stack.UserLevel_Type.ToString());
 
-                foreach (Models.UL_See_UL ul_see_ul in Program.dbOperations.GetAllUL_See_ULsAsync(Stack.Company_Index, Stack.UserLevel_Index))
+                foreach (Models.UL_See_UL ul_see_ul in Program.dbOperations
+                    .GetAllUL_See_ULsAsync(Stack.Company_Index, Stack.UserLevel_Index))
                 {
                     Models.User_Level ul = Program.dbOperations.GetUser_LevelAsync(ul_see_ul.UL_Index);
                     lstUL.Add(ul);
@@ -46,14 +47,19 @@ namespace OrdersProgress
             else
             {
                 if (Stack.UserLevel_Type == 1)
-                    lstUL = Program.dbOperations.GetAllUser_LevelsAsync(Stack.Company_Index,0).Where(b => b.Enabled).ToList();
+                    lstUL = Program.dbOperations.GetAllUser_LevelsAsync(Stack.Company_Index,0).ToList();
+                else if (Stack.UserLevel_Type == 2)
+                    lstUL = Program.dbOperations.GetAllUser_LevelsAsync(Stack.Company_Index, 0)
+                        .Where(d => (d.Type != 1)&&(d.Type != 2)).ToList();
                 else 
-                    lstUL = Program.dbOperations.GetAllUser_LevelsAsync(Stack.Company_Index, 0).Where(b => b.Enabled)
+                    lstUL = Program.dbOperations.GetAllUser_LevelsAsync(Stack.Company_Index, 0)
                         .Where(d => d.Type == 0).ToList();
 
             }
 
-            return lstUL.OrderByDescending(d => d.C_B1).ToList();
+            if (radEnabledLevel.Checked) return lstUL.Where(d => d.Enabled).OrderByDescending(d => d.C_B1).ToList();
+            else if (radDisabledLevel.Checked) return lstUL.Where(d => !d.Enabled).OrderByDescending(d => d.C_B1).ToList();
+            else return lstUL.OrderByDescending(d => d.C_B1).ToList();
         }
 
         private void ShowData()
@@ -64,9 +70,13 @@ namespace OrdersProgress
                 switch (col.Name)
                 {
                     case "Index":
-                        col.HeaderText = "شناسه";
-                        col.ReadOnly = true;
-                        col.Width = 50;
+                        if (Stack.UserLevel_Type == 1)
+                        {
+                            col.HeaderText = "شناسه";
+                            col.ReadOnly = true;
+                            col.Width = 50;
+                        }
+                        else col.Visible = false;
                         break;
                     case "Description":
                         col.HeaderText = "شرح";

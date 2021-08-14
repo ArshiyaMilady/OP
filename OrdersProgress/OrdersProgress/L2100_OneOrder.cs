@@ -321,7 +321,7 @@ namespace OrdersProgress
 
             if (string.IsNullOrEmpty(btnCustomer.Text) || (btnCustomer.Text.Length<2))
             {
-                MessageBox.Show("لطفا خریدار را مشخص نمایید", "خطا");
+                MessageBox.Show("لطفا خریدار را مشخص نمایید. حداق باید دو کاراکتر (حرف ، عدد یا ...) باشد", "خطا");
                 return;
             }
 
@@ -395,6 +395,14 @@ namespace OrdersProgress
                             Program.dbOperations.DeleteOrder_Item_PropertyAsync(oip);
                     }
                     #endregion
+
+                    #region حذف مراحل گذراندۀ قبلی
+                    if(Program.dbOperations.GetAllOrder_OLsAsync(Stack.Company_Index,OrderIndex).Any())
+                    {
+                        foreach (Models.Order_OL ool in Program.dbOperations.GetAllOrder_OLsAsync(Stack.Company_Index, OrderIndex))
+                            Program.dbOperations.DeleteOrder_OLAsync(ool);
+                    }
+                    #endregion
                 }
 
                 bSaveItems_to_Order = true;
@@ -451,7 +459,7 @@ namespace OrdersProgress
                                 Property_Name = property.Name,
                                 Property_Description = property.Description,
                                 Property_Value = property.DefaultValue,
-                                Property_ChangingValue = property.ChangingValue,
+                                Property_ChangingValue = ip.ChangingValue,
                             });
                             Application.DoEvents();
                             //MessageBox.Show(property.Name, (i+1).ToString());
@@ -475,9 +483,9 @@ namespace OrdersProgress
                 }
             }
 
-            Hide();
-            ForceClose = true;
+            //Hide();
             new L2120_OneOrder_Items(OrderIndex, bOrderReadOnly).ShowDialog();
+            ForceClose = Stack.bx;
             Close();
 
             Application.DoEvents();
@@ -569,9 +577,17 @@ namespace OrdersProgress
         bool ForceClose = false;
         private void L2100_OneOrder_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if(!ForceClose)
-                if (MessageBox.Show("آیا مایل به بستن صفحه می باشید؟",""
-                    ,MessageBoxButtons.YesNo) != DialogResult.Yes) e.Cancel = true;
+            if (!ForceClose)
+            {
+                bool bNotAsking = false;
+                bNotAsking = string.IsNullOrWhiteSpace(txtOrderTitle.Text)
+                    && (string.IsNullOrWhiteSpace(btnCustomer.Text) || (btnCustomer.Text.Length==1))
+                    && !dgvData.Rows.Cast<DataGridViewRow>().Any(d => Convert.ToBoolean(d.Cells["C_B1"].Value));
+
+                if(!bNotAsking)
+                    if (MessageBox.Show("آیا مایل به بستن صفحه می باشید؟", ""
+                        , MessageBoxButtons.YesNo) != DialogResult.Yes) e.Cancel = true;
+            }
         }
 
         private void TxtST_SmallCode_Leave(object sender, EventArgs e)

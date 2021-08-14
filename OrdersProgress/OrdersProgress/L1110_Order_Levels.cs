@@ -23,10 +23,10 @@ namespace OrdersProgress
             {
                 panel2.Visible = true;
                 btnAddNew.Visible = true;
-                panel3.Visible = true;
 
                 if (Stack.UserLevel_Type == 1)
                 {
+                    panel3.Visible = true;
                     tsmiDelete.Visible = true;
                     tsmiDeleteAllOL_Prerequisites.Visible = true;
                 }
@@ -39,12 +39,19 @@ namespace OrdersProgress
 
         private List<Models.Order_Level> GetData()
         {
-            if(radEnabledLevel.Checked)
-                return Program.dbOperations.GetAllOrder_LevelsAsync(Stack.Company_Index, 1).Where(d=>d.Enabled).ToList();
-            else if(radDisabledLevel.Checked)
-                return Program.dbOperations.GetAllOrder_LevelsAsync(Stack.Company_Index, -1).Where(d=>!d.Enabled).ToList();
+            List<Models.Order_Level> lstOLs = Program.dbOperations.GetAllOrder_LevelsAsync(Stack.Company_Index, 0);
 
-            return Program.dbOperations.GetAllOrder_LevelsAsync(Stack.Company_Index, 0);
+            if (Stack.UserLevel_Type != 1)
+            {
+                lstOLs = lstOLs.Where(d => !d.CancelingLevel && !d.RemovingLevel && !d.ReturningLevel).ToList();
+            }
+
+            if (radEnabledLevel.Checked)
+                lstOLs = lstOLs.Where(d=>d.Enabled).ToList();
+            else if(radDisabledLevel.Checked)
+                lstOLs = lstOLs.Where(d=>!d.Enabled).ToList();
+
+            return lstOLs;
         }
 
         private void ShowData()
@@ -64,8 +71,8 @@ namespace OrdersProgress
                         else col.Visible = false;
                         break;
                     case "Sequence":
-                        //if ((Stack.UserLevel_Type == 1) || (Stack.UserLevel_Type == 2))
-                        if (Stack.UserLevel_Type == 1)
+                        if ((Stack.UserLevel_Type == 1) || (Stack.UserLevel_Type == 2))
+                        //if (Stack.UserLevel_Type == 1)
                         {
                             col.HeaderText = "ترتیب";
                             col.Width = 50;

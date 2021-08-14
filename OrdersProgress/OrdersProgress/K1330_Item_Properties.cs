@@ -13,6 +13,7 @@ namespace OrdersProgress
     public partial class K1330_Item_Properties : X210_ExampleForm_Normal
     {
         Models.Item item;
+        List<Models.Property> lstPrs = new List<Models.Property>();
 
         public K1330_Item_Properties(Models.Item _item)
         {
@@ -29,8 +30,17 @@ namespace OrdersProgress
             cmbST_Name.SelectedIndex = 0;
             cmbST_Description.SelectedIndex = 0;
 
-            Program.dbOperations.Properties_Reset_Values();
+            //Program.dbOperations.Properties_Reset_Values();
+            dgvData.DataSource = GetData();
             ShowData();
+            Application.DoEvents();
+
+            if (!lstPrs.Where(d=>d.C_B1).Any())
+            {
+                progressBar1.Visible = false;
+                MessageBox.Show("در حال حاضر برای این کالا، مشخصه ای تعریف نشده است");
+                chkJustShowItemProperties.Checked = false;
+            }
 
             Application.DoEvents();
             progressBar1.Visible = false;
@@ -38,55 +48,92 @@ namespace OrdersProgress
         }
 
         // NeedToCorrect_C_B1 : آیا نیاز به بروز رسانی پارامتر «سی-بی 1» می باشد؟
-        private List<Models.Property> GetData(List<Models.Property> lstPr = null, bool NeedToCorrect_C_B1 = true)
+        private List<Models.Property> GetData() //List<Models.Property> lstPr = null, bool NeedToCorrect_C_B1 = true)
         {
-            if (lstPr == null) lstPr = Program.dbOperations.GetAllPropertiesAsync(1);
-
-            #region بروز رسانی پارامتر «سی-بی 1»
-            if (NeedToCorrect_C_B1)
+            if (!lstPrs.Any())
             {
-                // کالاهایی که زیرساخت کالای وارد شده به فرم می باشند
-                List<Models.Item_Property> lstIP = Program.dbOperations.GetAllItem_PropertiesAsync(Stack.Company_Index,item.Code_Small);
+                lstPrs = Program.dbOperations.GetAllProperties(Stack.Company_Index, 1);
 
-                if (lstIP.Any())
+                #region
                 {
-                    foreach (Models.Property pr1 in lstPr)
+                    // کالاهایی که زیرساخت کالای وارد شده به فرم می باشند
+                    List<Models.Item_Property> lstIP = Program.dbOperations
+                        .GetAllItem_PropertiesAsync(Stack.Company_Index, item.Code_Small);
+
+                    if (lstIP.Any())
                     {
-                        if (lstIP.Any(d => d.Property_Index == pr1.Index))
+                        foreach (Models.Property pr1 in lstPrs)
                         {
-                            pr1.C_B1 = true;
-                            pr1.DefaultValue = lstIP.First(d => d.Property_Index == pr1.Index).DefaultValue;
-                            Program.dbOperations.UpdatePropertyAsync(pr1);
+                            if (lstIP.Any(d => d.Property_Index == pr1.Index))
+                            {
+                                pr1.C_B1 = true;
+                                pr1.DefaultValue = lstIP.First(d => d.Property_Index == pr1.Index).DefaultValue;
+                                //Program.dbOperations.UpdatePropertyAsync(pr1);
+                            }
+                            Application.DoEvents();
                         }
-                        Application.DoEvents();
                     }
                 }
+                #endregion
             }
-            #endregion
 
             if (chkJustShowItemProperties.Checked)
-                return Program.dbOperations.GetAllPropertiesAsync(1).Where(d => d.C_B1).ToList();
-            else return Program.dbOperations.GetAllPropertiesAsync(1)
-                    .OrderByDescending(d => d.C_B1).ToList();
+                return lstPrs.Where(d => d.C_B1).ToList();
+            else return lstPrs.OrderByDescending(d => d.C_B1).ToList();
 
         }
 
-        private void ShowData(bool ChangeHeaderTexts = true)
-        {
-            List<Models.Property> lstPr = GetData().Where(d => d.C_B1).ToList();
-            // اگر این کالا دارای مشخصه ای نباشد
-            if (chkJustShowItemProperties.Checked && !lstPr.Any())
-            {
-                progressBar1.Visible = false;
-                MessageBox.Show("در حال حاضر برای این کالا، مشخصه ای تعریف نشده است");
-                chkJustShowItemProperties.Checked = false;
-                lstPr = GetData(null, false);
-            }
+        //// NeedToCorrect_C_B1 : آیا نیاز به بروز رسانی پارامتر «سی-بی 1» می باشد؟
+        //private List<Models.Property> GetData(List<Models.Property> lstPr = null, bool NeedToCorrect_C_B1 = true)
+        //{
+        //    if (lstPr == null) lstPr = Program.dbOperations.GetAllPropertiesAsync(Stack.Company_Index, 1);
 
-            dgvData.DataSource = lstPr;
+        //    #region بروز رسانی پارامتر «سی-بی 1»
+        //    if (NeedToCorrect_C_B1)
+        //    {
+        //        // کالاهایی که زیرساخت کالای وارد شده به فرم می باشند
+        //        List<Models.Item_Property> lstIP = Program.dbOperations
+        //            .GetAllItem_PropertiesAsync(Stack.Company_Index,item.Code_Small);
+
+        //        if (lstIP.Any())
+        //        {
+        //            foreach (Models.Property pr1 in lstPr)
+        //            {
+        //                if (lstIP.Any(d => d.Property_Index == pr1.Index))
+        //                {
+        //                    pr1.C_B1 = true;
+        //                    pr1.DefaultValue = lstIP.First(d => d.Property_Index == pr1.Index).DefaultValue;
+        //                    Program.dbOperations.UpdatePropertyAsync(pr1);
+        //                }
+        //                Application.DoEvents();
+        //            }
+        //        }
+        //    }
+        //    #endregion
+
+        //    if (chkJustShowItemProperties.Checked)
+        //        return Program.dbOperations.GetAllPropertiesAsync(Stack.Company_Index,1).Where(d => d.C_B1).ToList();
+        //    else return Program.dbOperations.GetAllPropertiesAsync(Stack.Company_Index,1)
+        //            .OrderByDescending(d => d.C_B1).ToList();
+
+        //}
+
+        private void ShowData() //bool ChangeHeaderTexts = true)
+        {
+            //List<Models.Property> lstPr = GetData().Where(d => d.C_B1).ToList();
+            //// اگر این کالا دارای مشخصه ای نباشد
+            //if (chkJustShowItemProperties.Checked && !lstPr.Any())
+            //{
+            //    progressBar1.Visible = false;
+            //    MessageBox.Show("در حال حاضر برای این کالا، مشخصه ای تعریف نشده است");
+            //    chkJustShowItemProperties.Checked = false;
+            //    //lstPr = GetData(null, false);
+            //}
+
+            //dgvData.DataSource = lstPr;
 
             #region ترجمه سر ستونها و مخفی کردن بعضی ستونها
-            if (ChangeHeaderTexts)
+            //if (ChangeHeaderTexts)
             {
                 foreach (DataGridViewColumn col in dgvData.Columns)
                 {
@@ -111,6 +158,10 @@ namespace OrdersProgress
                         case "DefaultValue":
                             col.HeaderText = "مقدار پیش فرض";
                             break;
+                        case "ChangingValue":
+                            col.HeaderText = "آیا مشخصه در هنگام سفارش قابل تغییر باشد؟";
+                            col.Width = 150;
+                            break;
                         default: col.Visible = false; break;
                     }
                 }
@@ -126,7 +177,7 @@ namespace OrdersProgress
             if (string.IsNullOrWhiteSpace(txtST_Name.Text)
                 && string.IsNullOrWhiteSpace(txtST_Description.Text))
             {
-                dgvData.DataSource = GetData(null, false);
+                dgvData.DataSource = GetData();// null, false);
                 //ShowData(false);
                 return;
             }
@@ -137,7 +188,7 @@ namespace OrdersProgress
             Application.DoEvents();
             //ShowData(false);
 
-            List<Models.Property> lstPr = GetData(null, false); 
+            List<Models.Property> lstPr = GetData();// null, false); 
             //MessageBox.Show(lstItems.Count.ToString());
 
             foreach (Control c in groupBox1.Controls)
@@ -206,27 +257,66 @@ namespace OrdersProgress
             panel1.Enabled = false;
             Application.DoEvents();
 
-            List<Models.Item_Property> lstIPs = Program.dbOperations.GetAllItem_PropertiesAsync(Stack.Company_Index,item.Code_Small);
-            foreach (Models.Item_Property ip in lstIPs) Program.dbOperations.DeleteItem_Property(ip);
-            foreach (Models.Property property in Program.dbOperations.GetAllPropertiesAsync(Stack.Company_Index).Where(d => d.C_B1).ToList())
+            List<Models.Property> lstPr = (List<Models.Property>)dgvData.DataSource;
+            /MessageBox.Show(lstPr.Where(d => d.ChangingValue).Count().ToString());
+            //List <Models.Order_Level> lstOL = (List<Models.Order_Level>)dgvData.DataSource;
+
+            #region حذف شود : قبلا بوده است، اما در جدول انتخاب نشده است 
+            if (Program.dbOperations.GetAllItem_PropertiesAsync(Stack.Company_Index, item.Code_Small).Any())
             {
-                Program.dbOperations.AddItem_PropertyAsync(new Models.Item_Property
+                foreach (Models.Item_Property ip
+                    in Program.dbOperations.GetAllItem_PropertiesAsync(Stack.Company_Index, item.Code_Small))
                 {
-                    Company_Index = Stack.Company_Index,
-                    Property_Index = property.Index,
-                    DefaultValue = property.DefaultValue,
-                    ChangingValue = property.ChangingValue,
-                    Item_Code_Small = item.Code_Small,
-                    Item_Index = item.Index,
-                });
+                    if (!lstPr.Where(d => d.C_B1).Any(d => d.Index == ip.Property_Index))
+                    {
+                        Program.dbOperations.DeleteItem_Property(ip);
+                    }
+                }
             }
+            #endregion
+
+            #region موارد جدید اضافه شود 
+            foreach (Models.Property pr in lstPr.Where(d => d.C_B1).ToList())
+            {
+                if (!Program.dbOperations.GetAllItem_PropertiesAsync(Stack.Company_Index, item.Code_Small)
+                    .Any(d => d.Property_Index == pr.Index))
+                {
+                    Program.dbOperations.AddItem_PropertyAsync(new Models.Item_Property
+                    {
+                        Company_Index = Stack.Company_Index,
+                        Property_Index = pr.Index,
+                        Item_Code_Small = item.Code_Small,
+                        Item_Index = item.Index,
+                        ChangingValue = pr.ChangingValue,
+                        DefaultValue = pr.DefaultValue,
+                    });
+                }
+            }
+            #endregion
+
+
+            //List<Models.Item_Property> lstIPs = Program.dbOperations.GetAllItem_PropertiesAsync(Stack.Company_Index,item.Code_Small);
+            //foreach (Models.Item_Property ip in lstIPs) Program.dbOperations.DeleteItem_Property(ip);
+            //foreach (Models.Property property in Program.dbOperations.GetAllPropertiesAsync
+            //    (Stack.Company_Index).Where(d => d.C_B1).ToList())
+            //{
+            //    Program.dbOperations.AddItem_PropertyAsync(new Models.Item_Property
+            //    {
+            //        Company_Index = Stack.Company_Index,
+            //        Property_Index = property.Index,
+            //        DefaultValue = property.DefaultValue,
+            //        ChangingValue = property.ChangingValue,
+            //        Item_Code_Small = item.Code_Small,
+            //        Item_Index = item.Index,
+            //    });
+            //}
 
             //dgvData.Sort(dgvData.Columns["C_B1"], ListSortDirection.Descending);
             //ShowData(false);
-            dgvData.DataSource= GetData(null, false);
+            //dgvData.DataSource= GetData();// null, false); 
             Application.DoEvents();
             panel1.Enabled = true;
-            MessageBox.Show("ثبت مشخصات برای این کالا با موفقیت انجام شد");
+            //MessageBox.Show("ثبت مشخصات برای این کالا با موفقیت انجام شد");
 
             #region ---
             /*
@@ -289,6 +379,8 @@ namespace OrdersProgress
 
         private void DgvData_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
+            return;
+
             if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
             //if (dgvData[e.ColumnIndex, e.RowIndex].Value == InitailValue) return;
 
@@ -309,7 +401,7 @@ namespace OrdersProgress
 
         private void ChkJustShowItemProperties_CheckedChanged(object sender, EventArgs e)
         {
-            dgvData.DataSource = GetData(null, false);
+            dgvData.DataSource = GetData();// null, false); 
         }
     }
 }

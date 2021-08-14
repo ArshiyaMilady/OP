@@ -73,8 +73,11 @@ namespace OrdersProgress
                                 .GetAllUser_ULsAsync(Stack.Company_Index).Where(d => d.UL_Index == main_admin_ul_index).ToList();
                             foreach (Models.User_UL user_ul in lstMainAdminUser_UL)
                             {
-                                Models.User ma_user = lstUsers.First(d => d.Index == user_ul.User_Index);
-                                lstUsers.Remove(ma_user);
+                                if (lstUsers.Any(d => d.Index == user_ul.User_Index))
+                                {
+                                    Models.User ma_user = lstUsers.First(d => d.Index == user_ul.User_Index);
+                                    lstUsers.Remove(ma_user);
+                                }
                             }
                         }
                     }
@@ -92,8 +95,11 @@ namespace OrdersProgress
                                     .GetAllUser_ULsAsync(Stack.Company_Index).Where(d => d.UL_Index == admin_ul_index).ToList();
                                 foreach (Models.User_UL user_ul in lstAdminUser_UL)
                                 {
-                                    Models.User ma_user = lstUsers.First(d => d.Index == user_ul.User_Index);
-                                    lstUsers.Remove(ma_user);
+                                    if (lstUsers.Any(d => d.Index == user_ul.User_Index))
+                                    {
+                                        Models.User ma_user = lstUsers.First(d => d.Index == user_ul.User_Index);
+                                        lstUsers.Remove(ma_user);
+                                    }
                                 }
                             }
                         }

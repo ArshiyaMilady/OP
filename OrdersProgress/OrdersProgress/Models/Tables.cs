@@ -481,6 +481,7 @@ namespace OrdersProgress.Models
         public long Index { get; set; }
         public long OI_Index { get; set; }  // 'Index' from 'Order_Item' table
         public string Order_Index { get; set; }
+
         public long Item_Index { get; set; }
         public string Item_SmallCode { get; set; }   // کد کوچک کالا
         public int ItemBatch_Counter { get; set; }  // شمارنده کالاها در یک دسته از سفارش
@@ -876,7 +877,7 @@ namespace OrdersProgress.Models
     {
         [PrimaryKey,AutoIncrement]
         public long Id { get; set; }   public long Company_Index { get; set; }
-        public bool C_B1 { get; set; }  // از این فیلد استفاده نشود. برای کارهای مختلف استفاده می گردد
+        public bool C_B1 { get; set; }  // کمکی
 
         // این محصول قابل استفاده است. مثلا در صورت قابل استفاده نبودن، امکان سفارش دهی نخواهد داشت
         public bool Enable { get; set; }    
@@ -916,8 +917,9 @@ namespace OrdersProgress.Models
         public int C_I2 { get; set; }
 
         // در اول کلاس آمده است
-        //public bool C_B1 { get; set; }  // از این فیلد استفاده نشود. برای کارهای مختلف استفاده می گردد
-        public bool C_B2 { get; set; }public bool C_B3 { get; set; }
+        //public bool C_B1 { get; set; }  // کمکی
+        public bool C_B2 { get; set; }
+        public bool C_B3 { get; set; }
     }
 
     // تمام فایلهای مرتیط با کالایی را می توان در این جدول مشخص نمود

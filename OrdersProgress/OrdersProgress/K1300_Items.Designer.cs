@@ -566,6 +566,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnReturn;
             this.ClientSize = new System.Drawing.Size(842, 404);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.progressBar1);

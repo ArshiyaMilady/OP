@@ -1943,6 +1943,19 @@ namespace OrdersProgress.Models
                 return _db.Table<Property>().Where(b => b.Company_Index == company_index).ToListAsync().Result;
         }
 
+        public List<Property> GetAllProperties(long company_index, int EnableType = 1)
+        {
+            var res = _db.Table<Property>().Where(b => b.Company_Index == company_index).ToListAsync();
+            res.Wait();
+
+            if (EnableType == 1)  // فقط مشخصه های فعال
+                return res.Result.Where(d => d.Enable).ToList();
+            else if (EnableType == -1)  // فقط مشخصه های غیرفعال
+                return res.Result.Where(d => !d.Enable).ToList();
+            else  // if(EnableType == 0) همه ی مشخصه ها
+                return res.Result.ToList();
+        }
+
         public Property GetPropertyAsync(long index)
         {
             return _db.Table<Property>().FirstOrDefaultAsync(d => d.Index == index).Result;
@@ -1985,7 +1998,7 @@ namespace OrdersProgress.Models
         // for all records :  C_B1 = false
         public void Properties_Reset_Values()
         {
-            List<Property> lstProperties = GetAllPropertiesAsync(0).ToList();
+            List<Property> lstProperties = GetAllPropertiesAsync(Stack.Company_Index, 0).ToList();
             foreach (Property property in lstProperties)
             {
                 property.C_B1 = false;
@@ -2181,6 +2194,8 @@ namespace OrdersProgress.Models
         #region Item_Property
         public List<Item_Property> GetAllItem_PropertiesAsync(long company_index, string Item_SmallCode = null)
         {
+            //return _db.Table<Item_Property>().ToListAsync().Result;
+
             if (string.IsNullOrEmpty(Item_SmallCode))
                 return _db.Table<Item_Property>().Where(b => b.Company_Index == company_index).ToListAsync().Result;
             else return _db.Table<Item_Property>().Where(b => b.Company_Index == company_index)
@@ -2191,7 +2206,7 @@ namespace OrdersProgress.Models
         // باید یکی از مشخصه های فوق غیر صفر و دیگری غیر صفر باشد
         // Item_Index != 0 : تمام مشخصه هایی که با این کالا در ارتباط هستند
         // PropertyIndex != 0 : تمام کالاهایی که با این مشخصه در ارتباط هستند
-        public List<Item_Property> GetAllItem_PropertiesAsync(long company_index, long ItemIndex = 0, long PropertyIndex = 0)
+        public List<Item_Property> GetAllItem_PropertiesAsync(long company_index, long ItemIndex , long PropertyIndex = 0)
         {
             if (ItemIndex > 0)
                 return _db.Table<Item_Property>().Where(b => b.Company_Index == company_index).Where(d => d.Item_Index == ItemIndex).ToListAsync().Result;

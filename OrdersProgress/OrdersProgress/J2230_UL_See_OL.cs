@@ -13,7 +13,7 @@ namespace OrdersProgress
     public partial class J2230_UL_See_OL : X210_ExampleForm_Normal
     {
         long ul_index;
-        List<Models.Order_Level> lstOL = new List<Models.Order_Level>();
+        List<Models.Order_Level> lstOLs = new List<Models.Order_Level>();
 
         public J2230_UL_See_OL(long _ul_index)
         {
@@ -31,7 +31,7 @@ namespace OrdersProgress
 
         private List<Models.Order_Level> GetData()
         {
-            if (!lstOL.Any())
+            if (!lstOLs.Any())
             {
                 if (Stack.UserLevel_Type == 0)
                 {
@@ -39,23 +39,23 @@ namespace OrdersProgress
                         .GetAllUL_See_OLsAsync(Stack.Company_Index, Stack.UserLevel_Index))
                     {
                         Models.Order_Level ol = Program.dbOperations.GetOrder_LevelAsync(ul_see_ol.OL_Index);
-                        lstOL.Add(ol);
+                        lstOLs.Add(ol);
                     }
                 }
                 else
                 {
                     //if (Stack.UserLevel_Type == 1)
-                    lstOL = Program.dbOperations.GetAllOrder_LevelsAsync(Stack.Company_Index).ToList();
+                    lstOLs = Program.dbOperations.GetAllOrder_LevelsAsync(Stack.Company_Index).ToList();
                 }
             }
 
-            foreach (Models.Order_Level ol in lstOL)
+            foreach (Models.Order_Level ol in lstOLs)
             {
                 ol.C_B1 = Program.dbOperations.GetAllUL_See_OLsAsync(Stack.Company_Index, ul_index)
                     .Any(d => d.OL_Index == ol.Index);
             }
 
-            return lstOL.OrderByDescending(d => d.C_B1).ToList();
+            return lstOLs.OrderByDescending(d => d.C_B1).ToList();
         }
 
         private void ShowData()
@@ -94,8 +94,10 @@ namespace OrdersProgress
             if (MessageBox.Show("آیا از ثبت تغییرات اطمینان دارید؟"
                 , "", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
 
-            List<Models.Order_Level> lstOL = (List<Models.Order_Level>)dgvData.DataSource;
+            panel1.Enabled = false;
+            Application.DoEvents();
 
+            List<Models.Order_Level> lstOL = (List<Models.Order_Level>)dgvData.DataSource;
 
             #region حذف شود : قبلا بوده است، اما در جدول انتخاب نشده است 
             if (Program.dbOperations.GetAllUL_See_OLsAsync(Stack.Company_Index, ul_index).Any())

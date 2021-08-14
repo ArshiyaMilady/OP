@@ -85,6 +85,7 @@
             this.btnReturn.TabIndex = 2;
             this.btnReturn.Text = "بازگشت";
             this.btnReturn.UseVisualStyleBackColor = true;
+            this.btnReturn.Click += new System.EventHandler(this.BtnReturn_Click);
             // 
             // panel1
             // 

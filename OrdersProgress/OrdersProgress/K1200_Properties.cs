@@ -24,11 +24,12 @@ namespace OrdersProgress
             cmbST_Name.SelectedIndex = 0;
             cmbST_Description.SelectedIndex = 0;
             comboBox1.SelectedIndex = 0;
-            dgvData.DataSource = Program.dbOperations.GetAllPropertiesAsync(1);
+
+            GetData();
             ShowData();
         }
 
-        private void ShowData(bool ChangeHeaderTexts = true)
+        private void GetData()
         {
             int enableType = 0;
             switch (comboBox1.SelectedIndex)
@@ -37,9 +38,12 @@ namespace OrdersProgress
                 case 1: enableType = -1; break;
                 case 2: enableType = 0; break;
             }
-            dgvData.DataSource = Program.dbOperations.GetAllPropertiesAsync(enableType);
 
+            dgvData.DataSource = Program.dbOperations.GetAllPropertiesAsync(Stack.Company_Index, enableType);
+        }
 
+        private void ShowData(bool ChangeHeaderTexts = true)
+        {
             #region ترجمه سر ستونها و مخفی کردن بعضی ستونها
             if (ChangeHeaderTexts)
             {
@@ -59,11 +63,11 @@ namespace OrdersProgress
                             col.HeaderText = "فعال؟";
                             col.Width = 50;
                             break;
-                        case "ChangingValue":
-                            col.HeaderText = "آیا مشخصه در هنگام سفارش قابل تغییر باشد؟";
-                            //col.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                            col.Width = 150;
-                            break;
+                        //case "ChangingValue":
+                        //    col.HeaderText = "آیا مشخصه در هنگام سفارش قابل تغییر باشد؟";
+                        //    //col.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        //    col.Width = 150;
+                        //    break;
                         default: col.Visible = false; break;
                     }
                 }
@@ -137,9 +141,7 @@ namespace OrdersProgress
                     property.Enable = Convert.ToBoolean(dgvData["Enable", e.RowIndex].Value);
                     bEnableChanged = !property.Enable && Program.dbOperations.GetAllItem_PropertiesAsync(Stack.Company_Index, index).Any();
                     break;
-                case "ChangingValue":
-                    property.ChangingValue = Convert.ToBoolean(dgvData["ChangingValue", e.RowIndex].Value);
-                    break;
+
             }
 
             if (bSaveChange)
@@ -226,17 +228,17 @@ namespace OrdersProgress
 
         private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ShowData(false);
+            GetData();
         }
 
         private void BtnSearch_Click(object sender, EventArgs e)
         {
-            //List<Models.Property> lstPr = Program.dbOperations.GetAllPropertiesAsync(1);
+            //List<Models.Property> lstPr = Program.dbOperations.GetAllPropertiesAsync(Stack.Company_Index,1);
 
             if (string.IsNullOrWhiteSpace(txtST_Name.Text)
                 && string.IsNullOrWhiteSpace(txtST_Description.Text))
             {
-                ShowData(false);
+                GetData();
                 return;
             }
 
@@ -244,7 +246,7 @@ namespace OrdersProgress
             panel1.Enabled = false;
             dgvData.Visible = false;
             Application.DoEvents();
-            ShowData(false);
+            GetData();
 
             List<Models.Property> lstPr = (List<Models.Property>)dgvData.DataSource;
             //MessageBox.Show(lstItems.Count.ToString());
@@ -265,7 +267,6 @@ namespace OrdersProgress
                 }
             }
 
-            //ShowData(false);
             dgvData.DataSource = lstPr;
 
             Application.DoEvents();
