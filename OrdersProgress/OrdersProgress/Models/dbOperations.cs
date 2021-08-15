@@ -63,7 +63,7 @@ namespace OrdersProgress.Models
             _db.CreateTableAsync<Contractor>().Wait();
             _db.CreateTableAsync<Contractor_Acion>().Wait();
             _db.CreateTableAsync<Warehouse>().Wait();
-            _db.CreateTableAsync<Warehouse_Inventory>().Wait();
+            _db.CreateTableAsync<Warehouse_Item>().Wait();
             _db.CreateTableAsync<Warehouse_Remittance>().Wait();
             _db.CreateTableAsync<Warehouse_Remittance_Item>().Wait();
         }
@@ -940,7 +940,7 @@ namespace OrdersProgress.Models
             return OIPs;
         }
 
-        public List<Order_Item_Property> GetAllOrder_Item_PropertiesAsync(string Order_Index, long ItemIndex, long PropertyIndex = 0)
+        public List<Order_Item_Property> GetAllOrder_Item_PropertiesAsync(long company_index, string Order_Index, long ItemIndex, long PropertyIndex = 0)
         {
             var OIPs = _db.Table<Order_Item_Property>().ToListAsync().Result;
             if (!string.IsNullOrEmpty(Order_Index))
@@ -1998,10 +1998,18 @@ namespace OrdersProgress.Models
         // for all records :  C_B1 = false
         public void Properties_Reset_Values()
         {
-            List<Property> lstProperties = GetAllPropertiesAsync(Stack.Company_Index, 0).ToList();
+            //foreach (Property property in GetAllPropertiesAsync(Stack.Company_Index, 0))
+            //{
+            //    property.C_B1 = false;
+            //    property.DefaultValue = null;
+            //    UpdatePropertyAsync(property);
+            //}
+
+            List<Property> lstProperties = GetAllPropertiesAsync(Stack.Company_Index, 0);
             foreach (Property property in lstProperties)
             {
                 property.C_B1 = false;
+                property.ChangingValue = false;
                 property.DefaultValue = null;
             }
             _db.UpdateAllAsync(lstProperties).Wait();
@@ -2037,6 +2045,22 @@ namespace OrdersProgress.Models
             }
         }
 
+        // مشخصاً کالاهای یک انبار را بر میگرداند
+        public List<Item> GetAllItems_in_WarehouseAsync(long company_index, int warehouse_index, int EnableType = 1)
+        {
+            List<Models.Item> lstItems = _db.Table<Item>().Where(b => b.Company_Index == company_index)
+                .Where(d=>d.Warehouse_Index == warehouse_index).ToListAsync().Result;
+
+                if (EnableType == 1)  // فقط مشخصه های فعال
+                    lstItems = lstItems.Where(d => d.Enable).ToList();
+                else if (EnableType == -1)  // فقط مشخصه های غیرفعال
+                    lstItems = lstItems.Where(d => !d.Enable).ToList();
+                //else  // if(EnableType == 0) همه ی مشخصه ها
+                //    lstItems = lstItems.ToListAsync().Result;
+
+            return lstItems;
+        }
+
         public Item GetItemAsync(long index)
         {
             return _db.Table<Item>().FirstAsync(d => d.Index == index).Result;
@@ -2063,6 +2087,11 @@ namespace OrdersProgress.Models
                 return res.Result.FirstOrDefault(d => d.Enable == true);
             else
                 return res.Result.FirstOrDefault();
+        }
+
+        public Item GetItem(long index, bool Enable_is_important = false)
+        {
+            return _db.Table<Item>().FirstOrDefaultAsync(d => d.Index == index).Result;
         }
 
         public long AddItemAsync(Item item, long index = 0)
@@ -2714,17 +2743,17 @@ namespace OrdersProgress.Models
 
         // ********** Warehouse_Inventory *************
         #region Warehouse_Inventory
-        public List<Warehouse_Inventory> GetAllWarehouse_InventorysAsync(long company_index, int Warehouse_Index = 0)
+        public List<Warehouse_Item> GetAllWarehouse_InventorysAsync(long company_index, int Warehouse_Index = 0)
         {
             if (Warehouse_Index == 0)
-                return _db.Table<Warehouse_Inventory>().Where(b => b.Company_Index == company_index).ToListAsync().Result;
-            else return _db.Table<Warehouse_Inventory>().Where(b => b.Company_Index == company_index).Where(d => d.Warehouse_Index == Warehouse_Index).ToListAsync().Result;
+                return _db.Table<Warehouse_Item>().Where(b => b.Company_Index == company_index).ToListAsync().Result;
+            else return _db.Table<Warehouse_Item>().Where(b => b.Company_Index == company_index).Where(d => d.Warehouse_Index == Warehouse_Index).ToListAsync().Result;
 
         }
 
-        public List<Warehouse_Inventory> GetAllWarehouse_Inventories(long company_index, int Warehouse_Index = 0)
+        public List<Warehouse_Item> GetAllWarehouse_Inventories(long company_index, int Warehouse_Index = 0)
         {
-            var res = _db.Table<Warehouse_Inventory>().Where(b => b.Company_Index == company_index).ToListAsync();
+            var res = _db.Table<Warehouse_Item>().Where(b => b.Company_Index == company_index).ToListAsync();
             res.Wait();
 
             if (Warehouse_Index == 0) return res.Result;
@@ -2732,69 +2761,69 @@ namespace OrdersProgress.Models
 
         }
 
-        public List<Warehouse_Inventory> GetAllWarehouse_InventorysAsync(long company_index, string Warehouse_Name)
+        public List<Warehouse_Item> GetAllWarehouse_InventorysAsync(long company_index, string Warehouse_Name)
         {
             if (Program.dbOperations.GetAllWarehousesAsync(Stack.Company_Index, false).Any(d => d.Name.ToLower().Equals(Warehouse_Name.ToLower())))
             {
                 int warehouse_index = Program.dbOperations.GetAllWarehousesAsync(company_index, false).First(d => d.Name.ToLower().Equals(Warehouse_Name.ToLower())).Index;
-                return _db.Table<Warehouse_Inventory>().Where(b => b.Company_Index == company_index)
+                return _db.Table<Warehouse_Item>().Where(b => b.Company_Index == company_index)
                     .Where(d => d.Warehouse_Index == warehouse_index).ToListAsync().Result;
             }
             else return null;
         }
 
-        public Warehouse_Inventory GetWarehouse_InventoryAsync(long index)
+        public Warehouse_Item GetWarehouse_InventoryAsync(long index)
         {
-            return _db.Table<Warehouse_Inventory>().FirstAsync(d => d.Index == index).Result;
+            return _db.Table<Warehouse_Item>().FirstAsync(d => d.Index == index).Result;
         }
 
-        public Warehouse_Inventory GetWarehouse_InventoryAsync(string item_code)
+        public Warehouse_Item GetWarehouse_InventoryAsync(string item_code)
         {
-            return _db.Table<Warehouse_Inventory>().FirstOrDefaultAsync(d => d.Item_Code.ToLower().Equals(item_code.ToLower())).Result;
+            return _db.Table<Warehouse_Item>().FirstOrDefaultAsync(d => d.Item_Code.ToLower().Equals(item_code.ToLower())).Result;
         }
 
-        public long AddWarehouse_InventoryAsync(Warehouse_Inventory warehouse_Inventory)
+        public long AddWarehouse_InventoryAsync(Warehouse_Item warehouse_Inventory)
         {
             warehouse_Inventory.Index = GetNewIndex_Warehouse_Inventory();
             _db.InsertAsync(warehouse_Inventory);
             return warehouse_Inventory.Id;
         }
 
-        public void AddWarehouse_Inventory(Warehouse_Inventory warehouse_Inventory)
+        public void AddWarehouse_Inventory(Warehouse_Item warehouse_Inventory)
         {
             warehouse_Inventory.Index = GetNewIndex_Warehouse_Inventory();
             _db.InsertAsync(warehouse_Inventory).Wait();
         }
 
-        public int DeleteWarehouse_InventoryAsync(Warehouse_Inventory warehouse_Inventory)
+        public int DeleteWarehouse_InventoryAsync(Warehouse_Item warehouse_Inventory)
         {
             return _db.DeleteAsync(warehouse_Inventory).Result;
         }
 
         public int DeleteAllWarehouse_InventorysAsync()
         {
-            return _db.DeleteAllAsync<Warehouse_Inventory>().Result;
+            return _db.DeleteAllAsync<Warehouse_Item>().Result;
         }
 
-        public int UpdateWarehouse_InventoryAsync(Warehouse_Inventory warehouse_Inventory)
+        public int UpdateWarehouse_InventoryAsync(Warehouse_Item warehouse_Inventory)
         {
             return _db.UpdateAsync(warehouse_Inventory).Result;
         }
 
-        public void UpdateWarehouse_Inventory(Warehouse_Inventory warehouse_Inventory)
+        public void UpdateWarehouse_Inventory(Warehouse_Item warehouse_Inventory)
         {
             _db.UpdateAsync(warehouse_Inventory).Wait(); ;
         }
 
-        public void UpdateSomeWarehouse_Inventory(List<Warehouse_Inventory> lstWI)
+        public void UpdateSomeWarehouse_Inventory(List<Warehouse_Item> lstWI)
         {
             _db.UpdateAllAsync(lstWI).Wait();
         }
 
         public long GetNewIndex_Warehouse_Inventory()
         {
-            if (_db.Table<Warehouse_Inventory>().ToListAsync().Result.Any())
-                return _db.Table<Warehouse_Inventory>().ToListAsync().Result.Max(d => d.Id) + 1;
+            if (_db.Table<Warehouse_Item>().ToListAsync().Result.Any())
+                return _db.Table<Warehouse_Item>().ToListAsync().Result.Max(d => d.Id) + 1;
             else return 1;
         }
         #endregion Warehouse_Inventory

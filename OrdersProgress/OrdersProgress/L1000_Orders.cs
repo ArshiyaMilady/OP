@@ -266,12 +266,14 @@ namespace OrdersProgress
         {
             string order_index = Convert.ToString(dgvData.CurrentRow.Cells["Index"].Value);
             Models.Order order = Program.dbOperations.GetOrderAsync(order_index);
-            if (Program.dbOperations.GetOrder_LevelAsync(order.CurrentLevel_Index).OrderCanChange)
+            Models.Order_Level current_order_level = Program.dbOperations.GetOrder_LevelAsync(order.CurrentLevel_Index);
+            if (current_order_level.OrderCanChange)
             {
                 new L2100_OneOrder(order_index).ShowDialog();
 
                 Models.Order order1 = Program.dbOperations.GetOrderAsync(order_index);
                 // در صورت به وجود آمدن تغییری در سفارش ، جدول را بروز کن
+                #region آیا تغییری در سفارش اتفاق افتاده است؟
                 if (!order.Title.Equals(order1.Title)
                     || (order.Customer_Index != order1.Customer_Index)
                     || (order.DateTime_mi != order1.DateTime_mi))
@@ -279,6 +281,28 @@ namespace OrdersProgress
                     lstOrders = new List<Models.Order>();
                     dgvData.DataSource = GetData();
                 }
+                #endregion
+            }
+            else if (current_order_level.CancelingLevel)
+            {
+                if (MessageBox.Show("سفارش قبلا کنسل شده است. آیا مایل به ثبت مجدد آن می باشید؟"
+                    , order.Title, MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    new L2100_OneOrder(order_index, false).ShowDialog();
+                    #region آیا تغییری در سفارش اتفاق افتاده است؟
+                    Models.Order order1 = Program.dbOperations.GetOrderAsync(order_index);
+                    // در صورت به وجود آمدن تغییری در سفارش ، جدول را بروز کن
+                    if (!order.Title.Equals(order1.Title)
+                        || (order.Customer_Index != order1.Customer_Index)
+                        || (order.DateTime_mi != order1.DateTime_mi))
+                    {
+                        lstOrders = new List<Models.Order>();
+                        dgvData.DataSource = GetData();
+                    }
+                    #endregion
+                }
+                else
+                    new L2120_OneOrder_Items(order_index, true).ShowDialog();
             }
             else
                 new L2120_OneOrder_Items(order_index, true).ShowDialog();
@@ -307,12 +331,12 @@ namespace OrdersProgress
 
         private void TsmiChangeOrder_Click(object sender, EventArgs e)
         {
-            string order_index = Convert.ToString(dgvData.CurrentRow.Cells["Index"].Value);
-            new L2100_OneOrder(order_index).ShowDialog();
+            //string order_index = Convert.ToString(dgvData.CurrentRow.Cells["Index"].Value);
+            //new L2100_OneOrder(order_index).ShowDialog();
 
-            if (Program.dbOperations.GetOrderAsync(order_index).PreviousLevel_Index
-                < Stack.OrderLevel_SendToCompany)
-                dgvData.DataSource = GetData();
+            //if (Program.dbOperations.GetOrderAsync(order_index).PreviousLevel_Index
+            //    < Stack.OrderLevel_SendToCompany)
+            //    dgvData.DataSource = GetData();
         }
 
         private void TsmiSentToCompany_Click(object sender, EventArgs e)

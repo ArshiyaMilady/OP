@@ -270,7 +270,7 @@ namespace OrdersProgress
         private void TsmiItemProperties_Click(object sender, EventArgs e)
         {
             long ItemIndex = Convert.ToInt64(dgvData.CurrentRow.Cells["Item_Index"].Value);
-            if (Program.dbOperations.GetAllOrder_Item_PropertiesAsync(order.Index, ItemIndex).Any())
+            if (Program.dbOperations.GetAllOrder_Item_PropertiesAsync(Stack.Company_Index, order.Index, ItemIndex).Any())
             {
                 Models.Order_Item oi = Program.dbOperations.GetOrder_ItemAsync(order.Index, ItemIndex);
                 //MessageBox.Show(oi.Item_SmallCode);

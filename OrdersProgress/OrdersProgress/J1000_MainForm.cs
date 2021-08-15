@@ -129,8 +129,8 @@ namespace OrdersProgress
             #endregion
 
             #region منوی انبار و زیرمنوهایش
-            tsmiStock.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jq0000");
-            tsmiStock_Inventory.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jq3000");
+            tsmiWarehouse.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jq0000");
+            tsmiWarehouseItems.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jq3000");
             #endregion
 
             #region منوی تعریف محصولات و زیرمنوهایش
@@ -147,7 +147,7 @@ namespace OrdersProgress
             menuStrip.Enabled = true;
             btnClose.Enabled = true;
 
-            if (Stack.UserLevel_Type==1) new zForm1().ShowDialog();
+            //if (Stack.UserLevel_Type==1) new zForm1().ShowDialog();
 
         }
 
@@ -163,7 +163,7 @@ namespace OrdersProgress
 
         private void TsmiStock_Inventory_Click(object sender, EventArgs e)
         {
-            new M1100_StockInventory().ShowDialog();
+            new M1110_WarehouseItems().ShowDialog();
         }
 
         private void TsmiUserPriorities_Click(object sender, EventArgs e)

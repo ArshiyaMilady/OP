@@ -856,6 +856,9 @@ namespace OrdersProgress.Models
 
         // فیلد زیر در هنگام برقراری رابطع کالا با مشخصات کاربرد دارند
         public string DefaultValue { get; set; }    // مقدار پیش فرض مشخصه
+
+        // در فیلد زیر مقداری ذخیره نمی شود و این فیلد صرفا برای کمک به فیلد مشابه در جدول 
+        // می باشد Item_Property
         public bool ChangingValue { get; set; }     // آیا مقدار این مشخصه بعدا (توسط سفارش دهنده) قابل تغییر است؟
 
         //public int Position { get; set; }   // مکان مشخصه در کد با شروع از عدد یک
@@ -904,9 +907,17 @@ namespace OrdersProgress.Models
         public double Weight { get; set; }  // وزن هرواحد بر حسب کیلوگرم
         public int Depo_type { get; set; }    // نوع دپو : (دپو نیست = 0) و غیره
 
+        public bool Salable { get; set; }   // قابل فروش = قابل سفارش دهی
+
         // قیمتهای زیر، قیمتهای بروز می باشند
         public long FixedPrice { get; set; }  // قیمت تمام شده یک عدد کالا - برای مواد اولیه قیمت خرید در نظر گرفته می شود
         public long SalesPrice { get; set; }  // قیمت فروش (بدون تخفیف) یک عدد کالا
+
+        public int Warehouse_Index { get; set; }   // شناسه انبار
+        // موجودی کالا در انبار
+        public double Wh_Quantity_Real { get; set; }   // موجودی واقعی
+        // برای نگهداری تغییراتی که هنوز تأیید نشده است
+        public double Wh_Quantity_x { get; set; }
 
         public string C_S1 { get; set; }
         public string C_S2 { get; set; }
@@ -1078,13 +1089,15 @@ namespace OrdersProgress.Models
     public class Warehouse
     {
         [PrimaryKey,AutoIncrement]
-        public int Id { get; set; }   public long Company_Index { get; set; }
+        public int Id { get; set; }
+        public long Company_Index { get; set; }
         
         public int Index { get; set; } // شناسه انبار
-        public string Name { get; set; }    // نام انبار
-        public string Description { get; set; }
-        public string Address { get; set; }
         public bool Active { get; set; }    // آیا انبار فعال است
+        public string Name { get; set; }    // نام انبار - باید منحصربفرد باشد
+        public string Phone { get; set; }
+        public string Address { get; set; }
+        public string Description { get; set; }
 
         public string C_S1 { get; set; }
         public string C_S2 { get; set; }
@@ -1094,11 +1107,12 @@ namespace OrdersProgress.Models
         public int C_I1 { get; set; }
         public int C_I2 { get; set; }
         public bool C_B1 { get; set; }
-        public bool C_B2 { get; set; }public bool C_B3 { get; set; }
+        public bool C_B2 { get; set; }
+        public bool C_B3 { get; set; }
     }
 
     // موجودی انبار
-    public class Warehouse_Inventory
+    public class Warehouse_Item
     {
         [PrimaryKey, AutoIncrement]
         public long Id { get; set; }   public long Company_Index { get; set; }
@@ -1107,9 +1121,9 @@ namespace OrdersProgress.Models
         public long Item_Index { get; set; }    
         public string Item_Code { get; set; }    // کد کوچک کالا
         public string Item_Name { get; set; }
-        public double Quantity_Real { get; set; }   // موجودی واقعی
         public string Item_Unit { get; set; }
 
+        public double Quantity_Real { get; set; }   // موجودی واقعی
         // برای نگهداری تغییراتی که هنوز تأیید نشده است
         public double Quantity_x { get; set; }  
         //public int Significance_Factor { get; set; }    // ضریب اهمیت

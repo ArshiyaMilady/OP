@@ -66,8 +66,11 @@ namespace OrdersProgress
                         {
                             if (lstIP.Any(d => d.Property_Index == pr1.Index))
                             {
+                                Models.Item_Property ip = lstIP.First(d => d.Property_Index == pr1.Index);
+
                                 pr1.C_B1 = true;
-                                pr1.DefaultValue = lstIP.First(d => d.Property_Index == pr1.Index).DefaultValue;
+                                pr1.DefaultValue = ip.DefaultValue;
+                                pr1.ChangingValue = ip.ChangingValue;
                                 //Program.dbOperations.UpdatePropertyAsync(pr1);
                             }
                             Application.DoEvents();
@@ -258,8 +261,7 @@ namespace OrdersProgress
             Application.DoEvents();
 
             List<Models.Property> lstPr = (List<Models.Property>)dgvData.DataSource;
-            /MessageBox.Show(lstPr.Where(d => d.ChangingValue).Count().ToString());
-            //List <Models.Order_Level> lstOL = (List<Models.Order_Level>)dgvData.DataSource;
+            //MessageBox.Show(lstPr.Where(d => d.ChangingValue).Count().ToString());
 
             #region حذف شود : قبلا بوده است، اما در جدول انتخاب نشده است 
             if (Program.dbOperations.GetAllItem_PropertiesAsync(Stack.Company_Index, item.Code_Small).Any())
@@ -268,9 +270,7 @@ namespace OrdersProgress
                     in Program.dbOperations.GetAllItem_PropertiesAsync(Stack.Company_Index, item.Code_Small))
                 {
                     if (!lstPr.Where(d => d.C_B1).Any(d => d.Index == ip.Property_Index))
-                    {
                         Program.dbOperations.DeleteItem_Property(ip);
-                    }
                 }
             }
             #endregion
@@ -278,6 +278,8 @@ namespace OrdersProgress
             #region موارد جدید اضافه شود 
             foreach (Models.Property pr in lstPr.Where(d => d.C_B1).ToList())
             {
+                //MessageBox.Show("C_B1 = " + pr.C_B1 + "\n" + "ChangingValue = " + pr.ChangingValue);
+
                 if (!Program.dbOperations.GetAllItem_PropertiesAsync(Stack.Company_Index, item.Code_Small)
                     .Any(d => d.Property_Index == pr.Index))
                 {
@@ -293,83 +295,9 @@ namespace OrdersProgress
                 }
             }
             #endregion
-
-
-            //List<Models.Item_Property> lstIPs = Program.dbOperations.GetAllItem_PropertiesAsync(Stack.Company_Index,item.Code_Small);
-            //foreach (Models.Item_Property ip in lstIPs) Program.dbOperations.DeleteItem_Property(ip);
-            //foreach (Models.Property property in Program.dbOperations.GetAllPropertiesAsync
-            //    (Stack.Company_Index).Where(d => d.C_B1).ToList())
-            //{
-            //    Program.dbOperations.AddItem_PropertyAsync(new Models.Item_Property
-            //    {
-            //        Company_Index = Stack.Company_Index,
-            //        Property_Index = property.Index,
-            //        DefaultValue = property.DefaultValue,
-            //        ChangingValue = property.ChangingValue,
-            //        Item_Code_Small = item.Code_Small,
-            //        Item_Index = item.Index,
-            //    });
-            //}
-
-            //dgvData.Sort(dgvData.Columns["C_B1"], ListSortDirection.Descending);
-            //ShowData(false);
-            //dgvData.DataSource= GetData();// null, false); 
+  
             Application.DoEvents();
             panel1.Enabled = true;
-            //MessageBox.Show("ثبت مشخصات برای این کالا با موفقیت انجام شد");
-
-            #region ---
-            /*
-            if (MessageBox.Show("آیا از ثبت تغییرات اطمینان دارید؟", "", MessageBoxButtons.YesNo)
-                == DialogResult.No) return;
-
-            panel1.Enabled = false;
-            Application.DoEvents();
-
-            // تمام مشخصات کالا
-            List<Models.Item_Property> lstIP = Program.dbOperations.GetAllItem_PropertiesAsync(item.Code_Small);
-
-            // مشخصه های نمایش داده شده در جدول
-            List<Models.Property> lstPr1 = (List<Models.Property>)dgvData.DataSource;
-            #region حذف کردن موارد تیک نخورده
-            if (lstPr1.Any(d => !d.C_B1))
-            {
-                foreach (Models.Property pr in lstPr1.Where(d => !d.C_B1).ToList())
-                {
-                    // اگر مشخصه در کالا بود، آنرا حذف کن
-                    if (lstIP.Any(d => d.Property_Index == pr.Index))
-                        Program.dbOperations.DeleteItem_PropertyAsync
-                            (lstIP.First(d => d.Property_Index == pr.Index));
-                }
-            }
-            #endregion
-
-            #region اضافه کردن موارد تیک خورده
-            if (lstPr1.Any(d => d.C_B1))
-            {
-                foreach (Models.Property pr in lstPr1.Where(d => d.C_B1).ToList())
-                {
-                    // اگر کالا در زیرساخت ماژول نبود، آنرا اضافه کن
-                    if (!lstIP.Any(d => d.Property_Index == pr.Index))
-                    {
-                        Program.dbOperations.AddItem_PropertyAsync(new Models.Item_Property
-                        {
-                            Item_Code_Small = item.Code_Small,
-                            Property_Index = pr.Index,
-                        });
-                    }
-                }
-            }
-            #endregion
-
-            Stack.bx = true;
-
-            ShowData((List<Models.Property>)dgvData.DataSource, false);
-
-            Application.DoEvents();
-            panel1.Enabled = true;
-            */
-            #endregion
         }
 
         private void BtnReturn_Click(object sender, EventArgs e)

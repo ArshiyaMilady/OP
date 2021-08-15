@@ -47,7 +47,7 @@ namespace OrdersProgress
         private void MakeDGV_Columns()
         {
             foreach(Models.Order_Item_Property oip in Program.dbOperations.GetAllOrder_Item_PropertiesAsync
-                (order_Item.Order_Index,order_Item.Item_Index).Where(d=>d.ItemBatch_Counter==1).ToList())
+                (Stack.Company_Index, order_Item.Order_Index,order_Item.Item_Index).Where(d=>d.ItemBatch_Counter==1).ToList())
             {
                 dgvData.Columns.Add(oip.Property_Index.ToString(), oip.Property_Name);
                 dgvData.Columns[oip.Property_Index.ToString()].ReadOnly = !oip.Property_ChangingValue || bOrderReadOnly;

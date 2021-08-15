@@ -77,7 +77,7 @@
             this.panel1.Controls.Add(this.dgvData);
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(925, 311);
+            this.panel1.Size = new System.Drawing.Size(912, 311);
             this.panel1.TabIndex = 3;
             // 
             // panel2
@@ -87,7 +87,7 @@
             this.panel2.Controls.Add(this.chkShowUpdateMessage);
             this.panel2.Controls.Add(this.btnAddNew);
             this.panel2.Enabled = false;
-            this.panel2.Location = new System.Drawing.Point(654, 3);
+            this.panel2.Location = new System.Drawing.Point(641, 3);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(265, 99);
             this.panel2.TabIndex = 77;
@@ -145,7 +145,7 @@
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Location = new System.Drawing.Point(654, 108);
+            this.groupBox1.Location = new System.Drawing.Point(641, 108);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(266, 161);
             this.groupBox1.TabIndex = 76;
@@ -287,7 +287,7 @@
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.Maroon;
-            this.label4.Location = new System.Drawing.Point(244, 3);
+            this.label4.Location = new System.Drawing.Point(231, 3);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(411, 18);
             this.label4.TabIndex = 75;
@@ -299,7 +299,7 @@
             this.btnImportDataFromExcel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnImportDataFromExcel.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnImportDataFromExcel.BackgroundImage")));
             this.btnImportDataFromExcel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnImportDataFromExcel.Location = new System.Drawing.Point(796, 275);
+            this.btnImportDataFromExcel.Location = new System.Drawing.Point(783, 275);
             this.btnImportDataFromExcel.Name = "btnImportDataFromExcel";
             this.btnImportDataFromExcel.Size = new System.Drawing.Size(34, 34);
             this.btnImportDataFromExcel.TabIndex = 72;
@@ -322,7 +322,7 @@
             // btnDeleteAll
             // 
             this.btnDeleteAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDeleteAll.Location = new System.Drawing.Point(836, 278);
+            this.btnDeleteAll.Location = new System.Drawing.Point(823, 278);
             this.btnDeleteAll.Name = "btnDeleteAll";
             this.btnDeleteAll.Size = new System.Drawing.Size(75, 29);
             this.btnDeleteAll.TabIndex = 2;
@@ -342,7 +342,7 @@
             this.dgvData.Location = new System.Drawing.Point(2, 24);
             this.dgvData.Name = "dgvData";
             this.dgvData.ReadOnly = true;
-            this.dgvData.Size = new System.Drawing.Size(650, 246);
+            this.dgvData.Size = new System.Drawing.Size(637, 246);
             this.dgvData.TabIndex = 0;
             this.dgvData.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.DgvData_CellBeginEdit);
             this.dgvData.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvData_CellContentClick);
@@ -390,7 +390,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnReturn;
-            this.ClientSize = new System.Drawing.Size(924, 312);
+            this.ClientSize = new System.Drawing.Size(911, 312);
             this.Controls.Add(this.panel1);
             this.Name = "L3100_Customers";
             this.Text = "   خریداران";

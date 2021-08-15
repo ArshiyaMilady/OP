@@ -508,12 +508,12 @@ namespace OrdersProgress
 
             #region 30 : محاسبه مقدار پیشرفت برای هر سفارش، بر اساس اولویتهای آن
             // تمام کالاهای انبار که دارای مقداری بیش از صفر می باشند
-            List<Models.Warehouse_Inventory> lstWI = Program.dbOperations
+            List<Models.Warehouse_Item> lstWI = Program.dbOperations
                 .GetAllWarehouse_InventorysAsync(Stack.Company_Index,warehouse_index)
                 .Where(d => d.Quantity_Real > 0).ToList();
 
             // ارزش دهی مقدار کاذب از هر کالا درانبار
-            foreach (Models.Warehouse_Inventory wi in lstWI)
+            foreach (Models.Warehouse_Item wi in lstWI)
                 wi.Quantity_x = wi.Quantity_Real;
             Program.dbOperations.UpdateSomeWarehouse_Inventory(lstWI);
             //new M1100_StockInventory().ShowDialog();
@@ -683,11 +683,11 @@ namespace OrdersProgress
 
             #region 30 : محاسبه مقدار پیشرفت برای هر سفارش، بر اساس اولویتهای آن
             // تمام کالاهای انبار که دارای مقداری بیش از صفر می باشند
-            List<Models.Warehouse_Inventory> lstWI = Program.dbOperations
+            List<Models.Warehouse_Item> lstWI = Program.dbOperations
                 .GetAllWarehouse_InventorysAsync(warehouse_index);
                 //.Where(d => d.Quantity_Real > 0).ToList();
             // ارزش دهی مقدار کاذب از هر کالا
-            foreach (Models.Warehouse_Inventory wi in lstWI)
+            foreach (Models.Warehouse_Item wi in lstWI)
             {
                 wi.Quantity_x = wi.Quantity_Real;
                 Program.dbOperations.UpdateWarehouse_InventoryAsync(wi);
@@ -737,7 +737,7 @@ namespace OrdersProgress
         // تعداد لازم را از انبار (درصورت وجود) بر می دارد و تغییرات را ذخیره می کند
         // DoChange_in_Warehouse = true : تغییرات در انبار (در متغیر غیر اصلی) ذخیره گردد
         private Models.Order_StockItem GetOrder_StockItem_from_Warehouse
-            (Models.Warehouse_Inventory wi,  Models.Order_StockItem osi, bool DoChange_in_Warehouse=true)
+            (Models.Warehouse_Item wi,  Models.Order_StockItem osi, bool DoChange_in_Warehouse=true)
         {
             double wi_quantity_x = wi.Quantity_x;
             if (wi_quantity_x > 0)

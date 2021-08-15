@@ -259,17 +259,29 @@
     <Compile Include="L2150_OneOrder_Change_OrderLevel.Designer.cs">
       <DependentUpon>L2150_OneOrder_Change_OrderLevel.cs</DependentUpon>
     </Compile>
+    <Compile Include="M1100_Warehouses.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="M1100_Warehouses.Designer.cs">
+      <DependentUpon>M1100_Warehouses.cs</DependentUpon>
+    </Compile>
+    <Compile Include="M1110_WarehouseItems.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="M1110_WarehouseItems.Designer.cs">
+      <DependentUpon>M1110_WarehouseItems.cs</DependentUpon>
+    </Compile>
     <Compile Include="M2100_OrdersPriority.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="M2100_OrdersPriority.Designer.cs">
       <DependentUpon>M2100_OrdersPriority.cs</DependentUpon>
     </Compile>
-    <Compile Include="M1100_StockInventory.cs">
+    <Compile Include="M1120_WarehouseItems.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="M1100_StockInventory.Designer.cs">
-      <DependentUpon>M1100_StockInventory.cs</DependentUpon>
+    <Compile Include="M1120_WarehouseItems.Designer.cs">
+      <DependentUpon>M1120_WarehouseItems.cs</DependentUpon>
     </Compile>
     <Compile Include="M2200_Order_StockItems.cs">
       <SubType>Form</SubType>
@@ -446,8 +458,14 @@
     <EmbeddedResource Include="L2150_OneOrder_Change_OrderLevel.resx">
       <DependentUpon>L2150_OneOrder_Change_OrderLevel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="M1100_StockInventory.resx">
-      <DependentUpon>M1100_StockInventory.cs</DependentUpon>
+    <EmbeddedResource Include="M1100_Warehouses.resx">
+      <DependentUpon>M1100_Warehouses.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="M1110_WarehouseItems.resx">
+      <DependentUpon>M1110_WarehouseItems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="M1120_WarehouseItems.resx">
+      <DependentUpon>M1120_WarehouseItems.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="M2100_OrdersPriority.resx">
       <DependentUpon>M2100_OrdersPriority.cs</DependentUpon>

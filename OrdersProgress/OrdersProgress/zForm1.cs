@@ -27,8 +27,9 @@ namespace OrdersProgress
             //dgvData.DataSource = Program.dbOperations.GetAllOrder_Level_on_ReturningsAsync(Stack.Company_Index);
             //dgvData.DataSource = Program.dbOperations.GetAllOrdersAsync(Stack.Company_Index);
             //dgvData.DataSource = Program.dbOperations.GetAllUsersAsync(Stack.Company_Index);
-            dgvData.DataSource = Program.dbOperations.GetAllItem_PropertiesAsync(Stack.Company_Index);
-            //dgvData.DataSource = Program.dbOperations.GetAllItemsAsync(Stack.Company_Index);
+            //dgvData.DataSource = Program.dbOperations.GetAllProperties (Stack.Company_Index,0);
+            //dgvData.DataSource = Program.dbOperations.GetAllItem_PropertiesAsync(Stack.Company_Index);
+            dgvData.DataSource = Program.dbOperations.GetAllItemsAsync(Stack.Company_Index);
             //dgvData.DataSource = Program.dbOperations.GetAllLoginHistorysAsync(Stack.Company_Index)
             //    .OrderByDescending(d=>d.DateTime_mi).ToList();
 
@@ -43,26 +44,20 @@ namespace OrdersProgress
             //dgvData.DataSource = new ThisProject().AllSubRelations("KK_002");
         }
 
-
-        List<Models.Item> items = new List<Models.Item>();
-        // تمام قطعات یک ماژول را برمیگرداند، حتی اگر ماژول از ماژولهای دیگری ساخته شده باشد
-        private void AllModule_Items(string sModule_SmallCode)
-        {
-            if (Program.dbOperations.GetAllModulesAsync(Stack.Company_Index,1, sModule_SmallCode).Any())
-            {
-                foreach (Models.Module md in Program.dbOperations.GetAllModulesAsync(Stack.Company_Index,1, sModule_SmallCode))
-                {
-                    Models.Item item = Program.dbOperations.GetItemAsync(md.Item_Code_Small);
-                    if (!item.Module) items.Add(item);
-                    else AllModule_Items(item.Code_Small);
-                }
-            }
-        }
-
         private void Button1_Click(object sender, EventArgs e)
         {
+            #region تعیین انبار کالاها
+            //foreach(Models.Item item in Program.dbOperations.GetAllItemsAsync(Stack.Company_Index,0,100))
+            //    {
+            //    item.Warehouse_Index = 1;
+            //    item.Salable = true;
+            //    item.C_B1 = false;
+            //    Program.dbOperations.UpdateItemAsync(item);
+            //}
+            #endregion
+
             #region حذف تمام روابط کالاها و مشخصه ها
-            Program.dbOperations.Properties_Reset_Values();
+            //Program.dbOperations.Properties_Reset_Values();
             //Program.dbOperations.DeleteAllItem_PropertiesAsync();
             #endregion
 
@@ -88,8 +83,6 @@ namespace OrdersProgress
             //Program.dbOperations.DeleteAllOrders_StockItemsAsync();
             //Program.dbOperations.DeleteAllOrderPrioritysAsync();
             #endregion
-
-            //Program.dbOperations.DeleteAllOrder_LevelsAsync();
 
             #region تعریف شرکت برای تمام داده های ذخیره شده در برنامه
             ////Program.dbOperations.DeleteAllCompaniesAsync();
@@ -351,7 +344,22 @@ namespace OrdersProgress
             //    Program.dbOperations.UpdateWarehouse_Remittance_ItemAsync(x);
             //}
             #endregion
+        }
 
+
+        List<Models.Item> items = new List<Models.Item>();
+        // تمام قطعات یک ماژول را برمیگرداند، حتی اگر ماژول از ماژولهای دیگری ساخته شده باشد
+        private void AllModule_Items(string sModule_SmallCode)
+        {
+            if (Program.dbOperations.GetAllModulesAsync(Stack.Company_Index,1, sModule_SmallCode).Any())
+            {
+                foreach (Models.Module md in Program.dbOperations.GetAllModulesAsync(Stack.Company_Index,1, sModule_SmallCode))
+                {
+                    Models.Item item = Program.dbOperations.GetItemAsync(md.Item_Code_Small);
+                    if (!item.Module) items.Add(item);
+                    else AllModule_Items(item.Code_Small);
+                }
+            }
         }
 
         private void BtnClose_Click(object sender, EventArgs e)

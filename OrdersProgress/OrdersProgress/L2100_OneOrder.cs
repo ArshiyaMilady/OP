@@ -363,6 +363,7 @@ namespace OrdersProgress
                     order.Index = Stack.UserIndex + Stack_Methods.DateTimeNow_Shamsi("/", ":", true);
                 else order.Index = OrderIndex;
 
+                #region مشخصات سفارش
                 string sDateTime_sh = Stack_Methods.DateTimeNow_Shamsi();
                 order.Company_Index = Stack.Company_Index;
                 order.Title = txtOrderTitle.Text;
@@ -375,6 +376,7 @@ namespace OrdersProgress
                 order.DateTime_mi = DateTime.Now;
                 order.Date_sh = sDateTime_sh.Substring(0, 10);
                 order.Time = sDateTime_sh.Substring(11, 5);
+                #endregion
 
                 if (string.IsNullOrEmpty(OrderIndex))
                 {

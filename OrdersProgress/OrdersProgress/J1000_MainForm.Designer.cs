@@ -51,8 +51,8 @@
             this.tsmiOrders_ReportProgress = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiUserPriorities = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiSuggestedPriorities = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiStock = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiStock_Inventory = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiWarehouse = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiWarehouseItems = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiProducts = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiProperties = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiItems = new System.Windows.Forms.ToolStripMenuItem();
@@ -65,6 +65,7 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnClose = new System.Windows.Forms.Button();
+            this.tsmiWarehouses = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -77,7 +78,7 @@
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiInternalFeatures,
             this.tsmiOrders,
-            this.tsmiStock,
+            this.tsmiWarehouse,
             this.tsmiProducts});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
@@ -102,7 +103,7 @@
             this.tsmiUserLevelsFeatures,
             this.tsmiLoginsHistory});
             this.tsmiUsers.Name = "tsmiUsers";
-            this.tsmiUsers.Size = new System.Drawing.Size(122, 24);
+            this.tsmiUsers.Size = new System.Drawing.Size(180, 24);
             this.tsmiUsers.Text = "کاربران";
             // 
             // tsmiUsers_Show_Change
@@ -145,7 +146,7 @@
             this.tsmiOrdersLevels,
             this.tsmiOrders_and_Details});
             this.tsmiOrdersFeatures.Name = "tsmiOrdersFeatures";
-            this.tsmiOrdersFeatures.Size = new System.Drawing.Size(122, 24);
+            this.tsmiOrdersFeatures.Size = new System.Drawing.Size(180, 24);
             this.tsmiOrdersFeatures.Text = "سفارشها";
             // 
             // tsmiOrdersLevels
@@ -253,20 +254,21 @@
             this.tsmiSuggestedPriorities.Text = "بر اساس اولویت بندی پیشنهادی";
             this.tsmiSuggestedPriorities.Click += new System.EventHandler(this.TsmiSuggestedPriorities_Click);
             // 
-            // tsmiStock
+            // tsmiWarehouse
             // 
-            this.tsmiStock.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmiStock_Inventory});
-            this.tsmiStock.Name = "tsmiStock";
-            this.tsmiStock.Size = new System.Drawing.Size(44, 23);
-            this.tsmiStock.Text = "انبار";
+            this.tsmiWarehouse.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiWarehouseItems,
+            this.tsmiWarehouses});
+            this.tsmiWarehouse.Name = "tsmiWarehouse";
+            this.tsmiWarehouse.Size = new System.Drawing.Size(44, 23);
+            this.tsmiWarehouse.Text = "انبار";
             // 
-            // tsmiStock_Inventory
+            // tsmiWarehouseItems
             // 
-            this.tsmiStock_Inventory.Name = "tsmiStock_Inventory";
-            this.tsmiStock_Inventory.Size = new System.Drawing.Size(121, 24);
-            this.tsmiStock_Inventory.Text = "موجودی";
-            this.tsmiStock_Inventory.Click += new System.EventHandler(this.TsmiStock_Inventory_Click);
+            this.tsmiWarehouseItems.Name = "tsmiWarehouseItems";
+            this.tsmiWarehouseItems.Size = new System.Drawing.Size(180, 24);
+            this.tsmiWarehouseItems.Text = "موجودی";
+            this.tsmiWarehouseItems.Click += new System.EventHandler(this.TsmiStock_Inventory_Click);
             // 
             // tsmiProducts
             // 
@@ -283,21 +285,21 @@
             // tsmiProperties
             // 
             this.tsmiProperties.Name = "tsmiProperties";
-            this.tsmiProperties.Size = new System.Drawing.Size(130, 24);
+            this.tsmiProperties.Size = new System.Drawing.Size(180, 24);
             this.tsmiProperties.Text = "مشخصات";
             this.tsmiProperties.Click += new System.EventHandler(this.TsmiProperties_Click);
             // 
             // tsmiItems
             // 
             this.tsmiItems.Name = "tsmiItems";
-            this.tsmiItems.Size = new System.Drawing.Size(130, 24);
+            this.tsmiItems.Size = new System.Drawing.Size(180, 24);
             this.tsmiItems.Text = "قطعات";
             this.tsmiItems.Click += new System.EventHandler(this.tsmiItems_Click);
             // 
             // tsmiModules
             // 
             this.tsmiModules.Name = "tsmiModules";
-            this.tsmiModules.Size = new System.Drawing.Size(130, 24);
+            this.tsmiModules.Size = new System.Drawing.Size(180, 24);
             this.tsmiModules.Text = "ماژول ها";
             this.tsmiModules.Visible = false;
             this.tsmiModules.Click += new System.EventHandler(this.TsmiModules_Click);
@@ -305,7 +307,7 @@
             // tsmiOPC
             // 
             this.tsmiOPC.Name = "tsmiOPC";
-            this.tsmiOPC.Size = new System.Drawing.Size(130, 24);
+            this.tsmiOPC.Size = new System.Drawing.Size(180, 24);
             this.tsmiOPC.Text = "OPC";
             this.tsmiOPC.Visible = false;
             this.tsmiOPC.Click += new System.EventHandler(this.TsmiOPC_Click);
@@ -313,7 +315,7 @@
             // tsmiActions
             // 
             this.tsmiActions.Name = "tsmiActions";
-            this.tsmiActions.Size = new System.Drawing.Size(130, 24);
+            this.tsmiActions.Size = new System.Drawing.Size(180, 24);
             this.tsmiActions.Text = "فعالیت ها";
             this.tsmiActions.Visible = false;
             this.tsmiActions.Click += new System.EventHandler(this.TsmiActions_Click);
@@ -365,6 +367,12 @@
             this.btnClose.UseVisualStyleBackColor = false;
             this.btnClose.Click += new System.EventHandler(this.BtnClose_Click);
             // 
+            // tsmiWarehouses
+            // 
+            this.tsmiWarehouses.Name = "tsmiWarehouses";
+            this.tsmiWarehouses.Size = new System.Drawing.Size(180, 24);
+            this.tsmiWarehouses.Text = "تعریف انبار";
+            // 
             // J1000_MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -404,7 +412,7 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.ToolStripMenuItem tsmiOrders;
-        private System.Windows.Forms.ToolStripMenuItem tsmiStock;
+        private System.Windows.Forms.ToolStripMenuItem tsmiWarehouse;
         private System.Windows.Forms.ToolStripMenuItem tsmiOrders_Show;
         private System.Windows.Forms.ToolStripMenuItem tsmiOrders_Priorities;
         private System.Windows.Forms.ToolStripMenuItem tsmiOrders_ReportProgress;
@@ -412,7 +420,7 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ToolStripMenuItem tsmiUserPriorities;
         private System.Windows.Forms.ToolStripMenuItem tsmiSuggestedPriorities;
-        private System.Windows.Forms.ToolStripMenuItem tsmiStock_Inventory;
+        private System.Windows.Forms.ToolStripMenuItem tsmiWarehouseItems;
         private System.Windows.Forms.ToolStripMenuItem tsmiProducts;
         private System.Windows.Forms.ToolStripMenuItem tsmiModules;
         private System.Windows.Forms.ToolStripMenuItem tsmiItems;
@@ -434,6 +442,7 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiOrders_and_Details;
         private System.Windows.Forms.ToolStripMenuItem tsmiLoginsHistory;
         private System.Windows.Forms.ToolStripMenuItem tsmiOrdersPriority;
+        private System.Windows.Forms.ToolStripMenuItem tsmiWarehouses;
     }
 }
 

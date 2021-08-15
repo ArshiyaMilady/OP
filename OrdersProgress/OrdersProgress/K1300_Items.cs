@@ -968,7 +968,7 @@ namespace OrdersProgress
                     // اضافه کردن به جدول انبار
                 }
 
-                Program.dbOperations.AddWarehouse_Inventory(new Models.Warehouse_Inventory
+                Program.dbOperations.AddWarehouse_Inventory(new Models.Warehouse_Item
                 {
                     Item_Code = item.Code_Small,
                     Item_Name = item.Name_Samll,
@@ -977,7 +977,7 @@ namespace OrdersProgress
             }
             else  // اگر کالا در انبار موجود باشد
             {
-                Models.Warehouse_Inventory wi = Program.dbOperations.GetWarehouse_InventoryAsync(item.Code_Small);
+                Models.Warehouse_Item wi = Program.dbOperations.GetWarehouse_InventoryAsync(item.Code_Small);
                 if (wi != null)
                 {
                     wi.Item_Name = item.Name_Samll;
