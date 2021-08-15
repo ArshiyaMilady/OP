@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(M1100_Warehouses));
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.chkCanEdit = new System.Windows.Forms.CheckBox();
             this.chkShowUpdateMessage = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -54,7 +55,6 @@
             this.dgvData = new System.Windows.Forms.DataGridView();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiDelete = new System.Windows.Forms.ToolStripMenuItem();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -91,6 +91,19 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(265, 99);
             this.panel2.TabIndex = 77;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "نمایش موارد فعال",
+            "نمایش تمام موارد"});
+            this.comboBox1.Location = new System.Drawing.Point(16, 60);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(229, 25);
+            this.comboBox1.TabIndex = 16;
             // 
             // chkCanEdit
             // 
@@ -171,6 +184,8 @@
             this.txtST_Name.Size = new System.Drawing.Size(93, 22);
             this.txtST_Name.TabIndex = 34;
             this.txtST_Name.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtST_Name.Enter += new System.EventHandler(this.TxtST_Enter);
+            this.txtST_Name.Leave += new System.EventHandler(this.TxtST_Leave);
             // 
             // txtST_Phone
             // 
@@ -181,6 +196,8 @@
             this.txtST_Phone.Size = new System.Drawing.Size(93, 22);
             this.txtST_Phone.TabIndex = 34;
             this.txtST_Phone.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtST_Phone.Enter += new System.EventHandler(this.TxtST_Enter);
+            this.txtST_Phone.Leave += new System.EventHandler(this.TxtST_Leave);
             // 
             // txtST_Address
             // 
@@ -191,6 +208,8 @@
             this.txtST_Address.Size = new System.Drawing.Size(93, 22);
             this.txtST_Address.TabIndex = 34;
             this.txtST_Address.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtST_Address.Enter += new System.EventHandler(this.TxtST_Enter);
+            this.txtST_Address.Leave += new System.EventHandler(this.TxtST_Leave);
             // 
             // cmbST_Name
             // 
@@ -360,19 +379,6 @@
             this.tsmiDelete.Size = new System.Drawing.Size(95, 22);
             this.tsmiDelete.Text = "حذف";
             this.tsmiDelete.Visible = false;
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "نمایش موارد فعال",
-            "نمایش تمام موارد"});
-            this.comboBox1.Location = new System.Drawing.Point(16, 60);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(229, 25);
-            this.comboBox1.TabIndex = 16;
             // 
             // M1100_Warehouses
             // 

@@ -239,7 +239,7 @@ namespace OrdersProgress
 
 
             if (bSaveChange)
-                Program.dbOperations.UpdateItemAsync(wh);
+                Program.dbOperations.UpdateWarehouseAsync(wh);
             else dgvData[e.ColumnIndex, e.RowIndex].Value = InitailValue;
         }
 
@@ -250,11 +250,11 @@ namespace OrdersProgress
 
         private void BtnDeleteAll_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("آیا از حذف همه کالاها اطمینان دارید؟"
-                , "اخطار", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
-                == DialogResult.No) return;
+        //    if (MessageBox.Show("آیا از حذف همه انبارها اطمینان دارید؟"
+        //        , "اخطار", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
+        //        == DialogResult.No) return;
 
-            Program.dbOperations.DeleteAllWarehouse_InventorysAsync();
+        //    Program.dbOperations.DeleteAllWarehousesAsync();
         }
 
         private void TsmiDelete_Click(object sender, EventArgs e)
@@ -289,12 +289,12 @@ namespace OrdersProgress
         {
             // Don't throw an exception when we're done.
             e.ThrowException = false;
-            if (dgvData.Columns[dgvData.CurrentCell.ColumnIndex].Name.Equals("Wh_Quantity_Real")
-                || dgvData.Columns[dgvData.CurrentCell.ColumnIndex].Name.Equals("Wh_Quantity_x"))
-            {
-                MessageBox.Show("تعداد را به صورت عدد وارد نمایید", "خطای نوع داده", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            else
+            //if (dgvData.Columns[dgvData.CurrentCell.ColumnIndex].Name.Equals("Wh_Quantity_Real")
+            //    || dgvData.Columns[dgvData.CurrentCell.ColumnIndex].Name.Equals("Wh_Quantity_x"))
+            //{
+            //    MessageBox.Show("تعداد را به صورت عدد وارد نمایید", "خطای نوع داده", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
+            //else
             {
                 MessageBox.Show("خطای نوع داده", "خطا", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -303,12 +303,12 @@ namespace OrdersProgress
             e.Cancel = false;
         }
 
-        private void TxtST_SmallCode_Enter(object sender, EventArgs e)
+        private void TxtST_Enter(object sender, EventArgs e)
         {
             AcceptButton = btnSearch;
         }
 
-        private void TxtST_SmallCode_Leave(object sender, EventArgs e)
+        private void TxtST_Leave(object sender, EventArgs e)
         {
             AcceptButton = null;
         }
