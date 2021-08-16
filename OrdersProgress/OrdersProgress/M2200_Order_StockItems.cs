@@ -109,9 +109,9 @@ namespace OrdersProgress
         private void GetOrder_StockItems(string order_item_code, double quantity)
         {
             // اگر کالا در انبار تعریف شده باشد
-            if (Program.dbOperations.GetWarehouse_InventoryAsync(order_item_code) != null)
+            if (Program.dbOperations.GetItem(Stack.Company_Index, order_item_code) != null)
             {
-                Models.Item it = Program.dbOperations.GetItemAsync(order_item_code, true);
+                Models.Item it = Program.dbOperations.GetItemAsync(Stack.Company_Index,order_item_code, true);
                 Models.Order_StockItem osi = new Models.Order_StockItem
                 {
                     Order_Index = OrderIndex,
@@ -126,7 +126,7 @@ namespace OrdersProgress
             else
             {
                 // پیدا کردن کالا در جدول کالاها
-                Models.Item item = Program.dbOperations.GetItemAsync(order_item_code, true);
+                Models.Item item = Program.dbOperations.GetItemAsync(Stack.Company_Index,order_item_code, true);
                 if (item.Module)
                 {
                     foreach (Models.Module item1 in Program.dbOperations.GetAllModulesAsync(Stack.Company_Index,1, order_item_code))
@@ -293,7 +293,7 @@ namespace OrdersProgress
                     lstOSI.Add(new Models.Order_StockItem
                     {
                         Item_SmallCode = osi_code,
-                        Item_Name_Samll = Program.dbOperations.GetItem(osi_code, true).Name_Samll,
+                        Item_Name_Samll = Program.dbOperations.GetItem(Stack.Company_Index, osi_code, true).Name_Samll,
                         Quantity = Program.dbOperations.GetAllOrder_StockItems(OrderIndex)
                             .Where(d => d.Item_SmallCode.Equals(osi_code)).Sum(j => j.Quantity),
                         Quantity_CanTake = Program.dbOperations.GetAllOrder_StockItems(OrderIndex)

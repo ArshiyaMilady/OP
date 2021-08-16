@@ -875,7 +875,7 @@ namespace OrdersProgress.Models
         public bool C_B2 { get; set; }public bool C_B3 { get; set; }   
     }
 
-    // کالا : رجوع به فایل اکسل کدها
+    // کالا : رجوع به فایل اکسل کدها و موجودی انبار
     public class Item
     {
         [PrimaryKey,AutoIncrement]
@@ -893,6 +893,7 @@ namespace OrdersProgress.Models
         public string Name_Samll { get; set; }  // نام اصلی
         public string Code_Small { get; set; }  // کد اصلی و منحصربفرد
         public string Name_Full { get; set; }
+        public string Code_Full { get; set; }  
 
         // 0 : کالا یا ماژول
         // 1 : مواد اولیه
@@ -1111,34 +1112,34 @@ namespace OrdersProgress.Models
         public bool C_B3 { get; set; }
     }
 
-    // موجودی انبار
-    public class Warehouse_Item
-    {
-        [PrimaryKey, AutoIncrement]
-        public long Id { get; set; }   public long Company_Index { get; set; }
-        public long Index { get; set; }
-        public int Warehouse_Index { get; set; }   // شناسه انبار
-        public long Item_Index { get; set; }    
-        public string Item_Code { get; set; }    // کد کوچک کالا
-        public string Item_Name { get; set; }
-        public string Item_Unit { get; set; }
+    //// موجودی انبار
+    //public class Warehouse_Item
+    //{
+    //    [PrimaryKey, AutoIncrement]
+    //    public long Id { get; set; }   public long Company_Index { get; set; }
+    //    public long Index { get; set; }
+    //    public int Warehouse_Index { get; set; }   // شناسه انبار
+    //    public long Item_Index { get; set; }    
+    //    public string Item_Code { get; set; }    // کد کوچک کالا
+    //    public string Item_Name { get; set; }
+    //    public string Item_Unit { get; set; }
 
-        public double Quantity_Real { get; set; }   // موجودی واقعی
-        // برای نگهداری تغییراتی که هنوز تأیید نشده است
-        public double Quantity_x { get; set; }  
-        //public int Significance_Factor { get; set; }    // ضریب اهمیت
-        //public double Weight { get; set; }  // وزن هرواحد بر حسب کیلوگرم
+    //    public double Quantity_Real { get; set; }   // موجودی واقعی
+    //    // برای نگهداری تغییراتی که هنوز تأیید نشده است
+    //    public double Quantity_x { get; set; }  
+    //    //public int Significance_Factor { get; set; }    // ضریب اهمیت
+    //    //public double Weight { get; set; }  // وزن هرواحد بر حسب کیلوگرم
 
-        public string C_S1 { get; set; }
-        public string C_S2 { get; set; }
-        public string C_S3 { get; set; }
-        public long C_L1 { get; set; }
-        public long C_L2 { get; set; }
-        public int C_I1 { get; set; }
-        public int C_I2 { get; set; }
-        public bool C_B1 { get; set; }
-        public bool C_B2 { get; set; }public bool C_B3 { get; set; }
-    }
+    //    public string C_S1 { get; set; }
+    //    public string C_S2 { get; set; }
+    //    public string C_S3 { get; set; }
+    //    public long C_L1 { get; set; }
+    //    public long C_L2 { get; set; }
+    //    public int C_I1 { get; set; }
+    //    public int C_I2 { get; set; }
+    //    public bool C_B1 { get; set; }
+    //    public bool C_B2 { get; set; }public bool C_B3 { get; set; }
+    //}
 
 
     // حواله های انبار

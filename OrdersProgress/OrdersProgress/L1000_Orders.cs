@@ -705,7 +705,7 @@ namespace OrdersProgress
 
                                     string item_Small_code = null;
                                     item_Small_code = Convert.ToString(ws.Cells[i, 3].Value);
-                                    Models.Item item = Program.dbOperations.GetItem(item_Small_code, true);
+                                    Models.Item item = Program.dbOperations.GetItem(Stack.Company_Index, item_Small_code, true);
                                     if (item != null)
                                     {
                                         Models.Order_Item order_item = new Models.Order_Item

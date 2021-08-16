@@ -15,6 +15,10 @@ namespace OrdersProgress
         public M1100_Warehouses()
         {
             InitializeComponent();
+
+            panel2.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jq4110");
+            btnAddNew.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jq4120");
+            tsmiDelete.Visible = Stack.UserLevel_Type == 1;
         }
 
         private void M1100_Warehouses_Shown(object sender, EventArgs e)
@@ -28,7 +32,7 @@ namespace OrdersProgress
             cmbST_Name.SelectedIndex = 0;
             cmbST_Address.SelectedIndex = 0;
             cmbST_Phone.SelectedIndex = 0;
-            comboBox1.SelectedIndex = 0;
+            //comboBox1.SelectedIndex = 0;
 
             dgvData.DataSource = GetData();
             ShowData();
@@ -39,12 +43,7 @@ namespace OrdersProgress
 
         private List<Models.Warehouse> GetData()
         {
-            switch (comboBox1.SelectedIndex)
-            {
-                case 0: return Program.dbOperations.GetAllWarehousesAsync(Stack.Company_Index, true);
-                default:
-                    return Program.dbOperations.GetAllWarehousesAsync(Stack.Company_Index, false);
-            }
+            return Program.dbOperations.GetAllWarehousesAsync(Stack.Company_Index, radEnabledLevel.Checked);
         }
 
         private void ShowData()
@@ -209,7 +208,7 @@ namespace OrdersProgress
                         .Where(d => d.Index != index).Any(j => j.Name.ToLower().Equals(wh.Name.ToLower())))
                     {
                         bSaveChange = false;
-                        MessageBox.Show("نام انبار تکراری بوده و قبلا استفاده شده است.", "خطا");
+                        MessageBox.Show("نام انبار تکراری بوده و قبلا استفاده شده است", "خطا");
                         #endregion
                     }
                     break;
@@ -259,13 +258,21 @@ namespace OrdersProgress
 
         private void TsmiDelete_Click(object sender, EventArgs e)
         {
+            int index = Convert.ToInt32(dgvData.CurrentRow.Cells["Index"].Value);
+            Models.Warehouse wh = Program.dbOperations.GetWarehouseAsync(index);
+            if (MessageBox.Show("آیا از حذف انبار اطمینان دارید؟", wh.Name,
+                MessageBoxButtons.YesNo,MessageBoxIcon.Warning) != DialogResult.Yes) return;
+            if (MessageBox.Show("با انجام این عمل ، تمام کالاهایی که در این انبار تعریف شده اند، بلاتکلیف خواهند شد.آیا از حذف انبار اطمینان دارید؟"
+                , wh.Name,MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes) return;
 
+            Program.dbOperations.DeleteWarehouseAsync(wh);
+            dgvData.DataSource = GetData();
         }
 
         int iX = 0, iY = 0;
         private void dgvData_MouseDown(object sender, MouseEventArgs e)
         {
-            if (!btnDeleteAll.Visible) return;
+            //if (!btnDeleteAll.Visible) return;
 
             iX = e.X;
             iY = e.Y;
@@ -273,7 +280,7 @@ namespace OrdersProgress
 
         private void dgvData_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (!btnDeleteAll.Visible) return;
+            //if (!btnDeleteAll.Visible) return;
 
             if (e.ColumnIndex < 0 || e.RowIndex < 0) return;
             if (e.Button == MouseButtons.Right)
@@ -318,9 +325,32 @@ namespace OrdersProgress
             Close();
         }
 
+        private void Rad_CheckedChanged(object sender, EventArgs e)
+        {
+            dgvData.DataSource = GetData();
+        }
+
         private void BtnAddNew_Click(object sender, EventArgs e)
         {
+            long index = Program.dbOperations.GetAllWarehousesAsync(Stack.Company_Index, false).Max(d => d.Id) + 1;
+                
+            Program.dbOperations.AddWarehouse(new Models.Warehouse
+            {
+                Company_Index = Stack.Company_Index,
+                Name = "انبار " + index,
+                //Description = "؟",
+                Active = true,
+            });
 
+            if (index > 0)
+            {
+                dgvData.DataSource = GetData();
+                Application.DoEvents();
+                //ShowData();
+                int iNewRow = dgvData.Rows.Count - 1;
+                dgvData.CurrentCell = dgvData["Name", iNewRow];
+                dgvData.Focus();
+            }
         }
 
     }

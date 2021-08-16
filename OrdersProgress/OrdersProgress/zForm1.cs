@@ -29,7 +29,8 @@ namespace OrdersProgress
             //dgvData.DataSource = Program.dbOperations.GetAllUsersAsync(Stack.Company_Index);
             //dgvData.DataSource = Program.dbOperations.GetAllProperties (Stack.Company_Index,0);
             //dgvData.DataSource = Program.dbOperations.GetAllItem_PropertiesAsync(Stack.Company_Index);
-            dgvData.DataSource = Program.dbOperations.GetAllItemsAsync(Stack.Company_Index);
+            dgvData.DataSource = Program.dbOperations.GetAllWarehousesAsync(Stack.Company_Index,false);
+            //dgvData.DataSource = Program.dbOperations.GetAllItemsAsync(Stack.Company_Index);
             //dgvData.DataSource = Program.dbOperations.GetAllLoginHistorysAsync(Stack.Company_Index)
             //    .OrderByDescending(d=>d.DateTime_mi).ToList();
 
@@ -355,7 +356,7 @@ namespace OrdersProgress
             {
                 foreach (Models.Module md in Program.dbOperations.GetAllModulesAsync(Stack.Company_Index,1, sModule_SmallCode))
                 {
-                    Models.Item item = Program.dbOperations.GetItemAsync(md.Item_Code_Small);
+                    Models.Item item = Program.dbOperations.GetItemAsync(Stack.Company_Index,md.Item_Code_Small);
                     if (!item.Module) items.Add(item);
                     else AllModule_Items(item.Code_Small);
                 }

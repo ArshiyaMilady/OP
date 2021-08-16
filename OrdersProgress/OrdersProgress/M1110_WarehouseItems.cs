@@ -57,7 +57,7 @@ namespace OrdersProgress
             {
                 case 0: return Program.dbOperations.GetAllItemsAsync(Stack.Company_Index,0);
                 default:
-                    int wh_index = Program.dbOperations.GetWarehouseAsync(cmbWarehouses.Text).Index;
+                    int wh_index = Program.dbOperations.GetWarehouseAsync(Stack.Company_Index, cmbWarehouses.Text).Index;
                     return Program.dbOperations.GetAllItems_in_WarehouseAsync(Stack.Company_Index,wh_index,0);
             }
         }
@@ -220,13 +220,13 @@ namespace OrdersProgress
             Models.Item item = Program.dbOperations.GetItem(index);
             switch (dgvData.Columns[e.ColumnIndex].Name)
             {
-                case "Item_Code":
+                case "Code_Small":
                     item.Code_Small = Convert.ToString(dgvData["Code_Small", e.RowIndex].Value);
                     if (string.IsNullOrWhiteSpace(item.Code_Small))
                         return;
                     #region اگر کالایی دیگر با این کد تعریف شده باشد
-                    else if (Program.dbOperations.GetAllWarehouse_InventorysAsync(Stack.Company_Index)
-                        .Where(d => d.Index != index).Any(j => j.Item_Code.ToLower().Equals(item.Code_Small.ToLower())))
+                    else if (Program.dbOperations.GetAllItemsAsync(Stack.Company_Index)
+                        .Where(d => d.Index != index).Any(j => j.Code_Small.ToLower().Equals(item.Code_Small.ToLower())))
                     {
                         bSaveChange = false;
                         MessageBox.Show("کد قبلا استفاده شده است.", "خطا");
@@ -271,11 +271,11 @@ namespace OrdersProgress
 
         private void BtnDeleteAll_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("آیا از حذف همه کالاها اطمینان دارید؟"
-                , "اخطار", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
-                == DialogResult.No) return;
+            //if (MessageBox.Show("آیا از حذف همه کالاها اطمینان دارید؟"
+            //    , "اخطار", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
+            //    == DialogResult.No) return;
 
-            Program.dbOperations.DeleteAllWarehouse_InventorysAsync();
+            //Program.dbOperations.DeleteAllWarehouse_InventorysAsync();
         }
 
         private void TsmiDelete_Click(object sender, EventArgs e)

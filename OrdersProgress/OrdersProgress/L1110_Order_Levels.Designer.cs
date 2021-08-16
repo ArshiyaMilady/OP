@@ -53,8 +53,8 @@
             this.dgvData = new System.Windows.Forms.DataGridView();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiOL_Prerequisites = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiDeleteAllOL_Prerequisites = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiReturningOrderLevels = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiDeleteAllOL_Prerequisites = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiVerifyingUsers = new System.Windows.Forms.ToolStripMenuItem();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
@@ -104,7 +104,7 @@
             this.radAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.radAll.AutoSize = true;
             this.radAll.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radAll.Location = new System.Drawing.Point(142, 55);
+            this.radAll.Location = new System.Drawing.Point(140, 30);
             this.radAll.Name = "radAll";
             this.radAll.Size = new System.Drawing.Size(99, 19);
             this.radAll.TabIndex = 59;
@@ -132,12 +132,13 @@
             this.radDisabledLevel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.radDisabledLevel.AutoSize = true;
             this.radDisabledLevel.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radDisabledLevel.Location = new System.Drawing.Point(121, 30);
+            this.radDisabledLevel.Location = new System.Drawing.Point(118, 56);
             this.radDisabledLevel.Name = "radDisabledLevel";
             this.radDisabledLevel.Size = new System.Drawing.Size(121, 19);
             this.radDisabledLevel.TabIndex = 58;
             this.radDisabledLevel.Text = "نمایش سطوح غیر فعال";
             this.radDisabledLevel.UseVisualStyleBackColor = true;
+            this.radDisabledLevel.Visible = false;
             this.radDisabledLevel.CheckedChanged += new System.EventHandler(this.RadEnabledLevel_CheckedChanged);
             // 
             // groupBox1
@@ -354,7 +355,7 @@
             this.tsmiVerifyingUsers});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.contextMenuStrip1.Size = new System.Drawing.Size(208, 136);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(208, 114);
             // 
             // tsmiOL_Prerequisites
             // 
@@ -363,6 +364,13 @@
             this.tsmiOL_Prerequisites.Text = "تعریف پیش نیازها";
             this.tsmiOL_Prerequisites.Click += new System.EventHandler(this.tsmiOL_Prerequisites_Click);
             // 
+            // tsmiReturningOrderLevels
+            // 
+            this.tsmiReturningOrderLevels.Name = "tsmiReturningOrderLevels";
+            this.tsmiReturningOrderLevels.Size = new System.Drawing.Size(207, 22);
+            this.tsmiReturningOrderLevels.Text = "تعیین مراحل برگشت";
+            this.tsmiReturningOrderLevels.Click += new System.EventHandler(this.TsmiReturningOrderLevels_Click);
+            // 
             // tsmiDeleteAllOL_Prerequisites
             // 
             this.tsmiDeleteAllOL_Prerequisites.Name = "tsmiDeleteAllOL_Prerequisites";
@@ -370,13 +378,6 @@
             this.tsmiDeleteAllOL_Prerequisites.Text = "حذف تمام پیش نیازهای مرحله";
             this.tsmiDeleteAllOL_Prerequisites.Visible = false;
             this.tsmiDeleteAllOL_Prerequisites.Click += new System.EventHandler(this.TsmiDeleteAllOL_Prerequisites_Click);
-            // 
-            // tsmiReturningOrderLevels
-            // 
-            this.tsmiReturningOrderLevels.Name = "tsmiReturningOrderLevels";
-            this.tsmiReturningOrderLevels.Size = new System.Drawing.Size(207, 22);
-            this.tsmiReturningOrderLevels.Text = "تعیین مراحل برگشت";
-            this.tsmiReturningOrderLevels.Click += new System.EventHandler(this.TsmiReturningOrderLevels_Click);
             // 
             // tsmiDelete
             // 

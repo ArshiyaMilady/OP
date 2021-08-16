@@ -10,6 +10,7 @@ namespace OrdersProgress
     static class Stack
     {
         public static bool bx;
+        public static int ix;
         public static long lx;
         public static string sx;
 

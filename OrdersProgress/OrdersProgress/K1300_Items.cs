@@ -19,21 +19,16 @@ namespace OrdersProgress
         {
             InitializeComponent();
 
-            if (Stack.UserLevel <= Stack.UserLevel_Supervisor1)
-            {
-                btnDeleteAllItems.Visible = true;
-            }
-        }
+            btnDeleteAllItems.Visible = Stack.UserLevel_Type == 1;
+            btnDeleteAllImages.Visible = Stack.UserLevel_Type == 1;
 
-        private void BtnReturn_Click(object sender, EventArgs e)
-        {
-            Close();
+            panel2.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jn2110"); // امکان تغییر
+            btnAddNew.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jn2120"); // امکان افزودن
+            btnGetImages.Visible= Stack.lstUser_ULF_UniquePhrase.Contains("jn2110"); // امکان افزودن تصویر
         }
 
         private void K1300_Items_Shown(object sender, EventArgs e)
         {
-            btnDeleteAllItems.Visible = Stack.UserLevel <= Stack.UserLevel_Supervisor1;
-            btnDeleteAllImages.Visible = Stack.UserLevel <= Stack.UserLevel_Supervisor1;
             //this.WindowState = FormWindowState.Maximized;
             //Application.DoEvents();
 
@@ -88,13 +83,7 @@ namespace OrdersProgress
                             //col.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                             col.Width = 200;
                             break;
-                        //case "Module":
-                        //    col.HeaderText = "ماژول؟";
-                        //    col.ReadOnly = true;
-                        //    col.DefaultCellStyle.BackColor = Color.LightGray;
-                        //    col.Width = 50;
-                        //    break;
-                        case "Weight":
+                      case "Weight":
                             col.HeaderText = "وزن(کیلوگرم)";
                             break;
                         case "FixedPrice":
@@ -107,6 +96,14 @@ namespace OrdersProgress
                             //col.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                             col.Width = 100;
                             break;
+                        case "Code_Full":
+                            col.HeaderText = "کد کامل";
+                            col.Width = 100;
+                            break;
+                        case "Name_Full":
+                            col.HeaderText = "نام کامل";
+                            col.Width = 100;
+                            break;
                         default: col.Visible = false; break;
                     }
                 }
@@ -114,10 +111,18 @@ namespace OrdersProgress
             #endregion
         }
 
+        private void BtnReturn_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
         int iNewRow = -1;
         bool JustEdit = true;
         private void BtnAddNew_Click(object sender, EventArgs e)
         {
+            new K1304_Item_ChooseWarehouse().ShowDialog();
+            if (Stack.ix < 0) return;
+
             radAll.Checked = true;
             RadModule_CheckedChanged(null, null);
             Application.DoEvents();
@@ -130,6 +135,7 @@ namespace OrdersProgress
                 Index = index,
                 Code_Small = "کد " + (index % 100000),
                 Name_Samll = "نام " + (index % 100000),
+                Warehouse_Index = Stack.ix,
                 Enable = true,
             }) > 0)
             {
@@ -166,7 +172,7 @@ namespace OrdersProgress
             try
             {
                 string sCode_Small = Convert.ToString(dgvData.CurrentRow.Cells["Code_Small"].Value);
-                Models.Item item = Program.dbOperations.GetItemAsync(sCode_Small);
+                Models.Item item = Program.dbOperations.GetItemAsync(Stack.Company_Index,sCode_Small);
                 if(item.Module)
                 {
                     //MessageBox.Show(item.Code_Small,"module = true");
@@ -206,11 +212,11 @@ namespace OrdersProgress
             if (e.Button == MouseButtons.Right)
             {
                 /////// Do something ///////
-                Models.Item item2 = Program.dbOperations.GetItemAsync(sc);
+                Models.Item item2 = Program.dbOperations.GetItemAsync(Stack.Company_Index,sc);
                 tsmiShowModuleItems.Visible = item2.Module;
                 tsmiDiagram.Visible = item2.Module;
-                if (Program.dbOperations.GetWarehouse_InventoryAsync(sc) == null)
-                    tsmiAddItem_to_Warehouse.Visible = true;
+                //if (Program.dbOperations.GetWarehouse_InventoryAsync(sc) == null)
+                //    tsmiItem_Warehouse.Visible = true;
 
                 // انتخاب سلولی که روی آن کلیک راست شده است
                 dgvData.CurrentCell = dgvData[e.ColumnIndex, e.RowIndex];
@@ -247,11 +253,11 @@ namespace OrdersProgress
                         .Any(j => j.Code_Small.ToLower().Equals(item.Code_Small.ToLower())))
                     {
                         bSaveChange = MessageBox.Show("کد قبلا استفاده شده است. آیا مایل به تعریف ورژن جدیدی از این کد می باشید؟"
-                            +"\n" + "دقت نمایید با تأیید این عمل، کدهای قبلی غیر فعال شده، و تمام ارتباطات از این پس از ورژن جدید استفاده می شوند"
-                            , "اخطار",MessageBoxButtons.YesNo) == DialogResult.Yes;
-                        if(bSaveChange)
+                            + "\n" + "دقت نمایید با تأیید این عمل، کدهای قبلی غیر فعال شده، و تمام ارتباطات از این پس از ورژن جدید استفاده می شوند"
+                            , "اخطار", MessageBoxButtons.YesNo) == DialogResult.Yes;
+                        if (bSaveChange)
                         {
-                            foreach(Models.Item it1 in  Program.dbOperations.GetAllItemsAsync(Stack.Company_Index).Where(d => d.Index != index)
+                            foreach (Models.Item it1 in Program.dbOperations.GetAllItemsAsync(Stack.Company_Index).Where(d => d.Index != index)
                                 .Where(j => j.Code_Small.ToLower().Equals(item.Code_Small.ToLower())).ToList())
                             {
                                 it1.Enable = false;
@@ -265,6 +271,22 @@ namespace OrdersProgress
                     break;
                 case "Name_Samll":
                     item.Name_Samll = Convert.ToString(dgvData["Name_Samll", e.RowIndex].Value);
+                    break;
+                case "Code_Full":
+                    item.Code_Full = Convert.ToString(dgvData["Code_Full", e.RowIndex].Value);
+                    if (string.IsNullOrWhiteSpace(item.Code_Full))
+                        return;
+                    #region اگر کالایی دیگر با این کد تعریف شده باشد
+                    else if (Program.dbOperations.GetAllItemsAsync(Stack.Company_Index).Where(d => d.Index != index)
+                        .Any(j => j.Code_Full.ToLower().Equals(item.Code_Full.ToLower())))
+                    {
+                        MessageBox.Show("کد قبلا استفاده شده است" , "خطا");
+                        bSaveChange = false;
+                    }
+                    #endregion
+                    break;
+                case "Name_Full":
+                    item.Name_Full = Convert.ToString(dgvData["Name_Full", e.RowIndex].Value);
                     break;
                 case "Module":
                     bSaveChange = false;
@@ -326,7 +348,7 @@ namespace OrdersProgress
                 if ((e.RowIndex == iNewRow))
                 {
                     Program.dbOperations.UpdateItemAsync(item);
-                    AddUpdateItem_to_WarehouseInventory(item, true,JustEdit);
+                    //AddUpdateItem_to_WarehouseInventory(item, true,JustEdit);
                     JustEdit = true;
                 }
                 else
@@ -347,7 +369,7 @@ namespace OrdersProgress
             {
                 Program.dbOperations.UpdateItemAsync(item);
 
-                AddUpdateItem_to_WarehouseInventory(item, false,true);
+                //AddUpdateItem_to_WarehouseInventory(item, false,true);
             }
             else dgvData[e.ColumnIndex, e.RowIndex].Value = InitailValue;
         }
@@ -467,7 +489,7 @@ namespace OrdersProgress
                             if (b1 & b2)
                             {
                                 module_Small_code = ws.Cells[i, 2].Value.ToString();
-                                if (Program.dbOperations.GetItemAsync(module_Small_code) == null)
+                                if (Program.dbOperations.GetItemAsync(Stack.Company_Index,module_Small_code) == null)
                                 {
                                     Models.Item module = new Models.Item
                                     {
@@ -489,7 +511,7 @@ namespace OrdersProgress
                             if (b3 & b4)
                             {
                                 item_Small_code = ws.Cells[i, 4].Value.ToString();
-                                if (Program.dbOperations.GetItemAsync(item_Small_code) == null)
+                                if (Program.dbOperations.GetItemAsync(Stack.Company_Index,item_Small_code) == null)
                                 {
                                     Models.Item item = new Models.Item
                                     {
@@ -660,7 +682,7 @@ namespace OrdersProgress
                             {
                                 // کد ماژول
                                 module_Small_code = ws.Cells[i, 3].Value.ToString();
-                                if (Program.dbOperations.GetItemAsync(module_Small_code,true) == null)
+                                if (Program.dbOperations.GetItemAsync(Stack.Company_Index,module_Small_code,true) == null)
                                 {
                                     Program.dbOperations.AddItem(new Models.Item
                                     {
@@ -678,7 +700,7 @@ namespace OrdersProgress
                             string item_Small_code = ws.Cells[i, 5].Value.ToString();
                             double quantity = Convert.ToDouble(ws.Cells[i, 7].Value);
 
-                            Models.Item item = Program.dbOperations.GetItemAsync(item_Small_code, true);
+                            Models.Item item = Program.dbOperations.GetItemAsync(Stack.Company_Index,item_Small_code, true);
                             if (item == null)
                             {
                                 long index = Program.dbOperations.GetNewIndex_Item();
@@ -780,6 +802,8 @@ namespace OrdersProgress
         private void BtnSearch_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtST_Name.Text)
+                && string.IsNullOrWhiteSpace(txtST_SmallCode.Text)
+                && string.IsNullOrWhiteSpace(txtST_FullName.Text)
                 && string.IsNullOrWhiteSpace(txtST_SmallCode.Text))
             {
                 //ShowData(false);
@@ -794,8 +818,8 @@ namespace OrdersProgress
             List<Models.Item> lstItems = (List<Models.Item>)dgvData.DataSource;
             //MessageBox.Show(lstItems.Count.ToString());
 
-            if (!string.IsNullOrWhiteSpace(txtST_Name.Text)
-               || !string.IsNullOrWhiteSpace(txtST_SmallCode.Text))
+            //if (!string.IsNullOrWhiteSpace(txtST_Name.Text)
+            //   || !string.IsNullOrWhiteSpace(txtST_SmallCode.Text))
             {
                 foreach (Control c in groupBox1.Controls)
                 {
@@ -847,6 +871,29 @@ namespace OrdersProgress
                             return lstItems1.Where(d => d.Name_Samll.ToLower().StartsWith(txtST_Name.Text.ToLower())).ToList();
                         case 2:
                             return lstItems1.Where(d => d.Name_Samll.ToLower().Equals(txtST_Name.Text.ToLower())).ToList();
+                        default: return lstItems1;
+                    }
+                case "txtST_FullCode":
+                    switch (cmbST_FullCode.SelectedIndex)
+                    {
+                        case 0:
+                            return lstItems1.Where(d => d.Code_Full.ToLower().Contains(txtST_FullCode.Text.ToLower())).ToList();
+                        case 1:
+                            return lstItems1.Where(d => d.Code_Full.ToLower().StartsWith(txtST_FullCode.Text.ToLower())).ToList();
+                        case 2:
+                            return lstItems1.Where(d => d.Code_Full.ToLower().Equals(txtST_FullCode.Text.ToLower())).ToList();
+                        default: return lstItems1;
+                    }
+                //break;
+                case "txtST_FullName":
+                    switch (cmbST_FullName.SelectedIndex)
+                    {
+                        case 0:
+                            return lstItems1.Where(d => d.Name_Full.ToLower().Contains(txtST_FullName.Text.ToLower())).ToList();
+                        case 1:
+                            return lstItems1.Where(d => d.Name_Full.ToLower().StartsWith(txtST_FullName.Text.ToLower())).ToList();
+                        case 2:
+                            return lstItems1.Where(d => d.Name_Full.ToLower().Equals(txtST_FullName.Text.ToLower())).ToList();
                         default: return lstItems1;
                     }
             }
@@ -927,16 +974,20 @@ namespace OrdersProgress
             new K1330_Item_Properties(Program.dbOperations.GetItemAsync(index)).ShowDialog();
         }
 
-        private void TsmiAddItem_to_Warehouse_Click(object sender, EventArgs e)
+        private void TsmiItem_Warehouse_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("آیا این کالا به انبار اضافه شود؟", ""
-                , MessageBoxButtons.YesNo) == DialogResult.No) return;
-
             long index = Convert.ToInt64(dgvData.CurrentRow.Cells["Index"].Value);
-            AddUpdateItem_to_WarehouseInventory(Program.dbOperations.GetItemAsync(index), false);
-            Application.DoEvents();
-            pictureBox1.Visible = true;
-            timer1.Enabled = true;
+            Models.Item item = Program.dbOperations.GetItemAsync(index);
+            new K1304_Item_ChooseWarehouse(item).ShowDialog();
+
+            if (Stack.ix > 0)
+            {
+                item.Warehouse_Index = Stack.ix;
+                Program.dbOperations.UpdateItemAsync(item);
+                //Application.DoEvents();
+                //pictureBox1.Visible = true;
+                //timer1.Enabled = true;
+            }
         }
 
         private void Timer1_Tick(object sender, EventArgs e)
@@ -952,39 +1003,6 @@ namespace OrdersProgress
 
         private void K1300_Items_Load(object sender, EventArgs e)
         {
-
-        }
-
-        // JustEdit : در صورت تغییر ، تغییرات ذخیره می شوند و در صورت اضافه شدن، تغییری در انبار ایجاد نشود
-        // اضافه کردن یا تغییر در جدول انبار
-        private void AddUpdateItem_to_WarehouseInventory(Models.Item item,bool AskToAdd = true,bool JustEdit=false)
-        {
-            if ((Program.dbOperations.GetWarehouse_InventoryAsync(item.Code_Small) == null) && !JustEdit)
-            {
-                if (AskToAdd)   // آیا برای اضافه کردن رکورد جدید از کاربر سوال شود؟
-                {
-                    if (MessageBox.Show("آیا این کالا به انبار اضافه شود؟"
-                       , "", MessageBoxButtons.YesNo) == DialogResult.No) return;
-                    // اضافه کردن به جدول انبار
-                }
-
-                Program.dbOperations.AddWarehouse_Inventory(new Models.Warehouse_Item
-                {
-                    Item_Code = item.Code_Small,
-                    Item_Name = item.Name_Samll,
-                    Item_Unit = item.Unit,
-                });
-            }
-            else  // اگر کالا در انبار موجود باشد
-            {
-                Models.Warehouse_Item wi = Program.dbOperations.GetWarehouse_InventoryAsync(item.Code_Small);
-                if (wi != null)
-                {
-                    wi.Item_Name = item.Name_Samll;
-                    wi.Item_Unit = item.Unit;
-                    Program.dbOperations.UpdateWarehouse_InventoryAsync(wi);
-                }
-            }
 
         }
 
@@ -1071,6 +1089,13 @@ namespace OrdersProgress
                     (Program.dbOperations.GetFileAsync(item_file.File_Index).Content);
             else pictureBox2.Image = null;
             #endregion
+        }
+
+        private void TsmiItem_Details_Click(object sender, EventArgs e)
+        {
+            long index = Convert.ToInt64(dgvData.CurrentRow.Cells["Index"].Value);
+            Models.Item item = Program.dbOperations.GetItemAsync(index);
+            new K1302_Item_Details(0,item).ShowDialog();
         }
 
         private void Add_ChangeImage(string item_code,string file)

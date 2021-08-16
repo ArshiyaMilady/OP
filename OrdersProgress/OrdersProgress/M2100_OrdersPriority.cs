@@ -465,7 +465,7 @@ namespace OrdersProgress
             Application.DoEvents();
 
             warehouse_index = (cmbWarehouses.SelectedIndex > 0)
-                ? Program.dbOperations.GetWarehouseAsync(cmbWarehouses.Text).Index : 0;
+                ? Program.dbOperations.GetWarehouseAsync(Stack.Company_Index, cmbWarehouses.Text).Index : 0;
 
             #region 10 : حذف اطلاعات قبلی
             if (chkCreateOrder_StockItems.Checked)
@@ -508,14 +508,14 @@ namespace OrdersProgress
 
             #region 30 : محاسبه مقدار پیشرفت برای هر سفارش، بر اساس اولویتهای آن
             // تمام کالاهای انبار که دارای مقداری بیش از صفر می باشند
-            List<Models.Warehouse_Item> lstWI = Program.dbOperations
-                .GetAllWarehouse_InventorysAsync(Stack.Company_Index,warehouse_index)
-                .Where(d => d.Quantity_Real > 0).ToList();
+            List<Models.Item> lstItems = Program.dbOperations
+                .GetAllItems_in_WarehouseAsync(Stack.Company_Index,warehouse_index)
+                .Where(d => d.Wh_Quantity_Real > 0).ToList();
 
             // ارزش دهی مقدار کاذب از هر کالا درانبار
-            foreach (Models.Warehouse_Item wi in lstWI)
-                wi.Quantity_x = wi.Quantity_Real;
-            Program.dbOperations.UpdateSomeWarehouse_Inventory(lstWI);
+            foreach (Models.Item item in lstItems)
+                item.Wh_Quantity_x = item.Wh_Quantity_Real;
+            Program.dbOperations.UpdateItems(lstItems);
             //new M1100_StockInventory().ShowDialog();
 
             List<Models.OrderPriority> lstOP = GetData();
@@ -532,8 +532,8 @@ namespace OrdersProgress
             }
 
 
-            lstWI = Program.dbOperations.GetAllWarehouse_Inventories(warehouse_index);
-              //.Where(d => d.Quantity_x > 0).ToList();
+            lstItems = Program.dbOperations.GetAllItems_in_WarehouseAsync(Stack.Company_Index,warehouse_index);
+              //.Where(d => d.Wh_Quantity_x > 0).ToList();
 
             int priority = 10;
             for (int i = 0; i < GetData().Count; i++)
@@ -548,10 +548,10 @@ namespace OrdersProgress
                         //osi.Quantity_CanTake = 0;
                         //osi.Quantity_Remained = 0;
 
-                        if (lstWI.Any(d => d.Item_Code.Equals(osi.Item_SmallCode)))
+                        if (lstItems.Any(d => d.Code_Small.Equals(osi.Item_SmallCode)))
                             Program.dbOperations.UpdateOrder_StockItem(
-                                GetOrder_StockItem_from_Warehouse(lstWI.First(d
-                                => d.Item_Code.Equals(osi.Item_SmallCode)), osi,false));
+                                GetOrder_StockItem_from_Warehouse(lstItems.First(d
+                                => d.Code_Small.Equals(osi.Item_SmallCode)), osi,false));
                     }
                 }
                 #endregion
@@ -599,14 +599,14 @@ namespace OrdersProgress
                     foreach (Models.Order_StockItem osi in Program.dbOperations
                         .GetAllOrder_StockItems(op_by_max_progress.Order_Index))
                     {
-                        if (lstWI.Any(d => d.Item_Code.Equals(osi.Item_SmallCode)))
+                        if (lstItems.Any(d => d.Code_Small.Equals(osi.Item_SmallCode)))
                             Program.dbOperations.UpdateOrder_StockItem(
-                                GetOrder_StockItem_from_Warehouse(lstWI.First(d
-                                => d.Item_Code.Equals(osi.Item_SmallCode)), osi));
+                                GetOrder_StockItem_from_Warehouse(lstItems.First(d
+                                => d.Code_Small.Equals(osi.Item_SmallCode)), osi));
                     }
 
-                    lstWI = Program.dbOperations.GetAllWarehouse_Inventories(Stack.Company_Index); //warehouse_index)
-                        //.Where(d => d.Quantity_x > 0).ToList();
+                    lstItems = Program.dbOperations.GetAllItemsAsync(Stack.Company_Index); //warehouse_index)
+                        //.Where(d => d.Wh_Quantity_x > 0).ToList();
 
                     //new M1100_StockInventory().ShowDialog();
 
@@ -648,7 +648,7 @@ namespace OrdersProgress
             Application.DoEvents();
 
             warehouse_index = (cmbWarehouses.SelectedIndex > 0)
-                ? Program.dbOperations.GetWarehouseAsync(cmbWarehouses.Text).Index : 0;
+                ? Program.dbOperations.GetWarehouseAsync(Stack.Company_Index, cmbWarehouses.Text).Index : 0;
 
             #region 10 : حذف اطلاعات قبلی
             if (chkCreateOrder_StockItems.Checked)
@@ -683,28 +683,28 @@ namespace OrdersProgress
 
             #region 30 : محاسبه مقدار پیشرفت برای هر سفارش، بر اساس اولویتهای آن
             // تمام کالاهای انبار که دارای مقداری بیش از صفر می باشند
-            List<Models.Warehouse_Item> lstWI = Program.dbOperations
-                .GetAllWarehouse_InventorysAsync(warehouse_index);
-                //.Where(d => d.Quantity_Real > 0).ToList();
+            List<Models.Item> lstItems = Program.dbOperations
+                .GetAllItems_in_WarehouseAsync(Stack.Company_Index, warehouse_index);
+                //.Where(d => d.Wh_Quantity_Real > 0).ToList();
             // ارزش دهی مقدار کاذب از هر کالا
-            foreach (Models.Warehouse_Item wi in lstWI)
+            foreach (Models.Item item in lstItems)
             {
-                wi.Quantity_x = wi.Quantity_Real;
-                Program.dbOperations.UpdateWarehouse_InventoryAsync(wi);
+                item.Wh_Quantity_x = item.Wh_Quantity_Real;
+                Program.dbOperations.UpdateItem(item);
             }
             //Program.dbOperations.UpdateAllWarehouse_InventoryAsync(lstWI);
 
             foreach (Models.OrderPriority op in GetData())
             {
-                lstWI = Program.dbOperations
-                    .GetAllWarehouse_InventorysAsync(warehouse_index);
-                    //.Where(d => d.Quantity_x > 0).ToList();
+                lstItems = Program.dbOperations
+                    .GetAllItems_in_WarehouseAsync(Stack.Company_Index,warehouse_index);
+                    //.Where(d => d.Wh_Quantity_x > 0).ToList();
                 foreach (Models.Order_StockItem osi in Program.dbOperations.GetAllOrder_StockItemsAsync(Stack.Company_Index, op.Order_Index))
                 {
-                    if (lstWI.Any(d => d.Item_Code.Equals(osi.Item_SmallCode)))
+                    if (lstItems.Any(d => d.Code_Small.Equals(osi.Item_SmallCode)))
                         Program.dbOperations.UpdateOrder_StockItem(
-                            GetOrder_StockItem_from_Warehouse(lstWI.First
-                            (d => d.Item_Code.Equals(osi.Item_SmallCode)), osi));
+                            GetOrder_StockItem_from_Warehouse(lstItems.First
+                            (d => d.Code_Small.Equals(osi.Item_SmallCode)), osi));
                 }
 
                 if (progressBar1.Value < progressBar1.Maximum)
@@ -737,9 +737,9 @@ namespace OrdersProgress
         // تعداد لازم را از انبار (درصورت وجود) بر می دارد و تغییرات را ذخیره می کند
         // DoChange_in_Warehouse = true : تغییرات در انبار (در متغیر غیر اصلی) ذخیره گردد
         private Models.Order_StockItem GetOrder_StockItem_from_Warehouse
-            (Models.Warehouse_Item wi,  Models.Order_StockItem osi, bool DoChange_in_Warehouse=true)
+            (Models.Item item,  Models.Order_StockItem osi, bool DoChange_in_Warehouse=true)
         {
-            double wi_quantity_x = wi.Quantity_x;
+            double wi_quantity_x = item.Wh_Quantity_x;
             if (wi_quantity_x > 0)
             {
                 // اگر تعداد کالا در انبار بیشتر یا مساوی تعداد کالای درخواستی باشد
@@ -759,8 +759,8 @@ namespace OrdersProgress
                 if (DoChange_in_Warehouse)
                 {
                     //Models.Warehouse_Inventory wi1 = Program.dbOperations.GetWarehouse_InventoryAsync(wi.Index);
-                    wi.Quantity_x = wi_quantity_x;
-                    Program.dbOperations.UpdateWarehouse_Inventory(wi);
+                    item.Wh_Quantity_x = wi_quantity_x;
+                    Program.dbOperations.UpdateItemAsync(item);
                 }
             }
             else
@@ -792,15 +792,15 @@ namespace OrdersProgress
         private void AddOrdersItem_to_OrderStockItems(string item_code, string order_index, double quantity,string top_code=null) // Models.Order_Item oi1)
         {
             bool bIsItemDefined_in_Stock = false;   // آیا کالا در انبار موجود است
-            bIsItemDefined_in_Stock = Program.dbOperations.GetAllWarehouse_InventorysAsync(Stack.Company_Index)
-                .Any(d => d.Item_Code.Equals(item_code));
+            bIsItemDefined_in_Stock = Program.dbOperations.GetAllItemsAsync(Stack.Company_Index)
+                .Any(d => d.Code_Small.Equals(item_code));
 
             int warehouse_index = (cmbWarehouses.SelectedIndex > 0)
-                ? Program.dbOperations.GetWarehouseAsync(cmbWarehouses.Text).Index : 0;
+                ? Program.dbOperations.GetWarehouseAsync(Stack.Company_Index, cmbWarehouses.Text).Index : 0;
 
             if (bIsItemDefined_in_Stock)
             {
-                Models.Item item = Program.dbOperations.GetItem(item_code, true);
+                Models.Item item = Program.dbOperations.GetItem(Stack.Company_Index,item_code, true);
 
                 #region ماژول بالایی این کالا
                 string top_name = null;
@@ -812,7 +812,7 @@ namespace OrdersProgress
                         top_name = item.Name_Samll;
                     }
                     else
-                        top_name = Program.dbOperations.GetItem(top_code, true).Name_Samll;
+                        top_name = Program.dbOperations.GetItem(Stack.Company_Index, top_code, true).Name_Samll;
                 }
                 catch { }
                 #endregion

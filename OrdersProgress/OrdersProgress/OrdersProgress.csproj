@@ -175,6 +175,18 @@
     <Compile Include="K1300_Items.Designer.cs">
       <DependentUpon>K1300_Items.cs</DependentUpon>
     </Compile>
+    <Compile Include="K1302_Item_Details.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="K1302_Item_Details.Designer.cs">
+      <DependentUpon>K1302_Item_Details.cs</DependentUpon>
+    </Compile>
+    <Compile Include="K1304_Item_ChooseWarehouse.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="K1304_Item_ChooseWarehouse.Designer.cs">
+      <DependentUpon>K1304_Item_ChooseWarehouse.cs</DependentUpon>
+    </Compile>
     <Compile Include="K1320_Modules.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -276,12 +288,6 @@
     </Compile>
     <Compile Include="M2100_OrdersPriority.Designer.cs">
       <DependentUpon>M2100_OrdersPriority.cs</DependentUpon>
-    </Compile>
-    <Compile Include="M1120_WarehouseItems.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="M1120_WarehouseItems.Designer.cs">
-      <DependentUpon>M1120_WarehouseItems.cs</DependentUpon>
     </Compile>
     <Compile Include="M2200_Order_StockItems.cs">
       <SubType>Form</SubType>
@@ -416,6 +422,12 @@
     <EmbeddedResource Include="K1300_Items.resx">
       <DependentUpon>K1300_Items.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="K1302_Item_Details.resx">
+      <DependentUpon>K1302_Item_Details.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="K1304_Item_ChooseWarehouse.resx">
+      <DependentUpon>K1304_Item_ChooseWarehouse.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="K1320_Modules.resx">
       <DependentUpon>K1320_Modules.cs</DependentUpon>
     </EmbeddedResource>
@@ -463,9 +475,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="M1110_WarehouseItems.resx">
       <DependentUpon>M1110_WarehouseItems.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="M1120_WarehouseItems.resx">
-      <DependentUpon>M1120_WarehouseItems.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="M2100_OrdersPriority.resx">
       <DependentUpon>M2100_OrdersPriority.cs</DependentUpon>

@@ -218,7 +218,7 @@ namespace OrdersProgress
         {
             //MessageBox.Show(level.ToString());
 
-            Models.Item item = Program.dbOperations.GetItemAsync(code, true);
+            Models.Item item = Program.dbOperations.GetItemAsync(Stack.Company_Index,code, true);
             if (item == null) return;
 
             Relation_by_Level rl = new Relation_by_Level();

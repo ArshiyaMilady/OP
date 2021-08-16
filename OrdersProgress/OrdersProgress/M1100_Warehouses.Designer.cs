@@ -31,8 +31,11 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(M1100_Warehouses));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.radAll = new System.Windows.Forms.RadioButton();
+            this.radEnabledLevel = new System.Windows.Forms.RadioButton();
+            this.radDisabledLevel = new System.Windows.Forms.RadioButton();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.chkCanEdit = new System.Windows.Forms.CheckBox();
             this.chkShowUpdateMessage = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -56,6 +59,7 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
@@ -67,6 +71,7 @@
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.panel3);
             this.panel1.Controls.Add(this.panel2);
             this.panel1.Controls.Add(this.groupBox1);
             this.panel1.Controls.Add(this.btnAddNew);
@@ -77,40 +82,78 @@
             this.panel1.Controls.Add(this.dgvData);
             this.panel1.Location = new System.Drawing.Point(-1, 1);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(912, 311);
+            this.panel1.Size = new System.Drawing.Size(912, 335);
             this.panel1.TabIndex = 4;
+            // 
+            // panel3
+            // 
+            this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel3.Controls.Add(this.radAll);
+            this.panel3.Controls.Add(this.radEnabledLevel);
+            this.panel3.Controls.Add(this.radDisabledLevel);
+            this.panel3.Location = new System.Drawing.Point(662, 76);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(244, 83);
+            this.panel3.TabIndex = 92;
+            // 
+            // radAll
+            // 
+            this.radAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.radAll.AutoSize = true;
+            this.radAll.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radAll.Location = new System.Drawing.Point(141, 55);
+            this.radAll.Name = "radAll";
+            this.radAll.Size = new System.Drawing.Size(98, 19);
+            this.radAll.TabIndex = 59;
+            this.radAll.Text = "نمایش تمام انبارها";
+            this.radAll.UseVisualStyleBackColor = true;
+            this.radAll.Visible = false;
+            // 
+            // radEnabledLevel
+            // 
+            this.radEnabledLevel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.radEnabledLevel.AutoSize = true;
+            this.radEnabledLevel.Checked = true;
+            this.radEnabledLevel.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radEnabledLevel.Location = new System.Drawing.Point(130, 5);
+            this.radEnabledLevel.Name = "radEnabledLevel";
+            this.radEnabledLevel.Size = new System.Drawing.Size(109, 19);
+            this.radEnabledLevel.TabIndex = 57;
+            this.radEnabledLevel.TabStop = true;
+            this.radEnabledLevel.Text = "نمایش انبارهای فعال";
+            this.radEnabledLevel.UseVisualStyleBackColor = true;
+            this.radEnabledLevel.CheckedChanged += new System.EventHandler(this.Rad_CheckedChanged);
+            // 
+            // radDisabledLevel
+            // 
+            this.radDisabledLevel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.radDisabledLevel.AutoSize = true;
+            this.radDisabledLevel.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radDisabledLevel.Location = new System.Drawing.Point(111, 30);
+            this.radDisabledLevel.Name = "radDisabledLevel";
+            this.radDisabledLevel.Size = new System.Drawing.Size(128, 19);
+            this.radDisabledLevel.TabIndex = 58;
+            this.radDisabledLevel.Text = "نمایش انبارهای غیر فعال";
+            this.radDisabledLevel.UseVisualStyleBackColor = true;
+            this.radDisabledLevel.CheckedChanged += new System.EventHandler(this.Rad_CheckedChanged);
             // 
             // panel2
             // 
             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel2.Controls.Add(this.comboBox1);
             this.panel2.Controls.Add(this.chkCanEdit);
             this.panel2.Controls.Add(this.chkShowUpdateMessage);
-            this.panel2.Enabled = false;
-            this.panel2.Location = new System.Drawing.Point(641, 3);
+            this.panel2.Location = new System.Drawing.Point(651, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(265, 99);
+            this.panel2.Size = new System.Drawing.Size(255, 67);
             this.panel2.TabIndex = 77;
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "نمایش موارد فعال",
-            "نمایش تمام موارد"});
-            this.comboBox1.Location = new System.Drawing.Point(16, 60);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(229, 25);
-            this.comboBox1.TabIndex = 16;
+            this.panel2.Visible = false;
             // 
             // chkCanEdit
             // 
             this.chkCanEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chkCanEdit.AutoSize = true;
             this.chkCanEdit.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkCanEdit.Location = new System.Drawing.Point(33, 3);
+            this.chkCanEdit.Location = new System.Drawing.Point(23, 3);
             this.chkCanEdit.Name = "chkCanEdit";
             this.chkCanEdit.Size = new System.Drawing.Size(229, 21);
             this.chkCanEdit.TabIndex = 4;
@@ -125,7 +168,7 @@
             this.chkShowUpdateMessage.Checked = true;
             this.chkShowUpdateMessage.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkShowUpdateMessage.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkShowUpdateMessage.Location = new System.Drawing.Point(80, 29);
+            this.chkShowUpdateMessage.Location = new System.Drawing.Point(70, 29);
             this.chkShowUpdateMessage.Name = "chkShowUpdateMessage";
             this.chkShowUpdateMessage.Size = new System.Drawing.Size(183, 19);
             this.chkShowUpdateMessage.TabIndex = 4;
@@ -146,9 +189,9 @@
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Location = new System.Drawing.Point(641, 108);
+            this.groupBox1.Location = new System.Drawing.Point(651, 161);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(266, 161);
+            this.groupBox1.Size = new System.Drawing.Size(256, 161);
             this.groupBox1.TabIndex = 76;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "جستجو";
@@ -156,7 +199,7 @@
             // btnShowAll
             // 
             this.btnShowAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnShowAll.Location = new System.Drawing.Point(178, 129);
+            this.btnShowAll.Location = new System.Drawing.Point(168, 129);
             this.btnShowAll.Name = "btnShowAll";
             this.btnShowAll.Size = new System.Drawing.Size(79, 26);
             this.btnShowAll.TabIndex = 57;
@@ -179,7 +222,7 @@
             // 
             this.txtST_Name.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtST_Name.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtST_Name.Location = new System.Drawing.Point(5, 31);
+            this.txtST_Name.Location = new System.Drawing.Point(9, 31);
             this.txtST_Name.Name = "txtST_Name";
             this.txtST_Name.Size = new System.Drawing.Size(93, 22);
             this.txtST_Name.TabIndex = 34;
@@ -191,7 +234,7 @@
             // 
             this.txtST_Phone.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtST_Phone.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtST_Phone.Location = new System.Drawing.Point(5, 59);
+            this.txtST_Phone.Location = new System.Drawing.Point(9, 59);
             this.txtST_Phone.Name = "txtST_Phone";
             this.txtST_Phone.Size = new System.Drawing.Size(93, 22);
             this.txtST_Phone.TabIndex = 34;
@@ -203,7 +246,7 @@
             // 
             this.txtST_Address.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtST_Address.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtST_Address.Location = new System.Drawing.Point(5, 89);
+            this.txtST_Address.Location = new System.Drawing.Point(9, 89);
             this.txtST_Address.Name = "txtST_Address";
             this.txtST_Address.Size = new System.Drawing.Size(93, 22);
             this.txtST_Address.TabIndex = 34;
@@ -221,7 +264,7 @@
             "شامل",
             "شروع شود با",
             "برابر باشد با"});
-            this.cmbST_Name.Location = new System.Drawing.Point(104, 29);
+            this.cmbST_Name.Location = new System.Drawing.Point(108, 29);
             this.cmbST_Name.Name = "cmbST_Name";
             this.cmbST_Name.Size = new System.Drawing.Size(91, 23);
             this.cmbST_Name.TabIndex = 30;
@@ -236,7 +279,7 @@
             "شامل",
             "شروع شود با",
             "برابر باشد با"});
-            this.cmbST_Phone.Location = new System.Drawing.Point(104, 57);
+            this.cmbST_Phone.Location = new System.Drawing.Point(108, 57);
             this.cmbST_Phone.Name = "cmbST_Phone";
             this.cmbST_Phone.Size = new System.Drawing.Size(91, 23);
             this.cmbST_Phone.TabIndex = 30;
@@ -251,7 +294,7 @@
             "شامل",
             "شروع شود با",
             "برابر باشد با"});
-            this.cmbST_Address.Location = new System.Drawing.Point(104, 87);
+            this.cmbST_Address.Location = new System.Drawing.Point(108, 87);
             this.cmbST_Address.Name = "cmbST_Address";
             this.cmbST_Address.Size = new System.Drawing.Size(91, 23);
             this.cmbST_Address.TabIndex = 30;
@@ -261,7 +304,7 @@
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(195, 32);
+            this.label5.Location = new System.Drawing.Point(199, 32);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(44, 15);
             this.label5.TabIndex = 29;
@@ -272,7 +315,7 @@
             this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(195, 60);
+            this.label6.Location = new System.Drawing.Point(199, 60);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(50, 15);
             this.label6.TabIndex = 29;
@@ -283,7 +326,7 @@
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(195, 90);
+            this.label3.Location = new System.Drawing.Point(199, 90);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(37, 15);
             this.label3.TabIndex = 29;
@@ -293,12 +336,13 @@
             // 
             this.btnAddNew.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAddNew.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.btnAddNew.Location = new System.Drawing.Point(481, 276);
+            this.btnAddNew.Location = new System.Drawing.Point(481, 300);
             this.btnAddNew.Name = "btnAddNew";
             this.btnAddNew.Size = new System.Drawing.Size(158, 29);
             this.btnAddNew.TabIndex = 1;
             this.btnAddNew.Text = "اضافه کردن انبار جدید";
             this.btnAddNew.UseVisualStyleBackColor = true;
+            this.btnAddNew.Visible = false;
             this.btnAddNew.Click += new System.EventHandler(this.BtnAddNew_Click);
             // 
             // label4
@@ -318,7 +362,7 @@
             this.btnImportDataFromExcel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnImportDataFromExcel.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnImportDataFromExcel.BackgroundImage")));
             this.btnImportDataFromExcel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnImportDataFromExcel.Location = new System.Drawing.Point(783, 275);
+            this.btnImportDataFromExcel.Location = new System.Drawing.Point(285, 297);
             this.btnImportDataFromExcel.Name = "btnImportDataFromExcel";
             this.btnImportDataFromExcel.Size = new System.Drawing.Size(34, 34);
             this.btnImportDataFromExcel.TabIndex = 72;
@@ -329,7 +373,7 @@
             // 
             this.btnReturn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnReturn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnReturn.Location = new System.Drawing.Point(3, 276);
+            this.btnReturn.Location = new System.Drawing.Point(3, 300);
             this.btnReturn.Name = "btnReturn";
             this.btnReturn.Size = new System.Drawing.Size(75, 29);
             this.btnReturn.TabIndex = 2;
@@ -340,7 +384,7 @@
             // btnDeleteAll
             // 
             this.btnDeleteAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDeleteAll.Location = new System.Drawing.Point(823, 278);
+            this.btnDeleteAll.Location = new System.Drawing.Point(325, 300);
             this.btnDeleteAll.Name = "btnDeleteAll";
             this.btnDeleteAll.Size = new System.Drawing.Size(75, 29);
             this.btnDeleteAll.TabIndex = 2;
@@ -357,7 +401,7 @@
             this.dgvData.Location = new System.Drawing.Point(2, 27);
             this.dgvData.Name = "dgvData";
             this.dgvData.ReadOnly = true;
-            this.dgvData.Size = new System.Drawing.Size(637, 243);
+            this.dgvData.Size = new System.Drawing.Size(637, 267);
             this.dgvData.TabIndex = 0;
             this.dgvData.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.DgvData_CellBeginEdit);
             this.dgvData.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvData_CellEndEdit);
@@ -376,20 +420,24 @@
             // tsmiDelete
             // 
             this.tsmiDelete.Name = "tsmiDelete";
-            this.tsmiDelete.Size = new System.Drawing.Size(95, 22);
+            this.tsmiDelete.Size = new System.Drawing.Size(180, 22);
             this.tsmiDelete.Text = "حذف";
             this.tsmiDelete.Visible = false;
+            this.tsmiDelete.Click += new System.EventHandler(this.TsmiDelete_Click);
             // 
             // M1100_Warehouses
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(911, 312);
+            this.CancelButton = this.btnReturn;
+            this.ClientSize = new System.Drawing.Size(911, 336);
             this.Controls.Add(this.panel1);
             this.Name = "M1100_Warehouses";
             this.Text = "   انبارها";
             this.Shown += new System.EventHandler(this.M1100_Warehouses_Shown);
             this.panel1.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
@@ -426,6 +474,9 @@
         private System.Windows.Forms.DataGridView dgvData;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem tsmiDelete;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.RadioButton radAll;
+        private System.Windows.Forms.RadioButton radEnabledLevel;
+        private System.Windows.Forms.RadioButton radDisabledLevel;
     }
 }
