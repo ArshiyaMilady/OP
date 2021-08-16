@@ -148,7 +148,7 @@ namespace OrdersProgress
             menuStrip.Enabled = true;
             btnClose.Enabled = true;
 
-            if (Stack.UserLevel_Type==1) new zForm1().ShowDialog();
+            //if (Stack.UserLevel_Type==1) new zForm1().ShowDialog();
 
         }
 

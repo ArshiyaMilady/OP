@@ -1095,7 +1095,9 @@ namespace OrdersProgress
         {
             long index = Convert.ToInt64(dgvData.CurrentRow.Cells["Index"].Value);
             Models.Item item = Program.dbOperations.GetItemAsync(index);
-            new K1302_Item_Details(0,item).ShowDialog();
+
+            int type = Stack.lstUser_ULF_UniquePhrase.Contains("jn2110") ? 1 : 0;
+            new K1302_Item_Details(type,item).ShowDialog();
         }
 
         private void Add_ChangeImage(string item_code,string file)
