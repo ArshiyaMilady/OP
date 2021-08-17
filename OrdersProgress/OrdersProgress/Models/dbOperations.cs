@@ -1969,13 +1969,13 @@ namespace OrdersProgress.Models
         public long GetNewIndex_Property()
         {
             if (_db.Table<Property>().ToListAsync().Result.Any())
-                return _db.Table<Property>().ToListAsync().Result.Last().Index + 1;
+                return _db.Table<Property>().ToListAsync().Result.Max(d=>d.Id) + 1;
             else return 1;
         }
 
         public long AddPropertyAsync(Property property)
         {
-            //property.Index = GetNewIndex_Property();
+            property.Index = GetNewIndex_Property();
             _db.InsertAsync(property).Wait();
             return property.Id;
         }
@@ -2099,16 +2099,18 @@ namespace OrdersProgress.Models
 
         public long AddItemAsync(Item item, long index = 0)
         {
-            if (index <= 0) index = GetNewIndex_Item();
+            if (index == 0) item.Index = GetNewIndex_Item();
+            else item.Index = index;
             _db.InsertAsync(item);
-            return item.Id;
+            return item.Index;
         }
 
         public long AddItem(Item item, long index = 0)
         {
-            if (index <= 0) index = GetNewIndex_Item();
+            if (index <= 0) item.Index = GetNewIndex_Item();
+            else item.Index = index;
             _db.InsertAsync(item).Wait();
-            return item.Id;
+            return item.Index;
         }
 
         public int DeleteItemAsync(Item item)
@@ -2139,7 +2141,7 @@ namespace OrdersProgress.Models
         public long GetNewIndex_Item()
         {
             if (_db.Table<Item>().ToListAsync().Result.Any())
-                return _db.Table<Item>().ToListAsync().Result.Last().Index + 1;
+                return _db.Table<Item>().ToListAsync().Result.Max(d=>d.Id) + 1;
             else return 1;
         }
 
@@ -2914,15 +2916,17 @@ namespace OrdersProgress.Models
 
         }
 
-        public Warehouse_Remittance_Item GetWarehouse_Remittance_ItemAsync(long id)
+        public Warehouse_Remittance_Item GetWarehouse_Remittance_ItemAsync(long index)
         {
-            return _db.Table<Warehouse_Remittance_Item>().FirstAsync(d => d.Id == id).Result;
+            return _db.Table<Warehouse_Remittance_Item>().FirstOrDefaultAsync(d => d.Index == index).Result;
         }
 
-        //public Warehouse_Remittance_Item GetWarehouse_Remittance_ItemAsync(string SmallCode)
-        //{
-        //    return _db.Table<Warehouse_Remittance_Item>().FirstOrDefaultAsync(d => d.Code_Small.ToLower().Equals(SmallCode.ToLower())).Result;
-        //}
+        public Warehouse_Remittance_Item GetWarehouse_Remittance_ItemAsync( string SmallCode, long company_index)
+        {
+            return _db.Table<Warehouse_Remittance_Item>()
+                .Where(b=>b.Company_Index == company_index).FirstOrDefaultAsync
+                (d => d.Item_SmallCode.ToLower().Equals(SmallCode.ToLower())).Result;
+        }
 
         public long AddWarehouse_Remittance_ItemAsync(Warehouse_Remittance_Item warehouse_Remittance_Item)
         {

@@ -1680,7 +1680,6 @@ E:\BOX\D\OrderProgress\OrdersProgress\OrdersProgress\OrdersProgress\obj\Debug\Or
 E:\BOX\D\OrderProgress\OrdersProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.L2140_OneOrder_History.resources
 E:\BOX\D\OrderProgress\OrdersProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.J2230_UL_See_OL.resources
 E:\BOX\D\OrderProgress\OrdersProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.L2150_OneOrder_Change_OrderLevel.resources
-E:\BOX\D\OrderProgress\OrdersProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.M1100_StockInventory.resources
 E:\BOX\D\OrderProgress\OrdersProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.M2100_OrdersPriority.resources
 E:\BOX\D\OrderProgress\OrdersProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.M2200_Order_StockItems.resources
 E:\BOX\D\OrderProgress\OrdersProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.Mm100_Priorities.resources
@@ -1714,3 +1713,7 @@ D:\Desktop\BOX\Personal\D\OrderProgress\OrderProgress\OrdersProgress\OrdersProgr
 D:\Desktop\BOX\Personal\D\OrderProgress\OrderProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.M1110_WarehouseItems.resources
 D:\Desktop\BOX\Personal\D\OrderProgress\OrderProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.K1302_Item_Details.resources
 D:\Desktop\BOX\Personal\D\OrderProgress\OrderProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.K1304_Item_ChooseWarehouse.resources
+E:\BOX\D\OrderProgress\OrdersProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.K1302_Item_Details.resources
+E:\BOX\D\OrderProgress\OrdersProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.K1304_Item_ChooseWarehouse.resources
+E:\BOX\D\OrderProgress\OrdersProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.M1100_Warehouses.resources
+E:\BOX\D\OrderProgress\OrdersProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.M1110_WarehouseItems.resources

@@ -47,6 +47,14 @@ namespace OrdersProgress
 
         private void Button1_Click(object sender, EventArgs e)
         {
+            #region واحد کالا : عدد
+            //foreach(Models.Item item in Program.dbOperations.GetAllItemsAsync(Stack.Company_Index,0))
+            //{
+            //    item.Unit = "عدد";
+            //    Program.dbOperations.UpdateItemAsync(item);
+            //}
+            #endregion
+
             #region تعیین انبار کالاها
             //foreach(Models.Item item in Program.dbOperations.GetAllItemsAsync(Stack.Company_Index,0,100))
             //    {

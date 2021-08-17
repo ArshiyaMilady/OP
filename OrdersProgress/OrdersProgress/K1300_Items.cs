@@ -19,12 +19,13 @@ namespace OrdersProgress
         {
             InitializeComponent();
 
+            tsmiDelete.Visible = (Stack.UserLevel_Type == 1) || (Stack.UserLevel_Type == 2);
             btnDeleteAllItems.Visible = Stack.UserLevel_Type == 1;
             btnDeleteAllImages.Visible = Stack.UserLevel_Type == 1;
 
-            panel2.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jn2110"); // امکان تغییر
+            //panel2.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jn2110"); // امکان تغییر
+            btnGetImages.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jn2110"); // امکان افزودن تصویر
             btnAddNew.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jn2120"); // امکان افزودن
-            btnGetImages.Visible= Stack.lstUser_ULF_UniquePhrase.Contains("jn2110"); // امکان افزودن تصویر
         }
 
         private void K1300_Items_Shown(object sender, EventArgs e)
@@ -36,32 +37,46 @@ namespace OrdersProgress
             cmbST_SmallCode.SelectedIndex = 0;
             //dataGridView1.DataSource = Program.dbOperations.GetAllModulesAsync();
             //dgvData.DataSource = Program.dbOperations.GetAllItemsAsync(Stack.Company_Index);
-            comboBox1.SelectedIndex = 0;
+            cmbItemsEnable.SelectedIndex = 0;
+
+            cmbWarehouses.Items.Add("تمام انبارها");
+            cmbWarehouses.Items.AddRange(Program.dbOperations.GetAllWarehousesAsync
+                (Stack.Company_Index, true).Select(d => d.Name).ToArray());
+            cmbWarehouses.SelectedIndex = 0;
+
+            dgvData.DataSource = GetData();
             ShowData();
         }
 
         private List<Models.Item> GetData()
         {
             int enableType = 0;
-            switch (comboBox1.SelectedIndex)
+            switch (cmbItemsEnable.SelectedIndex)
             {
                 case 0: enableType = 1; break;
                 case 1: enableType = -1; break;
                 case 2: enableType = 0; break;
             }
 
-            if (radModule.Checked) return Program.dbOperations.GetAllItemsAsync(Stack.Company_Index, enableType).Where(d => d.Module).ToList();
-            else if (radNotModule.Checked) return Program.dbOperations.GetAllItemsAsync(Stack.Company_Index, enableType).Where(d => !d.Module).ToList();
-            else return Program.dbOperations.GetAllItemsAsync(Stack.Company_Index, enableType);
+            List<Models.Item> lstResult = Program.dbOperations.GetAllItemsAsync(Stack.Company_Index, enableType);
 
+            if (radModule.Checked) lstResult = lstResult.Where(d => d.Module).ToList();
+            else if (radNotModule.Checked) lstResult = lstResult.Where(d => !d.Module).ToList();
+            //else return Program.dbOperations.GetAllItemsAsync(Stack.Company_Index, enableType);
+
+            if(cmbWarehouses.SelectedIndex>0)
+            {
+                int wh_index = Program.dbOperations.GetWarehouseAsync(Stack.Company_Index, cmbWarehouses.Text).Index;
+                lstResult = lstResult.Where(d => d.Warehouse_Index == wh_index).ToList();
+            }
+
+            return lstResult.OrderBy(d=>d.Code_Small).ToList();
         }
 
-        private void ShowData(bool ChangeHeaderTexts = true)
+        private void ShowData()
         {
-            dgvData.DataSource = GetData();
-
             #region ترجمه سر ستونها و مخفی کردن بعضی ستونها
-            if (ChangeHeaderTexts)
+            //if (ChangeHeaderTexts)
             {
                 foreach (DataGridViewColumn col in dgvData.Columns)
                 {
@@ -76,15 +91,20 @@ namespace OrdersProgress
                             break;
                         case "Code_Small":
                             col.HeaderText = "کد";
-                            //col.DefaultCellStyle.BackColor = Color.LightGray;
+                            col.Width = 100;
                             break;
                         case "Name_Samll":
                             col.HeaderText = "نام کالا";
                             //col.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                             col.Width = 200;
                             break;
-                      case "Weight":
+                        case "Salable":
+                            col.HeaderText = "قابل فروش؟";
+                            col.Width = 100;
+                            break;
+                        case "Weight":
                             col.HeaderText = "وزن(کیلوگرم)";
+                            col.Width = 100;
                             break;
                         case "FixedPrice":
                             col.HeaderText = "بهای تمام شده (ریال)";
@@ -120,6 +140,24 @@ namespace OrdersProgress
         bool JustEdit = true;
         private void BtnAddNew_Click(object sender, EventArgs e)
         {
+            new K1302_Item_Details(2).ShowDialog();
+
+            if (Stack.bx)
+            {
+                //dgvData.DataSource = GetData();
+                radNotModule.Checked = true;
+                BtnSearch_Click(null, null);
+                DataGridViewRow row = null;
+                if ((row = dgvData.Rows.Cast<DataGridViewRow>().ToList().FirstOrDefault
+                    (d => d.Cells["Index"].Value.ToString().Equals(Stack.lx.ToString()))) != null)
+                {
+                    dgvData.CurrentCell = row.Cells["Name_Samll"];
+                }
+            }
+
+            return;
+
+
             new K1304_Item_ChooseWarehouse().ShowDialog();
             if (Stack.ix < 0) return;
 
@@ -140,7 +178,7 @@ namespace OrdersProgress
             }) > 0)
             {
                 chkCanEdit.Checked = false;
-                ShowData(false);
+                dgvData.DataSource = GetData();
                 iNewRow = dgvData.Rows.Count - 1;
                 dgvData.CurrentCell = dgvData["Name_Samll", iNewRow];
                 dgvData.Focus();
@@ -166,28 +204,38 @@ namespace OrdersProgress
 
         private void TsmiDelete_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("آیا از حذف این مورد اطمینان دارید؟", "", MessageBoxButtons.YesNo)
+            long index = Convert.ToInt64(dgvData.CurrentRow.Cells["Index"].Value);
+            Models.Item item = Program.dbOperations.GetItem(index);
+            if (MessageBox.Show("آیا از حذف این مورد اطمینان دارید؟", item.Code_Small, MessageBoxButtons.YesNo)
                 == DialogResult.No) return;
 
             try
             {
-                string sCode_Small = Convert.ToString(dgvData.CurrentRow.Cells["Code_Small"].Value);
-                Models.Item item = Program.dbOperations.GetItemAsync(Stack.Company_Index,sCode_Small);
+                //string sCode_Small = Convert.ToString(dgvData.CurrentRow.Cells["Code_Small"].Value);
+                //Models.Item item = Program.dbOperations.GetItemAsync(Stack.Company_Index,sCode_Small);
+                int row_index = dgvData.CurrentRow.Index;
                 if(item.Module)
                 {
                     //MessageBox.Show(item.Code_Small,"module = true");
-                    if (Program.dbOperations.GetAllModulesAsync(Stack.Company_Index,0, sCode_Small).Any())
+                    if (Program.dbOperations.GetAllModulesAsync(Stack.Company_Index,0, item.Code_Small).Any())
                     {
                         //MessageBox.Show(item.Code_Small);
-                        List<Models.Module> lst = Program.dbOperations.GetAllModulesAsync(Stack.Company_Index,0, sCode_Small);
+                        List<Models.Module> lst = Program.dbOperations.GetAllModulesAsync(Stack.Company_Index,0, item.Code_Small);
                         foreach (var m in lst) Program.dbOperations.DeleteModule(m);
                     }
                 }
                 Program.dbOperations.DeleteItemAsync(item);
-                dgvData.DataSource = Program.dbOperations.GetAllItemsAsync(Stack.Company_Index);
+                BtnSearch_Click(null, null);
+                //dgvData.DataSource = Program.dbOperations.GetAllItemsAsync(Stack.Company_Index);
+                if (dgvData.Rows.Count > 0)
+                {
+                    if (row_index > 0) dgvData.CurrentCell = dgvData["Name_Samll", row_index - 1];
+                    else dgvData.CurrentCell = dgvData["Name_Samll", row_index + 1];
+                }
                 //dataGridView1.DataSource =  Program.dbOperations.GetAllModulesAsync();
             }
             catch { MessageBox.Show("خطا در اجرای عملیات"); }
+
         }
 
         int iX = 0, iY = 0;
@@ -200,6 +248,7 @@ namespace OrdersProgress
         private void dgvData_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.ColumnIndex < 0 || e.RowIndex < 0) return;
+            dgvData.CurrentCell = dgvData[e.ColumnIndex, e.RowIndex];
             string sc = Convert.ToString(dgvData["Code_Small", e.RowIndex].Value);
             //#region نمایش تصویر کالا در صورت وجود
             //Models.Item_File item_file = Program.dbOperations.GetItem_FileAsync(sc, 1,true);
@@ -213,7 +262,7 @@ namespace OrdersProgress
             {
                 /////// Do something ///////
                 Models.Item item2 = Program.dbOperations.GetItemAsync(Stack.Company_Index,sc);
-                tsmiShowModuleItems.Visible = item2.Module;
+                //tsmiShowModuleItems.Visible = item2.Module;
                 tsmiDiagram.Visible = item2.Module;
                 //if (Program.dbOperations.GetWarehouse_InventoryAsync(sc) == null)
                 //    tsmiItem_Warehouse.Visible = true;
@@ -291,6 +340,9 @@ namespace OrdersProgress
                 case "Module":
                     bSaveChange = false;
                     //item.Module = Convert.ToBoolean(dgvData["Module", e.RowIndex].Value);
+                    break;
+                case "Salable":
+                    item.Salable = Convert.ToBoolean(dgvData["Salable", e.RowIndex].Value);
                     break;
                 case "Weight":
                     item.Weight = Convert.ToDouble(dgvData["Weight", e.RowIndex].Value);
@@ -796,26 +848,26 @@ namespace OrdersProgress
 
         private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ShowData(false);
+            //dgvData.DataSource = GetData();
         }
 
         private void BtnSearch_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtST_Name.Text)
-                && string.IsNullOrWhiteSpace(txtST_SmallCode.Text)
-                && string.IsNullOrWhiteSpace(txtST_FullName.Text)
-                && string.IsNullOrWhiteSpace(txtST_SmallCode.Text))
-            {
-                //ShowData(false);
-                return;
-            }
+            //if (string.IsNullOrWhiteSpace(txtST_Name.Text)
+            //    && string.IsNullOrWhiteSpace(txtST_SmallCode.Text)
+            //    && string.IsNullOrWhiteSpace(txtST_FullName.Text)
+            //    && string.IsNullOrWhiteSpace(txtST_SmallCode.Text))
+            //{
+            //    //dgvData.DataSource = GetData();
+            //    return;
+            //}
 
             panel1.Enabled = false;
             //dgvData.Visible = false;
             Application.DoEvents();
-
-            //ShowData(false);
-            List<Models.Item> lstItems = (List<Models.Item>)dgvData.DataSource;
+            List<Models.Item> lstItems = GetData();
+            //dgvData.DataSource = GetData();
+            //List<Models.Item> lstItems = (List<Models.Item>)dgvData.DataSource;
             //MessageBox.Show(lstItems.Count.ToString());
 
             //if (!string.IsNullOrWhiteSpace(txtST_Name.Text)
@@ -917,7 +969,7 @@ namespace OrdersProgress
                 new K1320_Modules(Program.dbOperations.GetItemAsync(index)).ShowDialog();
 
                 if (Stack.bx)
-                    ShowData(false);
+                    dgvData.DataSource = GetData();
             }
         }
 
@@ -939,18 +991,11 @@ namespace OrdersProgress
             e.Cancel = false;
         }
 
-        private void TsmiShowModuleItems_Click(object sender, EventArgs e)
-        {
-            long index = Convert.ToInt64(dgvData.CurrentRow.Cells["Index"].Value);
-            new K1320_Modules(Program.dbOperations.GetItemAsync(index)).ShowDialog();
-            //new zForm1().ShowDialog();
-        }
-
         private void RadModule_CheckedChanged(object sender, EventArgs e)
         {
-            if (radModule.Checked) dgvData.DataSource = GetData().Where(d => d.Module).ToList();
-            else if (radNotModule.Checked) dgvData.DataSource = GetData().Where(d => !d.Module).ToList();
-            else dgvData.DataSource = GetData();
+            //if (radModule.Checked) dgvData.DataSource = GetData().Where(d => d.Module).ToList();
+            //else if (radNotModule.Checked) dgvData.DataSource = GetData().Where(d => !d.Module).ToList();
+            //else dgvData.DataSource = GetData();
         }
 
         private void TxtST_SmallCode_Enter(object sender, EventArgs e)
@@ -1056,6 +1101,11 @@ namespace OrdersProgress
 
         private void BtnGetImages_Click(object sender, EventArgs e)
         {
+            if (MessageBox.Show("آیا مایلید تمام تصاویر از مسیر مشخص شده، به دیتابیس اضافه گردد؟"
+                , "", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
+
+            return;
+
             string ImageDirectoryPath = Application.StartupPath + @"\_Requirements\Images\";
             foreach (string file in Directory.EnumerateFiles(
                            ImageDirectoryPath, "*.jpg", SearchOption.AllDirectories))
@@ -1067,13 +1117,15 @@ namespace OrdersProgress
 
         private void btnDeleteAllImages_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("آیا از حذف تمام تصاویر اطمینان دارید؟", "اخطار"
+            if (MessageBox.Show("آیا از حذف تمام تصاویر اطمینان دارید؟", "اخطار 1"
                , MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes) return;
 
-            //if (MessageBox.Show("با انجام این عمل ، تمام روابط مشخصه ها و کالاها از بین خواهد رفت"
-            //    + "\n" + "آیا از حذف تمام مشخصات اطمینان دارید؟", "اخطار 2"
-            //    , MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes) return;
+            if (MessageBox.Show("با انجام این عمل ، تمام تصاویر کالاها از بین خواهد رفت"
+                + "\n" + "آیا از حذف آنها اطمینان دارید؟", "اخطار 2"
+                , MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes) return;
 
+            return;
+            // تمام فایلها حذف می شوند. نمیتونم اجازه بدم
             Program.dbOperations.DeleteAllFilesAsync();
             Program.dbOperations.DeleteAllItem_FilesAsync();
             pictureBox2.Image = null;
@@ -1098,6 +1150,18 @@ namespace OrdersProgress
 
             int type = Stack.lstUser_ULF_UniquePhrase.Contains("jn2110") ? 1 : 0;
             new K1302_Item_Details(type,item).ShowDialog();
+        }
+
+        private void GroupBox1_Enter(object sender, EventArgs e)
+        {
+            AcceptButton = btnSearch;
+            //MessageBox.Show("in");
+        }
+
+        private void GroupBox1_Leave(object sender, EventArgs e)
+        {
+            AcceptButton = null;
+            //MessageBox.Show("out");
         }
 
         private void Add_ChangeImage(string item_code,string file)

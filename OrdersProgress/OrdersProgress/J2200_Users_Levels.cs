@@ -143,9 +143,14 @@ namespace OrdersProgress
         private void dgvData_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.ColumnIndex < 0 || e.RowIndex < 0) return;
+            dgvData.CurrentCell = dgvData[e.ColumnIndex, e.RowIndex];
             if (e.Button == MouseButtons.Right)
             {
                 /////// Do something ///////
+                long ul_index = Convert.ToInt64(dgvData.CurrentRow.Cells["Index"].Value);
+                Models.User_Level user_level = Program.dbOperations.GetUser_LevelAsync(ul_index);
+                tsmiDelete.Visible = (Stack.UserLevel_Type == 1) || (user_level.Type == 0);
+
                 // انتخاب سلولی که روی آن کلیک راست شده است
                 dgvData.CurrentCell = dgvData[e.ColumnIndex, e.RowIndex];
                 Application.DoEvents();

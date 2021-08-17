@@ -20,12 +20,13 @@ namespace OrdersProgress
         {
             InitializeComponent();
 
-            //bUserCanEdit = Stack.lstUser_ULF_UniquePhrase.Contains("jq3120");
-            bUserCanEdit_Quantity = bUserCanEdit || Stack.lstUser_ULF_UniquePhrase.Contains("jq3121");
-            //bUserCanAdd = Stack.lstUser_ULF_UniquePhrase.Contains("jq3130");
+            // امکان تغییر فقط مقادیر کالاها
+            panel2.Visible =  Stack.lstUser_ULF_UniquePhrase.Contains("jq3121");
 
-            panel2.Visible = bUserCanEdit || bUserCanEdit_Quantity;
-            btnAddNew.Visible = bUserCanAdd;
+            btnAddNew.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jn2120"); // امکان افزودن
+            //if (Stack.lstUser_ULF_UniquePhrase.Contains("jn2110")) // امکان تغییر
+            //    tsmiChange.Visible = true;
+            //else tsmiDetails.Visible = true;
         }
 
         private void M1110_WarehouseItems_Shown(object sender, EventArgs e)
@@ -41,10 +42,11 @@ namespace OrdersProgress
             comboBox1.SelectedIndex = 0;
 
             cmbWarehouses.Items.Add("تمام انبارها");
-            cmbWarehouses.Items.AddRange(Program.dbOperations.GetAllWarehousesAsync(Stack.Company_Index, true).Select(d => d.Name).ToArray());
-            cmbWarehouses.SelectedIndex = 1;
+            cmbWarehouses.Items.AddRange(Program.dbOperations.GetAllWarehousesAsync
+                (Stack.Company_Index, true).Select(d => d.Name).ToArray());
+            cmbWarehouses.SelectedIndex = 0;
 
-            dgvData.DataSource = GetData();
+            //dgvData.DataSource = GetData();
             ShowData();
 
             Application.DoEvents();
@@ -55,10 +57,12 @@ namespace OrdersProgress
         {
             switch (cmbWarehouses.SelectedIndex)
             {
-                case 0: return Program.dbOperations.GetAllItemsAsync(Stack.Company_Index,0);
+                case 0: return Program.dbOperations.GetAllItemsAsync(Stack.Company_Index)
+                        .OrderBy(d => d.Code_Small).ToList();
                 default:
                     int wh_index = Program.dbOperations.GetWarehouseAsync(Stack.Company_Index, cmbWarehouses.Text).Index;
-                    return Program.dbOperations.GetAllItems_in_WarehouseAsync(Stack.Company_Index,wh_index,0);
+                    return Program.dbOperations.GetAllItems_in_WarehouseAsync
+                        (Stack.Company_Index,wh_index).OrderBy(d=>d.Code_Small).ToList();
             }
         }
 
@@ -89,14 +93,15 @@ namespace OrdersProgress
                         col.Width = 100;
                         break;
                     case "Wh_Quantity_Real":
-                        col.HeaderText = "تعداد";
-                        col.ReadOnly = !( bUserCanEdit_Quantity && chkCanEdit.Checked);
+                        col.HeaderText = "موجودی";
+                        col.ReadOnly = !chkCanEdit.Checked;
+                        //col.ReadOnly = !( bUserCanEdit_Quantity && chkCanEdit.Checked);
                         col.Width = 100;
                         break;
                     case "Wh_Quantity_x":
                         if (Stack.UserLevel_Type == 1)  // فقط برای برنامه نویس قابل مشاهده باشد
                         {
-                            col.HeaderText = "تعداد غیر واقعی";
+                            col.HeaderText = "موجودی غیر واقعی";
                             col.Width = 100;
                         }
                         else col.Visible = false;
@@ -286,16 +291,12 @@ namespace OrdersProgress
         int iX = 0, iY = 0;
         private void dgvData_MouseDown(object sender, MouseEventArgs e)
         {
-            if (!btnDeleteAll.Visible) return;
-
             iX = e.X;
             iY = e.Y;
         }
 
         private void dgvData_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (!btnDeleteAll.Visible) return;
-
             if (e.ColumnIndex < 0 || e.RowIndex < 0) return;
             if (e.Button == MouseButtons.Right)
             {
@@ -339,9 +340,41 @@ namespace OrdersProgress
             Close();
         }
 
+        private void CmbWarehouses_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            dgvData.DataSource = GetData();
+        }
+
+        private void TsmiDetails_Click(object sender, EventArgs e)
+        {
+            long index = Convert.ToInt64(dgvData.CurrentRow.Cells["Index"].Value);
+            Models.Item item = Program.dbOperations.GetItemAsync(index);
+
+            int type = Stack.lstUser_ULF_UniquePhrase.Contains("jn2110") ? 1 : 0;
+            new K1302_Item_Details(type, item).ShowDialog();
+
+            if (Stack.bx)
+            {
+                BtnShowAll_Click(null, null);
+                DataGridViewRow row = null;
+                if ((row = dgvData.Rows.Cast<DataGridViewRow>().ToList().FirstOrDefault
+                    (d => d.Cells["Index"].Value.ToString().Equals(index.ToString()))) != null)
+                {
+                    dgvData.CurrentCell = row.Cells["Name_Samll"];
+                }
+            }
+
+        }
+
         private void BtnAddNew_Click(object sender, EventArgs e)
         {
+            new K1302_Item_Details(2).ShowDialog();
 
+            if(Stack.bx)
+            {
+                dgvData.DataSource = GetData();
+                dgvData.CurrentCell = dgvData["Name_Samll", dgvData.Rows.Count - 1];
+            }
         }
 
 

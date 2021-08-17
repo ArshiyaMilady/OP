@@ -31,8 +31,9 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(M1110_WarehouseItems));
             this.panel1 = new System.Windows.Forms.Panel();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.cmbWarehouses = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnShowAll = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
             this.txtST_Name = new System.Windows.Forms.TextBox();
@@ -51,6 +52,7 @@
             this.btnAddNew = new System.Windows.Forms.Button();
             this.dgvData = new System.Windows.Forms.DataGridView();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmiDetails = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -64,6 +66,8 @@
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.cmbWarehouses);
+            this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.groupBox1);
             this.panel1.Controls.Add(this.panel2);
             this.panel1.Controls.Add(this.btnImportDataFromExcel);
@@ -77,10 +81,31 @@
             this.panel1.Size = new System.Drawing.Size(805, 303);
             this.panel1.TabIndex = 2;
             // 
+            // cmbWarehouses
+            // 
+            this.cmbWarehouses.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbWarehouses.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbWarehouses.FormattingEnabled = true;
+            this.cmbWarehouses.Location = new System.Drawing.Point(570, 73);
+            this.cmbWarehouses.Name = "cmbWarehouses";
+            this.cmbWarehouses.Size = new System.Drawing.Size(220, 27);
+            this.cmbWarehouses.TabIndex = 57;
+            this.cmbWarehouses.SelectedIndexChanged += new System.EventHandler(this.CmbWarehouses_SelectedIndexChanged_1);
+            // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label4.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.Maroon;
+            this.label4.Location = new System.Drawing.Point(114, 9);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(437, 18);
+            this.label4.TabIndex = 94;
+            this.label4.Text = "* برای استفاده از امکانات بیشتر بر روی ردیف مورد نظر کلیک راست نمایید";
+            // 
             // groupBox1
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.cmbWarehouses);
             this.groupBox1.Controls.Add(this.btnShowAll);
             this.groupBox1.Controls.Add(this.btnSearch);
             this.groupBox1.Controls.Add(this.txtST_Name);
@@ -89,26 +114,17 @@
             this.groupBox1.Controls.Add(this.cmbST_SmallCode);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Location = new System.Drawing.Point(557, 96);
+            this.groupBox1.Location = new System.Drawing.Point(557, 109);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(242, 166);
+            this.groupBox1.Size = new System.Drawing.Size(242, 135);
             this.groupBox1.TabIndex = 20;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "جستجو";
             // 
-            // cmbWarehouses
-            // 
-            this.cmbWarehouses.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbWarehouses.FormattingEnabled = true;
-            this.cmbWarehouses.Location = new System.Drawing.Point(12, 23);
-            this.cmbWarehouses.Name = "cmbWarehouses";
-            this.cmbWarehouses.Size = new System.Drawing.Size(220, 27);
-            this.cmbWarehouses.TabIndex = 57;
-            // 
             // btnShowAll
             // 
             this.btnShowAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnShowAll.Location = new System.Drawing.Point(154, 134);
+            this.btnShowAll.Location = new System.Drawing.Point(154, 103);
             this.btnShowAll.Name = "btnShowAll";
             this.btnShowAll.Size = new System.Drawing.Size(79, 26);
             this.btnShowAll.TabIndex = 56;
@@ -119,7 +135,7 @@
             // btnSearch
             // 
             this.btnSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnSearch.Location = new System.Drawing.Point(6, 134);
+            this.btnSearch.Location = new System.Drawing.Point(6, 103);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(79, 26);
             this.btnSearch.TabIndex = 50;
@@ -131,7 +147,7 @@
             // 
             this.txtST_Name.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtST_Name.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtST_Name.Location = new System.Drawing.Point(7, 99);
+            this.txtST_Name.Location = new System.Drawing.Point(7, 63);
             this.txtST_Name.Name = "txtST_Name";
             this.txtST_Name.Size = new System.Drawing.Size(109, 22);
             this.txtST_Name.TabIndex = 45;
@@ -141,7 +157,7 @@
             // 
             this.txtST_SmallCode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtST_SmallCode.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtST_SmallCode.Location = new System.Drawing.Point(7, 70);
+            this.txtST_SmallCode.Location = new System.Drawing.Point(7, 34);
             this.txtST_SmallCode.Name = "txtST_SmallCode";
             this.txtST_SmallCode.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.txtST_SmallCode.Size = new System.Drawing.Size(109, 22);
@@ -158,7 +174,7 @@
             "شامل",
             "شروع شود با",
             "برابر باشد با"});
-            this.cmbST_Name.Location = new System.Drawing.Point(122, 97);
+            this.cmbST_Name.Location = new System.Drawing.Point(122, 61);
             this.cmbST_Name.Name = "cmbST_Name";
             this.cmbST_Name.Size = new System.Drawing.Size(91, 23);
             this.cmbST_Name.TabIndex = 40;
@@ -173,7 +189,7 @@
             "شامل",
             "شروع شود با",
             "برابر باشد با"});
-            this.cmbST_SmallCode.Location = new System.Drawing.Point(122, 68);
+            this.cmbST_SmallCode.Location = new System.Drawing.Point(122, 32);
             this.cmbST_SmallCode.Name = "cmbST_SmallCode";
             this.cmbST_SmallCode.Size = new System.Drawing.Size(91, 23);
             this.cmbST_SmallCode.TabIndex = 30;
@@ -183,7 +199,7 @@
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(213, 100);
+            this.label5.Location = new System.Drawing.Point(213, 64);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(23, 15);
             this.label5.TabIndex = 29;
@@ -194,7 +210,7 @@
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(213, 71);
+            this.label3.Location = new System.Drawing.Point(213, 35);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(22, 15);
             this.label3.TabIndex = 29;
@@ -208,7 +224,7 @@
             this.panel2.Controls.Add(this.comboBox1);
             this.panel2.Location = new System.Drawing.Point(557, 4);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(244, 88);
+            this.panel2.Size = new System.Drawing.Size(244, 63);
             this.panel2.TabIndex = 1;
             this.panel2.Visible = false;
             // 
@@ -260,7 +276,7 @@
             this.btnImportDataFromExcel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnImportDataFromExcel.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnImportDataFromExcel.BackgroundImage")));
             this.btnImportDataFromExcel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnImportDataFromExcel.Location = new System.Drawing.Point(518, 266);
+            this.btnImportDataFromExcel.Location = new System.Drawing.Point(371, 265);
             this.btnImportDataFromExcel.Name = "btnImportDataFromExcel";
             this.btnImportDataFromExcel.Size = new System.Drawing.Size(34, 34);
             this.btnImportDataFromExcel.TabIndex = 80;
@@ -293,7 +309,7 @@
             // btnAddNew
             // 
             this.btnAddNew.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAddNew.Location = new System.Drawing.Point(371, 266);
+            this.btnAddNew.Location = new System.Drawing.Point(411, 266);
             this.btnAddNew.Name = "btnAddNew";
             this.btnAddNew.Size = new System.Drawing.Size(141, 32);
             this.btnAddNew.TabIndex = 70;
@@ -308,10 +324,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvData.Location = new System.Drawing.Point(1, 2);
+            this.dgvData.Location = new System.Drawing.Point(1, 33);
             this.dgvData.Name = "dgvData";
             this.dgvData.ReadOnly = true;
-            this.dgvData.Size = new System.Drawing.Size(551, 262);
+            this.dgvData.Size = new System.Drawing.Size(551, 231);
             this.dgvData.TabIndex = 90;
             this.dgvData.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.DgvData_CellBeginEdit);
             this.dgvData.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvData_CellEndEdit);
@@ -322,15 +338,23 @@
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiDetails,
             this.tsmiDelete});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.contextMenuStrip1.Size = new System.Drawing.Size(96, 26);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(110, 48);
+            // 
+            // tsmiDetails
+            // 
+            this.tsmiDetails.Name = "tsmiDetails";
+            this.tsmiDetails.Size = new System.Drawing.Size(109, 22);
+            this.tsmiDetails.Text = "جزییات";
+            this.tsmiDetails.Click += new System.EventHandler(this.TsmiDetails_Click);
             // 
             // tsmiDelete
             // 
             this.tsmiDelete.Name = "tsmiDelete";
-            this.tsmiDelete.Size = new System.Drawing.Size(95, 22);
+            this.tsmiDelete.Size = new System.Drawing.Size(109, 22);
             this.tsmiDelete.Text = "حذف";
             this.tsmiDelete.Visible = false;
             // 
@@ -380,5 +404,7 @@
         private System.Windows.Forms.DataGridView dgvData;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem tsmiDelete;
+        private System.Windows.Forms.ToolStripMenuItem tsmiDetails;
+        private System.Windows.Forms.Label label4;
     }
 }

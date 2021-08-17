@@ -193,8 +193,10 @@ namespace OrdersProgress
             }
             #endregion
 
-            if(chkJustShowSubstructure.Checked)
-                return lstItems.Where(d=>d.C_B1).OrderByDescending(d => d.C_B1).ToList();
+            if (chkJustShowSubstructure.Checked)
+            {
+                return lstItems.Where(d => d.C_B1).OrderByDescending(d => d.C_B1).ToList();
+            }
             else return lstItems.OrderByDescending(d => d.C_B1).ToList();
         }
 

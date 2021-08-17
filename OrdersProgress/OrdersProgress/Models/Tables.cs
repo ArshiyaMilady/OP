@@ -892,8 +892,6 @@ namespace OrdersProgress.Models
 
         public string Name_Samll { get; set; }  // نام اصلی
         public string Code_Small { get; set; }  // کد اصلی و منحصربفرد
-        public string Name_Full { get; set; }
-        public string Code_Full { get; set; }  
 
         // 0 : کالا یا ماژول
         // 1 : مواد اولیه
@@ -902,13 +900,13 @@ namespace OrdersProgress.Models
         public bool Module { get; set; }
         // دو فیلد زیر در هنگام تعریف ماژول ها کاربرد دارند
         public double Quantity { get; set; }    // تعداد کالا در ماژول
-        public string Unit { get; set; }
 
         public int Significance_Factor { get; set; }    // ضریب اهمیت
         public double Weight { get; set; }  // وزن هرواحد بر حسب کیلوگرم
         public int Depo_type { get; set; }    // نوع دپو : (دپو نیست = 0) و غیره
 
         public bool Salable { get; set; }   // قابل فروش = قابل سفارش دهی
+        //public bool Changeable { get; set; }   // این کالا قابل تغییر است. سندی از آن صادر نشده و غیره
 
         // قیمتهای زیر، قیمتهای بروز می باشند
         public long FixedPrice { get; set; }  // قیمت تمام شده یک عدد کالا - برای مواد اولیه قیمت خرید در نظر گرفته می شود
@@ -919,6 +917,10 @@ namespace OrdersProgress.Models
         public double Wh_Quantity_Real { get; set; }   // موجودی واقعی
         // برای نگهداری تغییراتی که هنوز تأیید نشده است
         public double Wh_Quantity_x { get; set; }
+        public string Unit { get; set; }
+
+        public string Name_Full { get; set; }
+        public string Code_Full { get; set; }
 
         public string C_S1 { get; set; }
         public string C_S2 { get; set; }
@@ -1112,37 +1114,7 @@ namespace OrdersProgress.Models
         public bool C_B3 { get; set; }
     }
 
-    //// موجودی انبار
-    //public class Warehouse_Item
-    //{
-    //    [PrimaryKey, AutoIncrement]
-    //    public long Id { get; set; }   public long Company_Index { get; set; }
-    //    public long Index { get; set; }
-    //    public int Warehouse_Index { get; set; }   // شناسه انبار
-    //    public long Item_Index { get; set; }    
-    //    public string Item_Code { get; set; }    // کد کوچک کالا
-    //    public string Item_Name { get; set; }
-    //    public string Item_Unit { get; set; }
-
-    //    public double Quantity_Real { get; set; }   // موجودی واقعی
-    //    // برای نگهداری تغییراتی که هنوز تأیید نشده است
-    //    public double Quantity_x { get; set; }  
-    //    //public int Significance_Factor { get; set; }    // ضریب اهمیت
-    //    //public double Weight { get; set; }  // وزن هرواحد بر حسب کیلوگرم
-
-    //    public string C_S1 { get; set; }
-    //    public string C_S2 { get; set; }
-    //    public string C_S3 { get; set; }
-    //    public long C_L1 { get; set; }
-    //    public long C_L2 { get; set; }
-    //    public int C_I1 { get; set; }
-    //    public int C_I2 { get; set; }
-    //    public bool C_B1 { get; set; }
-    //    public bool C_B2 { get; set; }public bool C_B3 { get; set; }
-    //}
-
-
-    // حواله های انبار
+     // حواله های انبار
     public class Warehouse_Remittance
     {
         [PrimaryKey,AutoIncrement]
@@ -1172,17 +1144,19 @@ namespace OrdersProgress.Models
         public int C_I1 { get; set; }
         public int C_I2 { get; set; }
         public bool C_B1 { get; set; }
-        public bool C_B2 { get; set; }public bool C_B3 { get; set; }
+        public bool C_B2 { get; set; }
+        public bool C_B3 { get; set; }
     }
-
 
     // کالاهای موجود در حواله انبار
     public class Warehouse_Remittance_Item
     {
         [PrimaryKey,AutoIncrement]
-        public long Id { get; set; }   public long Company_Index { get; set; }
+        public long Id { get; set; }
+        public long Company_Index { get; set; }
         public long Index { get; set; }
         public long Warehouse_Remittance_Index { get; set; }
+        public string Item_Index{ get; set; }
         public string Item_SmallCode { get; set; }    // کد کوچک کالا
         public string Item_Name { get; set; }  
         public double Quantity { get; set; }   // تعداد
@@ -1197,7 +1171,8 @@ namespace OrdersProgress.Models
         public int C_I1 { get; set; }
         public int C_I2 { get; set; }
         public bool C_B1 { get; set; }
-        public bool C_B2 { get; set; }public bool C_B3 { get; set; }
+        public bool C_B2 { get; set; }
+        public bool C_B3 { get; set; }
     }
 
 

@@ -22,37 +22,51 @@ namespace OrdersProgress
         {
             InitializeComponent();
 
+            Stack.lx = -1;  // شناسه کالا
+            Stack.bx = false;   // آیا تغییری اتفاق افتاده است؟
             type = _type;
             #region تنظیمات کنترلها با توجه به نوع استفاده از فرم
-            if (_type == 2)     // add
+            if (type == 2)     // add
             {
+                item = new Models.Item();
                 btnSave.Text = "ثبت کالا";
-                btnSave.Visible = true;
             }
             else
             {
+                // اگر از این کالا در حواله ای استفاده شده باشد، نباید امکان تغییر داشته باشد
+                if (Program.dbOperations.GetWarehouse_Remittance_ItemAsync
+                    (_item.Code_Small, Stack.Company_Index) != null)
+                        type = 0;
+
                 item = _item;
                 Text = item.Name_Samll;
+            }
 
-                if (_type == 1)     // edit
+            if(type != 0)   // Add or Edit
+            {
+                //panel2.Enabled = true;
+                foreach (Control c in panel2.Controls.Cast<Control>()
+                    .Where(d => d.Name.Substring(0, 4).Equals("text")).ToList())
                 {
-                    //panel2.Enabled = true;
-                    foreach(Control c in panel2.Controls.Cast<Control>()
-                        .Where(d=>d.Name.Substring(0,4).Equals("text")).ToList())
-                    {
-                        TextBox txt = (TextBox)c;
-                        txt.ReadOnly = false;
-                    }
-                    comboBox1.Enabled = true;
-                    btnSave.Visible = true;
+                    TextBox txt = (TextBox)c;
+                    txt.ReadOnly = false;
                 }
+                comboBox1.Enabled = true;
+                btnSave.Visible = true;
             }
             #endregion
         }
 
         private void K1302_Item_Details_Shown(object sender, EventArgs e)
         {
-            if(type != 2)
+            comboBox1.Items.AddRange(Program.dbOperations.GetAllWarehousesAsync(Stack.Company_Index)
+                 .Select(d => d.Name).ToArray());
+
+            if (type == 2)  // add
+            {
+                comboBox1.SelectedIndex = 0;
+            }
+            else
             {
                 textBox1.Text = item.Name_Samll;
                 textBox2.Text = item.Code_Small;
@@ -61,10 +75,8 @@ namespace OrdersProgress
                 textBox5.Text = item.Unit;
                 textBox6.Text = item.Weight.ToString();
                 textBox7.Text = item.FixedPrice.ToString();
-                textBox8.Text = item.FixedPrice.ToString();
+                textBox8.Text = item.SalesPrice.ToString();
 
-                comboBox1.Items.AddRange(Program.dbOperations.GetAllWarehousesAsync(Stack.Company_Index)
-                        .Select(d => d.Name).ToArray());
                 comboBox1.Text = Program.dbOperations.GetWarehouseAsync(item.Warehouse_Index).Name;
             }
         }
@@ -94,25 +106,27 @@ namespace OrdersProgress
 
         private void BtnSave_Click(object sender, EventArgs e)
         {
+            bool bEverythingOK = true;
+
             #region خطایابی
             if(string.IsNullOrWhiteSpace(textBox1.Text))
             {
                 MessageBox.Show("کد کالا نباید خالی باشد", "خطا");
-                return;
+                bEverythingOK = false;
             }
             if(string.IsNullOrWhiteSpace(textBox2.Text))
             {
                 MessageBox.Show("نام کالا نباید خالی باشد", "خطا");
-                return;
+                bEverythingOK = false;
             }
 
             if(type==1)
             {
-                if (Program.dbOperations.GetAllItemsAsync(Stack.Company_Index).Where(d => d.Index != item.Index)
+                if (Program.dbOperations.GetAllItemsAsync(Stack.Company_Index).Where(d1=> d1.Index != item.Index)
                     .Any(j => j.Code_Small.ToLower().Equals(textBox1.Text.ToLower())))
                 {
                     MessageBox.Show("کد کالا قبلا استفاده شده است", "خطا");
-                    return;
+                    bEverythingOK = false;
                 }
             }
             else if (type == 2)
@@ -133,29 +147,61 @@ namespace OrdersProgress
                             Program.dbOperations.UpdateItemAsync(it1);
                         }
                     }
+                    else bEverythingOK = false;
                 }
                 #endregion
             }
 
+            if (string.IsNullOrWhiteSpace(textBox6.Text)) textBox6.Text = "0";
             if (!double.TryParse(textBox6.Text,out double d))
             {
                 MessageBox.Show("وزن کالا باید به صورت عددی قابل قبول وارد شود", "خطا");
-                return;
+                bEverythingOK = false;
             }
             #endregion
 
-            if (type == 1)  // edit
+            if(bEverythingOK)
+                bEverythingOK = MessageBox.Show("آیا از ثبت تغییرات اطمینان دارید؟", ""
+                , MessageBoxButtons.YesNo) == DialogResult.Yes;
+
+            if (bEverythingOK)
             {
+                item.Company_Index = Stack.Company_Index;
+                item.Enable = true;
                 item.Name_Samll = textBox1.Text;
                 item.Code_Small = textBox2.Text;
                 item.Name_Full = textBox3.Text;
-                item.
-            }
-            else if (type == 2) // add
-            {
-                item = new Models.Item();
+                item.Code_Full = textBox4.Text;
+                if (string.IsNullOrWhiteSpace(textBox5.Text)) textBox5.Text = "عدد";
+                item.Unit = textBox5.Text;
+                item.Weight = Convert.ToDouble(textBox6.Text);
+                if (string.IsNullOrWhiteSpace(textBox7.Text)) textBox7.Text = "0";
+                item.FixedPrice = Convert.ToInt64(textBox7.Text);
+                if (string.IsNullOrWhiteSpace(textBox8.Text)) textBox8.Text = "0";
+                item.SalesPrice = Convert.ToInt64(textBox8.Text);
+                item.Warehouse_Index = Program.dbOperations.GetWarehouseAsync(Stack.Company_Index, comboBox1.Text).Index;
 
+                pictureBox1.Visible = true;
+                Application.DoEvents();
+                if (type == 1)  // edit
+                {
+                    Program.dbOperations.UpdateItem(item);
+                }
+                else if (type == 2) // add
+                {
+                    Stack.lx = Program.dbOperations.AddItem(item);
+                }
+
+                Stack.bx = true;
+                timer1.Enabled = true;
             }
+        }
+
+        private void Timer1_Tick(object sender, EventArgs e)
+        {
+            pictureBox1.Visible = false;
+            timer1.Enabled = false;
+            Close();
         }
     }
 }
