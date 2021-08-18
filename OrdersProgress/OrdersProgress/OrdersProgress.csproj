@@ -163,6 +163,12 @@
     <Compile Include="J2240_UL_Confirm_OLs.Designer.cs">
       <DependentUpon>J2240_UL_Confirm_OLs.cs</DependentUpon>
     </Compile>
+    <Compile Include="K1100_Categories.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="K1100_Categories.Designer.cs">
+      <DependentUpon>K1100_Categories.cs</DependentUpon>
+    </Compile>
     <Compile Include="K1200_Properties.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -415,6 +421,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="J2240_UL_Confirm_OLs.resx">
       <DependentUpon>J2240_UL_Confirm_OLs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="K1100_Categories.resx">
+      <DependentUpon>K1100_Categories.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="K1200_Properties.resx">
       <DependentUpon>K1200_Properties.cs</DependentUpon>

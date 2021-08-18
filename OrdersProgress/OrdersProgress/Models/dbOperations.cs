@@ -52,6 +52,7 @@ namespace OrdersProgress.Models
             _db.CreateTableAsync<OrderPriority>().Wait();
             _db.CreateTableAsync<Property>().Wait();
             //_db.DropTableAsync<Item>().Wait();
+            _db.CreateTableAsync<Category>().Wait();
             _db.CreateTableAsync<Item>().Wait();
             _db.CreateTableAsync<Item_File>().Wait();
             _db.CreateTableAsync<Item_Property>().Wait();
@@ -1690,6 +1691,7 @@ namespace OrdersProgress.Models
         }
         #endregion File
 
+
         // ********** Customer *************
         #region Customer
         public List<Customer> GetAllCustomersAsync(long company_index, long UserIndex = -1)
@@ -2018,6 +2020,63 @@ namespace OrdersProgress.Models
         #endregion Property
 
 
+        // ********** Category *************
+        #region Category
+        public List<Category> GetAllCategoriesAsync(long company_index)
+        {
+            return _db.Table<Category>().Where(b => b.Company_Index == company_index).ToListAsync().Result;
+
+        }
+
+        public Category GetCategoryAsync(long index)
+        {
+            return _db.Table<Category>().FirstOrDefaultAsync(d => d.Index == index).Result;
+        }
+
+        public Category GetCategoryAsync(string name, long company_index)
+        {
+            return _db.Table<Category>().Where(b => b.Company_Index == company_index)
+                .FirstOrDefaultAsync(d => d.Name.ToLower().Equals(name.ToLower())).Result;
+        }
+
+        public long AddCategoryAsync(Category category)
+        {
+            category.Index = GetNewIndex_Category();
+            _db.InsertAsync(category);
+            return category.Index;
+        }
+
+        public long AddCategory(Category category)
+        {
+            category.Index = GetNewIndex_Category();
+            _db.InsertAsync(category).Wait();
+            return category.Index;
+        }
+
+        public int DeleteCategoryAsync(Category category)
+        {
+            return _db.DeleteAsync(category).Result;
+        }
+
+        public int DeleteAllCategoriesAsync()
+        {
+            return _db.DeleteAllAsync<Category>().Result;
+        }
+
+        public int UpdateCategoryAsync(Category category)
+        {
+            return _db.UpdateAsync(category).Result;
+        }
+
+        public int GetNewIndex_Category()
+        {
+            if (_db.Table<Category>().ToListAsync().Result.Any())
+                return _db.Table<Category>().ToListAsync().Result.Max(d => d.Id) + 1;
+            else return 1;
+        }
+        #endregion Category
+
+
         // ********** Item *************
         #region Item
         // type=0  : کالاها و ماژول ها
@@ -2046,7 +2105,7 @@ namespace OrdersProgress.Models
         }
 
         // مشخصاً کالاهای یک انبار را بر میگرداند
-        public List<Item> GetAllItems_in_WarehouseAsync(long company_index, int warehouse_index, int EnableType = 1)
+        public List<Item> GetAllItems_in_WarehouseAsync(long company_index, long warehouse_index, int EnableType = 1)
         {
             List<Models.Item> lstItems = _db.Table<Item>().Where(b => b.Company_Index == company_index)
                 .Where(d=>d.Warehouse_Index == warehouse_index).ToListAsync().Result;
@@ -2715,7 +2774,7 @@ namespace OrdersProgress.Models
 
         }
 
-        public Warehouse GetWarehouseAsync(int index)
+        public Warehouse GetWarehouseAsync(long index)
         {
             return _db.Table<Warehouse>().FirstOrDefaultAsync(d => d.Index == index).Result;
         }
@@ -2755,7 +2814,7 @@ namespace OrdersProgress.Models
             return _db.UpdateAsync(warehouse).Result;
         }
 
-        public int GetNewIndex_Warehouse()
+        public long GetNewIndex_Warehouse()
         {
             if (_db.Table<Warehouse>().ToListAsync().Result.Any())
                 return _db.Table<Warehouse>().ToListAsync().Result.Max(d => d.Id) + 1;

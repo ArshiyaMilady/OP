@@ -44,6 +44,12 @@ namespace OrdersProgress
                 (Stack.Company_Index, true).Select(d => d.Name).ToArray());
             cmbWarehouses.SelectedIndex = 0;
 
+            cmbCategories.Items.Add("تمام دسته ها");
+            if (Program.dbOperations.GetAllCategoriesAsync(Stack.Company_Index).Any())
+                cmbCategories.Items.AddRange(Program.dbOperations.GetAllCategoriesAsync
+                    (Stack.Company_Index).Select(d => d.Name).ToArray());
+            cmbCategories.SelectedIndex = 0;
+
             dgvData.DataSource = GetData();
             ShowData();
         }
@@ -66,8 +72,14 @@ namespace OrdersProgress
 
             if(cmbWarehouses.SelectedIndex>0)
             {
-                int wh_index = Program.dbOperations.GetWarehouseAsync(Stack.Company_Index, cmbWarehouses.Text).Index;
+                long wh_index = Program.dbOperations.GetWarehouseAsync(Stack.Company_Index, cmbWarehouses.Text).Index;
                 lstResult = lstResult.Where(d => d.Warehouse_Index == wh_index).ToList();
+            }
+
+            if(cmbCategories.SelectedIndex>0)
+            {
+                long cat_index = Program.dbOperations.GetCategoryAsync(cmbCategories.Text, Stack.Company_Index).Index;
+                lstResult = lstResult.Where(d => d.Category_Index == cat_index).ToList();
             }
 
             return lstResult.OrderBy(d=>d.Code_Small).ToList();
@@ -137,7 +149,6 @@ namespace OrdersProgress
         }
 
         int iNewRow = -1;
-        bool JustEdit = true;
         private void BtnAddNew_Click(object sender, EventArgs e)
         {
             new K1302_Item_Details(2).ShowDialog();
@@ -154,37 +165,6 @@ namespace OrdersProgress
                     dgvData.CurrentCell = row.Cells["Name_Samll"];
                 }
             }
-
-            return;
-
-
-            new K1304_Item_ChooseWarehouse().ShowDialog();
-            if (Stack.ix < 0) return;
-
-            radAll.Checked = true;
-            RadModule_CheckedChanged(null, null);
-            Application.DoEvents();
-
-            long index = Program.dbOperations.GetNewIndex_Item();
-
-            if (Program.dbOperations.AddItem(new Models.Item
-            {
-                Company_Index = Stack.Company_Index,
-                Index = index,
-                Code_Small = "کد " + (index % 100000),
-                Name_Samll = "نام " + (index % 100000),
-                Warehouse_Index = Stack.ix,
-                Enable = true,
-            }) > 0)
-            {
-                chkCanEdit.Checked = false;
-                dgvData.DataSource = GetData();
-                iNewRow = dgvData.Rows.Count - 1;
-                dgvData.CurrentCell = dgvData["Name_Samll", iNewRow];
-                dgvData.Focus();
-            }
-
-            JustEdit = false;
         }
 
         private void btnDeleteAll_Click(object sender, EventArgs e)
@@ -401,7 +381,7 @@ namespace OrdersProgress
                 {
                     Program.dbOperations.UpdateItemAsync(item);
                     //AddUpdateItem_to_WarehouseInventory(item, true,JustEdit);
-                    JustEdit = true;
+                    //JustEdit = true;
                 }
                 else
                 {
@@ -1150,6 +1130,25 @@ namespace OrdersProgress
 
             int type = Stack.lstUser_ULF_UniquePhrase.Contains("jn2110") ? 1 : 0;
             new K1302_Item_Details(type,item).ShowDialog();
+
+            if (Stack.bx)
+            {
+                dgvData.Enabled = false;
+                Application.DoEvents();
+                //dgvData.DataSource = GetData();
+                //radNotModule.Checked = true;
+                BtnSearch_Click(null, null);
+                DataGridViewRow row = null;
+                if ((row = dgvData.Rows.Cast<DataGridViewRow>().ToList().FirstOrDefault
+                    (d => d.Cells["Index"].Value.ToString().Equals(index.ToString()))) != null)
+                {
+                    dgvData.CurrentCell = row.Cells["Name_Samll"];
+                }
+                Application.DoEvents();
+                dgvData.Enabled = true;
+
+            }
+
         }
 
         private void GroupBox1_Enter(object sender, EventArgs e)

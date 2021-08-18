@@ -1717,3 +1717,4 @@ E:\BOX\D\OrderProgress\OrdersProgress\OrdersProgress\OrdersProgress\obj\Debug\Or
 E:\BOX\D\OrderProgress\OrdersProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.K1304_Item_ChooseWarehouse.resources
 E:\BOX\D\OrderProgress\OrdersProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.M1100_Warehouses.resources
 E:\BOX\D\OrderProgress\OrdersProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.M1110_WarehouseItems.resources
+E:\BOX\D\OrderProgress\OrdersProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.K1100_Categories.resources

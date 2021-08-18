@@ -29,7 +29,7 @@ namespace OrdersProgress
             if (type == 2)     // add
             {
                 item = new Models.Item();
-                btnSave.Text = "ثبت کالا";
+                btnSave.Text = "ثبت کالا و بستن";
             }
             else
             {
@@ -51,7 +51,11 @@ namespace OrdersProgress
                     TextBox txt = (TextBox)c;
                     txt.ReadOnly = false;
                 }
-                comboBox1.Enabled = true;
+
+                cmbCategories.Enabled = true;
+                cmbWarehouses.Enabled = true;
+                chkEnable.Enabled = true;
+                chkSalable.Enabled = true;
                 btnSave.Visible = true;
             }
             #endregion
@@ -59,12 +63,17 @@ namespace OrdersProgress
 
         private void K1302_Item_Details_Shown(object sender, EventArgs e)
         {
-            comboBox1.Items.AddRange(Program.dbOperations.GetAllWarehousesAsync(Stack.Company_Index)
+            cmbWarehouses.Items.AddRange(Program.dbOperations.GetAllWarehousesAsync(Stack.Company_Index)
+                 .Select(d => d.Name).ToArray());
+            cmbCategories.Items.AddRange(Program.dbOperations.GetAllCategoriesAsync(Stack.Company_Index)
                  .Select(d => d.Name).ToArray());
 
             if (type == 2)  // add
             {
-                comboBox1.SelectedIndex = 0;
+                cmbWarehouses.SelectedIndex = 0;
+                cmbCategories.SelectedIndex = 0;
+                chkEnable.Checked = true;
+                chkSalable.Checked = true;
             }
             else
             {
@@ -76,8 +85,12 @@ namespace OrdersProgress
                 textBox6.Text = item.Weight.ToString();
                 textBox7.Text = item.FixedPrice.ToString();
                 textBox8.Text = item.SalesPrice.ToString();
+                textBox9.Text = item.Wh_OrderPoint.ToString();
+                chkEnable.Checked = item.Enable;
+                chkSalable.Checked = item.Salable;
 
-                comboBox1.Text = Program.dbOperations.GetWarehouseAsync(item.Warehouse_Index).Name;
+                cmbWarehouses.Text = Program.dbOperations.GetWarehouseAsync(item.Warehouse_Index).Name;
+                cmbCategories.Text = Program.dbOperations.GetCategoryAsync(item.Category_Index).Name;
             }
         }
 
@@ -153,9 +166,16 @@ namespace OrdersProgress
             }
 
             if (string.IsNullOrWhiteSpace(textBox6.Text)) textBox6.Text = "0";
-            if (!double.TryParse(textBox6.Text,out double d))
+            else if (!double.TryParse(textBox6.Text,out double d6))
             {
                 MessageBox.Show("وزن کالا باید به صورت عددی قابل قبول وارد شود", "خطا");
+                bEverythingOK = false;
+            }
+
+            if (string.IsNullOrWhiteSpace(textBox9.Text)) textBox9.Text = "0";
+            else if (!double.TryParse(textBox9.Text,out double d9))
+            {
+                MessageBox.Show("نقطه سفارش کالا باید به صورت عددی قابل قبول وارد شود", "خطا");
                 bEverythingOK = false;
             }
             #endregion
@@ -179,7 +199,10 @@ namespace OrdersProgress
                 item.FixedPrice = Convert.ToInt64(textBox7.Text);
                 if (string.IsNullOrWhiteSpace(textBox8.Text)) textBox8.Text = "0";
                 item.SalesPrice = Convert.ToInt64(textBox8.Text);
-                item.Warehouse_Index = Program.dbOperations.GetWarehouseAsync(Stack.Company_Index, comboBox1.Text).Index;
+                item.Warehouse_Index = Program.dbOperations.GetWarehouseAsync(Stack.Company_Index, cmbWarehouses.Text).Index;
+                item.Enable = chkEnable.Checked;
+                item.Salable = chkSalable.Checked;
+                item.Wh_OrderPoint = Convert.ToDouble(textBox9.Text);
 
                 pictureBox1.Visible = true;
                 Application.DoEvents();

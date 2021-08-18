@@ -52,7 +52,7 @@ namespace OrdersProgress
             if (MessageBox.Show("آیا از انتخاب خود اطمینان دارید?", ""
                 , MessageBoxButtons.YesNo) != DialogResult.Yes) return;
 
-            Stack.ix = Program.dbOperations.GetWarehouseAsync(Stack.Company_Index, comboBox1.Text).Index;
+            Stack.lx = Program.dbOperations.GetWarehouseAsync(Stack.Company_Index, comboBox1.Text).Index;
             Close();
         }
 

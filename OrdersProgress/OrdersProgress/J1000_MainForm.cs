@@ -138,6 +138,7 @@ namespace OrdersProgress
             tsmiProducts.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jn0000");
             tsmiProperties.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jn1000");
             tsmiItems.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jn2000");
+            tsmiCategories.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jn3000");
             #endregion
 
             #endregion
@@ -570,6 +571,11 @@ namespace OrdersProgress
         private void TsmiWarehouses_Click(object sender, EventArgs e)
         {
             new M1100_Warehouses().ShowDialog();
+        }
+
+        private void TsmiCategories_Click(object sender, EventArgs e)
+        {
+            new K1100_Categories().ShowDialog();
         }
     }
 }

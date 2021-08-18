@@ -415,7 +415,7 @@ namespace OrdersProgress.Models
         // تعداد کالا از یک نوع در سفارش. مقدار این فیلد نباید تغییر کند
         public double Quantity { get; set; }    // در اصل می توان این فیلد را «مقدار باقیماندۀ اولیه» نامید
 
-        public int WarehouseIndex { get; set; }     // شناسه انباری که می توان تعدادی از کالای مورد نیاز را برداشت
+        public long WarehouseIndex { get; set; }     // شناسه انباری که می توان تعدادی از کالای مورد نیاز را برداشت
         public double Quantity_CanTake { get; set; }    // تعداد کالاهایی که می توانند از انبار ارسال شوند
         public double Quantity_Remained { get; set; }    // تعداد کالاهایی که (پس از ارسال از انبار) باقی می ماند
         public string Comment { get; set; } // توضیح
@@ -875,11 +875,24 @@ namespace OrdersProgress.Models
         public bool C_B2 { get; set; }public bool C_B3 { get; set; }   
     }
 
+    // دسته هر محصول را مشخص می کند. مانند : درب، چارچوب، یراق،کمد و غیره
+    public class Category
+    {
+        [PrimaryKey, AutoIncrement]
+        public int Id { get; set; }
+        public long Company_Index { get; set; }
+        public long Index { get; set; } // شناسه 
+        public string Name { get; set; }    // نام دسته - باید منحصر بفرد باشد
+        public string Description { get; set; }    // شرح دسته
+    }
+
     // کالا : رجوع به فایل اکسل کدها و موجودی انبار
     public class Item
     {
         [PrimaryKey,AutoIncrement]
-        public long Id { get; set; }   public long Company_Index { get; set; }
+        public long Id { get; set; }
+        public long Company_Index { get; set; }
+        public long Category_Index { get; set; }    // شناسه دسته
         public bool C_B1 { get; set; }  // کمکی
 
         // این محصول قابل استفاده است. مثلا در صورت قابل استفاده نبودن، امکان سفارش دهی نخواهد داشت
@@ -902,7 +915,6 @@ namespace OrdersProgress.Models
         public double Quantity { get; set; }    // تعداد کالا در ماژول
 
         public int Significance_Factor { get; set; }    // ضریب اهمیت
-        public double Weight { get; set; }  // وزن هرواحد بر حسب کیلوگرم
         public int Depo_type { get; set; }    // نوع دپو : (دپو نیست = 0) و غیره
 
         public bool Salable { get; set; }   // قابل فروش = قابل سفارش دهی
@@ -912,13 +924,16 @@ namespace OrdersProgress.Models
         public long FixedPrice { get; set; }  // قیمت تمام شده یک عدد کالا - برای مواد اولیه قیمت خرید در نظر گرفته می شود
         public long SalesPrice { get; set; }  // قیمت فروش (بدون تخفیف) یک عدد کالا
 
-        public int Warehouse_Index { get; set; }   // شناسه انبار
+        public long Warehouse_Index { get; set; }   // شناسه انبار
         // موجودی کالا در انبار
+        public double Wh_OrderPoint{ get; set; }   // نقطه سفارش
         public double Wh_Quantity_Real { get; set; }   // موجودی واقعی
         // برای نگهداری تغییراتی که هنوز تأیید نشده است
         public double Wh_Quantity_x { get; set; }
+        //public string Wh_Location { get; set; }     // مکان کالا در انبار
         public string Unit { get; set; }
 
+        public double Weight { get; set; }  // وزن هرواحد بر حسب کیلوگرم
         public string Name_Full { get; set; }
         public string Code_Full { get; set; }
 
@@ -1092,10 +1107,10 @@ namespace OrdersProgress.Models
     public class Warehouse
     {
         [PrimaryKey,AutoIncrement]
-        public int Id { get; set; }
+        public long Id { get; set; }
         public long Company_Index { get; set; }
         
-        public int Index { get; set; } // شناسه انبار
+        public long Index { get; set; } // شناسه انبار
         public bool Active { get; set; }    // آیا انبار فعال است
         public string Name { get; set; }    // نام انبار - باید منحصربفرد باشد
         public string Phone { get; set; }

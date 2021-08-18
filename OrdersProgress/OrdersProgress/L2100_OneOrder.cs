@@ -123,17 +123,20 @@ namespace OrdersProgress
 
                     if (bOrderReadOnly)
                         lstResult = Program.dbOperations.GetAllItemsAsync
-                            (Stack.Company_Index, 1).Where(d => d.C_B1).ToList();
+                            (Stack.Company_Index, 1).Where(b=>b.Salable).Where(d => d.C_B1).ToList();
                 }
 
                 if (!lstResult.Any())
-                    lstResult = Program.dbOperations.GetAllItemsAsync(Stack.Company_Index, 1);
+                    lstResult = Program.dbOperations.GetAllItemsAsync
+                        (Stack.Company_Index, 1).Where(b => b.Salable).ToList();
             }
 
             // نمایش قطعات ، ماژولها یا همگی
-            if (radModule.Checked) return lstResult.Where(d => d.Module).OrderByDescending(d => d.C_B1).ToList();
-            else if (radNotModule.Checked) return lstResult.Where(d => !d.Module).OrderByDescending(d => d.C_B1).ToList();
-            else return lstResult.OrderByDescending(d => d.C_B1).ToList();
+            if (radModule.Checked) return lstResult.Where(d => d.Module)
+                    .OrderByDescending(d => d.C_B1).ThenBy(j=>j.Code_Small).ToList();
+            else if (radNotModule.Checked) return lstResult.Where(d => !d.Module)
+                    .OrderByDescending(d => d.C_B1).ThenBy(j => j.Code_Small).ToList();
+            else return lstResult.OrderByDescending(d => d.C_B1).ThenBy(j => j.Code_Small).ToList();
         }
 
         private void ShowData()

@@ -60,7 +60,7 @@ namespace OrdersProgress
                 case 0: return Program.dbOperations.GetAllItemsAsync(Stack.Company_Index)
                         .OrderBy(d => d.Code_Small).ToList();
                 default:
-                    int wh_index = Program.dbOperations.GetWarehouseAsync(Stack.Company_Index, cmbWarehouses.Text).Index;
+                    long wh_index = Program.dbOperations.GetWarehouseAsync(Stack.Company_Index, cmbWarehouses.Text).Index;
                     return Program.dbOperations.GetAllItems_in_WarehouseAsync
                         (Stack.Company_Index,wh_index).OrderBy(d=>d.Code_Small).ToList();
             }
@@ -305,6 +305,18 @@ namespace OrdersProgress
                 dgvData.CurrentCell = dgvData[e.ColumnIndex, e.RowIndex];
                 contextMenuStrip1.Show(dgvData, new Point(iX, iY));
             }
+        }
+
+        private void DgvData_RowEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            string sc = Convert.ToString(dgvData["Code_Small", e.RowIndex].Value);
+            #region نمایش تصویر کالا در صورت وجود
+            Models.Item_File item_file = Program.dbOperations.GetItem_FileAsync(sc, 1, true);
+            if (item_file != null)
+                pictureBox2.Image = new ThisProject().ByteToImage
+                    (Program.dbOperations.GetFileAsync(item_file.File_Index).Content);
+            else pictureBox2.Image = null;
+            #endregion
         }
 
         private void DgvData_DataError(object sender, DataGridViewDataErrorEventArgs e)

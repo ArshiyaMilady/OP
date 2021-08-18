@@ -23,12 +23,6 @@ namespace OrdersProgress
 
         private void M1100_Warehouses_Shown(object sender, EventArgs e)
         {
-            //if (Stack.UserLevel_Type==1)
-            //{
-            //    //btnDeleteAll.Visible = true;
-            //    //tsmiDelete.Visible = true;
-            //}
-
             cmbST_Name.SelectedIndex = 0;
             cmbST_Address.SelectedIndex = 0;
             cmbST_Phone.SelectedIndex = 0;

@@ -630,7 +630,7 @@ namespace OrdersProgress
             panel1.Enabled = true;
         }
 
-        int warehouse_index = 0;
+        long warehouse_index = 0;
         // اعمال اولویتهای کاربر در برداشتن کالاها از انبار
         private void BtnDoUserPriorities_Click(object sender, EventArgs e)
         {
@@ -795,7 +795,7 @@ namespace OrdersProgress
             bIsItemDefined_in_Stock = Program.dbOperations.GetAllItemsAsync(Stack.Company_Index)
                 .Any(d => d.Code_Small.Equals(item_code));
 
-            int warehouse_index = (cmbWarehouses.SelectedIndex > 0)
+            long warehouse_index = (cmbWarehouses.SelectedIndex > 0)
                 ? Program.dbOperations.GetWarehouseAsync(Stack.Company_Index, cmbWarehouses.Text).Index : 0;
 
             if (bIsItemDefined_in_Stock)

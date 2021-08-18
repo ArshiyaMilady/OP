@@ -29,8 +29,9 @@ namespace OrdersProgress
             //dgvData.DataSource = Program.dbOperations.GetAllUsersAsync(Stack.Company_Index);
             //dgvData.DataSource = Program.dbOperations.GetAllProperties (Stack.Company_Index,0);
             //dgvData.DataSource = Program.dbOperations.GetAllItem_PropertiesAsync(Stack.Company_Index);
-            dgvData.DataSource = Program.dbOperations.GetAllWarehousesAsync(Stack.Company_Index,false);
-            //dgvData.DataSource = Program.dbOperations.GetAllItemsAsync(Stack.Company_Index);
+            //dgvData.DataSource = Program.dbOperations.GetAllCategoriesAsync(Stack.Company_Index);
+            //dgvData.DataSource = Program.dbOperations.GetAllWarehousesAsync(Stack.Company_Index,false);
+            dgvData.DataSource = Program.dbOperations.GetAllItemsAsync(Stack.Company_Index,0,100);
             //dgvData.DataSource = Program.dbOperations.GetAllLoginHistorysAsync(Stack.Company_Index)
             //    .OrderByDescending(d=>d.DateTime_mi).ToList();
 
@@ -47,6 +48,13 @@ namespace OrdersProgress
 
         private void Button1_Click(object sender, EventArgs e)
         {
+            #region دسته بندی اولیه : نامشخص
+            //List<Models.Item> lstItems = Program.dbOperations.GetAllItemsAsync(Stack.Company_Index, 0, 100);
+            //foreach (Models.Item item in lstItems)
+            //    item.Category_Index = 1;
+            //Program.dbOperations.UpdateItems(lstItems);
+            #endregion
+
             #region واحد کالا : عدد
             //foreach(Models.Item item in Program.dbOperations.GetAllItemsAsync(Stack.Company_Index,0))
             //{

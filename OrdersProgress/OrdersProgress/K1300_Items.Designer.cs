@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(K1300_Items));
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmiItem_Details = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiImage = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAdd_ChangeItemImage = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiDeleteItemImage = new System.Windows.Forms.ToolStripMenuItem();
@@ -38,7 +39,6 @@
             this.tsmiItemStructure = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiProperties = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiItem_Warehouse = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiItem_Details = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.btnImportDataFromExcel = new System.Windows.Forms.Button();
@@ -54,6 +54,7 @@
             this.btnShowAll = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
             this.cmbWarehouses = new System.Windows.Forms.ComboBox();
+            this.cmbCategories = new System.Windows.Forms.ComboBox();
             this.cmbItemsEnable = new System.Windows.Forms.ComboBox();
             this.radAll = new System.Windows.Forms.RadioButton();
             this.radNotModule = new System.Windows.Forms.RadioButton();
@@ -90,16 +91,23 @@
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiItem_Details,
             this.tsmiImage,
             this.tsmiDiagram,
             this.tsmiItemStructure,
             this.tsmiProperties,
             this.tsmiItem_Warehouse,
-            this.tsmiItem_Details,
             this.tsmiDelete});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.contextMenuStrip1.Size = new System.Drawing.Size(156, 158);
+            // 
+            // tsmiItem_Details
+            // 
+            this.tsmiItem_Details.Name = "tsmiItem_Details";
+            this.tsmiItem_Details.Size = new System.Drawing.Size(155, 22);
+            this.tsmiItem_Details.Text = "جزییات";
+            this.tsmiItem_Details.Click += new System.EventHandler(this.TsmiItem_Details_Click);
             // 
             // tsmiImage
             // 
@@ -154,13 +162,6 @@
             this.tsmiItem_Warehouse.Visible = false;
             this.tsmiItem_Warehouse.Click += new System.EventHandler(this.TsmiItem_Warehouse_Click);
             // 
-            // tsmiItem_Details
-            // 
-            this.tsmiItem_Details.Name = "tsmiItem_Details";
-            this.tsmiItem_Details.Size = new System.Drawing.Size(155, 22);
-            this.tsmiItem_Details.Text = "جزییات";
-            this.tsmiItem_Details.Click += new System.EventHandler(this.TsmiItem_Details_Click);
-            // 
             // tsmiDelete
             // 
             this.tsmiDelete.Name = "tsmiDelete";
@@ -174,7 +175,7 @@
             this.btnImportDataFromExcel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnImportDataFromExcel.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnImportDataFromExcel.BackgroundImage")));
             this.btnImportDataFromExcel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnImportDataFromExcel.Location = new System.Drawing.Point(15, 391);
+            this.btnImportDataFromExcel.Location = new System.Drawing.Point(12, 276);
             this.btnImportDataFromExcel.Name = "btnImportDataFromExcel";
             this.btnImportDataFromExcel.Size = new System.Drawing.Size(34, 34);
             this.btnImportDataFromExcel.TabIndex = 80;
@@ -187,7 +188,7 @@
             // 
             this.btnReturn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnReturn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnReturn.Location = new System.Drawing.Point(3, 429);
+            this.btnReturn.Location = new System.Drawing.Point(3, 449);
             this.btnReturn.Name = "btnReturn";
             this.btnReturn.Size = new System.Drawing.Size(75, 29);
             this.btnReturn.TabIndex = 80;
@@ -198,7 +199,7 @@
             // progressBar1
             // 
             this.progressBar1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.progressBar1.Location = new System.Drawing.Point(454, 221);
+            this.progressBar1.Location = new System.Drawing.Point(454, 219);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(100, 23);
             this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
@@ -225,7 +226,7 @@
             this.panel1.Controls.Add(this.dgvData);
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(884, 462);
+            this.panel1.Size = new System.Drawing.Size(884, 484);
             this.panel1.TabIndex = 0;
             // 
             // label4
@@ -233,7 +234,7 @@
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.Maroon;
-            this.label4.Location = new System.Drawing.Point(234, 12);
+            this.label4.Location = new System.Drawing.Point(234, 7);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(423, 18);
             this.label4.TabIndex = 93;
@@ -250,6 +251,7 @@
             this.groupBox1.Controls.Add(this.btnShowAll);
             this.groupBox1.Controls.Add(this.btnSearch);
             this.groupBox1.Controls.Add(this.cmbWarehouses);
+            this.groupBox1.Controls.Add(this.cmbCategories);
             this.groupBox1.Controls.Add(this.cmbItemsEnable);
             this.groupBox1.Controls.Add(this.radAll);
             this.groupBox1.Controls.Add(this.radNotModule);
@@ -262,9 +264,9 @@
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Location = new System.Drawing.Point(663, 41);
+            this.groupBox1.Location = new System.Drawing.Point(665, 40);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(215, 414);
+            this.groupBox1.Size = new System.Drawing.Size(215, 441);
             this.groupBox1.TabIndex = 20;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "جستجو";
@@ -281,7 +283,7 @@
             "شامل",
             "شروع شود با",
             "برابر باشد با"});
-            this.cmbST_FullName.Location = new System.Drawing.Point(76, 318);
+            this.cmbST_FullName.Location = new System.Drawing.Point(76, 349);
             this.cmbST_FullName.Name = "cmbST_FullName";
             this.cmbST_FullName.Size = new System.Drawing.Size(91, 23);
             this.cmbST_FullName.TabIndex = 40;
@@ -296,7 +298,7 @@
             "شامل",
             "شروع شود با",
             "برابر باشد با"});
-            this.cmbST_Name.Location = new System.Drawing.Point(95, 204);
+            this.cmbST_Name.Location = new System.Drawing.Point(95, 235);
             this.cmbST_Name.Name = "cmbST_Name";
             this.cmbST_Name.Size = new System.Drawing.Size(91, 23);
             this.cmbST_Name.TabIndex = 40;
@@ -311,7 +313,7 @@
             "شامل",
             "شروع شود با",
             "برابر باشد با"});
-            this.cmbST_FullCode.Location = new System.Drawing.Point(76, 252);
+            this.cmbST_FullCode.Location = new System.Drawing.Point(76, 283);
             this.cmbST_FullCode.Name = "cmbST_FullCode";
             this.cmbST_FullCode.Size = new System.Drawing.Size(91, 23);
             this.cmbST_FullCode.TabIndex = 30;
@@ -326,7 +328,7 @@
             "شامل",
             "شروع شود با",
             "برابر باشد با"});
-            this.cmbST_SmallCode.Location = new System.Drawing.Point(95, 175);
+            this.cmbST_SmallCode.Location = new System.Drawing.Point(95, 206);
             this.cmbST_SmallCode.Name = "cmbST_SmallCode";
             this.cmbST_SmallCode.Size = new System.Drawing.Size(91, 23);
             this.cmbST_SmallCode.TabIndex = 30;
@@ -334,7 +336,7 @@
             // btnShowAll
             // 
             this.btnShowAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnShowAll.Location = new System.Drawing.Point(191, 384);
+            this.btnShowAll.Location = new System.Drawing.Point(130, 411);
             this.btnShowAll.Name = "btnShowAll";
             this.btnShowAll.Size = new System.Drawing.Size(79, 26);
             this.btnShowAll.TabIndex = 56;
@@ -345,7 +347,7 @@
             // btnSearch
             // 
             this.btnSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnSearch.Location = new System.Drawing.Point(6, 384);
+            this.btnSearch.Location = new System.Drawing.Point(6, 411);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(79, 26);
             this.btnSearch.TabIndex = 50;
@@ -364,6 +366,18 @@
             this.cmbWarehouses.Size = new System.Drawing.Size(182, 25);
             this.cmbWarehouses.TabIndex = 15;
             this.cmbWarehouses.SelectedIndexChanged += new System.EventHandler(this.ComboBox1_SelectedIndexChanged);
+            // 
+            // cmbCategories
+            // 
+            this.cmbCategories.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbCategories.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbCategories.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbCategories.FormattingEnabled = true;
+            this.cmbCategories.Location = new System.Drawing.Point(27, 92);
+            this.cmbCategories.Name = "cmbCategories";
+            this.cmbCategories.Size = new System.Drawing.Size(182, 25);
+            this.cmbCategories.TabIndex = 15;
+            this.cmbCategories.SelectedIndexChanged += new System.EventHandler(this.ComboBox1_SelectedIndexChanged);
             // 
             // cmbItemsEnable
             // 
@@ -386,7 +400,7 @@
             this.radAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.radAll.AutoSize = true;
             this.radAll.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radAll.Location = new System.Drawing.Point(73, 145);
+            this.radAll.Location = new System.Drawing.Point(73, 176);
             this.radAll.Name = "radAll";
             this.radAll.Size = new System.Drawing.Size(132, 19);
             this.radAll.TabIndex = 26;
@@ -400,7 +414,7 @@
             this.radNotModule.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.radNotModule.AutoSize = true;
             this.radNotModule.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radNotModule.Location = new System.Drawing.Point(124, 121);
+            this.radNotModule.Location = new System.Drawing.Point(124, 152);
             this.radNotModule.Name = "radNotModule";
             this.radNotModule.Size = new System.Drawing.Size(81, 19);
             this.radNotModule.TabIndex = 24;
@@ -414,12 +428,12 @@
             this.radModule.AutoSize = true;
             this.radModule.Checked = true;
             this.radModule.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radModule.Location = new System.Drawing.Point(126, 96);
+            this.radModule.Location = new System.Drawing.Point(114, 127);
             this.radModule.Name = "radModule";
-            this.radModule.Size = new System.Drawing.Size(80, 19);
+            this.radModule.Size = new System.Drawing.Size(92, 19);
             this.radModule.TabIndex = 22;
             this.radModule.TabStop = true;
-            this.radModule.Text = "نمایش ماژول";
+            this.radModule.Text = "نمایش ماژول ها";
             this.radModule.UseVisualStyleBackColor = true;
             this.radModule.CheckedChanged += new System.EventHandler(this.RadModule_CheckedChanged);
             // 
@@ -427,7 +441,7 @@
             // 
             this.txtST_FullName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtST_FullName.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtST_FullName.Location = new System.Drawing.Point(7, 347);
+            this.txtST_FullName.Location = new System.Drawing.Point(7, 378);
             this.txtST_FullName.Name = "txtST_FullName";
             this.txtST_FullName.Size = new System.Drawing.Size(160, 22);
             this.txtST_FullName.TabIndex = 45;
@@ -439,7 +453,7 @@
             // 
             this.txtST_Name.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtST_Name.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtST_Name.Location = new System.Drawing.Point(7, 206);
+            this.txtST_Name.Location = new System.Drawing.Point(7, 237);
             this.txtST_Name.Name = "txtST_Name";
             this.txtST_Name.Size = new System.Drawing.Size(82, 22);
             this.txtST_Name.TabIndex = 45;
@@ -451,7 +465,7 @@
             // 
             this.txtST_FullCode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtST_FullCode.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtST_FullCode.Location = new System.Drawing.Point(7, 281);
+            this.txtST_FullCode.Location = new System.Drawing.Point(7, 312);
             this.txtST_FullCode.Name = "txtST_FullCode";
             this.txtST_FullCode.Size = new System.Drawing.Size(160, 22);
             this.txtST_FullCode.TabIndex = 34;
@@ -463,7 +477,7 @@
             // 
             this.txtST_SmallCode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtST_SmallCode.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtST_SmallCode.Location = new System.Drawing.Point(7, 177);
+            this.txtST_SmallCode.Location = new System.Drawing.Point(7, 208);
             this.txtST_SmallCode.Name = "txtST_SmallCode";
             this.txtST_SmallCode.Size = new System.Drawing.Size(82, 22);
             this.txtST_SmallCode.TabIndex = 34;
@@ -476,7 +490,7 @@
             this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(166, 321);
+            this.label6.Location = new System.Drawing.Point(166, 352);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(46, 15);
             this.label6.TabIndex = 29;
@@ -487,7 +501,7 @@
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(186, 208);
+            this.label5.Location = new System.Drawing.Point(186, 239);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(23, 15);
             this.label5.TabIndex = 29;
@@ -498,7 +512,7 @@
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(167, 255);
+            this.label1.Location = new System.Drawing.Point(167, 286);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(45, 15);
             this.label1.TabIndex = 29;
@@ -509,7 +523,7 @@
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(186, 179);
+            this.label3.Location = new System.Drawing.Point(186, 210);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(22, 15);
             this.label3.TabIndex = 29;
@@ -518,9 +532,9 @@
             // pictureBox2
             // 
             this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pictureBox2.Location = new System.Drawing.Point(3, 41);
+            this.pictureBox2.Location = new System.Drawing.Point(3, 33);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(154, 215);
+            this.pictureBox2.Size = new System.Drawing.Size(154, 223);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox2.TabIndex = 91;
             this.pictureBox2.TabStop = false;
@@ -530,7 +544,7 @@
             this.pictureBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.pictureBox1.BackColor = System.Drawing.SystemColors.Window;
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(479, 205);
+            this.pictureBox1.Location = new System.Drawing.Point(479, 203);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(49, 54);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -544,7 +558,7 @@
             this.panel2.BackColor = System.Drawing.SystemColors.Info;
             this.panel2.Controls.Add(this.chkCanEdit);
             this.panel2.Controls.Add(this.chkShowUpdateMessage);
-            this.panel2.Location = new System.Drawing.Point(21, 327);
+            this.panel2.Location = new System.Drawing.Point(9, 327);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(145, 62);
             this.panel2.TabIndex = 1;
@@ -603,7 +617,7 @@
             // btnDeleteAllItems
             // 
             this.btnDeleteAllItems.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnDeleteAllItems.Location = new System.Drawing.Point(84, 429);
+            this.btnDeleteAllItems.Location = new System.Drawing.Point(84, 449);
             this.btnDeleteAllItems.Name = "btnDeleteAllItems";
             this.btnDeleteAllItems.Size = new System.Drawing.Size(75, 29);
             this.btnDeleteAllItems.TabIndex = 75;
@@ -614,13 +628,14 @@
             // 
             // btnAddNew
             // 
+            this.btnAddNew.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAddNew.BackColor = System.Drawing.SystemColors.WindowFrame;
             this.btnAddNew.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnAddNew.ForeColor = System.Drawing.SystemColors.Window;
             this.btnAddNew.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnAddNew.Location = new System.Drawing.Point(3, 3);
+            this.btnAddNew.Location = new System.Drawing.Point(665, 2);
             this.btnAddNew.Name = "btnAddNew";
-            this.btnAddNew.Size = new System.Drawing.Size(154, 32);
+            this.btnAddNew.Size = new System.Drawing.Size(217, 32);
             this.btnAddNew.TabIndex = 70;
             this.btnAddNew.Text = "تعریف کالای جدید";
             this.btnAddNew.UseVisualStyleBackColor = false;
@@ -633,11 +648,11 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvData.Location = new System.Drawing.Point(163, 41);
+            this.dgvData.Location = new System.Drawing.Point(165, 33);
             this.dgvData.Name = "dgvData";
             this.dgvData.ReadOnly = true;
             this.dgvData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvData.Size = new System.Drawing.Size(494, 417);
+            this.dgvData.Size = new System.Drawing.Size(494, 448);
             this.dgvData.TabIndex = 90;
             this.dgvData.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.DgvData_CellBeginEdit);
             this.dgvData.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvData_CellEndEdit);
@@ -664,7 +679,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnReturn;
-            this.ClientSize = new System.Drawing.Size(883, 461);
+            this.ClientSize = new System.Drawing.Size(883, 483);
             this.Controls.Add(this.panel1);
             this.Name = "K1300_Items";
             this.Text = "   کالاها";
@@ -735,5 +750,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox cmbWarehouses;
+        private System.Windows.Forms.ComboBox cmbCategories;
     }
 }
