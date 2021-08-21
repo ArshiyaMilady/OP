@@ -34,6 +34,7 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.btnReturn = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.chkBookable = new System.Windows.Forms.CheckBox();
             this.chkSalable = new System.Windows.Forms.CheckBox();
             this.chkEnable = new System.Windows.Forms.CheckBox();
             this.cmbCategories = new System.Windows.Forms.ComboBox();
@@ -63,7 +64,7 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.chkBookable = new System.Windows.Forms.CheckBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -143,6 +144,20 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(446, 393);
             this.panel2.TabIndex = 2;
+            // 
+            // chkBookable
+            // 
+            this.chkBookable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.chkBookable.AutoSize = true;
+            this.chkBookable.Enabled = false;
+            this.chkBookable.Location = new System.Drawing.Point(9, 361);
+            this.chkBookable.Name = "chkBookable";
+            this.chkBookable.Size = new System.Drawing.Size(114, 23);
+            this.chkBookable.TabIndex = 51;
+            this.chkBookable.Text = "قابل رزرو کردن";
+            this.toolTip1.SetToolTip(this.chkBookable, "هنگام درخواست یا سفارشی از این کالا ، بعد از تأیید نهایی، این کالا در انبار رزرو " +
+        "می شود");
+            this.chkBookable.UseVisualStyleBackColor = true;
             // 
             // chkSalable
             // 
@@ -472,18 +487,6 @@
             this.timer1.Interval = 400;
             this.timer1.Tick += new System.EventHandler(this.Timer1_Tick);
             // 
-            // chkBookable
-            // 
-            this.chkBookable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.chkBookable.AutoSize = true;
-            this.chkBookable.Enabled = false;
-            this.chkBookable.Location = new System.Drawing.Point(9, 361);
-            this.chkBookable.Name = "chkBookable";
-            this.chkBookable.Size = new System.Drawing.Size(114, 23);
-            this.chkBookable.TabIndex = 51;
-            this.chkBookable.Text = "قابل رزرو کردن";
-            this.chkBookable.UseVisualStyleBackColor = true;
-            // 
             // K1302_Item_Details
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
@@ -541,5 +544,6 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.TextBox textBox9;
         private System.Windows.Forms.CheckBox chkBookable;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

@@ -390,7 +390,9 @@
             // 
             this.tsmiOtherSettings.Name = "tsmiOtherSettings";
             this.tsmiOtherSettings.Size = new System.Drawing.Size(180, 24);
-            this.tsmiOtherSettings.Text = "تنظیمات";
+            this.tsmiOtherSettings.Text = "تنظیمات برنامه";
+            this.tsmiOtherSettings.Visible = false;
+            this.tsmiOtherSettings.Click += new System.EventHandler(this.TsmiOtherSettings_Click);
             // 
             // J1000_MainForm
             // 

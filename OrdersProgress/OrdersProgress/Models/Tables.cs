@@ -29,10 +29,9 @@ namespace OrdersProgress.Models
         public DateTime End_DateTime_mi { get; set; }   // زمان پایان فعالیت به میلادی
         public string End_DateTime_sh { get; set; }   // زمان پایان فعالیت به شمسی
 
-
-        // 0 : رزرو کالاها از انبار به صورت دستی
-        // 1 : رزرو کالاها از انبار به صورت اتوماتیک
-        public byte Warehouse_Booking { get; set; }
+        // false : رزرو کالاها از انبار به صورت دستی
+        // true : رزرو کالاها از انبار به صورت اتوماتیک
+        public bool Warehouse_Booking { get; set; }
 
         public string C_S1 { get; set; }
         public string C_S2 { get; set; }

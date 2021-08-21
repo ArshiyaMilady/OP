@@ -26,6 +26,7 @@ namespace OrdersProgress
             //panel2.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jn2110"); // امکان تغییر
             btnGetImages.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jn2110"); // امکان افزودن تصویر
             btnAddNew.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jn2120"); // امکان افزودن
+            btnImportDataFromExcel.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jn2130"); // امکان  ورود اطلاعات از اکسل
         }
 
         private void K1300_Items_Shown(object sender, EventArgs e)
@@ -530,7 +531,9 @@ namespace OrdersProgress
                                         Name_Samll = ws.Cells[i, 1].Value.ToString(),
                                         Code_Small = module_Small_code,
                                         Enable = true,
-                                        Module = true
+                                        Module = true,
+                                        Salable = true,
+                                        Bookable=true,
                                     };
 
                                     Program.dbOperations.AddItem(module);
@@ -1161,6 +1164,11 @@ namespace OrdersProgress
         {
             AcceptButton = null;
             //MessageBox.Show("out");
+        }
+
+        private void DgvData_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            TsmiItem_Details_Click(null, null);
         }
 
         private void Add_ChangeImage(string item_code,string file)

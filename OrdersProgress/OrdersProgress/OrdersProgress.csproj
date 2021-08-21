@@ -410,6 +410,9 @@
     <Compile Include="J2204_User_UL.Designer.cs">
       <DependentUpon>J2204_User_UL.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="J1900_OtherSettings.resx">
+      <DependentUpon>J1900_OtherSettings.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="J1950_Login.resx">
       <DependentUpon>J1950_Login.cs</DependentUpon>
     </EmbeddedResource>

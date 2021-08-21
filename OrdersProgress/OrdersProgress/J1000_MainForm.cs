@@ -119,6 +119,8 @@ namespace OrdersProgress
             tsmiOrdersLevels.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jl3100");
             tsmiOrders_and_Details.Visible = Stack.UserLevel_Type == 1;
             tsmiLoginsHistory.Visible = (Stack.UserLevel_Type == 1) || Stack.lstUser_ULF_UniquePhrase.Contains("jk4000");
+
+            tsmiOtherSettings.Visible = Stack.UserLevel_Type == 1;
             #endregion
 
             #region منوی سفارشها و زیرمنوهایش
@@ -577,5 +579,10 @@ namespace OrdersProgress
         {
             new K1100_Categories().ShowDialog();
         }
+
+        private void TsmiOtherSettings_Click(object sender, EventArgs e)
+        {
+            new J1900_OtherSettings().ShowDialog();
+       }
     }
 }
