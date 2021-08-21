@@ -78,6 +78,7 @@
             this.btnSave.TabIndex = 2;
             this.btnSave.Text = "ثبت تغییرات و بستن";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.BtnSave_Click);
             // 
             // J1900_OtherSettings
             // 
