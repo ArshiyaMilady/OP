@@ -34,7 +34,7 @@ namespace OrdersProgress
             else
             {
                 // اگر از این کالا در حواله ای استفاده شده باشد، نباید امکان تغییر داشته باشد
-                if (Program.dbOperations.GetWarehouse_Remittance_ItemAsync
+                if (Program.dbOperations.GetWarehouse_Remittance_RowAsync
                     (_item.Code_Small, Stack.Company_Index) != null)
                         type = 0;
 
@@ -56,6 +56,7 @@ namespace OrdersProgress
                 cmbWarehouses.Enabled = true;
                 chkEnable.Enabled = true;
                 chkSalable.Enabled = true;
+                chkBookable.Enabled = true;
                 btnSave.Visible = true;
             }
             #endregion
@@ -72,8 +73,8 @@ namespace OrdersProgress
             {
                 cmbWarehouses.SelectedIndex = 0;
                 cmbCategories.SelectedIndex = 0;
-                chkEnable.Checked = true;
-                chkSalable.Checked = true;
+                //chkEnable.Checked = true;
+                //chkSalable.Checked = true;
             }
             else
             {
@@ -88,6 +89,7 @@ namespace OrdersProgress
                 textBox9.Text = item.Wh_OrderPoint.ToString();
                 chkEnable.Checked = item.Enable;
                 chkSalable.Checked = item.Salable;
+                chkBookable.Checked = item.Bookable;
 
                 cmbWarehouses.Text = Program.dbOperations.GetWarehouseAsync(item.Warehouse_Index).Name;
                 cmbCategories.Text = Program.dbOperations.GetCategoryAsync(item.Category_Index).Name;
@@ -200,9 +202,10 @@ namespace OrdersProgress
                 if (string.IsNullOrWhiteSpace(textBox8.Text)) textBox8.Text = "0";
                 item.SalesPrice = Convert.ToInt64(textBox8.Text);
                 item.Warehouse_Index = Program.dbOperations.GetWarehouseAsync(Stack.Company_Index, cmbWarehouses.Text).Index;
+                item.Wh_OrderPoint = Convert.ToDouble(textBox9.Text);
                 item.Enable = chkEnable.Checked;
                 item.Salable = chkSalable.Checked;
-                item.Wh_OrderPoint = Convert.ToDouble(textBox9.Text);
+                item.Bookable = chkBookable.Checked;
 
                 pictureBox1.Visible = true;
                 Application.DoEvents();

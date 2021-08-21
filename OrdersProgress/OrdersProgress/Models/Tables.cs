@@ -6,11 +6,11 @@ using System.Text;
 
 namespace OrdersProgress.Models
 {
-    
+
 
     public class Company
     {
-        [PrimaryKey,AutoIncrement]
+        [PrimaryKey, AutoIncrement]
         public long Id { get; set; }
 
         public bool Active { get; set; }    // آیا شرکت اجازه فعالیت دارد؟
@@ -29,6 +29,11 @@ namespace OrdersProgress.Models
         public DateTime End_DateTime_mi { get; set; }   // زمان پایان فعالیت به میلادی
         public string End_DateTime_sh { get; set; }   // زمان پایان فعالیت به شمسی
 
+
+        // 0 : رزرو کالاها از انبار به صورت دستی
+        // 1 : رزرو کالاها از انبار به صورت اتوماتیک
+        public byte Warehouse_Booking { get; set; }
+
         public string C_S1 { get; set; }
         public string C_S2 { get; set; }
         public string C_S3 { get; set; }
@@ -43,16 +48,16 @@ namespace OrdersProgress.Models
 
     public class User
     {
-        [PrimaryKey,AutoIncrement]
+        [PrimaryKey, AutoIncrement]
         public long Id { get; set; }
         public long Company_Index { get; set; }
 
         public bool Active { get; set; }    // آیا کاربر اجازه فعالیت دارد؟
-        
+
         // 101 : شناسه کسی که نام خریدار را ثبت می کند. در ابتدا این شناسه مربوط می شود به کارمند شرکت
         public long Index { get; set; } // منحصربفرد
         public string Name { get; set; }    // منحصر بفرد
-        public string Real_Name { get; set; }    
+        public string Real_Name { get; set; }
         public string Password { get; set; }  // معمولا 1111 است
         public string Mobile { get; set; }
         public string Phone { get; set; }
@@ -90,13 +95,13 @@ namespace OrdersProgress.Models
         public long Index { get; set; }
         public long Company_Index { get; set; }
 
-        public long User_Index { get; set; } 
-        public string User_RealName { get; set; } 
-        public DateTime DateTime_mi { get; set; } 
+        public long User_Index { get; set; }
+        public string User_RealName { get; set; }
+        public DateTime DateTime_mi { get; set; }
         public string Date_sh { get; set; } // تاریخ ورود
         public string Time { get; set; }    // ساعت ورود
     }
-    
+
     // User Level سطوح کاربری
     public class User_Level
     {
@@ -125,6 +130,19 @@ namespace OrdersProgress.Models
         public long Index { get; set; }
         public long MainUL_Index { get; set; }  // سطح کاربر مذکور
         public long UL_Index { get; set; }  // مابقی سطوح کاربری
+    }
+
+
+    // برای تأیید درخواست ها به انبار چه سطح کاربری ، سرپرست سرپرست سطح کاربری دیگر به حساب می آید
+    public class UL_Confirm_UL_Request
+    {
+        [PrimaryKey, AutoIncrement]
+        public long Id { get; set; }
+        public long Company_Index { get; set; }
+        public bool C_B1 { get; set; }  // فیلد کمکی
+        public long Index { get; set; }
+        public long UL_Index { get; set; }  // سطح کاربر مذکور
+        public long Supervisor_UL_Index { get; set; }  //  سطح کاربری سرپرست 
     }
 
     // UL = User_Level هر کاربر می تواند دارای یک یا چند سطح کاربری باشد
@@ -164,6 +182,21 @@ namespace OrdersProgress.Models
         public bool UL_Feature_Enabled { get; set; }
     }
 
+    // هر سطح کاربری درخواست کدام دسته از کالاها را می تواند از انبار داشته باشد
+    public class UL_Request_Category
+    {
+        [PrimaryKey, AutoIncrement]
+        public long Id { get; set; }
+        public long Index { get; set; }
+        public long Company_Index { get; set; }
+        public long User_Level_Index { get; set; }  // شناسه سطح کاربری
+        public long Category_Index { get; set; }    // شناسه دسته
+        public bool Need_Supervisor_Confirmation { get; set; }    // آیا نیاز به تأیید سرپرست می باشد
+        public bool Need_Manager_Confirmation { get; set; }    // آیا نیاز به تأیید مدیر می باشد
+
+        public bool C_B1 { get; set; }    // کمکی
+    }
+
     public class User_File
     {
         [PrimaryKey, AutoIncrement]
@@ -173,17 +206,18 @@ namespace OrdersProgress.Models
 
         // نوع فایل
         // 101 : تصویر امضا
-        public int Type { get; set; }  
+        public int Type { get; set; }
         public long User_Index { get; set; }
-        public string File_Index { get; set; }    
-        public bool Enable { get; set; }    
+        public string File_Index { get; set; }
+        public bool Enable { get; set; }
     }
 
     public class Order
     {
-        [PrimaryKey,AutoIncrement]
+        [PrimaryKey, AutoIncrement]
         public long Id { get; set; }
         public long Company_Index { get; set; }
+        public long Index_in_Company { get; set; } // این عدد، شناسه ای است که سفارش با آن در کارخانه مشخص می شود
 
         // عنوان سفارش - عبارتی که سفارش را با آن می شناسند
         public string Title { get; set; }    // منحصربفرد
@@ -210,7 +244,7 @@ namespace OrdersProgress.Models
         //public long CurrentLevel_Sequence { get; set; } // مهم
         public long NextLevel_Index { get; set; }       // مرحله بعدی سفارش
         // توضیحاتی که به سفارش دهنده جهت اطلاع از وضعیت سفارش نشان داده می شود
-        public string Level_Description { get; set; }   
+        public string Level_Description { get; set; }
         #endregion
 
         //public string Returning_Description { get; set; }   // در صورت بازگشت ، توضیحات آخرین بازگشت را در خود نگه می دارد
@@ -281,8 +315,8 @@ namespace OrdersProgress.Models
         public long Company_Index { get; set; }
         public long Index { get; set; }
 
-        public string Order_Index { get; set; }   
-        public long OrderLevel_Index { get; set; }  
+        public string Order_Index { get; set; }
+        public long OrderLevel_Index { get; set; }
     }
 
     // پیش نیازهای یک مرحله از سفارش را بر اساس مراحل دیگر تعریف میکند
@@ -330,15 +364,15 @@ namespace OrdersProgress.Models
         public int Id { get; set; }
         public long Company_Index { get; set; }
         public long Index { get; set; }
-        public long PassedLevel_binary { get; set; }    // مراحل گذشته تا این تاریخ به صورت باینری
+        //public long PassedLevel_binary { get; set; }    // مراحل گذشته تا این تاریخ به صورت باینری
 
         public long User_Index { get; set; }    // شناسۀ شخصی که مرحله را انجام داده است
+        public string User_Name { get; set; }     // نام شخصی که مرحله را انجام داده است
         public long User_Level_Index { get; set; }    // شناسۀ شخصی که مرحله را انجام داده است
 
         public string Order_Index { get; set; }
         public long OrderLevel_Index { get; set; }   //آخرین مرحله ای که سفارش گذرانده است
         public string OrderLevel_Description { get; set; }  // شرح مرحله ای که سفارش گذرانده است
-        public string User_Name { get; set; }     // نام شخصی که مرحله را انجام داده است
 
         public DateTime DateTime_mi { get; set; }   // زمان انجام مرحله به میلادی
         public string DateTime_sh { get; set; }     // زمان انجام مرحله به شمسی
@@ -517,10 +551,10 @@ namespace OrdersProgress.Models
     // رابطه بین تجمیع سفارشها و سفارشهای درون آنرا نگه می دارد
     public class Collection
     {
-        [PrimaryKey,AutoIncrement]
+        [PrimaryKey, AutoIncrement]
         public long Id { get; set; }
         public long Company_Index { get; set; }
-        
+
         public long Index { get; set; } // شناسه منحصربفرد که باید در شرکت به خود بگیرد
         public bool IsCompleted { get; set; }   // آیا کامل شده است؟
         public DateTime DateTime_mi { get; set; }   // زمان تجمیع سفارشها
@@ -540,15 +574,15 @@ namespace OrdersProgress.Models
         public bool C_B1 { get; set; }
         public bool C_B2 { get; set; }
         public bool C_B3 { get; set; }
-    }   
-    
+    }
+
     // تجمیع چند سفارش
     // مجموعه ای از یک یا چند سفارش را درخود نگه می دارد
     // اینکار برای تجمیع فعالیتهای یکسان در سفارشها و ارسال دسته ای آنها به خط تولید
     // بسیار مفید است
     public class OrdersCollection
     {
-        [PrimaryKey,AutoIncrement]
+        [PrimaryKey, AutoIncrement]
         public long Id { get; set; }
         public long Company_Index { get; set; }
         public long Index { get; set; }
@@ -573,8 +607,9 @@ namespace OrdersProgress.Models
     // شده باشند، در جدول زیر ثبت می شود که از کالای آ ، 7 عدد درخواست شده است
     public class Collection_Item
     {
-        [PrimaryKey,AutoIncrement]
-        public long Id { get; set; }   public long Company_Index { get; set; }
+        [PrimaryKey, AutoIncrement]
+        public long Id { get; set; }
+        public long Company_Index { get; set; }
         public long Index { get; set; }
 
         public long Collection_Index { get; set; } // شناسه منحصربفرد
@@ -598,20 +633,21 @@ namespace OrdersProgress.Models
     // در یک مجموعه سفارش ، چه فعالیتهایی وجود دارد و از هر فعالیت چند درصد پیشرفت کرده است
     public class Collection_Action
     {
-        [PrimaryKey,AutoIncrement]
-        public long Id { get; set; }   public long Company_Index { get; set; }
+        [PrimaryKey, AutoIncrement]
+        public long Id { get; set; }
+        public long Company_Index { get; set; }
         public long Index { get; set; }
         public long Collection_Index { get; set; }
 
         #region مشخصات فعالیت در زمان تبدیل سفارش به فعالیت
-        public long Action_Index{ get; set; }   
-        public string Action_Name { get; set; }    
+        public long Action_Index { get; set; }
+        public string Action_Name { get; set; }
         public double Action_Time { get; set; }    // مدت زمان انجام این فعالیت برای یک نفر نیرو
         public double Action_Workers { get; set; }     // تعداد نیروی لازم برای انجام این فعالیت
         public long Action_TotalCost { get; set; }     // هزینه (به ریال) کامل انجام این فعالیت در زمان سفارش
         // OPC پیش نیازهای این فعالیت در
         public string Action_Prerequisites { get; set; }
-       
+
         // اولویت فعالیت در روند ساخت 
         // در صورتیکه عدد اولویت یک فعالیت، کمتر باشد، آن فعالیت باید ابتدا اجرا شود
         // و در صورتیکه دو فعالیت دارای اولویت یکسانی باشند، می توانند همزمان با هم اجرا شوند
@@ -622,7 +658,7 @@ namespace OrdersProgress.Models
         public int ProgressPercent_Planning { get; set; }   // درصد پیشرفت برنامه ای یک فعالیت از سفارش
 
         public long CurrentContractor_Index { get; set; }   // پیمانکار جاری این فعالیت
-                                                            
+
         public bool Confirm_Contractor { get; set; }    // تأیید پیمانکار
         public bool Confirm_LineManager { get; set; }   // تأیید سرپرست تولید
         public bool Confirm_QC { get; set; }    // تأیید کنترل کیفی
@@ -642,11 +678,12 @@ namespace OrdersProgress.Models
     // تاریخچۀ پیشرفت فعالیتهای یک مجموعه سفارش 
     public class Collection_Action_History
     {
-        [PrimaryKey,AutoIncrement]
-        public long Id { get; set; }   public long Company_Index { get; set; }
+        [PrimaryKey, AutoIncrement]
+        public long Id { get; set; }
+        public long Company_Index { get; set; }
         public long Index { get; set; }
         public long Collection_Index { get; set; }
-        public long Action_Index{ get; set; }     
+        public long Action_Index { get; set; }
         public int ProgressPercent_Real { get; set; }   // درصد پیشرفت واقعی یک فعالیت از سفارش
         public long CurrentContractor_Index { get; set; }   // پیمانکار جاری این فعالیت در این زمان
 
@@ -672,20 +709,22 @@ namespace OrdersProgress.Models
 
     public class Order_Attachment
     {
-        [PrimaryKey,AutoIncrement]
-        public long Id { get; set; }   public long Company_Index { get; set; }
+        [PrimaryKey, AutoIncrement]
+        public long Id { get; set; }
+        public long Company_Index { get; set; }
         public long Index { get; set; }
         // 102 : پیوست سفارش
         public int Type { get; set; }
         public string Order_Index { get; set; }
-        public long File_Index{ get; set; }     
-        public bool Enable { get; set; }     
+        public long File_Index { get; set; }
+        public bool Enable { get; set; }
     }
 
     public class File
     {
-        [PrimaryKey,AutoIncrement]
-        public long Id { get; set; }   public long Company_Index { get; set; }
+        [PrimaryKey, AutoIncrement]
+        public long Id { get; set; }
+        public long Company_Index { get; set; }
 
         public long Index { get; set; }
         public byte[] Content { get; set; }     // محتوای فایل 
@@ -698,8 +737,9 @@ namespace OrdersProgress.Models
 
     public class Customer
     {
-        [PrimaryKey,AutoIncrement]
-        public long Id { get; set; }   public long Company_Index { get; set; }
+        [PrimaryKey, AutoIncrement]
+        public long Id { get; set; }
+        public long Company_Index { get; set; }
 
         // کد خریدار که به صورت منحصر بفرد تولید می شود
         // UserIndex + DateTime  در شروع این کد عبارت  است از
@@ -711,7 +751,7 @@ namespace OrdersProgress.Models
         public string Name { get; set; }    // منحصربفرد
         public string Mobile { get; set; }  // منحصربفرد
         public string Phone { get; set; }  // منحصربفرد
-        public string Address { get; set; }  
+        public string Address { get; set; }
         public string Description { get; set; }  // شرحی در باب خریدار
 
         public string C_S1 { get; set; }
@@ -729,8 +769,9 @@ namespace OrdersProgress.Models
     // ارتباط خریدار با سفارش هایش
     public class Order_Customer
     {
-        [PrimaryKey,AutoIncrement]
-        public long Id { get; set; }   public long Company_Index { get; set; }
+        [PrimaryKey, AutoIncrement]
+        public long Id { get; set; }
+        public long Company_Index { get; set; }
         public long Index { get; set; }
         public string Customer_Index { get; set; }
         public string Order_Index { get; set; }
@@ -741,17 +782,18 @@ namespace OrdersProgress.Models
     public class Proforma
     {
         [PrimaryKey, AutoIncrement]
-        public long Id { get; set; }   public long Company_Index { get; set; }
+        public long Id { get; set; }
+        public long Company_Index { get; set; }
 
         // توسط این فیلد ، پیش فاکتور با ردیف هایش ارتباط برقرار می کند
         // Order_Index + "-" + DateTime
         public string Index { get; set; }
 
         // در صورتیکه برای سفارش پیش فاکتور جدیدی صادر شود باید ، پیش فاکتورهای قبلی ، غیرفعال شوند
-        public bool Enable { get; set; }    
+        public bool Enable { get; set; }
 
         public long User_Index { get; set; }  // شناسه کاربر سفارش دهنده
-        public string Order_Index { get; set; } 
+        public string Order_Index { get; set; }
         public long Order_Id { get; set; }   // شناسه سفارش که در دیتابیس مرکزی مشخص می شود
         public string Order_ProformaNo { get; set; }   // شماره پیش فاکتور که توسط واحد مالی (در دیتابیس مرکزی) مشخص می شود
         public DateTime DateTime_mi { get; set; }   // زمان ثبت به میلادی
@@ -800,18 +842,20 @@ namespace OrdersProgress.Models
         public int C_I1 { get; set; }
         public int C_I2 { get; set; }
         public bool C_B1 { get; set; }
-        public bool C_B2 { get; set; }public bool C_B3 { get; set; }
+        public bool C_B2 { get; set; }
+        public bool C_B3 { get; set; }
     }
 
     // در این جدول هر ردیف از پیش فاکتور یک رکورد است
     public class Proforma_Row
     {
         [PrimaryKey, AutoIncrement]
-        public long Id { get; set; }   public long Company_Index { get; set; }
+        public long Id { get; set; }
+        public long Company_Index { get; set; }
         public long Index { get; set; }
         public string Proforma_Index { get; set; }
-        public long User_Index { get; set; }  
-        public string Order_Index { get; set; } 
+        public long User_Index { get; set; }
+        public string Order_Index { get; set; }
         public long Order_Id { get; set; }   // شناسه سفارش که در دیتابیس مرکزی مشخص می شود
         public long Item_Index { get; set; }
         public string Item_SmallCode { get; set; }
@@ -836,7 +880,8 @@ namespace OrdersProgress.Models
         public int C_I1 { get; set; }
         public int C_I2 { get; set; }
         public bool C_B1 { get; set; }
-        public bool C_B2 { get; set; }public bool C_B3 { get; set; }
+        public bool C_B2 { get; set; }
+        public bool C_B3 { get; set; }
     }
 
     //  مشخصه
@@ -845,8 +890,9 @@ namespace OrdersProgress.Models
     // تعریف نمود و در هر سفارش به صورت مختص آن برای کالاهای آن به مشخصه ها مقدار داد
     public class Property
     {
-        [PrimaryKey,AutoIncrement]
-        public long Id { get; set; }   public long Company_Index { get; set; }
+        [PrimaryKey, AutoIncrement]
+        public long Id { get; set; }
+        public long Company_Index { get; set; }
         public bool C_B1 { get; set; }  // از این فیلد استفاده نشود. برای کارهای مختلف استفاده می گردد
 
         public long Index { get; set; }     // unique
@@ -862,17 +908,18 @@ namespace OrdersProgress.Models
         public bool ChangingValue { get; set; }     // آیا مقدار این مشخصه بعدا (توسط سفارش دهنده) قابل تغییر است؟
 
         //public int Position { get; set; }   // مکان مشخصه در کد با شروع از عدد یک
-        public string C_S1 { get; set; } 
-        public string C_S2 { get; set; } 
-        public string C_S3 { get; set; }  
-        public long C_L1 { get; set; }   
-        public long C_L2 { get; set; }   
-        public int C_I1 { get; set; }   
+        public string C_S1 { get; set; }
+        public string C_S2 { get; set; }
+        public string C_S3 { get; set; }
+        public long C_L1 { get; set; }
+        public long C_L2 { get; set; }
+        public int C_I1 { get; set; }
         public int C_I2 { get; set; }
 
         // در اول کلاس آمده است
         //public bool C_B1 { get; set; }  // از این فیلد استفاده نشود. برای کارهای مختلف استفاده می گردد
-        public bool C_B2 { get; set; }public bool C_B3 { get; set; }   
+        public bool C_B2 { get; set; }
+        public bool C_B3 { get; set; }
     }
 
     // دسته هر محصول را مشخص می کند. مانند : درب، چارچوب، یراق،کمد و غیره
@@ -882,21 +929,24 @@ namespace OrdersProgress.Models
         public int Id { get; set; }
         public long Company_Index { get; set; }
         public long Index { get; set; } // شناسه 
+        public bool C_B1 { get; set; }    // کمکی
         public string Name { get; set; }    // نام دسته - باید منحصر بفرد باشد
         public string Description { get; set; }    // شرح دسته
+        public bool Need_Supervisor_Confirmation { get; set; }    // واقعا کمکی
+        public bool Need_Manager_Confirmation { get; set; }    // واقعا کمکی
     }
 
     // کالا : رجوع به فایل اکسل کدها و موجودی انبار
     public class Item
     {
-        [PrimaryKey,AutoIncrement]
+        [PrimaryKey, AutoIncrement]
         public long Id { get; set; }
         public long Company_Index { get; set; }
         public long Category_Index { get; set; }    // شناسه دسته
         public bool C_B1 { get; set; }  // کمکی
 
         // این محصول قابل استفاده است. مثلا در صورت قابل استفاده نبودن، امکان سفارش دهی نخواهد داشت
-        public bool Enable { get; set; }    
+        public bool Enable { get; set; }
 
         // مانند شناسۀ پشت کار عمل میکند
         // هرگاه کد توسط کاربر تغییر نماید این شناسه رابطه ها را حفظ میکند
@@ -926,9 +976,10 @@ namespace OrdersProgress.Models
 
         public long Warehouse_Index { get; set; }   // شناسه انبار
         // موجودی کالا در انبار
-        public double Wh_OrderPoint{ get; set; }   // نقطه سفارش
+        public double Wh_OrderPoint { get; set; }   // نقطه سفارش
         public double Wh_Quantity_Real { get; set; }   // موجودی واقعی
-        // برای نگهداری تغییراتی که هنوز تأیید نشده است
+        // برای نگهداری تغییراتی که هنوز تأیید نشده است  = رزرو شده ها
+        public double Wh_Quantity_Booking { get; set; }
         public double Wh_Quantity_x { get; set; }
         //public string Wh_Location { get; set; }     // مکان کالا در انبار
         public string Unit { get; set; }
@@ -936,7 +987,9 @@ namespace OrdersProgress.Models
         public double Weight { get; set; }  // وزن هرواحد بر حسب کیلوگرم
         public string Name_Full { get; set; }
         public string Code_Full { get; set; }
-
+        public bool Need_QC_Confirmation { get; set; } // آیا برای تأیید این ردیف از سند نیاز به تأیید کنترل کیفی می باشد؟
+        public bool Need_Manager_Confirmation { get; set; } // آیا برای تأیید این ردیف از سند نیاز به تأیید مدیریت می باشد؟
+        public bool Bookable { get; set; }  // آیا این کالا بنا به درخواست یا سفارش قابل رزرو کردن می باشد؟
         public string C_S1 { get; set; }
         public string C_S2 { get; set; }
         public string C_S3 { get; set; }
@@ -951,11 +1004,12 @@ namespace OrdersProgress.Models
         public bool C_B3 { get; set; }
     }
 
-    // تمام فایلهای مرتیط با کالایی را می توان در این جدول مشخص نمود
+    // تمام فایلهای مرتبط با کالایی را می توان در این جدول مشخص نمود
     public class Item_File
     {
         [PrimaryKey, AutoIncrement]
-        public long Id { get; set; }   public long Company_Index { get; set; }
+        public long Id { get; set; }
+        public long Company_Index { get; set; }
         public long Index { get; set; }
         // Type=1 : تصویر کالا
         public int Type { get; set; }
@@ -968,7 +1022,8 @@ namespace OrdersProgress.Models
     public class Item_Property
     {
         [PrimaryKey, AutoIncrement]
-        public long Id { get; set; }   public long Company_Index { get; set; }
+        public long Id { get; set; }
+        public long Company_Index { get; set; }
         public long Index { get; set; }
         public long Item_Index { get; set; }
         public string Item_Code_Small { get; set; }  // کالا
@@ -984,18 +1039,20 @@ namespace OrdersProgress.Models
     public class Item_OPC
     {
         [PrimaryKey, AutoIncrement]
-        public long Id { get; set; }   public long Company_Index { get; set; }
+        public long Id { get; set; }
+        public long Company_Index { get; set; }
         public long Index { get; set; }
         public long OPC_Index { get; set; }
         public long Item_Index { get; set; }
-        public string Item_SmallCode{ get; set; }
+        public string Item_SmallCode { get; set; }
     }
 
     // ماژول ها : کالایی که ساخته شده از چند کالای دیگر است
     public class Module
     {
         [PrimaryKey, AutoIncrement]
-        public long Id { get; set; }   public long Company_Index { get; set; }
+        public long Id { get; set; }
+        public long Company_Index { get; set; }
         public long Index { get; set; }
         public bool Enable { get; set; }
         public string Module_Code_Small { get; set; }  // کد کالای اصلی یا همان ماژول
@@ -1008,9 +1065,10 @@ namespace OrdersProgress.Models
     // فعالیتها
     public class Action
     {
-        [PrimaryKey,AutoIncrement]
-        public long Id { get; set; }   public long Company_Index { get; set; }
-        
+        [PrimaryKey, AutoIncrement]
+        public long Id { get; set; }
+        public long Company_Index { get; set; }
+
         public long Index { get; set; }
         public string Name { get; set; }    // منحصربفرد
         public double Time { get; set; }    // مدت زمان انجام این فعالیت برای یک نفر نیرو
@@ -1026,15 +1084,17 @@ namespace OrdersProgress.Models
         public int C_I1 { get; set; }
         public int C_I2 { get; set; }
         public bool C_B1 { get; set; }
-        public bool C_B2 { get; set; }public bool C_B3 { get; set; }
+        public bool C_B2 { get; set; }
+        public bool C_B3 { get; set; }
     }
 
     // OPC :  ترکیبی از فعالیتها
     public class OPC
     {
-        [PrimaryKey,AutoIncrement]
-        public long Id { get; set; }   public long Company_Index { get; set; }
-        
+        [PrimaryKey, AutoIncrement]
+        public long Id { get; set; }
+        public long Company_Index { get; set; }
+
         public long Index { get; set; }    // همان کد شش رقمی که در جدول مشخصه ها برای آن در نظر گرفته شده است
         public string Name { get; set; }
         public bool Enable { get; set; }
@@ -1048,7 +1108,8 @@ namespace OrdersProgress.Models
         public int C_I1 { get; set; }
         public int C_I2 { get; set; }
         public bool C_B1 { get; set; }
-        public bool C_B2 { get; set; }public bool C_B3 { get; set; }
+        public bool C_B2 { get; set; }
+        public bool C_B3 { get; set; }
 
     }
 
@@ -1056,7 +1117,8 @@ namespace OrdersProgress.Models
     public class OPC_Acions
     {
         [PrimaryKey, AutoIncrement]
-        public long Id { get; set; }   public long Company_Index { get; set; }
+        public long Id { get; set; }
+        public long Company_Index { get; set; }
         public long Index { get; set; }
         public long OPC_Index { get; set; }
         public long Action_Index { get; set; }
@@ -1069,12 +1131,13 @@ namespace OrdersProgress.Models
         public string Action_Prerequisites { get; set; }
     }
 
-    // پیمانکاران
-    public class Contractor
+    // واحد ها و پیمانکاران
+    public class Unit
     {
-        [PrimaryKey,AutoIncrement]
-        public long Id { get; set; }   public long Company_Index { get; set; }
-        
+        [PrimaryKey, AutoIncrement]
+        public long Id { get; set; }
+        public long Company_Index { get; set; }
+
         public long Index { get; set; }
         public string Name { get; set; }
         public bool Enable { get; set; }
@@ -1088,28 +1151,29 @@ namespace OrdersProgress.Models
         public int C_I1 { get; set; }
         public int C_I2 { get; set; }
         public bool C_B1 { get; set; }
-        public bool C_B2 { get; set; }public bool C_B3 { get; set; }
+        public bool C_B2 { get; set; }
+        public bool C_B3 { get; set; }
     }
 
     // ارتباط بین فعالیتها و پیمانکار
     // هر پیمانکار چه فعالیتهایی را می تواند انجام دهد؟
-    public class Contractor_Acion
+    public class Unit_Acion
     {
         [PrimaryKey, AutoIncrement]
-        public long Id { get; set; }   public long Company_Index { get; set; }
+        public long Id { get; set; }
+        public long Company_Index { get; set; }
         public long Index { get; set; }
-        public long Contractor_Index { get; set; }
+        public long Unit_Index { get; set; }
         public long Action_Index { get; set; }
     }
 
     //  انبارها : در صورتیکه بیش از چند انبار وجود داشته باشد
-    // شناسۀ اولین انبار 101 است
     public class Warehouse
     {
-        [PrimaryKey,AutoIncrement]
+        [PrimaryKey, AutoIncrement]
         public long Id { get; set; }
         public long Company_Index { get; set; }
-        
+
         public long Index { get; set; } // شناسه انبار
         public bool Active { get; set; }    // آیا انبار فعال است
         public string Name { get; set; }    // نام انبار - باید منحصربفرد باشد
@@ -1129,25 +1193,114 @@ namespace OrdersProgress.Models
         public bool C_B3 { get; set; }
     }
 
-     // حواله های انبار
+    // درخواستهای کالا از انبار
+    public class Warehouse_Request
+    {
+        [PrimaryKey, AutoIncrement]
+        public long Id { get; set; }
+        public long Company_Index { get; set; }
+        public long Index { get; set; }
+        public long Index_in_Company { get; set; }  // شماره درخواست در شرکت
+        public long Unit_Index { get; set; }    // شناسه واحد درخواست کننده
+        public string Unit_Name { get; set; }
+        public long User_Index { get; set; }    // شناسه کاربر درخواست کننده
+        public string User_Name { get; set; }
+        public DateTime DateTime_mi { get; set; }   // زمان ثبت به میلادی
+        public string DateTime_sh { get; set; }   // زمان ثبت به شمسی
+        public long CostCenter_Index { get; set; }
+        public long Item_Index { get; set; }
+        public string Item_SmallCode { get; set; }
+        public string Item_SmallName { get; set; }
+        public double Quantity { get; set; }    // مقدار درخواستی
+        public string Description { get; set; }
+        public string Status_Description { get; set; } // آخرین شرحی که برای درخواست داده می شود. مانند علت عدم تأیید یا غیره
+
+        #region تأییدیه سرپرست و مدیر در صورت نیاز به آنها
+        public bool Need_Supervisor_Confirmation { get; set; }  // نیاز به تأیید سرپرست دارد؟
+        public long Supervisor_Confirmer_Index { get; set; }    // شناسه سرپرست تأیید کننده
+        public string Supervisor_Confirmer_Name { get; set; }    // نام سرپرست تأیید کننده
+        public bool Need_Manager_Confirmation { get; set; }     // نیاز به تأیید مدیر دارد؟
+        public long Manager_Confirmer_Index { get; set; }    // شناسه مدیر تأیید کننده
+        public string Manager_Confirmer_Name { get; set; }    // نام مدیر تأیید کننده
+        #endregion
+    }
+
+    // ردیف های موجود در حواله یا رسید انبار
+    public class Warehouse_Request_Row
+    {
+        [PrimaryKey, AutoIncrement]
+        public long Id { get; set; }
+        public long Company_Index { get; set; }
+        public long Index { get; set; }
+        public long Warehouse_Request_Index { get; set; }
+        public string Item_Index { get; set; }
+        public string Item_SmallCode { get; set; }    // کد کوچک کالا
+        public string Item_Name { get; set; }
+        public double Quantity { get; set; }   // تعداد کالا در ردیف
+        public string Item_Unit { get; set; }   // واحد شمارش کالا
+        public string Description { get; set; }
+
+        #region آیا تأیید سرپرست یا مدیر نیاز می باشد
+        public bool Need_Supervisor_Confirmation { get; set; }  // نیاز به تأیید سرپرست دارد؟
+        public bool Need_Manager_Confirmation { get; set; }     // نیاز به تأیید مدیر دارد؟
+        #endregion
+
+        //public double Quantity_Confirmed { get; set; }   // تعداد تأیید شده نهایی
+
+        public bool C_B1 { get; set; }
+        public bool C_B2 { get; set; }
+        public bool C_B3 { get; set; }
+    }
+
+    public class Warehouse_Request_History
+    {
+        [PrimaryKey, AutoIncrement]
+        public long Id { get; set; }
+        public long Company_Index { get; set; }
+        public long Index { get; set; }
+        public long Warehouse_Request_Index { get; set; }
+        public long User_Index { get; set; }    // شناسۀ شخصی که عملی را انجام داده است
+        public string User_Name { get; set; }     // نام شخصی که عملی را انجام داده است
+        public long User_Level_Index { get; set; }    // شناسۀ شخصی که عملی را انجام داده است
+
+        public DateTime DateTime_mi { get; set; }   // زمان انجام به میلادی
+        public string DateTime_sh { get; set; }     // زمان انجام به شمسی
+
+        // اگر نیاز به ذکر توضیحی باشد مانند علت عدم تأیید و ... ، این توضیح در فیلد ذخیره می شود
+        public string Description { get; set; }
+    }
+
+    // سند رسید یا حواله انبار
     public class Warehouse_Remittance
     {
-        [PrimaryKey,AutoIncrement]
-        public long Id { get; set; }   public long Company_Index { get; set; }
-        
+        [PrimaryKey, AutoIncrement]
+        public long Id { get; set; }
+        public long Company_Index { get; set; }
+
         public long Index { get; set; }     // شناسه مخصوص این حواله
         public int Warehouse_Index { get; set; }   // شناسه انبار
-        public string User_Index { get; set; }  // ثبت کننده حواله
+        public string User_Index { get; set; }  // شناسه ثبت کننده حواله
+        public string User_Name { get; set; }  // نام ثبت کننده حواله
         public DateTime DateTime_mi { get; set; }   // زمان ثبت به میلادی
         public string DateTime_sh { get; set; }   // زمان ثبت به شمسی
 
-        // 100 : حواله ورود
+        // 100 : رسید ورود
         // 200 : حواله خروج
-        public int Type { get; set; }  // نوع حواله
+        public int Type { get; set; }  // نوع سند
+
+        public long cost_center_Index { get; set; } // شناسه مرکز هزینه
+        public string cost_center_Descripiton { get; set; } // شرح مرکز هزینه
+
+
+        #region اگر سند، رسید ورود باشد
+        //public long 
+        #endregion
 
         // از دو فیلد، یکی می تواند مقدار بگیرد
         public long Contractor_Index { get; set; }  // پیمانکار مرتبط با حواله
+        public string Contractor_Name { get; set; }
         public string Customer_Index { get; set; }  // مشتری مرتبط با حواله
+        public string Customer_Name { get; set; }
 
         public string Description { get; set; }  // شرحی بر حواله در صورت نیاز
 
@@ -1163,32 +1316,80 @@ namespace OrdersProgress.Models
         public bool C_B3 { get; set; }
     }
 
-    // کالاهای موجود در حواله انبار
-    public class Warehouse_Remittance_Item
+    // تاریخچه سند - در صورت نیاز به تأیید های مختلف در این جا مراحل ثبت می شوند
+    public class Warehouse_Remittance_History
     {
-        [PrimaryKey,AutoIncrement]
+        [PrimaryKey, AutoIncrement]
+        public long Id { get; set; }
+        public long Company_Index { get; set; }
+        public long Index { get; set; }
+        public long Warehouse_Remittance_Index { get; set; }     // شناسه مخصوص سند
+        public long User_Index { get; set; }    // شناسۀ شخصی که عملی را انجام داده است
+        public string User_Name { get; set; }     // نام شخصی که عملی را انجام داده است
+        public long User_Level_Index { get; set; }    // شناسۀ شخصی که عملی را انجام داده است
+        public string Description { get; set; }
+        public DateTime DateTime_mi { get; set; }   // زمان ثبت به میلادی
+        public string DateTime_sh { get; set; }   // زمان ثبت به شمسی
+    }
+
+    // ردیف های موجود در حواله یا رسید انبار
+    public class Warehouse_Remittance_Row
+    {
+        [PrimaryKey, AutoIncrement]
         public long Id { get; set; }
         public long Company_Index { get; set; }
         public long Index { get; set; }
         public long Warehouse_Remittance_Index { get; set; }
-        public string Item_Index{ get; set; }
+        public string Item_Index { get; set; }
         public string Item_SmallCode { get; set; }    // کد کوچک کالا
-        public string Item_Name { get; set; }  
-        public double Quantity { get; set; }   // تعداد
-
+        public string Item_Name { get; set; }
+        public double Quantity { get; set; }   // تعداد کالا در ردیف
+        public string Item_Unit { get; set; }   // واحد شمارش کالا
         public string Description { get; set; }  // شرحی بر حواله در صورت نیاز
 
-        public string C_S1 { get; set; }
-        public string C_S2 { get; set; }
-        public string C_S3 { get; set; }
-        public long C_L1 { get; set; }
-        public long C_L2 { get; set; }
-        public int C_I1 { get; set; }
-        public int C_I2 { get; set; }
+        #region تأیید کنترل کیفی و مدیریت
+        public bool Need_QC_Confirmation { get; set; } // آیا برای تأیید این ردیف از سند نیاز به تأیید کنترل کیفی می باشد؟
+        public byte QC_Confirmation_Type { get; set; }  // منفی یک : عدم تأیید - یک : تأیید کامل - دو : تأیید تعدادی از کالاها
+        public double Quantity_QC_Confirmed { get; set; }   // تعداد کالاهایی که توسط کنترل کیفی تأیید شده اند
+        public DateTime QC_DateTime_mi { get; set; }    // تاریخ تأیید (یا عدم تأیید) کنترل کیفی
+        public string QC_DateTime_sh { get; set; }
+
+        public bool Need_Manager_Confirmation { get; set; } // آیا برای تأیید این ردیف از سند نیاز به تأیید مدیر می باشد؟
+        public byte Manager_Confirmation_Type { get; set; }  // منفی یک : عدم تأیید - یک : تأیید کامل - دو : تأیید تعدادی از کالاها
+        public DateTime Manager_DateTime_mi { get; set; }   // تاریخ تأیید (یا عدم تأیید) مدیریت
+        public string Manager_DateTime_sh { get; set; }
+        #endregion
+
+        public double Quantity_Confirmed { get; set; }   // تعداد تأیید شده نهایی
+
         public bool C_B1 { get; set; }
         public bool C_B2 { get; set; }
         public bool C_B3 { get; set; }
     }
 
+    // مراکز هزینه
+    public class CostCenter
+    {
+        [PrimaryKey, AutoIncrement]
+        public long Id { get; set; }
+        public long Company_Index { get; set; }
+        public long Index { get; set; }
+        public string Description { get; set; }
+    }
 
+    // درخواست خرید
+    public class PurchaseRequest
+    {
+        [PrimaryKey, AutoIncrement]
+        public long Id { get; set; }
+        public long Company_Index { get; set; }
+        public long Index { get; set; }
+        public string Description { get; set; }
+    }
+
+
+
+
+
+    //
 }

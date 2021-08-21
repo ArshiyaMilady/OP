@@ -1,6 +1,6 @@
 ﻿namespace OrdersProgress
 {
-    partial class J2202_UL_See_ULs
+    partial class J2202_UL_See_UL_Orders
     {
         /// <summary>
         /// Required designer variable.
@@ -121,7 +121,7 @@
             this.Controls.Add(this.panel1);
             this.Name = "J2202_UL_See_ULs";
             this.Text = "J2202_UL_See_ULs";
-            this.Shown += new System.EventHandler(this.J2202_UL_See_ULs_Shown);
+            this.Shown += new System.EventHandler(this.J2202_UL_See_UL_Orders_Shown);
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).EndInit();
             this.ResumeLayout(false);

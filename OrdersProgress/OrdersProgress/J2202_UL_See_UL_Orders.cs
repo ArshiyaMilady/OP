@@ -10,12 +10,12 @@ using System.Windows.Forms;
 
 namespace OrdersProgress
 {
-    public partial class J2202_UL_See_ULs : X210_ExampleForm_Normal
+    public partial class J2202_UL_See_UL_Orders : X210_ExampleForm_Normal
     {
         long main_ul_index;
         List<Models.User_Level> lstUL = new List<Models.User_Level>();
 
-        public J2202_UL_See_ULs(long _main_ul_index)
+        public J2202_UL_See_UL_Orders(long _main_ul_index)
         {
             InitializeComponent();
 
@@ -23,7 +23,7 @@ namespace OrdersProgress
             Text = "   " + Program.dbOperations.GetUser_LevelAsync(main_ul_index).Description;
         }
 
-        private void J2202_UL_See_ULs_Shown(object sender, EventArgs e)
+        private void J2202_UL_See_UL_Orders_Shown(object sender, EventArgs e)
         {
             dgvData.DataSource = GetData();
             ShowData();

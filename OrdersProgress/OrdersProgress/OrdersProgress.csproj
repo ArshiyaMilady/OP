@@ -109,6 +109,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="J1900_OtherSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="J1900_OtherSettings.Designer.cs">
+      <DependentUpon>J1900_OtherSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="J1950_Login.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -139,11 +145,11 @@
     <Compile Include="J2200_Users_Levels.Designer.cs">
       <DependentUpon>J2200_Users_Levels.cs</DependentUpon>
     </Compile>
-    <Compile Include="J2202_UL_See_ULs.cs">
+    <Compile Include="J2202_UL_See_UL_Orders.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="J2202_UL_See_ULs.Designer.cs">
-      <DependentUpon>J2202_UL_See_ULs.cs</DependentUpon>
+    <Compile Include="J2202_UL_See_UL_Orders.Designer.cs">
+      <DependentUpon>J2202_UL_See_UL_Orders.cs</DependentUpon>
     </Compile>
     <Compile Include="J2210_UL_Features.cs">
       <SubType>Form</SubType>
@@ -162,6 +168,18 @@
     </Compile>
     <Compile Include="J2240_UL_Confirm_OLs.Designer.cs">
       <DependentUpon>J2240_UL_Confirm_OLs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="J2310_UL_Request_Categories.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="J2310_UL_Request_Categories.Designer.cs">
+      <DependentUpon>J2310_UL_Request_Categories.cs</DependentUpon>
+    </Compile>
+    <Compile Include="J2320_UL_Confirm_UL_Requests.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="J2320_UL_Confirm_UL_Requests.Designer.cs">
+      <DependentUpon>J2320_UL_Confirm_UL_Requests.cs</DependentUpon>
     </Compile>
     <Compile Include="K1100_Categories.cs">
       <SubType>Form</SubType>
@@ -407,8 +425,8 @@
     <EmbeddedResource Include="J2200_Users_Levels.resx">
       <DependentUpon>J2200_Users_Levels.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="J2202_UL_See_ULs.resx">
-      <DependentUpon>J2202_UL_See_ULs.cs</DependentUpon>
+    <EmbeddedResource Include="J2202_UL_See_UL_Orders.resx">
+      <DependentUpon>J2202_UL_See_UL_Orders.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="J2204_User_UL.resx">
       <DependentUpon>J2204_User_UL.cs</DependentUpon>
@@ -421,6 +439,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="J2240_UL_Confirm_OLs.resx">
       <DependentUpon>J2240_UL_Confirm_OLs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="J2310_UL_Request_Categories.resx">
+      <DependentUpon>J2310_UL_Request_Categories.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="J2320_UL_Confirm_UL_Requests.resx">
+      <DependentUpon>J2320_UL_Confirm_UL_Requests.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="K1100_Categories.resx">
       <DependentUpon>K1100_Categories.cs</DependentUpon>

@@ -27,6 +27,8 @@ namespace OrdersProgress.Models
             _db.CreateTableAsync<UL_Feature>().Wait();
             _db.CreateTableAsync<User_Level_UL_Feature>().Wait();
             _db.CreateTableAsync<UL_See_OL>().Wait();
+            _db.CreateTableAsync<UL_Confirm_UL_Request>().Wait();
+            _db.CreateTableAsync<UL_Request_Category>().Wait();
             _db.CreateTableAsync<User_File>().Wait();
             _db.CreateTableAsync<Order>().Wait();
             _db.CreateTableAsync<OrdersCollection>().Wait();
@@ -61,12 +63,17 @@ namespace OrdersProgress.Models
             _db.CreateTableAsync<OPC>().Wait();
             _db.CreateTableAsync<Item_OPC>().Wait();
             _db.CreateTableAsync<OPC_Acions>().Wait();
-            _db.CreateTableAsync<Contractor>().Wait();
-            _db.CreateTableAsync<Contractor_Acion>().Wait();
+            _db.CreateTableAsync<Unit>().Wait();
+            _db.CreateTableAsync<Unit_Acion>().Wait();
             _db.CreateTableAsync<Warehouse>().Wait();
-            //_db.CreateTableAsync<Warehouse_Item>().Wait();
+            _db.CreateTableAsync<Warehouse_Request>().Wait();
+            _db.CreateTableAsync<Warehouse_Request_Row>().Wait();
+            _db.CreateTableAsync<Warehouse_Request_History>().Wait();
             _db.CreateTableAsync<Warehouse_Remittance>().Wait();
-            _db.CreateTableAsync<Warehouse_Remittance_Item>().Wait();
+            _db.CreateTableAsync<Warehouse_Remittance_History>().Wait();
+            _db.CreateTableAsync<Warehouse_Remittance_Row>().Wait();
+            _db.CreateTableAsync<CostCenter>().Wait();
+            _db.CreateTableAsync<PurchaseRequest>().Wait();
         }
 
 
@@ -135,7 +142,7 @@ namespace OrdersProgress.Models
         public long GetNewIndex_Company()
         {
             if (_db.Table<Company>().ToListAsync().Result.Any())
-                return _db.Table<Company>().ToListAsync().Result.Max(d => d.Id) + 1;
+                return _db.Table<Company>().ToListAsync().Result.Max(d => d.Index) + 1;
             else return 1;
         }
         #endregion Company
@@ -207,7 +214,7 @@ namespace OrdersProgress.Models
         public long GetNewIndex_User()
         {
             if (_db.Table<User>().ToListAsync().Result.Any())
-                return _db.Table<User>().ToListAsync().Result.Max(d => d.Id) + 1;
+                return _db.Table<User>().ToListAsync().Result.Max(d => d.Index) + 1;
             else return 1;
         }
 
@@ -263,7 +270,7 @@ namespace OrdersProgress.Models
         public long GetNewIndex_LoginHistory()
         {
             if (_db.Table<LoginHistory>().ToListAsync().Result.Any())
-                return _db.Table<LoginHistory>().ToListAsync().Result.Max(d => d.Id) + 1;
+                return _db.Table<LoginHistory>().ToListAsync().Result.Max(d => d.Index) + 1;
             else return 1;
         }
         #endregion LoginHistory
@@ -317,7 +324,7 @@ namespace OrdersProgress.Models
         public long GetNewIndex_User_Level()
         {
             if (_db.Table<User_Level>().ToListAsync().Result.Any())
-                return _db.Table<User_Level>().ToListAsync().Result.Max(d => d.Id) + 1;
+                return _db.Table<User_Level>().ToListAsync().Result.Max(d => d.Index) + 1;
             else return 1;
         }
         #endregion User_Level
@@ -370,10 +377,65 @@ namespace OrdersProgress.Models
         public long GetNewIndex_UL_See_UL()
         {
             if (_db.Table<UL_See_UL>().ToListAsync().Result.Any())
-                return _db.Table<UL_See_UL>().ToListAsync().Result.Max(d => d.Id) + 1;
+                return _db.Table<UL_See_UL>().ToListAsync().Result.Max(d => d.Index) + 1;
             else return 1;
         }
         #endregion UL_See_UL
+
+        // ********** UL_Confirm_UL_Request *************
+        #region UL_Confirm_UL_Request
+        public List<UL_Confirm_UL_Request> GetAllUL_Confirm_UL_RequestsAsync(long company_index, long UL_index = 0, long Supervisor_UL_index = 0)
+        {
+            List<UL_Confirm_UL_Request> lstUCUR = _db.Table<UL_Confirm_UL_Request>().Where(b => b.Company_Index == company_index).ToListAsync().Result;
+            if (UL_index > 0)
+                return lstUCUR.Where(d=>d.UL_Index == UL_index).ToList();
+            if (Supervisor_UL_index > 0)
+                return lstUCUR.Where(d => d.Supervisor_UL_Index == Supervisor_UL_index).ToList();
+
+            return lstUCUR;
+        }
+
+        public UL_Confirm_UL_Request GetUL_Confirm_UL_RequestAsync(long index)
+        {
+            return _db.Table<UL_Confirm_UL_Request>().FirstOrDefaultAsync(d => d.Index == index).Result;
+        }
+
+        public long AddUL_Confirm_UL_RequestAsync(UL_Confirm_UL_Request ul_Confirm_UL_Request)
+        {
+            ul_Confirm_UL_Request.Index = GetNewIndex_UL_Confirm_UL_Request();
+            _db.InsertAsync(ul_Confirm_UL_Request);
+            return ul_Confirm_UL_Request.Index;
+        }
+
+        public long AddUL_Confirm_UL_Request(UL_Confirm_UL_Request ul_Confirm_UL_Request)
+        {
+            ul_Confirm_UL_Request.Index = GetNewIndex_UL_Confirm_UL_Request();
+            _db.InsertAsync(ul_Confirm_UL_Request).Wait();
+            return ul_Confirm_UL_Request.Index;
+        }
+
+        public int DeleteUL_Confirm_UL_RequestAsync(UL_Confirm_UL_Request ul_Confirm_UL_Request)
+        {
+            return _db.DeleteAsync(ul_Confirm_UL_Request).Result;
+        }
+
+        public int DeleteAllUL_Confirm_UL_RequestsAsync()
+        {
+            return _db.DeleteAllAsync<UL_Confirm_UL_Request>().Result;
+        }
+
+        public int UpdateUL_Confirm_UL_RequestAsync(UL_Confirm_UL_Request ul_Confirm_UL_Request)
+        {
+            return _db.UpdateAsync(ul_Confirm_UL_Request).Result;
+        }
+
+        public long GetNewIndex_UL_Confirm_UL_Request()
+        {
+            if (_db.Table<UL_Confirm_UL_Request>().ToListAsync().Result.Any())
+                return _db.Table<UL_Confirm_UL_Request>().ToListAsync().Result.Max(d => d.Index) + 1;
+            else return 1;
+        }
+        #endregion UL_Confirm_UL_Request
 
         // ********** User_UL *************
         #region User_UL
@@ -425,7 +487,7 @@ namespace OrdersProgress.Models
         public long GetNewIndex_User_UL()
         {
             if (_db.Table<User_UL>().ToListAsync().Result.Any())
-                return _db.Table<User_UL>().ToListAsync().Result.Max(d => d.Id) + 1;
+                return _db.Table<User_UL>().ToListAsync().Result.Max(d => d.Index) + 1;
             else return 1;
         }
         #endregion User_UL
@@ -499,7 +561,7 @@ namespace OrdersProgress.Models
         public long GetNewIndex_UL_Feature()
         {
             if (_db.Table<UL_Feature>().ToListAsync().Result.Any())
-                return _db.Table<UL_Feature>().ToListAsync().Result.Max(d => d.Id) + 1;
+                return _db.Table<UL_Feature>().ToListAsync().Result.Max(d => d.Index) + 1;
             else return 1;
         }
 
@@ -627,10 +689,63 @@ namespace OrdersProgress.Models
         public long GetNewIndex_UL_See_OL()
         {
             if (_db.Table<UL_See_OL>().ToListAsync().Result.Any())
-                return _db.Table<UL_See_OL>().ToListAsync().Result.Max(d => d.Id) + 1;
+                return _db.Table<UL_See_OL>().ToListAsync().Result.Max(d => d.Index) + 1;
             else return 1;
         }
         #endregion UL_See_OL
+
+        // ********** UL_Request_Category *************
+        #region UL_Request_Category
+        public List<UL_Request_Category> GetAllUL_Request_CategoriesAsync(long company_index, long user_level_index = 0)
+        {
+            if (user_level_index == 0)
+                return _db.Table<UL_Request_Category>().Where(b => b.Company_Index == company_index).ToListAsync().Result;
+            else  
+                return _db.Table<UL_Request_Category>().Where(b => b.Company_Index == company_index)
+                    .Where(d => d.User_Level_Index == user_level_index).ToListAsync().Result;
+        }
+
+        public UL_Request_Category GetUL_Request_CategoryAsync(long index)
+        {
+            return _db.Table<UL_Request_Category>().FirstOrDefaultAsync(d => d.Index == index).Result;
+        }
+
+        public long AddUL_Request_CategoryAsync(UL_Request_Category ul_request_category)
+        {
+            ul_request_category.Index = GetNewIndex_UL_Request_Category();
+            _db.InsertAsync(ul_request_category);
+            return ul_request_category.Index;
+        }
+
+        public long AddUL_Request_Category(UL_Request_Category ul_request_category)
+        {
+            ul_request_category.Index = GetNewIndex_UL_Request_Category();
+            _db.InsertAsync(ul_request_category).Wait();
+            return ul_request_category.Index;
+        }
+
+        public int DeleteUL_Request_CategoryAsync(UL_Request_Category ul_request_category)
+        {
+            return _db.DeleteAsync(ul_request_category).Result;
+        }
+
+        public int DeleteAllUL_Request_CategoriesAsync()
+        {
+            return _db.DeleteAllAsync<UL_Request_Category>().Result;
+        }
+
+        public int UpdateUL_Request_CategoryAsync(UL_Request_Category ul_request_category)
+        {
+            return _db.UpdateAsync(ul_request_category).Result;
+        }
+
+        public long GetNewIndex_UL_Request_Category()
+        {
+            if (_db.Table<UL_Request_Category>().ToListAsync().Result.Any())
+                return _db.Table<UL_Request_Category>().ToListAsync().Result.Max(d => d.Index) + 1;
+            else return 1;
+        }
+        #endregion UL_Request_Category
 
 
         // ********** User_File *************
@@ -677,7 +792,7 @@ namespace OrdersProgress.Models
         public long GetNewIndex_User_File()
         {
             if (_db.Table<User_File>().ToListAsync().Result.Any())
-                return _db.Table<User_File>().ToListAsync().Result.Max(d => d.Id) + 1;
+                return _db.Table<User_File>().ToListAsync().Result.Max(d => d.Index) + 1;
             else return 1;
         }
         #endregion User_File
@@ -704,7 +819,7 @@ namespace OrdersProgress.Models
                 return res.Result.Where(d => d.User_Index == UserIndex).ToList();
         }
 
-        public Order GetOrderAsync(int id)
+        public Order GetOrderAsync(long id)
         {
             return _db.Table<Order>().FirstAsync(d => d.Id == id).Result;
         }
@@ -717,12 +832,14 @@ namespace OrdersProgress.Models
 
         public long AddOrderAsync(Order order)
         {
+            order.Index_in_Company = GetNewOrderIndex_in_Company(order.Company_Index);
             _db.InsertAsync(order);
             return order.Id;
         }
 
         public long AddOrder(Order order)
         {
+            order.Index_in_Company = GetNewOrderIndex_in_Company(order.Company_Index);
             _db.InsertAsync(order).Wait();
             return order.Id;
         }
@@ -760,6 +877,14 @@ namespace OrdersProgress.Models
         public void UpdateOrder(Order order)
         {
             _db.UpdateAsync(order).Wait();
+        }
+
+        public long GetNewOrderIndex_in_Company(long company_index)
+        {
+            if (_db.Table<Order>().ToListAsync().Result.Any())
+                return _db.Table<Order>().Where(b=>b.Company_Index == company_index)
+                    .ToListAsync().Result.Max(d => d.Index_in_Company) + 1;
+            else return 1;
         }
         #endregion Order
 
@@ -822,7 +947,7 @@ namespace OrdersProgress.Models
         public long GetNewIndex_Order_Item()
         {
             if (_db.Table<Order_Item>().ToListAsync().Result.Any())
-                return _db.Table<Order_Item>().ToListAsync().Result.Max(d => d.Id) + 1;
+                return _db.Table<Order_Item>().ToListAsync().Result.Max(d => d.Index) + 1;
             else return 1;
         }
 
@@ -920,7 +1045,7 @@ namespace OrdersProgress.Models
         public long GetNewIndex_Order_StockItem()
         {
             if (_db.Table<Order_StockItem>().ToListAsync().Result.Any())
-                return _db.Table<Order_StockItem>().ToListAsync().Result.Max(d => d.Id) + 1;
+                return _db.Table<Order_StockItem>().ToListAsync().Result.Max(d => d.Index) + 1;
             else return 1;
         }
 
@@ -1001,7 +1126,7 @@ namespace OrdersProgress.Models
         public long GetNewIndex_Order_Item_Property()
         {
             if (_db.Table<Order_Item_Property>().ToListAsync().Result.Any())
-                return _db.Table<Order_Item_Property>().ToListAsync().Result.Max(d => d.Id) + 1;
+                return _db.Table<Order_Item_Property>().ToListAsync().Result.Max(d => d.Index) + 1;
             else return 1;
         }
         #endregion Order_Item_Property
@@ -1074,7 +1199,7 @@ namespace OrdersProgress.Models
         public long GetNewIndex_Order_Level()
         {
             if (_db.Table<Order_Level>().ToListAsync().Result.Any())
-                return _db.Table<Order_Level>().ToListAsync().Result.Max(d => d.Id) + 1;
+                return _db.Table<Order_Level>().ToListAsync().Result.Max(d => d.Index) + 1;
             else return 1;
         }
         #endregion Order_Level
@@ -1131,7 +1256,7 @@ namespace OrdersProgress.Models
         public long GetNewIndex_Order_Level_on_Returning()
         {
             if (_db.Table<Order_Level_on_Returning>().ToListAsync().Result.Any())
-                return _db.Table<Order_Level_on_Returning>().ToListAsync().Result.Max(d => d.Id) + 1;
+                return _db.Table<Order_Level_on_Returning>().ToListAsync().Result.Max(d => d.Index) + 1;
             else return 1;
         }
         #endregion Order_Level_on_Returning
@@ -1193,7 +1318,7 @@ namespace OrdersProgress.Models
         public long GetNewIndex_Order_OL()
         {
             if (_db.Table<Order_OL>().ToListAsync().Result.Any())
-                return _db.Table<Order_OL>().ToListAsync().Result.Max(d => d.Id) + 1;
+                return _db.Table<Order_OL>().ToListAsync().Result.Max(d => d.Index) + 1;
             else return 1;
         }
         #endregion Order_OL
@@ -1259,7 +1384,7 @@ namespace OrdersProgress.Models
         public long GetNewIndex_OL_Prerequisite()
         {
             if (_db.Table<OL_Prerequisite>().ToListAsync().Result.Any())
-                return _db.Table<OL_Prerequisite>().ToListAsync().Result.Max(d => d.Id) + 1;
+                return _db.Table<OL_Prerequisite>().ToListAsync().Result.Max(d => d.Index) + 1;
             else return 1;
         }
         #endregion OL_Prerequisit
@@ -1319,7 +1444,7 @@ namespace OrdersProgress.Models
         public long GetNewIndex_OL_UL()
         {
             if (_db.Table<OL_UL>().ToListAsync().Result.Any())
-                return _db.Table<OL_UL>().ToListAsync().Result.Max(d => d.Id) + 1;
+                return _db.Table<OL_UL>().ToListAsync().Result.Max(d => d.Index) + 1;
             else return 1;
         }
 
@@ -1372,7 +1497,7 @@ namespace OrdersProgress.Models
         public long GetNewIndex_Order_History()
         {
             if (_db.Table<Order_History>().ToListAsync().Result.Any())
-                return _db.Table<Order_History>().ToListAsync().Result.Max(d => d.Id) + 1;
+                return _db.Table<Order_History>().ToListAsync().Result.Max(d => d.Index) + 1;
             else return 1;
         }
         #endregion Order_History
@@ -1413,7 +1538,7 @@ namespace OrdersProgress.Models
         public long GetNewIndex_Collection()
         {
             if (_db.Table<Collection>().ToListAsync().Result.Any())
-                return _db.Table<Collection>().ToListAsync().Result.Max(d => d.Id) + 1;
+                return _db.Table<Collection>().ToListAsync().Result.Max(d => d.Index) + 1;
             else return 1;
         }
         #endregion Collection
@@ -1455,7 +1580,7 @@ namespace OrdersProgress.Models
         public long GetNewIndex_OrdersCollection()
         {
             if (_db.Table<OrdersCollection>().ToListAsync().Result.Any())
-                return _db.Table<OrdersCollection>().ToListAsync().Result.Max(d => d.Id) + 1;
+                return _db.Table<OrdersCollection>().ToListAsync().Result.Max(d => d.Index) + 1;
             else return 1;
         }
         #endregion OrdersCollection
@@ -1497,7 +1622,7 @@ namespace OrdersProgress.Models
         public long GetNewIndex_Collection_Item()
         {
             if (_db.Table<Collection_Item>().ToListAsync().Result.Any())
-                return _db.Table<Collection_Item>().ToListAsync().Result.Max(d => d.Id) + 1;
+                return _db.Table<Collection_Item>().ToListAsync().Result.Max(d => d.Index) + 1;
             else return 1;
         }
         #endregion Collection_Item
@@ -1539,7 +1664,7 @@ namespace OrdersProgress.Models
         public long GetNewIndex_Collection_Action()
         {
             if (_db.Table<Collection_Action>().ToListAsync().Result.Any())
-                return _db.Table<Collection_Action>().ToListAsync().Result.Max(d => d.Id) + 1;
+                return _db.Table<Collection_Action>().ToListAsync().Result.Max(d => d.Index) + 1;
             else return 1;
         }
         #endregion Collection_Action
@@ -1581,7 +1706,7 @@ namespace OrdersProgress.Models
         public long GetNewIndex_Collection_Action_History()
         {
             if (_db.Table<Collection_Action_History>().ToListAsync().Result.Any())
-                return _db.Table<Collection_Action_History>().ToListAsync().Result.Max(d => d.Id) + 1;
+                return _db.Table<Collection_Action_History>().ToListAsync().Result.Max(d => d.Index) + 1;
             else return 1;
         }
         #endregion Collection_Action_History
@@ -1638,7 +1763,7 @@ namespace OrdersProgress.Models
         public long GetNewIndex_Order_Attachment()
         {
             if (_db.Table<Order_Attachment>().ToListAsync().Result.Any())
-                return _db.Table<Order_Attachment>().ToListAsync().Result.Max(d => d.Id) + 1;
+                return _db.Table<Order_Attachment>().ToListAsync().Result.Max(d => d.Index) + 1;
             else return 1;
         }
         #endregion Order_Attachment
@@ -1686,7 +1811,7 @@ namespace OrdersProgress.Models
         public long GetNewIndex_File()
         {
             if (_db.Table<File>().ToListAsync().Result.Any())
-                return _db.Table<File>().ToListAsync().Result.Max(d => d.Id) + 1;
+                return _db.Table<File>().ToListAsync().Result.Max(d => d.Index) + 1;
             else return 1;
         }
         #endregion File
@@ -1780,7 +1905,7 @@ namespace OrdersProgress.Models
         public long GetNewIndex_Order_Customer()
         {
             if (_db.Table<Order_Customer>().ToListAsync().Result.Any())
-                return _db.Table<Order_Customer>().ToListAsync().Result.Max(d => d.Id) + 1;
+                return _db.Table<Order_Customer>().ToListAsync().Result.Max(d => d.Index) + 1;
             else return 1;
         }
         #endregion Order_Customer
@@ -1869,7 +1994,7 @@ namespace OrdersProgress.Models
         public long GetNewIndex_Proforma_Row()
         {
             if (_db.Table<Proforma_Row>().ToListAsync().Result.Any())
-                return _db.Table<Proforma_Row>().ToListAsync().Result.Max(d => d.Id) + 1;
+                return _db.Table<Proforma_Row>().ToListAsync().Result.Max(d => d.Index) + 1;
             else return 1;
         }
         #endregion Proforma_Row
@@ -1927,7 +2052,7 @@ namespace OrdersProgress.Models
         public long GetNewIndex_OrderPriority()
         {
             if (_db.Table<OrderPriority>().ToListAsync().Result.Any())
-                return _db.Table<OrderPriority>().ToListAsync().Result.Max(d => d.Id) + 1;
+                return _db.Table<OrderPriority>().ToListAsync().Result.Max(d => d.Index) + 1;
             else return 1;
         }
         #endregion OrderPriority
@@ -2068,10 +2193,10 @@ namespace OrdersProgress.Models
             return _db.UpdateAsync(category).Result;
         }
 
-        public int GetNewIndex_Category()
+        public long GetNewIndex_Category()
         {
             if (_db.Table<Category>().ToListAsync().Result.Any())
-                return _db.Table<Category>().ToListAsync().Result.Max(d => d.Id) + 1;
+                return _db.Table<Category>().ToListAsync().Result.Max(d => d.Index) + 1;
             else return 1;
         }
         #endregion Category
@@ -2288,7 +2413,7 @@ namespace OrdersProgress.Models
         public long GetNewIndex_Item_File()
         {
             if (_db.Table<Item_File>().ToListAsync().Result.Any())
-                return _db.Table<Item_File>().ToListAsync().Result.Max(d => d.Id) + 1;
+                return _db.Table<Item_File>().ToListAsync().Result.Max(d => d.Index) + 1;
             else return 1;
         }
         #endregion Item_File
@@ -2369,7 +2494,7 @@ namespace OrdersProgress.Models
         public long GetNewIndex_Item_Property()
         {
             if (_db.Table<Item_Property>().ToListAsync().Result.Any())
-                return _db.Table<Item_Property>().ToListAsync().Result.Max(d => d.Id) + 1;
+                return _db.Table<Item_Property>().ToListAsync().Result.Max(d => d.Index) + 1;
             else return 1;
         }
         #endregion Item_Property
@@ -2419,7 +2544,7 @@ namespace OrdersProgress.Models
         public long GetNewIndex_Item_OPC()
         {
             if (_db.Table<Item_OPC>().ToListAsync().Result.Any())
-                return _db.Table<Item_OPC>().ToListAsync().Result.Max(d => d.Id) + 1;
+                return _db.Table<Item_OPC>().ToListAsync().Result.Max(d => d.Index) + 1;
             else return 1;
         }
         #endregion Item_OPC
@@ -2506,7 +2631,7 @@ namespace OrdersProgress.Models
         public long GetNewIndex_Module()
         {
             if (_db.Table<Module>().ToListAsync().Result.Any())
-                return _db.Table<Module>().ToListAsync().Result.Max(d => d.Id) + 1;
+                return _db.Table<Module>().ToListAsync().Result.Max(d => d.Index) + 1;
             else return 1;
         }
         #endregion Module
@@ -2605,7 +2730,7 @@ namespace OrdersProgress.Models
         public long GetNewIndex_OPC()
         {
             if (_db.Table<OPC>().ToListAsync().Result.Any())
-                return _db.Table<OPC>().ToListAsync().Result.Max(d => d.Id) + 1;
+                return _db.Table<OPC>().ToListAsync().Result.Max(d => d.Index) + 1;
             else return 1;
         }
         #endregion OPC
@@ -2656,111 +2781,112 @@ namespace OrdersProgress.Models
         public long GetNewIndex_OPC_Acions()
         {
             if (_db.Table<OPC_Acions>().ToListAsync().Result.Any())
-                return _db.Table<OPC_Acions>().ToListAsync().Result.Max(d => d.Id) + 1;
+                return _db.Table<OPC_Acions>().ToListAsync().Result.Max(d => d.Index) + 1;
             else return 1;
         }
         #endregion OPC_Acion
 
 
-        // ********** Contractor *************
-        #region Contractor
-        public List<Contractor> GetAllContractorsAsync(long company_index)
+        // ********** Unit *************
+        #region Unit
+        public List<Unit> GetAllUnitsAsync(long company_index)
         {
             //if (string.IsNullOrEmpty(MainItem_Code_Small))
-            return _db.Table<Contractor>().Where(b => b.Company_Index == company_index).ToListAsync().Result;
-            //else return _db.Table<Contractor>().Where(d => d.Item_Code_Small.Equals(MainItem_Code_Small)).ToListAsync().Result;
+            return _db.Table<Unit>().Where(b => b.Company_Index == company_index).ToListAsync().Result;
+            //else return _db.Table<Unit>().Where(d => d.Item_Code_Small.Equals(MainItem_Code_Small)).ToListAsync().Result;
 
         }
 
-        public Contractor GetContractorAsync(long index)
+        public Unit GetUnitAsync(long index)
         {
-            return _db.Table<Contractor>().FirstAsync(d => d.Index == index).Result;
+            return _db.Table<Unit>().FirstAsync(d => d.Index == index).Result;
         }
 
-        //public Contractor GetContractorAsync(string SmallCode)
+        //public Unit GetUnitAsync(string SmallCode)
         //{
-        //    return _db.Table<Contractor>().FirstOrDefaultAsync(d => d.Code_Small.ToLower().Equals(SmallCode.ToLower())).Result;
+        //    return _db.Table<Unit>().FirstOrDefaultAsync(d => d.Code_Small.ToLower().Equals(SmallCode.ToLower())).Result;
         //}
 
-        public long AddContractorAsync(Contractor contractor)
+        public long AddUnitAsync(Unit unit)
         {
-            _db.InsertAsync(contractor);
-            return contractor.Id;
+            _db.InsertAsync(unit);
+            return unit.Id;
         }
 
-        public int DeleteContractorAsync(Contractor contractor)
+        public int DeleteUnitAsync(Unit unit)
         {
-            return _db.DeleteAsync(contractor).Result;
+            return _db.DeleteAsync(unit).Result;
         }
 
-        public int DeleteAllContractorsAsync()
+        public int DeleteAllUnitsAsync()
         {
-            return _db.DeleteAllAsync<Contractor>().Result;
+            return _db.DeleteAllAsync<Unit>().Result;
         }
 
-        public int UpdateContractorAsync(Contractor contractor)
+        public int UpdateUnitAsync(Unit unit)
         {
-            return _db.UpdateAsync(contractor).Result;
+            return _db.UpdateAsync(unit).Result;
         }
 
-        public long GetNewIndex_Contractor()
+        public long GetNewIndex_Unit()
         {
-            if (_db.Table<Contractor>().ToListAsync().Result.Any())
-                return _db.Table<Contractor>().ToListAsync().Result.Max(d => d.Id) + 1;
+            if (_db.Table<Unit>().ToListAsync().Result.Any())
+                return _db.Table<Unit>().ToListAsync().Result.Max(d => d.Index) + 1;
             else return 1;
         }
-        #endregion Contractor
+        #endregion Unit
 
 
-        // ********** Contractor_Acion *************
-        #region Contractor_Acion
-        public List<Contractor_Acion> GetAllContractor_AcionsAsync(long company_index, long Contractor_Index = 0)
+        // ********** Unit_Acion *************
+        #region Unit_Acion
+        public List<Unit_Acion> GetAllUnit_AcionsAsync(long company_index, long Unit_Index = 0)
         {
-            if (Contractor_Index == 0)
-                return _db.Table<Contractor_Acion>().Where(b => b.Company_Index == company_index).ToListAsync().Result;
-            else return _db.Table<Contractor_Acion>().Where(b => b.Company_Index == company_index).Where(d => d.Contractor_Index == Contractor_Index).ToListAsync().Result;
+            if (Unit_Index == 0)
+                return _db.Table<Unit_Acion>().Where(b => b.Company_Index == company_index).ToListAsync().Result;
+            else return _db.Table<Unit_Acion>().Where(b => b.Company_Index == company_index)
+                    .Where(d => d.Unit_Index == Unit_Index).ToListAsync().Result;
 
         }
 
-        public Contractor_Acion GetContractor_AcionAsync(long id)
+        public Unit_Acion GetUnit_AcionAsync(long id)
         {
-            return _db.Table<Contractor_Acion>().FirstAsync(d => d.Id == id).Result;
+            return _db.Table<Unit_Acion>().FirstAsync(d => d.Id == id).Result;
         }
 
-        //public Contractor_Acion GetContractor_AcionAsync(string SmallCode)
+        //public Unit_Acion GetUnit_AcionAsync(string SmallCode)
         //{
-        //    return _db.Table<Contractor_Acion>().FirstOrDefaultAsync(d => d.Code_Small.ToLower().Equals(SmallCode.ToLower())).Result;
+        //    return _db.Table<Unit_Acion>().FirstOrDefaultAsync(d => d.Code_Small.ToLower().Equals(SmallCode.ToLower())).Result;
         //}
 
-        public long AddContractor_AcionAsync(Contractor_Acion contractor_Acion)
+        public long AddUnit_AcionAsync(Unit_Acion unit_Acion)
         {
-            contractor_Acion.Index = GetNewIndex_Contractor_Acion();
-            _db.InsertAsync(contractor_Acion);
-            return contractor_Acion.Id;
+            unit_Acion.Index = GetNewIndex_Unit_Acion();
+            _db.InsertAsync(unit_Acion);
+            return unit_Acion.Id;
         }
 
-        public int DeleteContractor_AcionAsync(Contractor_Acion contractor_Acion)
+        public int DeleteUnit_AcionAsync(Unit_Acion unit_Acion)
         {
-            return _db.DeleteAsync(contractor_Acion).Result;
+            return _db.DeleteAsync(unit_Acion).Result;
         }
 
-        public int DeleteAllContractor_AcionsAsync()
+        public int DeleteAllUnit_AcionsAsync()
         {
-            return _db.DeleteAllAsync<Contractor_Acion>().Result;
+            return _db.DeleteAllAsync<Unit_Acion>().Result;
         }
 
-        public int UpdateContractor_AcionAsync(Contractor_Acion contractor_Acion)
+        public int UpdateUnit_AcionAsync(Unit_Acion unit_Acion)
         {
-            return _db.UpdateAsync(contractor_Acion).Result;
+            return _db.UpdateAsync(unit_Acion).Result;
         }
 
-        public long GetNewIndex_Contractor_Acion()
+        public long GetNewIndex_Unit_Acion()
         {
-            if (_db.Table<Contractor_Acion>().ToListAsync().Result.Any())
-                return _db.Table<Contractor_Acion>().ToListAsync().Result.Max(d => d.Id) + 1;
+            if (_db.Table<Unit_Acion>().ToListAsync().Result.Any())
+                return _db.Table<Unit_Acion>().ToListAsync().Result.Max(d => d.Index) + 1;
             else return 1;
         }
-        #endregion Contractor_Acion
+        #endregion Unit_Acion
 
 
         // ********** Warehouse *************
@@ -2817,109 +2943,167 @@ namespace OrdersProgress.Models
         public long GetNewIndex_Warehouse()
         {
             if (_db.Table<Warehouse>().ToListAsync().Result.Any())
-                return _db.Table<Warehouse>().ToListAsync().Result.Max(d => d.Id) + 1;
+                return _db.Table<Warehouse>().ToListAsync().Result.Max(d => d.Index) + 1;
             else return 1;
         }
         #endregion Warehouse
 
+        // ********** Warehouse_Request *************
+        #region Warehouse_Request
+        public List<Warehouse_Request> GetAllWarehouse_RequestsAsync(long company_index)
+        {
+            //if (Warehouse_Index == 0)
+                return _db.Table<Warehouse_Request>().Where(b => b.Company_Index == company_index).ToListAsync().Result;
+            //else return _db.Table<Warehouse_Request>().Where(b => b.Company_Index == company_index).Where(d => d.Warehouse_Index == Warehouse_Index).ToListAsync().Result;
+        }
 
-        // ********** Warehouse_Inventory *************
-        //#region Warehouse_Inventory
-        //public List<Warehouse_Item> GetAllWarehouse_InventorysAsync(long company_index, int Warehouse_Index = 0)
+        public Warehouse_Request GetWarehouse_RequestAsync(long index)
+        {
+            return _db.Table<Warehouse_Request>().FirstAsync(d => d.Index == index).Result;
+        }
+
+        public long AddWarehouse_RequestAsync(Warehouse_Request warehouse_Request)
+        {
+            warehouse_Request.Index = GetNewIndex_Warehouse_Request();
+            _db.InsertAsync(warehouse_Request);
+            return warehouse_Request.Id;
+        }
+
+        public int DeleteWarehouse_RequestAsync(Warehouse_Request warehouse_Request)
+        {
+            return _db.DeleteAsync(warehouse_Request).Result;
+        }
+
+        public int DeleteAllWarehouse_RequestsAsync()
+        {
+            return _db.DeleteAllAsync<Warehouse_Request>().Result;
+        }
+
+        public int UpdateWarehouse_RequestAsync(Warehouse_Request warehouse_Request)
+        {
+            return _db.UpdateAsync(warehouse_Request).Result;
+        }
+
+        public long GetNewIndex_Warehouse_Request()
+        {
+            if (_db.Table<Warehouse_Request>().ToListAsync().Result.Any())
+                return _db.Table<Warehouse_Request>().ToListAsync().Result.Max(d => d.Index) + 1;
+            else return 1;
+        }
+
+        #endregion Warehouse_Request
+
+        // ********** Warehouse_Request_History *************
+        #region Warehouse_Request_History
+        public List<Warehouse_Request_History> GetAllWarehouse_Request_HistorysAsync(long company_index,long Warehouse_Request_Index=0)
+        {
+            if(Warehouse_Request_Index <= 0)
+                return _db.Table<Warehouse_Request_History>().Where(b => b.Company_Index == company_index).ToListAsync().Result;
+            else return _db.Table<Warehouse_Request_History>().Where(b => b.Company_Index == company_index)
+                    .Where(b => b.Warehouse_Request_Index == Warehouse_Request_Index).ToListAsync().Result;
+        }
+
+        public Warehouse_Request_History GetWarehouse_Request_HistoryAsync(long index)
+        {
+            return _db.Table<Warehouse_Request_History>().FirstAsync(d => d.Index == index).Result;
+        }
+
+        //public Warehouse_Request_History GetWarehouse_Request_HistoryAsync(string SmallCode)
         //{
-        //    if (Warehouse_Index == 0)
-        //        return _db.Table<Warehouse_Item>().Where(b => b.Company_Index == company_index).ToListAsync().Result;
-        //    else return _db.Table<Warehouse_Item>().Where(b => b.Company_Index == company_index).Where(d => d.Warehouse_Index == Warehouse_Index).ToListAsync().Result;
-
+        //    return _db.Table<Warehouse_Request_History>().FirstOrDefaultAsync(d => d.Code_Small.ToLower().Equals(SmallCode.ToLower())).Result;
         //}
 
-        //public List<Warehouse_Item> GetAllWarehouse_Inventories(long company_index, int Warehouse_Index = 0)
-        //{
-        //    var res = _db.Table<Warehouse_Item>().Where(b => b.Company_Index == company_index).ToListAsync();
-        //    res.Wait();
+        public long AddWarehouse_Request_HistoryAsync(Warehouse_Request_History warehouse_Request_History)
+        {
+            warehouse_Request_History.Index = GetNewIndex_Warehouse_Request_History();
+            _db.InsertAsync(warehouse_Request_History);
+            return warehouse_Request_History.Id;
+        }
 
-        //    if (Warehouse_Index == 0) return res.Result;
-        //    else return res.Result.Where(d => d.Warehouse_Index == Warehouse_Index).ToList();
+        public int DeleteWarehouse_Request_HistoryAsync(Warehouse_Request_History warehouse_Request_History)
+        {
+            return _db.DeleteAsync(warehouse_Request_History).Result;
+        }
 
-        //}
+        public int DeleteAllWarehouse_Request_HistorysAsync()
+        {
+            return _db.DeleteAllAsync<Warehouse_Request_History>().Result;
+        }
 
-        //public List<Warehouse_Item> GetAllWarehouse_InventorysAsync(long company_index, string Warehouse_Name)
-        //{
-        //    if (Program.dbOperations.GetAllWarehousesAsync(Stack.Company_Index, false).Any(d => d.Name.ToLower().Equals(Warehouse_Name.ToLower())))
-        //    {
-        //        int warehouse_index = Program.dbOperations.GetAllWarehousesAsync(company_index, false).First(d => d.Name.ToLower().Equals(Warehouse_Name.ToLower())).Index;
-        //        return _db.Table<Warehouse_Item>().Where(b => b.Company_Index == company_index)
-        //            .Where(d => d.Warehouse_Index == warehouse_index).ToListAsync().Result;
-        //    }
-        //    else return null;
-        //}
+        public int UpdateWarehouse_Request_HistoryAsync(Warehouse_Request_History warehouse_Request_History)
+        {
+            return _db.UpdateAsync(warehouse_Request_History).Result;
+        }
 
-        //public Warehouse_Item GetWarehouse_InventoryAsync(long index)
-        //{
-        //    return _db.Table<Warehouse_Item>().FirstAsync(d => d.Index == index).Result;
-        //}
+        public long GetNewIndex_Warehouse_Request_History()
+        {
+            if (_db.Table<Warehouse_Request_History>().ToListAsync().Result.Any())
+                return _db.Table<Warehouse_Request_History>().ToListAsync().Result.Max(d => d.Index) + 1;
+            else return 1;
+        }
 
-        //public Warehouse_Item GetWarehouse_InventoryAsync(string item_code)
-        //{
-        //    return _db.Table<Warehouse_Item>().FirstOrDefaultAsync(d => d.Item_Code.ToLower().Equals(item_code.ToLower())).Result;
-        //}
+        #endregion Warehouse_Request_History
 
-        //public long AddWarehouse_InventoryAsync(Warehouse_Item warehouse_Inventory)
-        //{
-        //    warehouse_Inventory.Index = GetNewIndex_Warehouse_Inventory();
-        //    _db.InsertAsync(warehouse_Inventory);
-        //    return warehouse_Inventory.Id;
-        //}
+        // ********** Warehouse_Request_Row *************
+        #region Warehouse_Request_Row
+        public List<Warehouse_Request_Row> GetAllWarehouse_Request_RowsAsync(long company_index, long Warehouse_Request_Index = 0)
+        {
+            if (Warehouse_Request_Index == 0)
+                return _db.Table<Warehouse_Request_Row>().Where(b => b.Company_Index == company_index).ToListAsync().Result;
+            else return _db.Table<Warehouse_Request_Row>().Where(b => b.Company_Index == company_index)
+                    .Where(d => d.Warehouse_Request_Index == Warehouse_Request_Index).ToListAsync().Result;
 
-        //public void AddWarehouse_Inventory(Warehouse_Item warehouse_Inventory)
-        //{
-        //    warehouse_Inventory.Index = GetNewIndex_Warehouse_Inventory();
-        //    _db.InsertAsync(warehouse_Inventory).Wait();
-        //}
+        }
 
-        //public int DeleteWarehouse_InventoryAsync(Warehouse_Item warehouse_Inventory)
-        //{
-        //    return _db.DeleteAsync(warehouse_Inventory).Result;
-        //}
+        public Warehouse_Request_Row GetWarehouse_Request_RowAsync(long index)
+        {
+            return _db.Table<Warehouse_Request_Row>().FirstOrDefaultAsync(d => d.Index == index).Result;
+        }
 
-        //public int DeleteAllWarehouse_InventorysAsync()
-        //{
-        //    return _db.DeleteAllAsync<Warehouse_Item>().Result;
-        //}
+        public Warehouse_Request_Row GetWarehouse_Request_RowAsync(string SmallCode, long company_index)
+        {
+            return _db.Table<Warehouse_Request_Row>()
+                .Where(b => b.Company_Index == company_index).FirstOrDefaultAsync
+                (d => d.Item_SmallCode.ToLower().Equals(SmallCode.ToLower())).Result;
+        }
 
-        //public int UpdateWarehouse_InventoryAsync(Warehouse_Item warehouse_Inventory)
-        //{
-        //    return _db.UpdateAsync(warehouse_Inventory).Result;
-        //}
+        public long AddWarehouse_Request_RowAsync(Warehouse_Request_Row warehouse_Request_Row)
+        {
+            warehouse_Request_Row.Index = GetNewIndex_Warehouse_Request_Row();
+            _db.InsertAsync(warehouse_Request_Row);
+            return warehouse_Request_Row.Id;
+        }
 
-        //public void UpdateWarehouse_Inventory(Warehouse_Item warehouse_Inventory)
-        //{
-        //    _db.UpdateAsync(warehouse_Inventory).Wait(); ;
-        //}
+        public int DeleteWarehouse_Request_RowAsync(Warehouse_Request_Row warehouse_Request_Row)
+        {
+            return _db.DeleteAsync(warehouse_Request_Row).Result;
+        }
 
-        //public void UpdateSomeWarehouse_Inventory(List<Warehouse_Item> lstWI)
-        //{
-        //    _db.UpdateAllAsync(lstWI).Wait();
-        //}
+        public int DeleteAllWarehouse_Request_RowsAsync()
+        {
+            return _db.DeleteAllAsync<Warehouse_Request_Row>().Result;
+        }
 
-        //public long GetNewIndex_Warehouse_Inventory()
-        //{
-        //    if (_db.Table<Warehouse_Item>().ToListAsync().Result.Any())
-        //        return _db.Table<Warehouse_Item>().ToListAsync().Result.Max(d => d.Id) + 1;
-        //    else return 1;
-        //}
-        //#endregion Warehouse_Inventory
+        public int UpdateWarehouse_Request_RowAsync(Warehouse_Request_Row warehouse_Request_Row)
+        {
+            return _db.UpdateAsync(warehouse_Request_Row).Result;
+        }
 
+        public long GetNewIndex_Warehouse_Request_Row()
+        {
+            if (_db.Table<Warehouse_Request_Row>().ToListAsync().Result.Any())
+                return _db.Table<Warehouse_Request_Row>().ToListAsync().Result.Max(d => d.Index) + 1;
+            else return 1;
+        }
+        #endregion Warehouse_Request_Row
 
         // ********** Warehouse_Remittance *************
-
         #region Warehouse_Remittance
         public List<Warehouse_Remittance> GetAllWarehouse_RemittancesAsync(long company_index, int Warehouse_Index = 0)
         {
             if (Warehouse_Index == 0)
                 return _db.Table<Warehouse_Remittance>().Where(b => b.Company_Index == company_index).ToListAsync().Result;
             else return _db.Table<Warehouse_Remittance>().Where(b => b.Company_Index == company_index).Where(d => d.Warehouse_Index == Warehouse_Index).ToListAsync().Result;
-
         }
 
         public Warehouse_Remittance GetWarehouse_RemittanceAsync(long id)
@@ -2927,14 +3111,9 @@ namespace OrdersProgress.Models
             return _db.Table<Warehouse_Remittance>().FirstAsync(d => d.Id == id).Result;
         }
 
-        //public Warehouse_Remittance GetWarehouse_RemittanceAsync(string SmallCode)
-        //{
-        //    return _db.Table<Warehouse_Remittance>().FirstOrDefaultAsync(d => d.Code_Small.ToLower().Equals(SmallCode.ToLower())).Result;
-        //}
-
         public long AddWarehouse_RemittanceAsync(Warehouse_Remittance warehouse_Remittance)
         {
-            //warehouse_Remittance.Index = GetNewIndex_Warehouse_Remittance();
+            warehouse_Remittance.Index = GetNewIndex_Warehouse_Remittance();
             _db.InsertAsync(warehouse_Remittance);
             return warehouse_Remittance.Id;
         }
@@ -2957,65 +3136,197 @@ namespace OrdersProgress.Models
         public long GetNewIndex_Warehouse_Remittance()
         {
             if (_db.Table<Warehouse_Remittance>().ToListAsync().Result.Any())
-                return _db.Table<Warehouse_Remittance>().ToListAsync().Result.Max(d => d.Id) + 1;
+                return _db.Table<Warehouse_Remittance>().ToListAsync().Result.Max(d => d.Index) + 1;
             else return 1;
         }
 
         #endregion Warehouse_Remittance
 
+        // ********** Warehouse_Remittance_History *************
+        #region Warehouse_Remittance_History
+        public List<Warehouse_Remittance_History> GetAllWarehouse_Remittance_HistorysAsync(long company_index)
+        {
+            return _db.Table<Warehouse_Remittance_History>().Where(b => b.Company_Index == company_index).ToListAsync().Result;
+        }
 
-        // ********** Warehouse_Remittance_Item *************
-        #region Warehouse_Remittance_Item
-        public List<Warehouse_Remittance_Item> GetAllWarehouse_Remittance_ItemsAsync(long company_index, long Warehouse_Remittance_Index = 0)
+        public Warehouse_Remittance_History GetWarehouse_Remittance_HistoryAsync(long id)
+        {
+            return _db.Table<Warehouse_Remittance_History>().FirstAsync(d => d.Id == id).Result;
+        }
+
+        //public Warehouse_Remittance_History GetWarehouse_Remittance_HistoryAsync(string SmallCode)
+        //{
+        //    return _db.Table<Warehouse_Remittance_History>().FirstOrDefaultAsync(d => d.Code_Small.ToLower().Equals(SmallCode.ToLower())).Result;
+        //}
+
+        public long AddWarehouse_Remittance_HistoryAsync(Warehouse_Remittance_History warehouse_Remittance_History)
+        {
+            warehouse_Remittance_History.Index = GetNewIndex_Warehouse_Remittance_History();
+            _db.InsertAsync(warehouse_Remittance_History);
+            return warehouse_Remittance_History.Id;
+        }
+
+        public int DeleteWarehouse_Remittance_HistoryAsync(Warehouse_Remittance_History warehouse_Remittance_History)
+        {
+            return _db.DeleteAsync(warehouse_Remittance_History).Result;
+        }
+
+        public int DeleteAllWarehouse_Remittance_HistorysAsync()
+        {
+            return _db.DeleteAllAsync<Warehouse_Remittance_History>().Result;
+        }
+
+        public int UpdateWarehouse_Remittance_HistoryAsync(Warehouse_Remittance_History warehouse_Remittance_History)
+        {
+            return _db.UpdateAsync(warehouse_Remittance_History).Result;
+        }
+
+        public long GetNewIndex_Warehouse_Remittance_History()
+        {
+            if (_db.Table<Warehouse_Remittance_History>().ToListAsync().Result.Any())
+                return _db.Table<Warehouse_Remittance_History>().ToListAsync().Result.Max(d => d.Index) + 1;
+            else return 1;
+        }
+
+        #endregion Warehouse_Remittance_History
+
+
+        // ********** Warehouse_Remittance_Row *************
+        #region Warehouse_Remittance_Row
+        public List<Warehouse_Remittance_Row> GetAllWarehouse_Remittance_RowsAsync(long company_index, long Warehouse_Remittance_Index = 0)
         {
             if (Warehouse_Remittance_Index == 0)
-                return _db.Table<Warehouse_Remittance_Item>().Where(b => b.Company_Index == company_index).ToListAsync().Result;
-            else return _db.Table<Warehouse_Remittance_Item>().Where(b => b.Company_Index == company_index)
+                return _db.Table<Warehouse_Remittance_Row>().Where(b => b.Company_Index == company_index).ToListAsync().Result;
+            else return _db.Table<Warehouse_Remittance_Row>().Where(b => b.Company_Index == company_index)
                     .Where(d => d.Warehouse_Remittance_Index == Warehouse_Remittance_Index).ToListAsync().Result;
 
         }
 
-        public Warehouse_Remittance_Item GetWarehouse_Remittance_ItemAsync(long index)
+        public Warehouse_Remittance_Row GetWarehouse_Remittance_RowAsync(long index)
         {
-            return _db.Table<Warehouse_Remittance_Item>().FirstOrDefaultAsync(d => d.Index == index).Result;
+            return _db.Table<Warehouse_Remittance_Row>().FirstOrDefaultAsync(d => d.Index == index).Result;
         }
 
-        public Warehouse_Remittance_Item GetWarehouse_Remittance_ItemAsync( string SmallCode, long company_index)
+        public Warehouse_Remittance_Row GetWarehouse_Remittance_RowAsync( string SmallCode, long company_index)
         {
-            return _db.Table<Warehouse_Remittance_Item>()
+            return _db.Table<Warehouse_Remittance_Row>()
                 .Where(b=>b.Company_Index == company_index).FirstOrDefaultAsync
                 (d => d.Item_SmallCode.ToLower().Equals(SmallCode.ToLower())).Result;
         }
 
-        public long AddWarehouse_Remittance_ItemAsync(Warehouse_Remittance_Item warehouse_Remittance_Item)
+        public long AddWarehouse_Remittance_RowAsync(Warehouse_Remittance_Row warehouse_Remittance_Row)
         {
-            warehouse_Remittance_Item.Index = GetNewIndex_Warehouse_Remittance_Item();
-            _db.InsertAsync(warehouse_Remittance_Item);
-            return warehouse_Remittance_Item.Id;
+            warehouse_Remittance_Row.Index = GetNewIndex_Warehouse_Remittance_Row();
+            _db.InsertAsync(warehouse_Remittance_Row);
+            return warehouse_Remittance_Row.Id;
         }
 
-        public int DeleteWarehouse_Remittance_ItemAsync(Warehouse_Remittance_Item warehouse_Remittance_Item)
+        public int DeleteWarehouse_Remittance_RowAsync(Warehouse_Remittance_Row warehouse_Remittance_Row)
         {
-            return _db.DeleteAsync(warehouse_Remittance_Item).Result;
+            return _db.DeleteAsync(warehouse_Remittance_Row).Result;
         }
 
-        public int DeleteAllWarehouse_Remittance_ItemsAsync()
+        public int DeleteAllWarehouse_Remittance_RowsAsync()
         {
-            return _db.DeleteAllAsync<Warehouse_Remittance_Item>().Result;
+            return _db.DeleteAllAsync<Warehouse_Remittance_Row>().Result;
         }
 
-        public int UpdateWarehouse_Remittance_ItemAsync(Warehouse_Remittance_Item warehouse_Remittance_Item)
+        public int UpdateWarehouse_Remittance_RowAsync(Warehouse_Remittance_Row warehouse_Remittance_Row)
         {
-            return _db.UpdateAsync(warehouse_Remittance_Item).Result;
+            return _db.UpdateAsync(warehouse_Remittance_Row).Result;
         }
 
-        public long GetNewIndex_Warehouse_Remittance_Item()
+        public long GetNewIndex_Warehouse_Remittance_Row()
         {
-            if (_db.Table<Warehouse_Remittance_Item>().ToListAsync().Result.Any())
-                return _db.Table<Warehouse_Remittance_Item>().ToListAsync().Result.Max(d => d.Id) + 1;
+            if (_db.Table<Warehouse_Remittance_Row>().ToListAsync().Result.Any())
+                return _db.Table<Warehouse_Remittance_Row>().ToListAsync().Result.Max(d => d.Index) + 1;
             else return 1;
         }
-        #endregion Warehouse_Remittance_Item
+        #endregion Warehouse_Remittance_Row
+
+        // ********** CostCenter *************
+        #region CostCenter
+        public List<CostCenter> GetAllCostCentersAsync(long company_index)
+        {
+            return _db.Table<CostCenter>().Where(b => b.Company_Index == company_index).ToListAsync().Result;
+        }
+
+        public CostCenter GetCostCenterAsync(long index)
+        {
+            return _db.Table<CostCenter>().FirstOrDefaultAsync(d => d.Index == index).Result;
+        }
+
+        public long AddCostCenterAsync(CostCenter costCenter)
+        {
+            costCenter.Index = GetNewIndex_CostCenter();
+            _db.InsertAsync(costCenter);
+            return costCenter.Id;
+        }
+
+        public int DeleteCostCenterAsync(CostCenter costCenter)
+        {
+            return _db.DeleteAsync(costCenter).Result;
+        }
+
+        public int DeleteAllCostCentersAsync()
+        {
+            return _db.DeleteAllAsync<CostCenter>().Result;
+        }
+
+        public int UpdateCostCenterAsync(CostCenter costCenter)
+        {
+            return _db.UpdateAsync(costCenter).Result;
+        }
+
+        public long GetNewIndex_CostCenter()
+        {
+            if (_db.Table<CostCenter>().ToListAsync().Result.Any())
+                return _db.Table<CostCenter>().ToListAsync().Result.Max(d => d.Index) + 1;
+            else return 1;
+        }
+        #endregion CostCenter
+
+        // ********** PurchaseRequest *************
+        #region PurchaseRequest
+        public List<PurchaseRequest> GetAllPurchaseRequestsAsync(long company_index)
+        {
+            return _db.Table<PurchaseRequest>().Where(b => b.Company_Index == company_index).ToListAsync().Result;
+        }
+
+        public PurchaseRequest GetPurchaseRequestAsync(long index)
+        {
+            return _db.Table<PurchaseRequest>().FirstOrDefaultAsync(d => d.Index == index).Result;
+        }
+
+        public long AddPurchaseRequestAsync(PurchaseRequest purchaseRequest)
+        {
+            purchaseRequest.Index = GetNewIndex_PurchaseRequest();
+            _db.InsertAsync(purchaseRequest);
+            return purchaseRequest.Id;
+        }
+
+        public int DeletePurchaseRequestAsync(PurchaseRequest purchaseRequest)
+        {
+            return _db.DeleteAsync(purchaseRequest).Result;
+        }
+
+        public int DeleteAllPurchaseRequestsAsync()
+        {
+            return _db.DeleteAllAsync<PurchaseRequest>().Result;
+        }
+
+        public int UpdatePurchaseRequestAsync(PurchaseRequest purchaseRequest)
+        {
+            return _db.UpdateAsync(purchaseRequest).Result;
+        }
+
+        public long GetNewIndex_PurchaseRequest()
+        {
+            if (_db.Table<PurchaseRequest>().ToListAsync().Result.Any())
+                return _db.Table<PurchaseRequest>().ToListAsync().Result.Max(d => d.Index) + 1;
+            else return 1;
+        }
+        #endregion PurchaseRequest
 
 
 

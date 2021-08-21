@@ -57,9 +57,11 @@
             this.tsmiUL_See_ULs = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiUL_See_OL = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiSetOL_UL = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiUL_Request_Categories = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.tsmiUL_Confirm_UL_Request = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -338,10 +340,12 @@
             this.tsmiUL_See_ULs,
             this.tsmiUL_See_OL,
             this.tsmiSetOL_UL,
+            this.tsmiUL_Request_Categories,
+            this.tsmiUL_Confirm_UL_Request,
             this.tsmiDelete});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.contextMenuStrip1.Size = new System.Drawing.Size(222, 136);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(289, 180);
             // 
             // tsmiUL_Features
             // 
@@ -349,7 +353,7 @@
             this.tsmiUL_Features_Edit,
             this.tsmiDeleteAllFeatures});
             this.tsmiUL_Features.Name = "tsmiUL_Features";
-            this.tsmiUL_Features.Size = new System.Drawing.Size(221, 22);
+            this.tsmiUL_Features.Size = new System.Drawing.Size(288, 22);
             this.tsmiUL_Features.Text = "امکانات";
             // 
             // tsmiUL_Features_Edit
@@ -369,28 +373,35 @@
             // tsmiUL_See_ULs
             // 
             this.tsmiUL_See_ULs.Name = "tsmiUL_See_ULs";
-            this.tsmiUL_See_ULs.Size = new System.Drawing.Size(221, 22);
+            this.tsmiUL_See_ULs.Size = new System.Drawing.Size(288, 22);
             this.tsmiUL_See_ULs.Text = "مشاهده سطوح کاربری دیگر";
             this.tsmiUL_See_ULs.Click += new System.EventHandler(this.tsmiUL_See_ULs_Click);
             // 
             // tsmiUL_See_OL
             // 
             this.tsmiUL_See_OL.Name = "tsmiUL_See_OL";
-            this.tsmiUL_See_OL.Size = new System.Drawing.Size(221, 22);
+            this.tsmiUL_See_OL.Size = new System.Drawing.Size(288, 22);
             this.tsmiUL_See_OL.Text = "مشاهده مراحل سفارش";
             this.tsmiUL_See_OL.Click += new System.EventHandler(this.TsmiUL_See_OL_Click);
             // 
             // tsmiSetOL_UL
             // 
             this.tsmiSetOL_UL.Name = "tsmiSetOL_UL";
-            this.tsmiSetOL_UL.Size = new System.Drawing.Size(221, 22);
+            this.tsmiSetOL_UL.Size = new System.Drawing.Size(288, 22);
             this.tsmiSetOL_UL.Text = "تعیین مراحل سفارش قابل تأیید";
             this.tsmiSetOL_UL.Click += new System.EventHandler(this.TsmiSetOL_UL_Click);
+            // 
+            // tsmiUL_Request_Categories
+            // 
+            this.tsmiUL_Request_Categories.Name = "tsmiUL_Request_Categories";
+            this.tsmiUL_Request_Categories.Size = new System.Drawing.Size(288, 22);
+            this.tsmiUL_Request_Categories.Text = "درخواست کالاها - تعیین دسته کالاها";
+            this.tsmiUL_Request_Categories.Click += new System.EventHandler(this.TsmiUL_Request_Categories_Click);
             // 
             // tsmiDelete
             // 
             this.tsmiDelete.Name = "tsmiDelete";
-            this.tsmiDelete.Size = new System.Drawing.Size(221, 22);
+            this.tsmiDelete.Size = new System.Drawing.Size(288, 22);
             this.tsmiDelete.Text = "حذف";
             this.tsmiDelete.Visible = false;
             this.tsmiDelete.Click += new System.EventHandler(this.TsmiDelete_Click);
@@ -412,6 +423,13 @@
             // 
             this.timer1.Interval = 400;
             this.timer1.Tick += new System.EventHandler(this.Timer1_Tick);
+            // 
+            // tsmiUL_Confirm_UL_Request
+            // 
+            this.tsmiUL_Confirm_UL_Request.Name = "tsmiUL_Confirm_UL_Request";
+            this.tsmiUL_Confirm_UL_Request.Size = new System.Drawing.Size(288, 22);
+            this.tsmiUL_Confirm_UL_Request.Text = "سطح کاربری تأییدکننده درخواست کالا از انبار";
+            this.tsmiUL_Confirm_UL_Request.Click += new System.EventHandler(this.TsmiUL_Confirm_UL_Request_Click);
             // 
             // J2200_Users_Levels
             // 
@@ -468,5 +486,7 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiUL_See_ULs;
         private System.Windows.Forms.ToolStripMenuItem tsmiUL_See_OL;
         private System.Windows.Forms.ToolStripMenuItem tsmiSetOL_UL;
+        private System.Windows.Forms.ToolStripMenuItem tsmiUL_Request_Categories;
+        private System.Windows.Forms.ToolStripMenuItem tsmiUL_Confirm_UL_Request;
     }
 }

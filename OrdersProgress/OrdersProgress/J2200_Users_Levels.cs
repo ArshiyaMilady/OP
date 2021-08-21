@@ -344,7 +344,7 @@ namespace OrdersProgress
         private void tsmiUL_See_ULs_Click(object sender, EventArgs e)
         {
             long user_level_index = Convert.ToInt64(dgvData.CurrentRow.Cells["Index"].Value);
-            new J2202_UL_See_ULs(user_level_index).ShowDialog();
+            new J2202_UL_See_UL_Orders(user_level_index).ShowDialog();
         }
 
         private void TsmiUL_See_OL_Click(object sender, EventArgs e)
@@ -357,6 +357,18 @@ namespace OrdersProgress
         {
             long user_level_index = Convert.ToInt64(dgvData.CurrentRow.Cells["Index"].Value);
             new J2240_UL_Confirm_OLs(user_level_index).ShowDialog();
+        }
+
+        private void TsmiUL_Request_Categories_Click(object sender, EventArgs e)
+        {
+            long user_level_index = Convert.ToInt64(dgvData.CurrentRow.Cells["Index"].Value);
+            new J2310_UL_Request_Categories(user_level_index).ShowDialog();
+        }
+
+        private void TsmiUL_Confirm_UL_Request_Click(object sender, EventArgs e)
+        {
+            long user_level_index = Convert.ToInt64(dgvData.CurrentRow.Cells["Index"].Value);
+            new J2320_UL_Confirm_UL_Requests(user_level_index).ShowDialog();
         }
 
         private void BtnShowAll_Click(object sender, EventArgs e)
