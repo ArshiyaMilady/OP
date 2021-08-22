@@ -33,8 +33,8 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.radMyRequests = new System.Windows.Forms.RadioButton();
-            this.radAllOrders = new System.Windows.Forms.RadioButton();
-            this.radOrders_Need_Confirmation = new System.Windows.Forms.RadioButton();
+            this.radConfirmedRequests = new System.Windows.Forms.RadioButton();
+            this.radRequests_Need_Confirmation = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.cmbST_OrderId = new System.Windows.Forms.ComboBox();
             this.btnShowAll = new System.Windows.Forms.Button();
@@ -97,8 +97,8 @@
             // 
             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.Controls.Add(this.radMyRequests);
-            this.panel2.Controls.Add(this.radAllOrders);
-            this.panel2.Controls.Add(this.radOrders_Need_Confirmation);
+            this.panel2.Controls.Add(this.radConfirmedRequests);
+            this.panel2.Controls.Add(this.radRequests_Need_Confirmation);
             this.panel2.Location = new System.Drawing.Point(557, 107);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(283, 94);
@@ -116,29 +116,27 @@
             this.radMyRequests.Text = "درخواستهای من";
             this.radMyRequests.UseVisualStyleBackColor = true;
             // 
-            // radAllOrders
+            // radConfirmedRequests
             // 
-            this.radAllOrders.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.radAllOrders.AutoSize = true;
-            this.radAllOrders.Location = new System.Drawing.Point(162, 67);
-            this.radAllOrders.Name = "radAllOrders";
-            this.radAllOrders.Size = new System.Drawing.Size(116, 23);
-            this.radAllOrders.TabIndex = 0;
-            this.radAllOrders.Text = "تمام درخواست ها";
-            this.radAllOrders.UseVisualStyleBackColor = true;
+            this.radConfirmedRequests.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.radConfirmedRequests.AutoSize = true;
+            this.radConfirmedRequests.Location = new System.Drawing.Point(139, 67);
+            this.radConfirmedRequests.Name = "radConfirmedRequests";
+            this.radConfirmedRequests.Size = new System.Drawing.Size(139, 23);
+            this.radConfirmedRequests.TabIndex = 0;
+            this.radConfirmedRequests.Text = "درخواستهای تأیید شده";
+            this.radConfirmedRequests.UseVisualStyleBackColor = true;
             // 
-            // radOrders_Need_Confirmation
+            // radRequests_Need_Confirmation
             // 
-            this.radOrders_Need_Confirmation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.radOrders_Need_Confirmation.AutoSize = true;
-            this.radOrders_Need_Confirmation.Checked = true;
-            this.radOrders_Need_Confirmation.Location = new System.Drawing.Point(107, 9);
-            this.radOrders_Need_Confirmation.Name = "radOrders_Need_Confirmation";
-            this.radOrders_Need_Confirmation.Size = new System.Drawing.Size(169, 23);
-            this.radOrders_Need_Confirmation.TabIndex = 0;
-            this.radOrders_Need_Confirmation.TabStop = true;
-            this.radOrders_Need_Confirmation.Text = "درخواستهای در انتظار تأیید";
-            this.radOrders_Need_Confirmation.UseVisualStyleBackColor = true;
+            this.radRequests_Need_Confirmation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.radRequests_Need_Confirmation.AutoSize = true;
+            this.radRequests_Need_Confirmation.Location = new System.Drawing.Point(107, 9);
+            this.radRequests_Need_Confirmation.Name = "radRequests_Need_Confirmation";
+            this.radRequests_Need_Confirmation.Size = new System.Drawing.Size(169, 23);
+            this.radRequests_Need_Confirmation.TabIndex = 0;
+            this.radRequests_Need_Confirmation.Text = "درخواستهای در انتظار تأیید";
+            this.radRequests_Need_Confirmation.UseVisualStyleBackColor = true;
             // 
             // groupBox1
             // 
@@ -388,52 +386,52 @@
             this.tsmiChangeOrder});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 158);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(193, 158);
             // 
             // tsmiOrderHistory
             // 
             this.tsmiOrderHistory.Name = "tsmiOrderHistory";
-            this.tsmiOrderHistory.Size = new System.Drawing.Size(180, 22);
+            this.tsmiOrderHistory.Size = new System.Drawing.Size(192, 22);
             this.tsmiOrderHistory.Text = "تاریخچه سفارش";
             // 
             // tsmiOrderDetails
             // 
             this.tsmiOrderDetails.Name = "tsmiOrderDetails";
-            this.tsmiOrderDetails.Size = new System.Drawing.Size(180, 22);
+            this.tsmiOrderDetails.Size = new System.Drawing.Size(192, 22);
             this.tsmiOrderDetails.Text = "مشاهده جزییات سفارش";
             // 
             // tsmiWarehouseChecklist
             // 
             this.tsmiWarehouseChecklist.Name = "tsmiWarehouseChecklist";
-            this.tsmiWarehouseChecklist.Size = new System.Drawing.Size(180, 22);
+            this.tsmiWarehouseChecklist.Size = new System.Drawing.Size(192, 22);
             this.tsmiWarehouseChecklist.Text = "مشاهده چک لیست انبار";
             this.tsmiWarehouseChecklist.Visible = false;
             // 
             // tsmiChangeOrderLevel
             // 
             this.tsmiChangeOrderLevel.Name = "tsmiChangeOrderLevel";
-            this.tsmiChangeOrderLevel.Size = new System.Drawing.Size(180, 22);
+            this.tsmiChangeOrderLevel.Size = new System.Drawing.Size(192, 22);
             this.tsmiChangeOrderLevel.Text = "تغییر وضعیت سفارش";
             this.tsmiChangeOrderLevel.Visible = false;
             // 
             // tsmiDelete
             // 
             this.tsmiDelete.Name = "tsmiDelete";
-            this.tsmiDelete.Size = new System.Drawing.Size(180, 22);
+            this.tsmiDelete.Size = new System.Drawing.Size(192, 22);
             this.tsmiDelete.Text = "حذف";
             this.tsmiDelete.Visible = false;
             // 
             // tsmiCancel
             // 
             this.tsmiCancel.Name = "tsmiCancel";
-            this.tsmiCancel.Size = new System.Drawing.Size(180, 22);
+            this.tsmiCancel.Size = new System.Drawing.Size(192, 22);
             this.tsmiCancel.Text = "لغو سفارش";
             this.tsmiCancel.Visible = false;
             // 
             // tsmiChangeOrder
             // 
             this.tsmiChangeOrder.Name = "tsmiChangeOrder";
-            this.tsmiChangeOrder.Size = new System.Drawing.Size(180, 22);
+            this.tsmiChangeOrder.Size = new System.Drawing.Size(192, 22);
             this.tsmiChangeOrder.Text = "تغییر سفارش";
             this.tsmiChangeOrder.Visible = false;
             // 
@@ -494,8 +492,8 @@
 
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.RadioButton radAllOrders;
-        private System.Windows.Forms.RadioButton radOrders_Need_Confirmation;
+        private System.Windows.Forms.RadioButton radConfirmedRequests;
+        private System.Windows.Forms.RadioButton radRequests_Need_Confirmation;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button btnShowAll;
         private System.Windows.Forms.Button btnSearch;

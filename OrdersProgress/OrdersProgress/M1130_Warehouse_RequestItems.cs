@@ -12,7 +12,9 @@ namespace OrdersProgress
 {
     public partial class M1130_Warehouse_RequestItems : X210_ExampleForm_Normal
     {
-        List<Models.Warehouse_Request> lstOrders = new List<Models.Warehouse_Request>();
+        List<Models.Warehouse_Request> lstRequests_need_confirmation = new List<Models.Warehouse_Request>();
+        List<Models.Warehouse_Request> lstRequests_mine = new List<Models.Warehouse_Request>();
+        List<Models.Warehouse_Request> lstRequests_confirmed = new List<Models.Warehouse_Request>();
 
         public M1130_Warehouse_RequestItems()
         {
@@ -47,8 +49,43 @@ namespace OrdersProgress
 
         private void BackgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            if (panel2.Visible)
+                radRequests_Need_Confirmation.Checked = true;
+            else radMyRequests.Checked = true;
+
+            if (radRequests_Need_Confirmation.Checked)
+            {
+
+            }
+
             progressBar1.Visible = false;
             panel1.Enabled = true;
+        }
+
+        private void GetData()
+        {
+            if(!lstRequests.Any())
+            {
+                if (panel2.Visible)
+                {
+                    // شناسه سطوح کاربرانی که درخواستهای آنها نیاز به تأیید سطح کاربر جاری دارد
+                    List<long> lstUsers_Need_Confirmation = Program.dbOperations.GetAllUL_Confirm_UL_RequestsAsync
+                        (Stack.Company_Index, 0, Stack.UserLevel_Index).Select(d => d.UL_Index).ToList();
+
+                    lstRequests.AddRange(Program.dbOperations.GetAllWarehouse_RequestsAsync(Stack.Company_Index)
+                        .Where(d => d.Need_Supervisor_Confirmation)//.Where(j => j.Supervisor_Confirmer_Index <= 0)
+                        .Where(n=>lstUsers_Need_Confirmation.Contains(n.UserLevel_Index)).ToList());
+
+                    // درخواستهای سطوح کاربری دیگر (که سرپرست هستند) و نیاز به تأیید سطح کاربر جاری دارند
+                    if(Program.dbOperations.GetAllUL_Confirm_UL_RequestsAsync(Stack.Company_Index,Stack.UserLevel_Index).Any())
+                    {
+
+                    }
+                }
+            }
+
+
+
         }
 
         private void ShowData(int ActionType = 1)

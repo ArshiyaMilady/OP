@@ -2962,7 +2962,7 @@ namespace OrdersProgress.Models
             return _db.Table<Warehouse_Request>().FirstAsync(d => d.Index == index).Result;
         }
 
-        public long AddWarehouse_RequestAsync(Warehouse_Request warehouse_Request)
+        public long AddWarehouse_RequestAsync(Warehouse_Request warehouse_Request, long company_index)
         {
             warehouse_Request.Index = GetNewIndex_Warehouse_Request();
             warehouse_Request.Index_in_Company = GetNewIndex_Warehouse_Request(company_index);

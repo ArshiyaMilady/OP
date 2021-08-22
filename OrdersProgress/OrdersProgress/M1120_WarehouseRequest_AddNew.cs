@@ -78,7 +78,7 @@ namespace OrdersProgress
                 DateTime_sh = Stack_Methods.Miladi_to_Shamsi_YYYYMMDD(DateTime.Now),
             };
 
-            long wr_index = Program.dbOperations.AddWarehouse_RequestAsync(wr);
+            long wr_index = Program.dbOperations.AddWarehouse_RequestAsync(wr,Stack.Company_Index);
 
             for (int i = 0; i < dgvRequestItems.Rows.Count; i++)
             {
