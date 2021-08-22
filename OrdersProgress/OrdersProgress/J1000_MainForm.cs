@@ -587,7 +587,7 @@ namespace OrdersProgress
 
         private void TsmiWarehouse_RequestItems_Click(object sender, EventArgs e)
         {
-
+            new M1130_Warehouse_RequestItems().ShowDialog();
         }
     }
 }

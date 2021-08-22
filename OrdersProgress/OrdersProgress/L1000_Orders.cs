@@ -24,10 +24,10 @@ namespace OrdersProgress
             InitializeComponent();
             CustumerIndex = _CustumerIndex;
 
-            //if (Stack.UserLevel <= Stack.UserLevel_Admin) ShowWhichOrders = 10;  // نمایش تمام سفارشها
-            //else if (Stack.UserLevel <= Stack.UserLevel_Supervisor2) ShowWhichOrders = 20;  // حذف شده ها نمایش داده نشوند  
-            //else if (Stack.UserLevel <= Stack.UserLevel_Supervisor3) ShowWhichOrders = 30;  // کنسل شده ها نمایش داده نشوند  
-            //else if (Stack.UserLevel <= Stack.UserLevel_SaleUnit) ShowWhichOrders = 40;  // فقط ارسال شده ها به شرکت نمایش داده شوند 
+            //if (Stack.UserLevel_Index <= Stack.UserLevel_Admin) ShowWhichOrders = 10;  // نمایش تمام سفارشها
+            //else if (Stack.UserLevel_Index <= Stack.UserLevel_Supervisor2) ShowWhichOrders = 20;  // حذف شده ها نمایش داده نشوند  
+            //else if (Stack.UserLevel_Index <= Stack.UserLevel_Supervisor3) ShowWhichOrders = 30;  // کنسل شده ها نمایش داده نشوند  
+            //else if (Stack.UserLevel_Index <= Stack.UserLevel_SaleUnit) ShowWhichOrders = 40;  // فقط ارسال شده ها به شرکت نمایش داده شوند 
             //if(Stack.UserIndex <=0) Stack
         }
 
@@ -422,7 +422,7 @@ namespace OrdersProgress
                 lstOrders.Remove(lstOrders.First(d => d.Index == order.Index));
                 lstOrders.Add(order);
                 //dgvData.DataSource = GetData();
-                dgvData.DataSource = GetData();// 0, Stack.UserLevel <= Stack.UserLevel_Supervisor3);
+                dgvData.DataSource = GetData();// 0, Stack.UserLevel_Index <= Stack.UserLevel_Supervisor3);
 
                 new ThisProject().Create_OrderHistory(order);//, "حذف توسط " + Program.dbOperations.GetUserAsync(Stack.UserIndex).Name);
             }
@@ -454,7 +454,7 @@ namespace OrdersProgress
                 lstOrders.Remove(lstOrders.First(d => d.Index == order.Index));
                 lstOrders.Add(order);
                 //dgvData.DataSource = GetData();
-                dgvData.DataSource = GetData();// 0, Stack.UserLevel <= Stack.UserLevel_Supervisor3);
+                dgvData.DataSource = GetData();// 0, Stack.UserLevel_Index <= Stack.UserLevel_Supervisor3);
                 dgvData.CurrentCell = dgvData["Title", irow];
                 new ThisProject().Create_OrderHistory(order);//, "حذف توسط " + Program.dbOperations.GetUserAsync(Stack.UserIndex).Name);
             }

@@ -946,37 +946,37 @@ namespace OrdersProgress
                     //    break;
                     case "Top_Code":
                         col.HeaderText = "کد ماژول";
-                        col.ReadOnly = true; //  Stack.UserLevel > Stack.UserLevel_Supervisor1;
+                        col.ReadOnly = true; //  Stack.UserLevel_Index > Stack.UserLevel_Supervisor1;
                         col.Width = 60;
                         break;
                     case "Top_Name":
                         col.HeaderText = "نام ماژول";
-                        col.ReadOnly = true; //  Stack.UserLevel > Stack.UserLevel_Supervisor1;
+                        col.ReadOnly = true; //  Stack.UserLevel_Index > Stack.UserLevel_Supervisor1;
                         col.Width = 120;
                         break;
                     case "Item_SmallCode":
                         col.HeaderText = "ریز کد";// "کد کالا";
-                        col.ReadOnly = true; //  Stack.UserLevel > Stack.UserLevel_Supervisor1;
+                        col.ReadOnly = true; //  Stack.UserLevel_Index > Stack.UserLevel_Supervisor1;
                         col.Width = 100;
                         break;
                     case "Item_Name_Samll":
                         col.HeaderText = "نام قطعه";
-                        col.ReadOnly = true; // Stack.UserLevel > Stack.UserLevel_Supervisor3;
+                        col.ReadOnly = true; // Stack.UserLevel_Index > Stack.UserLevel_Supervisor3;
                         col.Width = 200;
                         break;
                     case "Quantity":
                         col.HeaderText = "تعداد قطعه";
-                        col.ReadOnly = true; // Stack.UserLevel > Stack.UserLevel_Supervisor1;
+                        col.ReadOnly = true; // Stack.UserLevel_Index > Stack.UserLevel_Supervisor1;
                         col.Width = 100;
                         break;
                     case "Quantity_CanTake":
                         col.HeaderText = "تعداد قطعات قابل ارسال";
-                        //col.ReadOnly = true;// Stack.UserLevel > Stack.UserLevel_Supervisor3;
+                        //col.ReadOnly = true;// Stack.UserLevel_Index > Stack.UserLevel_Supervisor3;
                         col.Width = 120;
                         break;
                     case "C_S1":
                         col.HeaderText = "تعداد قطعات ارسالی";
-                        col.ReadOnly = true; // Stack.UserLevel > Stack.UserLevel_Supervisor1;
+                        col.ReadOnly = true; // Stack.UserLevel_Index > Stack.UserLevel_Supervisor1;
                         col.Width = 80;
                         break;
 

@@ -112,6 +112,7 @@ namespace OrdersProgress.Models
         public bool C_B1 { get; set; }  // فیلد کمکی
         public long Index { get; set; }
         public string Description { get; set; }
+        public string Unit_Name { get; set; }   // نام واحد
         public bool Enabled { get; set; }
 
         // 1 : real admin
@@ -1204,19 +1205,13 @@ namespace OrdersProgress.Models
         public long Index { get; set; }
         public string Order_Index { get; set; } // اگر درخواست مرتبط با سفارشی باشد
         public long Index_in_Company { get; set; }  // شماره درخواست در شرکت
-        public long Unit_Index { get; set; }    // شناسه واحد درخواست کننده
-        public string Unit_Name { get; set; }
+        public long UserLevel_Index { get; set; }   // شناسه سطح کاربری کاربر درخواست کننده
+        public string Unit_Name { get; set; }   // توسط سطح کاربری کاربر، واحد آن مشخص می شود
         public long User_Index { get; set; }    // شناسه کاربر درخواست کننده
-        public long User_LevelIndex { get; set; }   // شناسه سطح کاربری کاربر درخواست کننده
         public string User_Name { get; set; }
         public DateTime DateTime_mi { get; set; }   // زمان ثبت به میلادی
         public string DateTime_sh { get; set; }   // زمان ثبت به شمسی
-        public long CostCenter_Index { get; set; }
-        public long Item_Index { get; set; }
-        public string Item_SmallCode { get; set; }
-        public string Item_SmallName { get; set; }
-        public double Quantity { get; set; }    // مقدار درخواستی
-        public string Description { get; set; }
+        public string Description { get; set; } // توضیحات
         public string Status_Description { get; set; } // آخرین شرحی که برای درخواست داده می شود. مانند علت عدم تأیید یا غیره
 
         #region تأییدیه سرپرست و مدیر در صورت نیاز به آنها
@@ -1240,6 +1235,7 @@ namespace OrdersProgress.Models
         public long Company_Index { get; set; }
         public long Index { get; set; }
         public long Warehouse_Request_Index { get; set; }
+        public long CostCenter_Index { get; set; }  // کد مرکز هزینه
         public string Item_Index { get; set; }
         public string Item_SmallCode { get; set; }    // کد کوچک کالا
         public string Item_Name { get; set; }
@@ -1285,6 +1281,7 @@ namespace OrdersProgress.Models
         public long Company_Index { get; set; }
 
         public long Index { get; set; }     // شناسه مخصوص این حواله
+        public long Index_in_Company { get; set; }  // شماره سند در شرکت
         public int Warehouse_Index { get; set; }   // شناسه انبار
         public string User_Index { get; set; }  // شناسه ثبت کننده حواله
         public string User_Name { get; set; }  // نام ثبت کننده حواله
@@ -1381,7 +1378,10 @@ namespace OrdersProgress.Models
         public long Id { get; set; }
         public long Company_Index { get; set; }
         public long Index { get; set; }
+        public long Index_in_Company { get; set; }  // کد مرکز هزینه
         public string Description { get; set; }
+        // 1 : مربوط به درخواستهای کالا از انبار
+        public int Type { get; set; }
     }
 
     // درخواست خرید

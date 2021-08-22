@@ -94,7 +94,7 @@ namespace OrdersProgress
 
                 tsmiChangeOrder.Visible = order.CurrentLevel_Index < Stack.OrderLevel_SendToCompany;
                 tsmiSentToCompany.Visible = order.CurrentLevel_Index == Stack.OrderLevel_OrderCompleted;
-                tsmiWarehouseChecklist.Visible = (Stack.UserLevel <= Stack.UserLevel_Supervisor3)
+                tsmiWarehouseChecklist.Visible = (Stack.UserLevel_Index <= Stack.UserLevel_Supervisor3)
                     && Program.dbOperations.GetAllOrder_StockItems(order_index).Any();
 
                 // انتخاب سلولی که روی آن کلیک راست شده است

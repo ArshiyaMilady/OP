@@ -32,10 +32,10 @@ namespace OrdersProgress
                 dgvData.ReadOnly = false;
             }
 
-            if (Stack.UserLevel <= Stack.UserLevel_Supervisor1)
+            if (Stack.UserLevel_Index <= Stack.UserLevel_Supervisor1)
                 btnDeleteAll.Visible = true;
 
-            if (Stack.UserLevel <= Stack.UserLevel_Supervisor3)
+            if (Stack.UserLevel_Index <= Stack.UserLevel_Supervisor3)
                 panel2.Enabled = true;
         }
 
@@ -52,7 +52,7 @@ namespace OrdersProgress
 
         private List<Models.Customer> GetData()
         {
-            if(Stack.UserLevel <= Stack.UserLevel_SaleUnit)
+            if(Stack.UserLevel_Index <= Stack.UserLevel_SaleUnit)
                 return Program.dbOperations.GetAllCustomersAsync(Stack.Company_Index);
             else return Program.dbOperations.GetAllCustomersAsync(Stack.Company_Index, Stack.UserIndex);
         }
@@ -75,7 +75,7 @@ namespace OrdersProgress
                             else col.Visible = false;
                             break;
                         case "Index":
-                            //if (Stack.UserLevel <= Stack.UserLevel_Admin)
+                            //if (Stack.UserLevel_Index <= Stack.UserLevel_Admin)
                             if (Stack.UserLevel_Type == 1)
                             {
                                 col.HeaderText = "شناسه";

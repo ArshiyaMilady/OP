@@ -50,6 +50,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.btnReturn = new System.Windows.Forms.Button();
             this.btnImportOrdersFromExcel = new System.Windows.Forms.Button();
+            this.btnAddNew = new System.Windows.Forms.Button();
+            this.btnCostCenters = new System.Windows.Forms.Button();
             this.btnDeleteAll = new System.Windows.Forms.Button();
             this.dgvData = new System.Windows.Forms.DataGridView();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -63,7 +65,6 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.btnAddNew = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -83,6 +84,7 @@
             this.panel1.Controls.Add(this.btnReturn);
             this.panel1.Controls.Add(this.btnImportOrdersFromExcel);
             this.panel1.Controls.Add(this.btnAddNew);
+            this.panel1.Controls.Add(this.btnCostCenters);
             this.panel1.Controls.Add(this.btnDeleteAll);
             this.panel1.Controls.Add(this.dgvData);
             this.panel1.Enabled = false;
@@ -326,10 +328,34 @@
             this.btnImportOrdersFromExcel.UseVisualStyleBackColor = true;
             this.btnImportOrdersFromExcel.Visible = false;
             // 
+            // btnAddNew
+            // 
+            this.btnAddNew.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAddNew.Location = new System.Drawing.Point(448, 287);
+            this.btnAddNew.Name = "btnAddNew";
+            this.btnAddNew.Size = new System.Drawing.Size(103, 29);
+            this.btnAddNew.TabIndex = 45;
+            this.btnAddNew.Text = "درخواست جدید";
+            this.btnAddNew.UseVisualStyleBackColor = true;
+            this.btnAddNew.Visible = false;
+            this.btnAddNew.Click += new System.EventHandler(this.BtnAddNew_Click);
+            // 
+            // btnCostCenters
+            // 
+            this.btnCostCenters.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCostCenters.Location = new System.Drawing.Point(339, 287);
+            this.btnCostCenters.Name = "btnCostCenters";
+            this.btnCostCenters.Size = new System.Drawing.Size(89, 29);
+            this.btnCostCenters.TabIndex = 45;
+            this.btnCostCenters.Text = "مراکز هزینه";
+            this.btnCostCenters.UseVisualStyleBackColor = true;
+            this.btnCostCenters.Visible = false;
+            this.btnCostCenters.Click += new System.EventHandler(this.BtnCostCenters_Click);
+            // 
             // btnDeleteAll
             // 
             this.btnDeleteAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnDeleteAll.Location = new System.Drawing.Point(94, 287);
+            this.btnDeleteAll.Location = new System.Drawing.Point(84, 287);
             this.btnDeleteAll.Name = "btnDeleteAll";
             this.btnDeleteAll.Size = new System.Drawing.Size(75, 29);
             this.btnDeleteAll.TabIndex = 45;
@@ -439,21 +465,11 @@
             this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BackgroundWorker1_DoWork);
             this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BackgroundWorker1_RunWorkerCompleted);
             // 
-            // btnAddNew
-            // 
-            this.btnAddNew.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAddNew.Location = new System.Drawing.Point(448, 287);
-            this.btnAddNew.Name = "btnAddNew";
-            this.btnAddNew.Size = new System.Drawing.Size(103, 29);
-            this.btnAddNew.TabIndex = 45;
-            this.btnAddNew.Text = "درخواست جدید";
-            this.btnAddNew.UseVisualStyleBackColor = true;
-            this.btnAddNew.Visible = false;
-            // 
             // M1130_Warehouse_RequestItems
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnReturn;
             this.ClientSize = new System.Drawing.Size(843, 322);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.progressBar1);
@@ -510,5 +526,6 @@
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.RadioButton radMyRequests;
         private System.Windows.Forms.Button btnAddNew;
+        private System.Windows.Forms.Button btnCostCenters;
     }
 }

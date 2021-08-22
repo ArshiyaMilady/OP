@@ -82,6 +82,10 @@ namespace OrdersProgress
                         col.HeaderText = "شرح";
                         col.Width = 200;
                         break;
+                    case "Unit_Name":
+                        col.HeaderText = "نام واحد";
+                        col.Width = 120;
+                        break;
                     case "Enabled":
                         col.HeaderText = "فعال؟";
                         col.Width = 50;
@@ -110,6 +114,7 @@ namespace OrdersProgress
             {
                 Company_Index = Stack.Company_Index,
                 Description = "؟",
+                Unit_Name="؟",
                 Enabled = true,
             });
 
@@ -183,6 +188,9 @@ namespace OrdersProgress
                     break;
                 case "Description":
                     user_level.Description = Convert.ToString(dgvData["Description", e.RowIndex].Value);
+                    break;
+                case "Unit_Name":
+                    user_level.Unit_Name = Convert.ToString(dgvData["Unit_Name", e.RowIndex].Value);
                     break;
                 case "Type":
                     user_level.Type = Convert.ToInt32(dgvData["Type", e.RowIndex].Value);

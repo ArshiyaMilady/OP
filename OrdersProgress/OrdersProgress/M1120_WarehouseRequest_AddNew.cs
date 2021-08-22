@@ -13,6 +13,7 @@ namespace OrdersProgress
     public partial class M1120_WarehouseRequest_AddNew : X210_ExampleForm_Normal
     {
         List<Models.Item> lstItems = new List<Models.Item>();
+        List<long> lstCostCenter_Code = new List<long>();
 
         public M1120_WarehouseRequest_AddNew()
         {
@@ -37,6 +38,19 @@ namespace OrdersProgress
                     return;
                 }
             }
+
+            foreach (Models.CostCenter cc in Program.dbOperations.GetAllCostCentersAsync(Stack.Company_Index, 1)
+               .Where(d=>!d.Description.Equals("?") && !d.Description.Equals("؟"))
+               .OrderBy(d => d.Index_in_Company).ToList())
+            {
+                lstCostCenter_Code.Add(cc.Index_in_Company);
+                cmbCostCenters.Items.Add(cc.Index_in_Company + " - " + cc.Description);
+            }
+            if (cmbCostCenters.Items.Count > 0) cmbCostCenters.SelectedIndex = 0;
+
+
+            cmbST_Name.SelectedIndex = 0;
+            cmbST_SmallCode.SelectedIndex = 0;
         }
 
         private void BtnSave_Click(object sender, EventArgs e)
@@ -49,6 +63,27 @@ namespace OrdersProgress
             }
 
             #endregion
+
+            if (MessageBox.Show("پس از ثبت درخواست، امکان تغییر در درخواست نخواهد بود. آیا از ثبت درخواست اطمینان دارید؟"
+                , "", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
+
+            Models.Warehouse_Request wr = new Models.Warehouse_Request
+            {
+                Company_Index=Stack.Company_Index,
+                UserLevel_Index = Stack.UserLevel_Index,
+                Unit_Name = Program.dbOperations.GetUser_LevelAsync(Stack.UserLevel_Index).Unit_Name,
+                User_Index = Stack.UserIndex,
+                User_Name = Stack.UserName,
+                DateTime_mi = DateTime.Now,
+                DateTime_sh = Stack_Methods.Miladi_to_Shamsi_YYYYMMDD(DateTime.Now),
+            };
+
+            long wr_index = Program.dbOperations.AddWarehouse_RequestAsync(wr);
+
+            for (int i = 0; i < dgvRequestItems.Rows.Count; i++)
+            {
+                Program.dbOperations.AddWarehouse_Request_RowAsync()
+            }
         }
 
         private void BtnCancel_Click(object sender, EventArgs e)
@@ -89,6 +124,10 @@ namespace OrdersProgress
         {
             dgvWarehouseItems.DataSource = lstItems;
             ShowData();
+
+            if (dgvWarehouseItems.Rows.Count > 0)
+                dgvWarehouseItems.CurrentCell = dgvWarehouseItems["Name_Samll", 0];
+
             progressBar1.Visible = false;
             panel1.Enabled = true;
         }
@@ -109,7 +148,7 @@ namespace OrdersProgress
                         case "Name_Samll":
                             col.HeaderText = "نام کالا";
                             //col.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                            col.Width = 300;
+                            col.Width = 400;
                             break;
 
                         case "C_D1":
@@ -122,7 +161,6 @@ namespace OrdersProgress
             }
             #endregion
         }
-
 
         private void BtnShowAll_Click(object sender, EventArgs e)
         {
@@ -139,7 +177,7 @@ namespace OrdersProgress
             Application.DoEvents();
 
             List<Models.Item> lstItems1 = (List<Models.Item>)dgvWarehouseItems.DataSource;
-            foreach (Control c in groupBox1.Controls)
+            foreach (Control c in groupBox2.Controls)
             {
                 //MessageBox.Show(c.Text);
                 if (c.Name.Length > 4)
@@ -163,7 +201,7 @@ namespace OrdersProgress
         }
 
         // جستجوی موردی
-        private List<Models.Item> SearchThis(List<Models.Item> lstItems1, string TextBoxName)
+        private List<Models.Item> SearchThis(List<Models.Item> lstItems2, string TextBoxName)
         {
             switch (TextBoxName)
             {
@@ -171,24 +209,24 @@ namespace OrdersProgress
                     switch (cmbST_SmallCode.SelectedIndex)
                     {
                         case 0:
-                            return lstItems1.Where(d => d.Code_Small.ToLower().Contains(txtST_SmallCode.Text.ToLower())).ToList();
+                            return lstItems2.Where(d => d.Code_Small.ToLower().Contains(txtST_SmallCode.Text.ToLower())).ToList();
                         case 1:
-                            return lstItems1.Where(d => d.Code_Small.ToLower().StartsWith(txtST_SmallCode.Text.ToLower())).ToList();
+                            return lstItems2.Where(d => d.Code_Small.ToLower().StartsWith(txtST_SmallCode.Text.ToLower())).ToList();
                         case 2:
-                            return lstItems1.Where(d => d.Code_Small.ToLower().Equals(txtST_SmallCode.Text.ToLower())).ToList();
-                        default: return lstItems1;
+                            return lstItems2.Where(d => d.Code_Small.ToLower().Equals(txtST_SmallCode.Text.ToLower())).ToList();
+                        default: return lstItems2;
                     }
                 //break;
                 case "txtST_Name":
                     switch (cmbST_Name.SelectedIndex)
                     {
                         case 0:
-                            return lstItems1.Where(d => d.Name_Samll.ToLower().Contains(txtST_Name.Text.ToLower())).ToList();
+                            return lstItems2.Where(d => d.Name_Samll.ToLower().Contains(txtST_Name.Text.ToLower())).ToList();
                         case 1:
-                            return lstItems1.Where(d => d.Name_Samll.ToLower().StartsWith(txtST_Name.Text.ToLower())).ToList();
+                            return lstItems2.Where(d => d.Name_Samll.ToLower().StartsWith(txtST_Name.Text.ToLower())).ToList();
                         case 2:
-                            return lstItems1.Where(d => d.Name_Samll.ToLower().Equals(txtST_Name.Text.ToLower())).ToList();
-                        default: return lstItems1;
+                            return lstItems2.Where(d => d.Name_Samll.ToLower().Equals(txtST_Name.Text.ToLower())).ToList();
+                        default: return lstItems2;
                     }
             }
 
@@ -197,10 +235,16 @@ namespace OrdersProgress
 
         private void DgvWarehouseItems_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
-            textBox1.Text = dgvWarehouseItems.CurrentRow.Cells["Name_Samll"].Value.ToString();
-            textBox2.Text = dgvWarehouseItems.CurrentRow.Cells["Code_Small"].Value.ToString();
-            label2.Text = dgvWarehouseItems.CurrentRow.Cells["Unit"].Value.ToString();
-            numericUpDown1.Value = 0;
+            if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
+            try
+            {
+                //dgvWarehouseItems.CurrentCell = dgvWarehouseItems["Name_Samll", 0];
+                textBox1.Text = dgvWarehouseItems["Name_Samll",e.RowIndex].Value.ToString();
+                textBox2.Text = dgvWarehouseItems["Code_Small", e.RowIndex].Value.ToString();
+                label2.Text = dgvWarehouseItems["Unit", e.RowIndex].Value.ToString();
+                numericUpDown1.Value = 0;
+            }
+            catch { }
         }
 
         private void BtnAddItem_to_Request_Click(object sender, EventArgs e)
@@ -212,12 +256,45 @@ namespace OrdersProgress
                 return;
             }
 
+            decimal qExistence = Convert.ToDecimal(dgvWarehouseItems.CurrentRow.Cells["C_D1"].Value);
+            if (numericUpDown1.Value > qExistence)
+            {
+                if(MessageBox.Show("تعداد درخواست شده از تعداد موجودی بیشتر است. آیا درخواست انجام شود؟"
+                    , "اخطار",MessageBoxButtons.YesNo) != DialogResult.Yes)
+                    return;
+            }
+
             #endregion
 
             long item_index = Convert.ToInt64(dgvWarehouseItems.CurrentRow.Cells["Index"].Value);
-            Models.Item item = progr
+            Models.Item item = Program.dbOperations.GetItem(item_index);
             int iRow = dgvRequestItems.Rows.Add();
-            dgvRequestItems["colItem_Index"].Value = 
+            dgvRequestItems["colRow",iRow].Value = iRow+1;
+            dgvRequestItems["colItem_Index",iRow].Value = item.Index;
+            dgvRequestItems["colItem_SmallCode", iRow].Value = item.Code_Small;
+            dgvRequestItems["colItem_Name", iRow].Value = item.Name_Samll;
+            dgvRequestItems["colQuantity", iRow].Value = numericUpDown1.Value;
+            dgvRequestItems["colItem_Unit", iRow].Value = item.Unit;
+            if(lstCostCenter_Code.Any())    // کد مرکز هزینه
+                dgvRequestItems["colCostCenter_Index", iRow].Value = lstCostCenter_Code[cmbCostCenters.SelectedIndex];
+            Models.UL_Request_Category urc = Program.dbOperations.GetAllUL_Request_CategoriesAsync
+                (Stack.Company_Index, Stack.UserLevel_Index).FirstOrDefault(d => d.Category_Index == item.Category_Index);
+            if (urc != null)
+            {
+                dgvRequestItems["colNeed_Supervisor_Confirmation", iRow].Value = urc.Need_Supervisor_Confirmation;
+                dgvRequestItems["colNeed_Manager_Confirmation", iRow].Value = urc.Need_Manager_Confirmation;
+            }
+        }
+
+        private void DgvRequestItems_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
+
+            if(dgvRequestItems.Columns[e.ColumnIndex].Name.Equals("colRemove"))
+            {
+                dgvRequestItems.CurrentCell = null;
+                dgvRequestItems.Rows.RemoveAt(e.RowIndex);
+            }
         }
     }
 }

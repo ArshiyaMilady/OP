@@ -19,7 +19,7 @@ namespace OrdersProgress
 
         private void K1200_Properties_Shown(object sender, EventArgs e)
         {
-            btnDeleteAll.Visible = Stack.UserLevel <= Stack.UserLevel_Supervisor1;
+            btnDeleteAll.Visible = Stack.UserLevel_Index <= Stack.UserLevel_Supervisor1;
 
             cmbST_Name.SelectedIndex = 0;
             cmbST_Description.SelectedIndex = 0;

@@ -31,6 +31,8 @@ namespace OrdersProgress
             // دکمه «درخواست جدید» در صورتیکه قابل استفاده است که برای سطح دسترسی کاربر، دسته محصولی جهت درخواست تعریف شده باشد
             btnAddNew.Visible = (Stack.UserLevel_Type !=0) ||
                 Program.dbOperations.GetAllUL_Request_CategoriesAsync(Stack.Company_Index, Stack.UserLevel_Index).Any();
+
+            btnCostCenters.Visible = (Stack.UserLevel_Type != 0);
         }
 
         private void M1130_Warehouse_RequestItems_Shown(object sender, EventArgs e)
@@ -88,6 +90,16 @@ namespace OrdersProgress
                 }
             }
             #endregion
+        }
+
+        private void BtnAddNew_Click(object sender, EventArgs e)
+        {
+            new M1120_WarehouseRequest_AddNew().Show();
+        }
+
+        private void BtnCostCenters_Click(object sender, EventArgs e)
+        {
+            new M1140_CostCenters().ShowDialog();
         }
 
 

@@ -2962,7 +2962,7 @@ namespace OrdersProgress.Models
             return _db.Table<Warehouse_Request>().FirstAsync(d => d.Index == index).Result;
         }
 
-        public long AddWarehouse_RequestAsync(long company_index,Warehouse_Request warehouse_Request)
+        public long AddWarehouse_RequestAsync(Warehouse_Request warehouse_Request)
         {
             warehouse_Request.Index = GetNewIndex_Warehouse_Request();
             warehouse_Request.Index_in_Company = GetNewIndex_Warehouse_Request(company_index);
@@ -3122,9 +3122,10 @@ namespace OrdersProgress.Models
             return _db.Table<Warehouse_Remittance>().FirstAsync(d => d.Id == id).Result;
         }
 
-        public long AddWarehouse_RemittanceAsync(Warehouse_Remittance warehouse_Remittance)
+        public long AddWarehouse_RemittanceAsync(long company_index, Warehouse_Remittance warehouse_Remittance)
         {
             warehouse_Remittance.Index = GetNewIndex_Warehouse_Remittance();
+            warehouse_Remittance.Index_in_Company = GetNewIndex_Warehouse_Remittance(company_index);
             _db.InsertAsync(warehouse_Remittance);
             return warehouse_Remittance.Id;
         }
@@ -3144,13 +3145,22 @@ namespace OrdersProgress.Models
             return _db.UpdateAsync(warehouse_Remittance).Result;
         }
 
-        public long GetNewIndex_Warehouse_Remittance()
+        public long GetNewIndex_Warehouse_Remittance(long company_index = 0)
         {
-            if (_db.Table<Warehouse_Remittance>().ToListAsync().Result.Any())
-                return _db.Table<Warehouse_Remittance>().ToListAsync().Result.Max(d => d.Index) + 1;
-            else return 1;
-        }
+            if (company_index <= 0)
+            {
+                if (_db.Table<Warehouse_Remittance>().ToListAsync().Result.Any())
+                    return _db.Table<Warehouse_Remittance>().ToListAsync().Result.Max(d => d.Index) + 1;
+            }
+            else
+            {
+                if (_db.Table<Warehouse_Remittance>().Where(d => d.Company_Index == company_index).ToListAsync().Result.Any())
+                    return _db.Table<Warehouse_Remittance>().Where(d => d.Company_Index == company_index)
+                        .ToListAsync().Result.Max(d => d.Index_in_Company) + 1;
+            }
 
+            return 1;
+        }
         #endregion Warehouse_Remittance
 
         // ********** Warehouse_Remittance_History *************
@@ -3257,9 +3267,13 @@ namespace OrdersProgress.Models
 
         // ********** CostCenter *************
         #region CostCenter
-        public List<CostCenter> GetAllCostCentersAsync(long company_index)
+        public List<CostCenter> GetAllCostCentersAsync(long company_index,int type = -1)
         {
-            return _db.Table<CostCenter>().Where(b => b.Company_Index == company_index).ToListAsync().Result;
+            if(type<0)
+                return _db.Table<CostCenter>().Where(b => b.Company_Index == company_index).ToListAsync().Result;
+            else
+                return _db.Table<CostCenter>().Where(b => b.Company_Index == company_index)
+                    .Where(j=>j.Type == type).ToListAsync().Result;
         }
 
         public CostCenter GetCostCenterAsync(long index)
@@ -3267,11 +3281,20 @@ namespace OrdersProgress.Models
             return _db.Table<CostCenter>().FirstOrDefaultAsync(d => d.Index == index).Result;
         }
 
-        public long AddCostCenterAsync(CostCenter costCenter)
+        public long AddCostCenterAsync(long company_index,CostCenter costCenter)
         {
             costCenter.Index = GetNewIndex_CostCenter();
+            costCenter.Index_in_Company = GetNewIndex_CostCenter(company_index);
             _db.InsertAsync(costCenter);
-            return costCenter.Id;
+            return costCenter.Index;
+        }
+
+        public long AddCostCenter(long company_index,CostCenter costCenter)
+        {
+            costCenter.Index = GetNewIndex_CostCenter();
+            costCenter.Index_in_Company = GetNewIndex_CostCenter(company_index);
+            _db.InsertAsync(costCenter).Wait();
+            return costCenter.Index;
         }
 
         public int DeleteCostCenterAsync(CostCenter costCenter)
@@ -3289,11 +3312,21 @@ namespace OrdersProgress.Models
             return _db.UpdateAsync(costCenter).Result;
         }
 
-        public long GetNewIndex_CostCenter()
+        public long GetNewIndex_CostCenter(long company_index = 0)
         {
-            if (_db.Table<CostCenter>().ToListAsync().Result.Any())
-                return _db.Table<CostCenter>().ToListAsync().Result.Max(d => d.Index) + 1;
-            else return 1;
+            if (company_index <= 0)
+            {
+                if (_db.Table<CostCenter>().ToListAsync().Result.Any())
+                    return _db.Table<CostCenter>().ToListAsync().Result.Max(d => d.Index) + 1;
+            }
+            else
+            {
+                if (_db.Table<CostCenter>().Where(d => d.Company_Index == company_index).ToListAsync().Result.Any())
+                    return _db.Table<CostCenter>().Where(d => d.Company_Index == company_index)
+                        .ToListAsync().Result.Max(d => d.Index_in_Company) + 1;
+            }
+
+            return 1;
         }
         #endregion CostCenter
 

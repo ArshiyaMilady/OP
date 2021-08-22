@@ -1496,7 +1496,6 @@ D:\Desktop\BOX\Personal\D\OrderProgress\OrderProgress\OrdersProgress\OrdersProgr
 D:\Desktop\BOX\Personal\D\OrderProgress\OrderProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.J2000_Users.resources
 D:\Desktop\BOX\Personal\D\OrderProgress\OrderProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.J2110_ChangePassword.resources
 D:\Desktop\BOX\Personal\D\OrderProgress\OrderProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.J2200_Users_Levels.resources
-D:\Desktop\BOX\Personal\D\OrderProgress\OrderProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.J2202_UL_See_ULs.resources
 D:\Desktop\BOX\Personal\D\OrderProgress\OrderProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.J2204_User_UL.resources
 D:\Desktop\BOX\Personal\D\OrderProgress\OrderProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.J2210_UL_Features.resources
 D:\Desktop\BOX\Personal\D\OrderProgress\OrderProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.J2220_User_Level_UL_Feature.resources
@@ -1720,3 +1719,11 @@ E:\BOX\D\OrderProgress\OrdersProgress\OrdersProgress\OrdersProgress\obj\Debug\Or
 E:\BOX\D\OrderProgress\OrdersProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.J2310_UL_Request_Categories.resources
 E:\BOX\D\OrderProgress\OrdersProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.J2202_UL_See_UL_Orders.resources
 E:\BOX\D\OrderProgress\OrdersProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.J2320_UL_Confirm_UL_Requests.resources
+D:\Desktop\BOX\Personal\D\OrderProgress\OrderProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.J1900_OtherSettings.resources
+D:\Desktop\BOX\Personal\D\OrderProgress\OrderProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.J2202_UL_See_UL_Orders.resources
+D:\Desktop\BOX\Personal\D\OrderProgress\OrderProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.J2310_UL_Request_Categories.resources
+D:\Desktop\BOX\Personal\D\OrderProgress\OrderProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.J2320_UL_Confirm_UL_Requests.resources
+D:\Desktop\BOX\Personal\D\OrderProgress\OrderProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.K1100_Categories.resources
+D:\Desktop\BOX\Personal\D\OrderProgress\OrderProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.M1120_WarehouseRequest_AddNew.resources
+D:\Desktop\BOX\Personal\D\OrderProgress\OrderProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.M1130_Warehouse_RequestItems.resources
+D:\Desktop\BOX\Personal\D\OrderProgress\OrderProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.M1140_CostCenters.resources

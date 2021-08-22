@@ -18,7 +18,7 @@ namespace OrdersProgress
         {
             InitializeComponent();
 
-            if (Stack.UserLevel <= Stack.UserLevel_Supervisor1)
+            if (Stack.UserLevel_Index <= Stack.UserLevel_Supervisor1)
             {
                 btnDeleteAll.Visible = true;
             }

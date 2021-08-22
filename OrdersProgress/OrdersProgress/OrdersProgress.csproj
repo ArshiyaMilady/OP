@@ -319,6 +319,12 @@
     <Compile Include="M1130_Warehouse_RequestItems.Designer.cs">
       <DependentUpon>M1130_Warehouse_RequestItems.cs</DependentUpon>
     </Compile>
+    <Compile Include="M1140_CostCenters.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="M1140_CostCenters.Designer.cs">
+      <DependentUpon>M1140_CostCenters.cs</DependentUpon>
+    </Compile>
     <Compile Include="M2100_OrdersPriority.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -529,6 +535,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="M1130_Warehouse_RequestItems.resx">
       <DependentUpon>M1130_Warehouse_RequestItems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="M1140_CostCenters.resx">
+      <DependentUpon>M1140_CostCenters.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="M2100_OrdersPriority.resx">
       <DependentUpon>M2100_OrdersPriority.cs</DependentUpon>

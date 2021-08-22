@@ -399,8 +399,8 @@
             // tsmiWarehouse_RequestItems
             // 
             this.tsmiWarehouse_RequestItems.Name = "tsmiWarehouse_RequestItems";
-            this.tsmiWarehouse_RequestItems.Size = new System.Drawing.Size(190, 24);
-            this.tsmiWarehouse_RequestItems.Text = "درخواست کالااز انبار";
+            this.tsmiWarehouse_RequestItems.Size = new System.Drawing.Size(194, 24);
+            this.tsmiWarehouse_RequestItems.Text = "درخواست کالا از انبار";
             this.tsmiWarehouse_RequestItems.Click += new System.EventHandler(this.TsmiWarehouse_RequestItems_Click);
             // 
             // J1000_MainForm
