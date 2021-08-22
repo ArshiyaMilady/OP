@@ -2962,11 +2962,12 @@ namespace OrdersProgress.Models
             return _db.Table<Warehouse_Request>().FirstAsync(d => d.Index == index).Result;
         }
 
-        public long AddWarehouse_RequestAsync(Warehouse_Request warehouse_Request)
+        public long AddWarehouse_RequestAsync(long company_index,Warehouse_Request warehouse_Request)
         {
             warehouse_Request.Index = GetNewIndex_Warehouse_Request();
+            warehouse_Request.Index_in_Company = GetNewIndex_Warehouse_Request(company_index);
             _db.InsertAsync(warehouse_Request);
-            return warehouse_Request.Id;
+            return warehouse_Request.Index;
         }
 
         public int DeleteWarehouse_RequestAsync(Warehouse_Request warehouse_Request)
@@ -2984,11 +2985,21 @@ namespace OrdersProgress.Models
             return _db.UpdateAsync(warehouse_Request).Result;
         }
 
-        public long GetNewIndex_Warehouse_Request()
+        public long GetNewIndex_Warehouse_Request(long company_index=0)
         {
-            if (_db.Table<Warehouse_Request>().ToListAsync().Result.Any())
-                return _db.Table<Warehouse_Request>().ToListAsync().Result.Max(d => d.Index) + 1;
-            else return 1;
+            if (company_index <= 0)
+            {
+                if (_db.Table<Warehouse_Request>().ToListAsync().Result.Any())
+                    return _db.Table<Warehouse_Request>().ToListAsync().Result.Max(d => d.Index) + 1;
+            }
+            else
+            {
+                if (_db.Table<Warehouse_Request>().Where(d=>d.Company_Index == company_index).ToListAsync().Result.Any())
+                    return _db.Table<Warehouse_Request>().Where(d => d.Company_Index == company_index)
+                        .ToListAsync().Result.Max(d => d.Index_in_Company) + 1;
+            }
+
+            return 1;
         }
 
         #endregion Warehouse_Request

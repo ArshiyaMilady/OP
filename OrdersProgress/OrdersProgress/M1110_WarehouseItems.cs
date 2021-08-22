@@ -378,6 +378,11 @@ namespace OrdersProgress
 
         }
 
+        private void M1110_WarehouseItems_Load(object sender, EventArgs e)
+        {
+
+        }
+
         private void BtnAddNew_Click(object sender, EventArgs e)
         {
             new K1302_Item_Details(2).ShowDialog();

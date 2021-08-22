@@ -64,7 +64,28 @@ namespace OrdersProgress
             panel1.Enabled = true;
         }
 
-        private List<Models.Order> GetData(long user_index = 0,bool bShowWhichOrders = false)
+        private void BackgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+            foreach (Models.Order order1 in lstOrders)
+            {
+                long last_ol_in_history = Program.dbOperations.GetAllOrder_HistorysAsync
+                    (Stack.Company_Index, order1.Index).Last().OrderLevel_Index;
+                order1.C_B2 = Program.dbOperations.GetOrder_LevelAsync
+                    (last_ol_in_history).ReturningLevel;
+            }
+        }
+
+        private void BackgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            foreach (DataGridViewRow row in dgvData.Rows.Cast<DataGridViewRow>()
+                .Where(d => Convert.ToBoolean(d.Cells["C_B2"].Value)).ToList())
+                row.DefaultCellStyle.ForeColor = Color.Red;
+            //panel1.Enabled = true;
+            //backgroundWorker1.CancelAsync();
+            dgvData.CurrentCell = null;
+        }
+
+        private List<Models.Order> GetData(long user_index = 0, bool bShowWhichOrders = false)
         {
             #region چه سفارشهایی توسط کاربر قابل مشاهده می باشد
             if (!lstOrders.Any())
@@ -119,13 +140,13 @@ namespace OrdersProgress
                     //    foreach (Models.Order order in lstOrders)
                     //        order.C_B1 = true;
                     //else   
-                        // به جز سفارشهای تکمیل شده
-                        foreach (Models.Order order in lstOrders.Where(d => d.CurrentLevel_Index != last_order_level_index).ToList())
-                            order.C_B1 = true;
+                    // به جز سفارشهای تکمیل شده
+                    foreach (Models.Order order in lstOrders.Where(d => d.CurrentLevel_Index != last_order_level_index).ToList())
+                        order.C_B1 = true;
                 }
                 else
                 {
-                    foreach (Models.Order order in lstOrders.Where(d=>d.CurrentLevel_Index != last_order_level_index).ToList())
+                    foreach (Models.Order order in lstOrders.Where(d => d.CurrentLevel_Index != last_order_level_index).ToList())
                     {
                         // برای سفارشهایی که امکان تغییر دارند، فقط سفارش دهنده اجازه تغییر را دارد
                         if (Program.dbOperations.GetOrder_LevelAsync(order.CurrentLevel_Index).OrderCanChange)
@@ -156,31 +177,10 @@ namespace OrdersProgress
             if (radOrders_Need_Confirmation.Checked)
                 return lstOrders.Where(d => d.C_B1).OrderByDescending(d => d.DateTime_mi).ToList();
             else
-                return lstOrders.OrderByDescending(d=>d.DateTime_mi).ToList();
+                return lstOrders.OrderByDescending(d => d.DateTime_mi).ToList();
 
             //return lstOrders;
 
-        }
-
-        private void BackgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
-        {
-            foreach (Models.Order order1 in lstOrders)
-            {
-                long last_ol_in_history = Program.dbOperations.GetAllOrder_HistorysAsync
-                    (Stack.Company_Index, order1.Index).Last().OrderLevel_Index;
-                order1.C_B2 = Program.dbOperations.GetOrder_LevelAsync
-                    (last_ol_in_history).ReturningLevel;
-            }
-        }
-
-        private void BackgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            foreach (DataGridViewRow row in dgvData.Rows.Cast<DataGridViewRow>()
-                .Where(d => Convert.ToBoolean(d.Cells["C_B2"].Value)).ToList())
-                row.DefaultCellStyle.ForeColor = Color.Red;
-            //panel1.Enabled = true;
-            //backgroundWorker1.CancelAsync();
-            dgvData.CurrentCell = null;
         }
 
         private void ShowData(int ActionType = 1)

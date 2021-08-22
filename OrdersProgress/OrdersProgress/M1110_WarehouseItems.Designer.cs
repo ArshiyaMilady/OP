@@ -70,19 +70,19 @@
             this.tsmiDelete});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.contextMenuStrip1.Size = new System.Drawing.Size(110, 48);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(108, 48);
             // 
             // tsmiDetails
             // 
             this.tsmiDetails.Name = "tsmiDetails";
-            this.tsmiDetails.Size = new System.Drawing.Size(109, 22);
+            this.tsmiDetails.Size = new System.Drawing.Size(107, 22);
             this.tsmiDetails.Text = "جزییات";
             this.tsmiDetails.Click += new System.EventHandler(this.TsmiDetails_Click);
             // 
             // tsmiDelete
             // 
             this.tsmiDelete.Name = "tsmiDelete";
-            this.tsmiDelete.Size = new System.Drawing.Size(109, 22);
+            this.tsmiDelete.Size = new System.Drawing.Size(107, 22);
             this.tsmiDelete.Text = "حذف";
             this.tsmiDelete.Visible = false;
             // 
@@ -382,6 +382,7 @@
             this.Name = "M1110_WarehouseItems";
             this.Text = "موجودی انبار";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Load += new System.EventHandler(this.M1110_WarehouseItems_Load);
             this.Shown += new System.EventHandler(this.M1110_WarehouseItems_Shown);
             this.contextMenuStrip1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);

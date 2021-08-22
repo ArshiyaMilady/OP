@@ -32,6 +32,8 @@ namespace OrdersProgress.Models
         // false : رزرو کالاها از انبار به صورت دستی
         // true : رزرو کالاها از انبار به صورت اتوماتیک
         public bool Warehouse_Booking { get; set; }
+        // بعد از گذشت زمان رزرو درخواست منقضی شده و کالای رزرو شده به موجودی قابل استفاده انبار بر میگردد
+        public long Warehouse_Booking_MaxTime { get; set; } // حداکثر زمانی که (به ساعت) یک کالا می تواند رزرو شود
 
         public string C_S1 { get; set; }
         public string C_S2 { get; set; }
@@ -303,7 +305,6 @@ namespace OrdersProgress.Models
         public long OrderLevel_Index { get; set; }
         public long OL_Retruned_Index { get; set; }
     }
-
 
     // سفارش چه مراحلی گذرانده است
     // تفاوت با تاریخچه: در صورت یک یا چند برگشت سفارش ، مراحل را می توان از این جدول حذف نمود
@@ -974,8 +975,8 @@ namespace OrdersProgress.Models
         public long SalesPrice { get; set; }  // قیمت فروش (بدون تخفیف) یک عدد کالا
 
         public long Warehouse_Index { get; set; }   // شناسه انبار
-        // موجودی کالا در انبار
         public double Wh_OrderPoint { get; set; }   // نقطه سفارش
+        // موجودی کالا در انبار
         public double Wh_Quantity_Real { get; set; }   // موجودی واقعی
         // برای نگهداری تغییراتی که هنوز تأیید نشده است  = رزرو شده ها
         public double Wh_Quantity_Booking { get; set; }
@@ -994,6 +995,8 @@ namespace OrdersProgress.Models
         public string C_S3 { get; set; }
         public long C_L1 { get; set; }
         public long C_L2 { get; set; }
+        public double C_D1 { get; set; }    // کمکی
+        public double C_D2 { get; set; }
         public int C_I1 { get; set; }
         public int C_I2 { get; set; }
 
@@ -1199,10 +1202,12 @@ namespace OrdersProgress.Models
         public long Id { get; set; }
         public long Company_Index { get; set; }
         public long Index { get; set; }
+        public string Order_Index { get; set; } // اگر درخواست مرتبط با سفارشی باشد
         public long Index_in_Company { get; set; }  // شماره درخواست در شرکت
         public long Unit_Index { get; set; }    // شناسه واحد درخواست کننده
         public string Unit_Name { get; set; }
         public long User_Index { get; set; }    // شناسه کاربر درخواست کننده
+        public long User_LevelIndex { get; set; }   // شناسه سطح کاربری کاربر درخواست کننده
         public string User_Name { get; set; }
         public DateTime DateTime_mi { get; set; }   // زمان ثبت به میلادی
         public string DateTime_sh { get; set; }   // زمان ثبت به شمسی
@@ -1222,6 +1227,9 @@ namespace OrdersProgress.Models
         public long Manager_Confirmer_Index { get; set; }    // شناسه مدیر تأیید کننده
         public string Manager_Confirmer_Name { get; set; }    // نام مدیر تأیید کننده
         #endregion
+
+        public bool Sent_to_Warehouse { get; set; }  // مراحل تأیید درخواست کامل شده و درخواست به انبار ارسال گردید
+        public bool Request_Completed { get; set; }  // درخواست توسط انبار تحویل داده شد
     }
 
     // ردیف های موجود در حواله یا رسید انبار

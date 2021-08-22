@@ -1,0 +1,562 @@
+﻿namespace OrdersProgress
+{
+    partial class M1120_WarehouseRequest_AddNew
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(M1120_WarehouseRequest_AddNew));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnShowAll = new System.Windows.Forms.Button();
+            this.btnSearch = new System.Windows.Forms.Button();
+            this.txtST_Name = new System.Windows.Forms.TextBox();
+            this.txtST_SmallCode = new System.Windows.Forms.TextBox();
+            this.cmbST_Name = new System.Windows.Forms.ComboBox();
+            this.cmbST_SmallCode = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.dgvWarehouseItems = new System.Windows.Forms.DataGridView();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btnAddItem_to_Request = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.dgvRequestItems = new System.Windows.Forms.DataGridView();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.colItem_Index = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colItem_SmallCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colItem_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colItem_Unit = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colNeed_Supervisor_Confirmation = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colNeed_Manager_Confirmation = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colRemove = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.panel1.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvWarehouseItems)).BeginInit();
+            this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            this.groupBox4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvRequestItems)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.groupBox4);
+            this.panel1.Controls.Add(this.groupBox3);
+            this.panel1.Enabled = false;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(857, 389);
+            this.panel1.TabIndex = 0;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.groupBox1.Controls.Add(this.dgvWarehouseItems);
+            this.groupBox1.Controls.Add(this.groupBox2);
+            this.groupBox1.Location = new System.Drawing.Point(0, 2);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(854, 177);
+            this.groupBox1.TabIndex = 1;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "موجودی انبار";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.btnShowAll);
+            this.groupBox2.Controls.Add(this.btnSearch);
+            this.groupBox2.Controls.Add(this.txtST_Name);
+            this.groupBox2.Controls.Add(this.txtST_SmallCode);
+            this.groupBox2.Controls.Add(this.cmbST_Name);
+            this.groupBox2.Controls.Add(this.cmbST_SmallCode);
+            this.groupBox2.Controls.Add(this.label5);
+            this.groupBox2.Controls.Add(this.label3);
+            this.groupBox2.Location = new System.Drawing.Point(604, 33);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(242, 135);
+            this.groupBox2.TabIndex = 21;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "جستجو";
+            // 
+            // btnShowAll
+            // 
+            this.btnShowAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnShowAll.Location = new System.Drawing.Point(154, 103);
+            this.btnShowAll.Name = "btnShowAll";
+            this.btnShowAll.Size = new System.Drawing.Size(79, 26);
+            this.btnShowAll.TabIndex = 56;
+            this.btnShowAll.Text = "نمایش همه";
+            this.btnShowAll.UseVisualStyleBackColor = true;
+            this.btnShowAll.Click += new System.EventHandler(this.BtnShowAll_Click);
+            // 
+            // btnSearch
+            // 
+            this.btnSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnSearch.Location = new System.Drawing.Point(6, 103);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(79, 26);
+            this.btnSearch.TabIndex = 50;
+            this.btnSearch.Text = "جستجو";
+            this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.BtnSearch_Click);
+            // 
+            // txtST_Name
+            // 
+            this.txtST_Name.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtST_Name.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtST_Name.Location = new System.Drawing.Point(7, 63);
+            this.txtST_Name.Name = "txtST_Name";
+            this.txtST_Name.Size = new System.Drawing.Size(109, 22);
+            this.txtST_Name.TabIndex = 45;
+            this.txtST_Name.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // txtST_SmallCode
+            // 
+            this.txtST_SmallCode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtST_SmallCode.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtST_SmallCode.Location = new System.Drawing.Point(7, 34);
+            this.txtST_SmallCode.Name = "txtST_SmallCode";
+            this.txtST_SmallCode.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.txtST_SmallCode.Size = new System.Drawing.Size(109, 22);
+            this.txtST_SmallCode.TabIndex = 34;
+            this.txtST_SmallCode.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // cmbST_Name
+            // 
+            this.cmbST_Name.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbST_Name.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbST_Name.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbST_Name.FormattingEnabled = true;
+            this.cmbST_Name.Items.AddRange(new object[] {
+            "شامل",
+            "شروع شود با",
+            "برابر باشد با"});
+            this.cmbST_Name.Location = new System.Drawing.Point(122, 61);
+            this.cmbST_Name.Name = "cmbST_Name";
+            this.cmbST_Name.Size = new System.Drawing.Size(91, 23);
+            this.cmbST_Name.TabIndex = 40;
+            // 
+            // cmbST_SmallCode
+            // 
+            this.cmbST_SmallCode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbST_SmallCode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbST_SmallCode.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbST_SmallCode.FormattingEnabled = true;
+            this.cmbST_SmallCode.Items.AddRange(new object[] {
+            "شامل",
+            "شروع شود با",
+            "برابر باشد با"});
+            this.cmbST_SmallCode.Location = new System.Drawing.Point(122, 32);
+            this.cmbST_SmallCode.Name = "cmbST_SmallCode";
+            this.cmbST_SmallCode.Size = new System.Drawing.Size(91, 23);
+            this.cmbST_SmallCode.TabIndex = 30;
+            // 
+            // label5
+            // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(213, 64);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(23, 15);
+            this.label5.TabIndex = 29;
+            this.label5.Text = "نام :";
+            // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(213, 35);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(22, 15);
+            this.label3.TabIndex = 29;
+            this.label3.Text = "کد :";
+            // 
+            // dgvWarehouseItems
+            // 
+            this.dgvWarehouseItems.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvWarehouseItems.BackgroundColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.dgvWarehouseItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvWarehouseItems.Location = new System.Drawing.Point(6, 43);
+            this.dgvWarehouseItems.Name = "dgvWarehouseItems";
+            this.dgvWarehouseItems.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvWarehouseItems.Size = new System.Drawing.Size(593, 126);
+            this.dgvWarehouseItems.TabIndex = 57;
+            this.dgvWarehouseItems.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvWarehouseItems_RowEnter);
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox3.BackColor = System.Drawing.SystemColors.Info;
+            this.groupBox3.Controls.Add(this.textBox1);
+            this.groupBox3.Controls.Add(this.textBox2);
+            this.groupBox3.Controls.Add(this.label4);
+            this.groupBox3.Controls.Add(this.label6);
+            this.groupBox3.Controls.Add(this.numericUpDown1);
+            this.groupBox3.Controls.Add(this.label2);
+            this.groupBox3.Controls.Add(this.label1);
+            this.groupBox3.Controls.Add(this.btnAddItem_to_Request);
+            this.groupBox3.Location = new System.Drawing.Point(3, 185);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(851, 61);
+            this.groupBox3.TabIndex = 58;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "کالای انتخاب شده";
+            // 
+            // btnAddItem_to_Request
+            // 
+            this.btnAddItem_to_Request.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAddItem_to_Request.BackColor = System.Drawing.Color.ForestGreen;
+            this.btnAddItem_to_Request.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAddItem_to_Request.ForeColor = System.Drawing.SystemColors.Window;
+            this.btnAddItem_to_Request.Location = new System.Drawing.Point(9, 20);
+            this.btnAddItem_to_Request.Name = "btnAddItem_to_Request";
+            this.btnAddItem_to_Request.Size = new System.Drawing.Size(163, 31);
+            this.btnAddItem_to_Request.TabIndex = 0;
+            this.btnAddItem_to_Request.Text = "اضافه کردن به درخواست";
+            this.btnAddItem_to_Request.UseVisualStyleBackColor = false;
+            this.btnAddItem_to_Request.Click += new System.EventHandler(this.BtnAddItem_to_Request_Click);
+            // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(343, 27);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(43, 19);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "تعداد  :";
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(213, 27);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(32, 19);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "واحد";
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.numericUpDown1.Location = new System.Drawing.Point(251, 23);
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(89, 26);
+            this.numericUpDown1.TabIndex = 3;
+            this.numericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox1.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox1.Location = new System.Drawing.Point(563, 25);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(245, 22);
+            this.textBox1.TabIndex = 51;
+            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox2.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox2.Location = new System.Drawing.Point(398, 25);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.ReadOnly = true;
+            this.textBox2.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.textBox2.Size = new System.Drawing.Size(108, 22);
+            this.textBox2.TabIndex = 49;
+            this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(814, 28);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(23, 15);
+            this.label4.TabIndex = 46;
+            this.label4.Text = "نام :";
+            // 
+            // label6
+            // 
+            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(507, 28);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(22, 15);
+            this.label6.TabIndex = 47;
+            this.label6.Text = "کد :";
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox4.Controls.Add(this.btnSave);
+            this.groupBox4.Controls.Add(this.btnCancel);
+            this.groupBox4.Controls.Add(this.dgvRequestItems);
+            this.groupBox4.Location = new System.Drawing.Point(3, 252);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(851, 134);
+            this.groupBox4.TabIndex = 59;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "درخواست";
+            // 
+            // dgvRequestItems
+            // 
+            this.dgvRequestItems.AllowUserToAddRows = false;
+            this.dgvRequestItems.AllowUserToDeleteRows = false;
+            this.dgvRequestItems.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvRequestItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvRequestItems.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colItem_Index,
+            this.colItem_SmallCode,
+            this.colItem_Name,
+            this.colQuantity,
+            this.colItem_Unit,
+            this.colNeed_Supervisor_Confirmation,
+            this.colNeed_Manager_Confirmation,
+            this.colRemove});
+            this.dgvRequestItems.Location = new System.Drawing.Point(6, 24);
+            this.dgvRequestItems.Name = "dgvRequestItems";
+            this.dgvRequestItems.ReadOnly = true;
+            this.dgvRequestItems.Size = new System.Drawing.Size(839, 75);
+            this.dgvRequestItems.TabIndex = 0;
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancel.Location = new System.Drawing.Point(6, 105);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(75, 28);
+            this.btnCancel.TabIndex = 1;
+            this.btnCancel.Text = "انصراف";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
+            // 
+            // btnSave
+            // 
+            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSave.Location = new System.Drawing.Point(743, 105);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(102, 28);
+            this.btnSave.TabIndex = 1;
+            this.btnSave.Text = "ثبت درخواست";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.BtnSave_Click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.pictureBox1.BackColor = System.Drawing.SystemColors.Window;
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(404, 167);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(49, 54);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 10;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Visible = false;
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.progressBar1.Location = new System.Drawing.Point(379, 183);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(100, 23);
+            this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            this.progressBar1.TabIndex = 9;
+            // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.WorkerSupportsCancellation = true;
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BackgroundWorker1_DoWork);
+            this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BackgroundWorker1_RunWorkerCompleted);
+            // 
+            // colItem_Index
+            // 
+            this.colItem_Index.HeaderText = "Item_Index ";
+            this.colItem_Index.Name = "colItem_Index";
+            this.colItem_Index.ReadOnly = true;
+            this.colItem_Index.Visible = false;
+            // 
+            // colItem_SmallCode
+            // 
+            this.colItem_SmallCode.HeaderText = "کد کالا";
+            this.colItem_SmallCode.Name = "colItem_SmallCode";
+            this.colItem_SmallCode.ReadOnly = true;
+            // 
+            // colItem_Name
+            // 
+            this.colItem_Name.HeaderText = "نام کالا";
+            this.colItem_Name.Name = "colItem_Name";
+            this.colItem_Name.ReadOnly = true;
+            this.colItem_Name.Width = 300;
+            // 
+            // colQuantity
+            // 
+            this.colQuantity.HeaderText = "تعداد";
+            this.colQuantity.Name = "colQuantity";
+            this.colQuantity.ReadOnly = true;
+            this.colQuantity.Width = 50;
+            // 
+            // colItem_Unit
+            // 
+            this.colItem_Unit.HeaderText = "واحد";
+            this.colItem_Unit.Name = "colItem_Unit";
+            this.colItem_Unit.ReadOnly = true;
+            // 
+            // colNeed_Supervisor_Confirmation
+            // 
+            this.colNeed_Supervisor_Confirmation.HeaderText = "Need_Supervisor_Confirmation";
+            this.colNeed_Supervisor_Confirmation.Name = "colNeed_Supervisor_Confirmation";
+            this.colNeed_Supervisor_Confirmation.ReadOnly = true;
+            this.colNeed_Supervisor_Confirmation.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colNeed_Supervisor_Confirmation.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.colNeed_Supervisor_Confirmation.Visible = false;
+            // 
+            // colNeed_Manager_Confirmation
+            // 
+            this.colNeed_Manager_Confirmation.HeaderText = "Need_Manager_Confirmation";
+            this.colNeed_Manager_Confirmation.Name = "colNeed_Manager_Confirmation";
+            this.colNeed_Manager_Confirmation.ReadOnly = true;
+            this.colNeed_Manager_Confirmation.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colNeed_Manager_Confirmation.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.colNeed_Manager_Confirmation.Visible = false;
+            // 
+            // colRemove
+            // 
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.Red;
+            this.colRemove.DefaultCellStyle = dataGridViewCellStyle7;
+            this.colRemove.HeaderText = " ";
+            this.colRemove.Name = "colRemove";
+            this.colRemove.ReadOnly = true;
+            this.colRemove.Text = "حذف";
+            this.colRemove.UseColumnTextForButtonValue = true;
+            this.colRemove.Width = 50;
+            // 
+            // M1120_WarehouseRequest_AddNew
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnCancel;
+            this.ClientSize = new System.Drawing.Size(858, 389);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.progressBar1);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.panel1);
+            this.Name = "M1120_WarehouseRequest_AddNew";
+            this.Text = "M1120_WarehouseRequest_AddNew";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.M1120_WarehouseRequest_AddNew_FormClosing);
+            this.Load += new System.EventHandler(this.M1120_WarehouseRequest_AddNew_Load);
+            this.Shown += new System.EventHandler(this.M1120_WarehouseRequest_AddNew_Shown);
+            this.panel1.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvWarehouseItems)).EndInit();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            this.groupBox4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvRequestItems)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Button btnShowAll;
+        private System.Windows.Forms.Button btnSearch;
+        private System.Windows.Forms.TextBox txtST_Name;
+        private System.Windows.Forms.TextBox txtST_SmallCode;
+        private System.Windows.Forms.ComboBox cmbST_Name;
+        private System.Windows.Forms.ComboBox cmbST_SmallCode;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.DataGridView dgvWarehouseItems;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnAddItem_to_Request;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.DataGridView dgvRequestItems;
+        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colItem_Index;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colItem_SmallCode;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colItem_Name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colQuantity;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colItem_Unit;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn colNeed_Supervisor_Confirmation;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn colNeed_Manager_Confirmation;
+        private System.Windows.Forms.DataGridViewButtonColumn colRemove;
+    }
+}

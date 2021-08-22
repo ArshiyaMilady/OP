@@ -40,6 +40,7 @@
             this.tsmiOrdersFeatures = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiOrdersLevels = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiOrders_and_Details = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiOtherSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiOrders = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiNewOrder = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiShowOrders = new System.Windows.Forms.ToolStripMenuItem();
@@ -67,7 +68,7 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnClose = new System.Windows.Forms.Button();
-            this.tsmiOtherSettings = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiWarehouse_RequestItems = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -106,7 +107,7 @@
             this.tsmiUserLevelsFeatures,
             this.tsmiLoginsHistory});
             this.tsmiUsers.Name = "tsmiUsers";
-            this.tsmiUsers.Size = new System.Drawing.Size(180, 24);
+            this.tsmiUsers.Size = new System.Drawing.Size(156, 24);
             this.tsmiUsers.Text = "کاربران";
             // 
             // tsmiUsers_Show_Change
@@ -149,7 +150,7 @@
             this.tsmiOrdersLevels,
             this.tsmiOrders_and_Details});
             this.tsmiOrdersFeatures.Name = "tsmiOrdersFeatures";
-            this.tsmiOrdersFeatures.Size = new System.Drawing.Size(180, 24);
+            this.tsmiOrdersFeatures.Size = new System.Drawing.Size(156, 24);
             this.tsmiOrdersFeatures.Text = "سفارشها";
             // 
             // tsmiOrdersLevels
@@ -165,6 +166,14 @@
             this.tsmiOrders_and_Details.Size = new System.Drawing.Size(200, 24);
             this.tsmiOrders_and_Details.Text = "سفارشها با تمام جزییات";
             this.tsmiOrders_and_Details.Click += new System.EventHandler(this.TsmiOrders_and_Details_Click);
+            // 
+            // tsmiOtherSettings
+            // 
+            this.tsmiOtherSettings.Name = "tsmiOtherSettings";
+            this.tsmiOtherSettings.Size = new System.Drawing.Size(156, 24);
+            this.tsmiOtherSettings.Text = "تنظیمات برنامه";
+            this.tsmiOtherSettings.Visible = false;
+            this.tsmiOtherSettings.Click += new System.EventHandler(this.TsmiOtherSettings_Click);
             // 
             // tsmiOrders
             // 
@@ -261,7 +270,8 @@
             // 
             this.tsmiWarehouse.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiWarehouseItems,
-            this.tsmiWarehouses});
+            this.tsmiWarehouses,
+            this.tsmiWarehouse_RequestItems});
             this.tsmiWarehouse.Name = "tsmiWarehouse";
             this.tsmiWarehouse.Size = new System.Drawing.Size(44, 23);
             this.tsmiWarehouse.Text = "انبار";
@@ -269,14 +279,14 @@
             // tsmiWarehouseItems
             // 
             this.tsmiWarehouseItems.Name = "tsmiWarehouseItems";
-            this.tsmiWarehouseItems.Size = new System.Drawing.Size(152, 24);
+            this.tsmiWarehouseItems.Size = new System.Drawing.Size(190, 24);
             this.tsmiWarehouseItems.Text = "موجودی";
             this.tsmiWarehouseItems.Click += new System.EventHandler(this.TsmiStock_Inventory_Click);
             // 
             // tsmiWarehouses
             // 
             this.tsmiWarehouses.Name = "tsmiWarehouses";
-            this.tsmiWarehouses.Size = new System.Drawing.Size(152, 24);
+            this.tsmiWarehouses.Size = new System.Drawing.Size(190, 24);
             this.tsmiWarehouses.Text = "مشاهده انبارها";
             this.tsmiWarehouses.Click += new System.EventHandler(this.TsmiWarehouses_Click);
             // 
@@ -386,13 +396,12 @@
             this.btnClose.UseVisualStyleBackColor = false;
             this.btnClose.Click += new System.EventHandler(this.BtnClose_Click);
             // 
-            // tsmiOtherSettings
+            // tsmiWarehouse_RequestItems
             // 
-            this.tsmiOtherSettings.Name = "tsmiOtherSettings";
-            this.tsmiOtherSettings.Size = new System.Drawing.Size(180, 24);
-            this.tsmiOtherSettings.Text = "تنظیمات برنامه";
-            this.tsmiOtherSettings.Visible = false;
-            this.tsmiOtherSettings.Click += new System.EventHandler(this.TsmiOtherSettings_Click);
+            this.tsmiWarehouse_RequestItems.Name = "tsmiWarehouse_RequestItems";
+            this.tsmiWarehouse_RequestItems.Size = new System.Drawing.Size(190, 24);
+            this.tsmiWarehouse_RequestItems.Text = "درخواست کالااز انبار";
+            this.tsmiWarehouse_RequestItems.Click += new System.EventHandler(this.TsmiWarehouse_RequestItems_Click);
             // 
             // J1000_MainForm
             // 
@@ -466,6 +475,7 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiWarehouses;
         private System.Windows.Forms.ToolStripMenuItem tsmiCategories;
         private System.Windows.Forms.ToolStripMenuItem tsmiOtherSettings;
+        private System.Windows.Forms.ToolStripMenuItem tsmiWarehouse_RequestItems;
     }
 }
 

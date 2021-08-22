@@ -55,10 +55,10 @@
             this.tsmiOrderHistory = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiOrderDetails = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiWarehouseChecklist = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiChangeOrder = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiChangeOrderLevel = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiCancel = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiChangeOrder = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
@@ -85,7 +85,7 @@
             this.panel1.Enabled = false;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(844, 319);
+            this.panel1.Size = new System.Drawing.Size(844, 321);
             this.panel1.TabIndex = 0;
             // 
             // panel2
@@ -287,7 +287,7 @@
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.Maroon;
-            this.label2.Location = new System.Drawing.Point(187, 293);
+            this.label2.Location = new System.Drawing.Point(187, 295);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(366, 18);
             this.label2.TabIndex = 3;
@@ -297,7 +297,7 @@
             // 
             this.btnReturn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnReturn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnReturn.Location = new System.Drawing.Point(3, 285);
+            this.btnReturn.Location = new System.Drawing.Point(3, 287);
             this.btnReturn.Name = "btnReturn";
             this.btnReturn.Size = new System.Drawing.Size(75, 29);
             this.btnReturn.TabIndex = 40;
@@ -308,7 +308,7 @@
             // btnImportOrdersFromExcel
             // 
             this.btnImportOrdersFromExcel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnImportOrdersFromExcel.Location = new System.Drawing.Point(557, 250);
+            this.btnImportOrdersFromExcel.Location = new System.Drawing.Point(557, 252);
             this.btnImportOrdersFromExcel.Name = "btnImportOrdersFromExcel";
             this.btnImportOrdersFromExcel.Size = new System.Drawing.Size(283, 31);
             this.btnImportOrdersFromExcel.TabIndex = 45;
@@ -320,7 +320,7 @@
             // btnDeleteAll
             // 
             this.btnDeleteAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnDeleteAll.Location = new System.Drawing.Point(94, 285);
+            this.btnDeleteAll.Location = new System.Drawing.Point(94, 287);
             this.btnDeleteAll.Name = "btnDeleteAll";
             this.btnDeleteAll.Size = new System.Drawing.Size(75, 29);
             this.btnDeleteAll.TabIndex = 45;
@@ -339,7 +339,7 @@
             this.dgvData.Name = "dgvData";
             this.dgvData.ReadOnly = true;
             this.dgvData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvData.Size = new System.Drawing.Size(548, 279);
+            this.dgvData.Size = new System.Drawing.Size(548, 281);
             this.dgvData.TabIndex = 50;
             this.dgvData.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvData_CellDoubleClick);
             this.dgvData.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvData_CellMouseDown);
@@ -357,7 +357,7 @@
             this.tsmiChangeOrder});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 180);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 158);
             // 
             // tsmiOrderHistory
             // 
@@ -380,14 +380,6 @@
             this.tsmiWarehouseChecklist.Text = "مشاهده چک لیست انبار";
             this.tsmiWarehouseChecklist.Visible = false;
             this.tsmiWarehouseChecklist.Click += new System.EventHandler(this.TsmiWarehouseChecklist_Click);
-            // 
-            // tsmiChangeOrder
-            // 
-            this.tsmiChangeOrder.Name = "tsmiChangeOrder";
-            this.tsmiChangeOrder.Size = new System.Drawing.Size(180, 22);
-            this.tsmiChangeOrder.Text = "تغییر سفارش";
-            this.tsmiChangeOrder.Visible = false;
-            this.tsmiChangeOrder.Click += new System.EventHandler(this.TsmiChangeOrder_Click);
             // 
             // tsmiChangeOrderLevel
             // 
@@ -413,12 +405,20 @@
             this.tsmiCancel.Visible = false;
             this.tsmiCancel.Click += new System.EventHandler(this.TsmiCancel_Click);
             // 
+            // tsmiChangeOrder
+            // 
+            this.tsmiChangeOrder.Name = "tsmiChangeOrder";
+            this.tsmiChangeOrder.Size = new System.Drawing.Size(180, 22);
+            this.tsmiChangeOrder.Text = "تغییر سفارش";
+            this.tsmiChangeOrder.Visible = false;
+            this.tsmiChangeOrder.Click += new System.EventHandler(this.TsmiChangeOrder_Click);
+            // 
             // pictureBox1
             // 
             this.pictureBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.pictureBox1.BackColor = System.Drawing.SystemColors.Window;
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(396, 133);
+            this.pictureBox1.Location = new System.Drawing.Point(396, 134);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(49, 54);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -429,7 +429,7 @@
             // progressBar1
             // 
             this.progressBar1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.progressBar1.Location = new System.Drawing.Point(371, 149);
+            this.progressBar1.Location = new System.Drawing.Point(371, 150);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(100, 23);
             this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
@@ -446,7 +446,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnReturn;
-            this.ClientSize = new System.Drawing.Size(843, 320);
+            this.ClientSize = new System.Drawing.Size(843, 322);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.panel1);

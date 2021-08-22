@@ -24,7 +24,7 @@ namespace OrdersProgress
 
         //public static string UserName = "admin";
         // سطح دسترسی کاربری که با نرم افزار کار می کند 
-        public static int UserLevel = UserLevel_Supervisor1;
+        //public static int UserLevel = UserLevel_Supervisor1;
 
         // امکانات کاربر وارد شده را در خود نگه می دارد
         public static List<string> lstUser_ULF_UniquePhrase = new List<string>();

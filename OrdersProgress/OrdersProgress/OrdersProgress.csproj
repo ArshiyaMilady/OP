@@ -307,6 +307,18 @@
     <Compile Include="M1110_WarehouseItems.Designer.cs">
       <DependentUpon>M1110_WarehouseItems.cs</DependentUpon>
     </Compile>
+    <Compile Include="M1120_WarehouseRequest_AddNew.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="M1120_WarehouseRequest_AddNew.Designer.cs">
+      <DependentUpon>M1120_WarehouseRequest_AddNew.cs</DependentUpon>
+    </Compile>
+    <Compile Include="M1130_Warehouse_RequestItems.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="M1130_Warehouse_RequestItems.Designer.cs">
+      <DependentUpon>M1130_Warehouse_RequestItems.cs</DependentUpon>
+    </Compile>
     <Compile Include="M2100_OrdersPriority.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -511,6 +523,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="M1110_WarehouseItems.resx">
       <DependentUpon>M1110_WarehouseItems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="M1120_WarehouseRequest_AddNew.resx">
+      <DependentUpon>M1120_WarehouseRequest_AddNew.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="M1130_Warehouse_RequestItems.resx">
+      <DependentUpon>M1130_Warehouse_RequestItems.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="M2100_OrdersPriority.resx">
       <DependentUpon>M2100_OrdersPriority.cs</DependentUpon>

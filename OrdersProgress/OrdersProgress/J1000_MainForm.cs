@@ -584,5 +584,10 @@ namespace OrdersProgress
         {
             new J1900_OtherSettings().ShowDialog();
        }
+
+        private void TsmiWarehouse_RequestItems_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
