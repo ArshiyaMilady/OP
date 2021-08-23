@@ -190,6 +190,7 @@ namespace OrdersProgress
                 long supervisor_ul_index = checkBox1.Checked ? 0 : Convert.ToInt64(dgvULs.CurrentRow.Cells["Index"].Value);
                 long ul_cr_index = Program.dbOperations.AddUL_Request_Category(
                     new Models.UL_Request_Category {
+                        Company_Index = Stack.Company_Index,
                         User_Level_Index = ul_index,
                         Category_Index = cat_index,
                         Supervisor_UL_Index = supervisor_ul_index,

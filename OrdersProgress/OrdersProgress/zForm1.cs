@@ -52,7 +52,7 @@ namespace OrdersProgress
         private void Button1_Click(object sender, EventArgs e)
         {
             #region حذف رابطه سطح کاربری-دسته کالا -سرپرست در درخواست کالا از انبار
-            //Program.dbOperations.DeleteAllUL_Request_CategoriesAsync();
+            Program.dbOperations.DeleteAllUL_Request_CategoriesAsync();
             #endregion
 
             #region دسته بندی اولیه : نامشخص
