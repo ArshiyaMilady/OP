@@ -993,7 +993,8 @@ namespace OrdersProgress
 
         private void BtnShowAll_Click(object sender, EventArgs e)
         {
-            RadModule_CheckedChanged(null, null);
+            //RadModule_CheckedChanged(null, null);
+            dgvData.DataSource = GetData();
         }
 
         private void TsmiProperties_Click(object sender, EventArgs e)

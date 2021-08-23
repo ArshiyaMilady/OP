@@ -386,11 +386,12 @@ namespace OrdersProgress.Models
         #region UL_Confirm_UL_Request
         public List<UL_Confirm_UL_Request> GetAllUL_Confirm_UL_RequestsAsync(long company_index, long UL_index = 0, long Supervisor_UL_index = 0)
         {
-            List<UL_Confirm_UL_Request> lstUCUR = _db.Table<UL_Confirm_UL_Request>().Where(b => b.Company_Index == company_index).ToListAsync().Result;
+            List<UL_Confirm_UL_Request> lstUCUR = _db.Table<UL_Confirm_UL_Request>()
+                .Where(b => b.Company_Index == company_index).ToListAsync().Result;
             if (UL_index > 0)
-                return lstUCUR.Where(d=>d.UL_Index == UL_index).ToList();
+                lstUCUR = lstUCUR.Where(d=>d.UL_Index == UL_index).ToList();
             if (Supervisor_UL_index > 0)
-                return lstUCUR.Where(d => d.Supervisor_UL_Index == Supervisor_UL_index).ToList();
+                lstUCUR = lstUCUR.Where(d => d.Supervisor_UL_Index == Supervisor_UL_index).ToList();
 
             return lstUCUR;
         }

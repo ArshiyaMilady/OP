@@ -294,18 +294,21 @@ namespace OrdersProgress
                 case "Mobile":
                     //bSaveChange = false;
                     user.Mobile = Convert.ToString(dgvData["Mobile", e.RowIndex].Value);
-                    if(user.Mobile.Trim().Length<10)
+                    if (Stack.UserLevel_Type != 1)
                     {
-                        MessageBox.Show("لطفا شماره موبایل را بدرستی وارد نمایید", "خطا");
-                        bSaveChange = false;
-                    }
-                    else if(Program.dbOperations.GetAllUsersAsync(Stack.Company_Index, 0).Where(d=>d.Index!=index)
-                        .Where(j=>j.Mobile!=null).Where(n=>n.Mobile.Length>=10)
-                        .Any(q=>q.Mobile.Substring(q.Mobile.Length-10)
-                        .Equals(user.Mobile.Substring(q.Mobile.Length - 10))))
-                    {
-                        MessageBox.Show("این شماره همراه قبلا وارد شده است", "خطا");
-                        bSaveChange = false;
+                        if (user.Mobile.Trim().Length < 10)
+                        {
+                            MessageBox.Show("لطفا شماره موبایل را بدرستی وارد نمایید", "خطا");
+                            bSaveChange = false;
+                        }
+                        else if (Program.dbOperations.GetAllUsersAsync(Stack.Company_Index, 0).Where(d => d.Index != index)
+                            .Where(j => j.Mobile != null).Where(n => n.Mobile.Length >= 10)
+                            .Any(q => q.Mobile.Substring(q.Mobile.Length - 10)
+                            .Equals(user.Mobile.Substring(q.Mobile.Length - 10))))
+                        {
+                            MessageBox.Show("این شماره همراه قبلا وارد شده است", "خطا");
+                            bSaveChange = false;
+                        }
                     }
                     break;
                 case "Phone":

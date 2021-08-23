@@ -18,6 +18,9 @@ namespace OrdersProgress
         public M1120_WarehouseRequest_AddNew()
         {
             InitializeComponent();
+
+            // آیا کاربر درخواست(های) جدیدی را ثبت کرده است
+            Stack.bx = false;
         }
 
         private void M1120_WarehouseRequest_AddNew_Load(object sender, EventArgs e)
@@ -67,6 +70,10 @@ namespace OrdersProgress
             if (MessageBox.Show("پس از ثبت درخواست، امکان تغییر در درخواست نخواهد بود. آیا از ثبت درخواست اطمینان دارید؟"
                 , "", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
 
+            panel1.Enabled = false;
+            progressBar1.Visible = true;
+            Application.DoEvents();
+
             Models.Warehouse_Request wr = new Models.Warehouse_Request
             {
                 Company_Index=Stack.Company_Index,
@@ -78,12 +85,36 @@ namespace OrdersProgress
                 DateTime_sh = Stack_Methods.Miladi_to_Shamsi_YYYYMMDD(DateTime.Now),
             };
 
+            Application.DoEvents();
             long wr_index = Program.dbOperations.AddWarehouse_RequestAsync(wr,Stack.Company_Index);
 
             for (int i = 0; i < dgvRequestItems.Rows.Count; i++)
             {
-                Program.dbOperations.AddWarehouse_Request_RowAsync()
+                DataGridViewRow row = dgvRequestItems.Rows[i];
+
+                long cost_center_index = 0;
+                if (lstCostCenter_Code.Any())
+                    cost_center_index = lstCostCenter_Code[cmbCostCenters.SelectedIndex];
+
+                Program.dbOperations.AddWarehouse_Request_RowAsync(
+                    new Models.Warehouse_Request_Row
+                    {
+                        Warehouse_Request_Index = wr_index,
+                        CostCenter_Index = cost_center_index,
+                        Item_Index = Convert.ToInt64(row.Cells["colItem_Index"].Value),
+                        Item_SmallCode = Convert.ToString(row.Cells["colItem_Index"].Value),
+                        Item_Name = Convert.ToString(row.Cells["colItem_Name"].Value),
+                        Item_Unit = Convert.ToString(row.Cells["colItem_Unit"].Value),
+                        Quantity = Convert.ToDouble(row.Cells["colQuantity"].Value),
+                        Need_Supervisor_Confirmation = Convert.ToBoolean(row.Cells["colNeed_Supervisor_Confirmation"].Value),
+                    });
+                Application.DoEvents();
             }
+
+            progressBar1.Visible = false;
+            panel1.Enabled = true;
+            dgvRequestItems.Rows.Clear();
+            Stack.bx = true;
         }
 
         private void BtnCancel_Click(object sender, EventArgs e)
@@ -282,7 +313,7 @@ namespace OrdersProgress
             if (urc != null)
             {
                 dgvRequestItems["colNeed_Supervisor_Confirmation", iRow].Value = urc.Need_Supervisor_Confirmation;
-                dgvRequestItems["colNeed_Manager_Confirmation", iRow].Value = urc.Need_Manager_Confirmation;
+                //dgvRequestItems["colNeed_Manager_Confirmation", iRow].Value = urc.Need_Manager_Confirmation;
             }
         }
 

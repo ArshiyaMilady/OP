@@ -73,7 +73,7 @@ namespace OrdersProgress
             {
                 cmbWarehouses.SelectedIndex = 0;
                 cmbCategories.SelectedIndex = 0;
-                //chkEnable.Checked = true;
+                chkEnable.Checked = true;
                 //chkSalable.Checked = true;
             }
             else
@@ -189,7 +189,7 @@ namespace OrdersProgress
             if (bEverythingOK)
             {
                 item.Company_Index = Stack.Company_Index;
-                item.Enable = true;
+                item.Category_Index = Program.dbOperations.GetCategoryAsync(cmbCategories.Text, Stack.Company_Index).Index;
                 item.Name_Samll = textBox1.Text;
                 item.Code_Small = textBox2.Text;
                 item.Name_Full = textBox3.Text;

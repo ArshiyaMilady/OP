@@ -134,6 +134,7 @@ namespace OrdersProgress
             tsmiWarehouse.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jq0000");
             tsmiWarehouseItems.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jq3000");
             tsmiWarehouses.Visible= Stack.lstUser_ULF_UniquePhrase.Contains("jq4000");
+            tsmiWarehouse_RequestItems.Visible= Stack.lstUser_ULF_UniquePhrase.Contains("jq5000");
             #endregion
 
             #region منوی تعریف محصولات و زیرمنوهایش

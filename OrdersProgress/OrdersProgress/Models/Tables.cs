@@ -134,7 +134,6 @@ namespace OrdersProgress.Models
         public long UL_Index { get; set; }  // مابقی سطوح کاربری
     }
 
-
     // برای تأیید درخواست ها به انبار چه سطح کاربری ، سرپرست سرپرست سطح کاربری دیگر به حساب می آید
     public class UL_Confirm_UL_Request
     {
@@ -1223,8 +1222,9 @@ namespace OrdersProgress.Models
         public string Manager_Confirmer_Name { get; set; }    // نام مدیر تأیید کننده
         #endregion
 
-        public bool Sent_to_Warehouse { get; set; }  // مراحل تأیید درخواست کامل شده و درخواست به انبار ارسال گردید
-        public bool Request_Completed { get; set; }  // درخواست توسط انبار تحویل داده شد
+        public bool Sent_to_Warehouse { get; set; } // مراحل تأیید درخواست کامل شده و درخواست به انبار ارسال گردید
+        public bool Request_Completed { get; set; } // درخواست توسط انبار تحویل داده شد
+        public bool Request_Canceled{ get; set; }   // درخواست توسط سرپرستی کنسل شده است
     }
 
     // ردیف های موجود در حواله یا رسید انبار
@@ -1236,7 +1236,7 @@ namespace OrdersProgress.Models
         public long Index { get; set; }
         public long Warehouse_Request_Index { get; set; }
         public long CostCenter_Index { get; set; }  // کد مرکز هزینه
-        public string Item_Index { get; set; }
+        public long Item_Index { get; set; }
         public string Item_SmallCode { get; set; }    // کد کوچک کالا
         public string Item_Name { get; set; }
         public double Quantity { get; set; }   // تعداد کالا در ردیف

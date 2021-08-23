@@ -57,11 +57,11 @@ namespace OrdersProgress
             foreach (Models.User_Level ul in lstUL)
             {
                 ul.C_B1 = Program.dbOperations.GetAllUL_Confirm_UL_RequestsAsync(Stack.Company_Index, ul_index)
-                    .Any(d => d.UL_Index == ul.Index);
+                    .Any(d => d.Supervisor_UL_Index == ul.Index);
             }
 
 
-            return lstUL.OrderByDescending(d => d.C_B1).ToList();
+            return lstUL.Where(d=>d.Index!=ul_index).OrderByDescending(d => d.C_B1).ToList();
         }
 
         private void ShowData()
@@ -137,10 +137,10 @@ namespace OrdersProgress
 
         private void BtnDeleteAll_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("آیا از حذف تمام روابط سطوح کاربری اطمینان دارید؟"
+            if (MessageBox.Show("آیا از حذف تمام روابط سطوح کاربری و تأیید کننده های درخواستها اطمینان دارید؟"
                 , "", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
 
-            Program.dbOperations.DeleteAllUL_See_ULsAsync();
+            Program.dbOperations.DeleteAllUL_Confirm_UL_RequestsAsync();
         }
 
         // فقط یکی از سطح ها انتخاب شود

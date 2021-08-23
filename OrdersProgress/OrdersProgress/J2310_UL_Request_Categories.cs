@@ -77,10 +77,10 @@ namespace OrdersProgress
                         col.HeaderText = "نیاز به تأیید سرپرست؟";
                         col.Width = 100;
                         break;
-                    case "Need_Manager_Confirmation":
-                        col.HeaderText = "نیاز به تأیید مدیریت";
-                        col.Width = 100;
-                        break;
+                    //case "Need_Manager_Confirmation":
+                    //    col.HeaderText = "نیاز به تأیید مدیریت";
+                    //    col.Width = 100;
+                    //    break;
 
                     default: col.Visible = false; break;
                 }

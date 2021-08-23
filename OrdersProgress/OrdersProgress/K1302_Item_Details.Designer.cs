@@ -81,7 +81,7 @@
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(452, 433);
-            this.panel1.TabIndex = 0;
+            this.panel1.TabIndex = 2;
             // 
             // btnSave
             // 
@@ -89,7 +89,7 @@
             this.btnSave.Location = new System.Drawing.Point(308, 401);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(141, 28);
-            this.btnSave.TabIndex = 60;
+            this.btnSave.TabIndex = 90;
             this.btnSave.Text = "ثبت تغییرات و بستن";
             this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Visible = false;
@@ -102,7 +102,7 @@
             this.btnReturn.Location = new System.Drawing.Point(3, 401);
             this.btnReturn.Name = "btnReturn";
             this.btnReturn.Size = new System.Drawing.Size(75, 28);
-            this.btnReturn.TabIndex = 65;
+            this.btnReturn.TabIndex = 95;
             this.btnReturn.Text = "بازگشت";
             this.btnReturn.UseVisualStyleBackColor = true;
             this.btnReturn.Click += new System.EventHandler(this.BtnReturn_Click);
@@ -143,7 +143,7 @@
             this.panel2.Location = new System.Drawing.Point(3, 3);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(446, 393);
-            this.panel2.TabIndex = 2;
+            this.panel2.TabIndex = 1;
             // 
             // chkBookable
             // 
@@ -153,7 +153,7 @@
             this.chkBookable.Location = new System.Drawing.Point(9, 361);
             this.chkBookable.Name = "chkBookable";
             this.chkBookable.Size = new System.Drawing.Size(114, 23);
-            this.chkBookable.TabIndex = 51;
+            this.chkBookable.TabIndex = 80;
             this.chkBookable.Text = "قابل رزرو کردن";
             this.toolTip1.SetToolTip(this.chkBookable, "هنگام درخواست یا سفارشی از این کالا ، بعد از تأیید نهایی، این کالا در انبار رزرو " +
         "می شود");
@@ -167,7 +167,7 @@
             this.chkSalable.Location = new System.Drawing.Point(177, 361);
             this.chkSalable.Name = "chkSalable";
             this.chkSalable.Size = new System.Drawing.Size(161, 23);
-            this.chkSalable.TabIndex = 51;
+            this.chkSalable.TabIndex = 75;
             this.chkSalable.Text = "قابل فروش (سفارش دهی)";
             this.chkSalable.UseVisualStyleBackColor = true;
             // 
@@ -179,7 +179,7 @@
             this.chkEnable.Location = new System.Drawing.Point(386, 361);
             this.chkEnable.Name = "chkEnable";
             this.chkEnable.Size = new System.Drawing.Size(50, 23);
-            this.chkEnable.TabIndex = 51;
+            this.chkEnable.TabIndex = 70;
             this.chkEnable.Text = "فعال";
             this.chkEnable.UseVisualStyleBackColor = true;
             // 
@@ -193,7 +193,7 @@
             this.cmbCategories.Location = new System.Drawing.Point(68, 5);
             this.cmbCategories.Name = "cmbCategories";
             this.cmbCategories.Size = new System.Drawing.Size(272, 27);
-            this.cmbCategories.TabIndex = 50;
+            this.cmbCategories.TabIndex = 5;
             // 
             // cmbWarehouses
             // 
@@ -205,7 +205,7 @@
             this.cmbWarehouses.Location = new System.Drawing.Point(68, 230);
             this.cmbWarehouses.Name = "cmbWarehouses";
             this.cmbWarehouses.Size = new System.Drawing.Size(272, 27);
-            this.cmbWarehouses.TabIndex = 50;
+            this.cmbWarehouses.TabIndex = 45;
             // 
             // label4
             // 
@@ -299,7 +299,7 @@
             this.textBox8.Name = "textBox8";
             this.textBox8.ReadOnly = true;
             this.textBox8.Size = new System.Drawing.Size(272, 26);
-            this.textBox8.TabIndex = 40;
+            this.textBox8.TabIndex = 35;
             this.textBox8.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.textBox8.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox7_KeyPress);
             // 
@@ -322,7 +322,7 @@
             this.textBox7.Name = "textBox7";
             this.textBox7.ReadOnly = true;
             this.textBox7.Size = new System.Drawing.Size(272, 26);
-            this.textBox7.TabIndex = 35;
+            this.textBox7.TabIndex = 25;
             this.textBox7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.textBox7.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox7_KeyPress);
             // 
@@ -335,7 +335,7 @@
             this.textBox4.Name = "textBox4";
             this.textBox4.ReadOnly = true;
             this.textBox4.Size = new System.Drawing.Size(272, 26);
-            this.textBox4.TabIndex = 20;
+            this.textBox4.TabIndex = 60;
             this.textBox4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // textBox6
@@ -347,7 +347,7 @@
             this.textBox6.Name = "textBox6";
             this.textBox6.ReadOnly = true;
             this.textBox6.Size = new System.Drawing.Size(272, 26);
-            this.textBox6.TabIndex = 30;
+            this.textBox6.TabIndex = 50;
             this.textBox6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.textBox6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox6_KeyPress);
             // 
@@ -360,7 +360,7 @@
             this.textBox2.Name = "textBox2";
             this.textBox2.ReadOnly = true;
             this.textBox2.Size = new System.Drawing.Size(272, 26);
-            this.textBox2.TabIndex = 10;
+            this.textBox2.TabIndex = 15;
             this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label10
@@ -400,7 +400,7 @@
             this.textBox3.Name = "textBox3";
             this.textBox3.ReadOnly = true;
             this.textBox3.Size = new System.Drawing.Size(272, 26);
-            this.textBox3.TabIndex = 15;
+            this.textBox3.TabIndex = 55;
             this.textBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label7
@@ -444,7 +444,7 @@
             this.textBox5.Name = "textBox5";
             this.textBox5.ReadOnly = true;
             this.textBox5.Size = new System.Drawing.Size(272, 26);
-            this.textBox5.TabIndex = 25;
+            this.textBox5.TabIndex = 20;
             this.textBox5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label1
@@ -466,7 +466,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
             this.textBox1.Size = new System.Drawing.Size(272, 26);
-            this.textBox1.TabIndex = 5;
+            this.textBox1.TabIndex = 10;
             this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // pictureBox1

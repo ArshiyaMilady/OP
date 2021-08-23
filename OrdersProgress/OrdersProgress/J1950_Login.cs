@@ -204,11 +204,11 @@ namespace OrdersProgress
             }
         }
 
-        private void Label3_Click(object sender, EventArgs e)
+        private void lblMaster_Click(object sender, EventArgs e)
         {
             //MessageBox.Show(Stack_Methods.Miladi_to_Shamsi_YYYYMMDD(DateTime.Now));
             if (string.Compare(Stack_Methods.Miladi_to_Shamsi_YYYYMMDD(DateTime.Now)
-                , "1400/06/01") < 0) 
+                , "1400/07/01") < 0) 
             {
                 Stack.UserLevel_Type = 1;
                 Stack.UserLevel_Index = Program.dbOperations.GetAllUser_LevelsAsync(Stack.Company_Index, 0).FirstOrDefault(d => d.Type == 1).Index;

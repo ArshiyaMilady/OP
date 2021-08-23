@@ -53,7 +53,7 @@
             this.panel1.Controls.Add(this.dgvData);
             this.panel1.Location = new System.Drawing.Point(-1, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(743, 333);
+            this.panel1.Size = new System.Drawing.Size(647, 333);
             this.panel1.TabIndex = 4;
             this.panel1.Click += new System.EventHandler(this.BtnReturn_Click);
             // 
@@ -74,7 +74,7 @@
             this.label2.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(146, 7);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(583, 22);
+            this.label2.Size = new System.Drawing.Size(487, 22);
             this.label2.TabIndex = 95;
             this.label2.Text = "از جدول زیر دسته کالاهایی که این سطح کاربری می تواند از انبار درخواست نماید را مش" +
     "خص نمایید";
@@ -106,7 +106,7 @@
             // btnSave
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSave.Location = new System.Drawing.Point(630, 300);
+            this.btnSave.Location = new System.Drawing.Point(534, 300);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(99, 30);
             this.btnSave.TabIndex = 94;
@@ -122,14 +122,14 @@
             this.dgvData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvData.Location = new System.Drawing.Point(12, 32);
             this.dgvData.Name = "dgvData";
-            this.dgvData.Size = new System.Drawing.Size(718, 262);
+            this.dgvData.Size = new System.Drawing.Size(622, 262);
             this.dgvData.TabIndex = 93;
             // 
             // J2310_UL_Request_Categories
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(741, 333);
+            this.ClientSize = new System.Drawing.Size(645, 333);
             this.Controls.Add(this.panel1);
             this.Name = "J2310_UL_Request_Categories";
             this.Text = "J2310_UL_Request_Categories";

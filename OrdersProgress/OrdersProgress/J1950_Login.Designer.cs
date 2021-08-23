@@ -40,7 +40,7 @@
             this.txtNM = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnExit = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lblMaster = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -53,7 +53,7 @@
             this.panel1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.panel1.Controls.Add(this.panel2);
             this.panel1.Controls.Add(this.btnExit);
-            this.panel1.Controls.Add(this.label3);
+            this.panel1.Controls.Add(this.lblMaster);
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(344, 264);
@@ -200,19 +200,19 @@
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.BtnExit_Click);
             // 
-            // label3
+            // lblMaster
             // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label3.AutoSize = true;
-            this.label3.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label3.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.Black;
-            this.label3.Location = new System.Drawing.Point(5, 241);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(32, 17);
-            this.label3.TabIndex = 16;
-            this.label3.Text = "ورود";
-            this.label3.Click += new System.EventHandler(this.Label3_Click);
+            this.lblMaster.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblMaster.AutoSize = true;
+            this.lblMaster.Cursor = System.Windows.Forms.Cursors.Default;
+            this.lblMaster.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMaster.ForeColor = System.Drawing.Color.Black;
+            this.lblMaster.Location = new System.Drawing.Point(5, 241);
+            this.lblMaster.Name = "lblMaster";
+            this.lblMaster.Size = new System.Drawing.Size(32, 17);
+            this.lblMaster.TabIndex = 16;
+            this.lblMaster.Text = "ورود";
+            this.lblMaster.Click += new System.EventHandler(this.lblMaster_Click);
             // 
             // J1950_Login
             // 
@@ -250,6 +250,6 @@
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.Label lblExit;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblMaster;
     }
 }
