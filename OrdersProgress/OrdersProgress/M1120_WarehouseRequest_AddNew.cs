@@ -42,6 +42,15 @@ namespace OrdersProgress
                 }
             }
 
+            #region دسته کالاهایی که کاربر می تواند کالاهای آن را انتخاب نماید
+            List<long> lstCatsIndex = Program.dbOperations.GetAllUL_Request_CategoriesAsync
+                (Stack.Company_Index, Stack.UserLevel_Index).Select(d=>d.Category_Index).ToList();
+
+            foreach (long l in lstCatsIndex)
+                cmbCategories.Items.Add(Program.dbOperations.GetCategoryAsync(l).Name);
+            if (cmbCategories.Items.Count > 0) cmbCategories.SelectedIndex = 0;
+            #endregion
+
             foreach (Models.CostCenter cc in Program.dbOperations.GetAllCostCentersAsync(Stack.Company_Index, 1)
                .Where(d=>!d.Description.Equals("?") && !d.Description.Equals("؟"))
                .OrderBy(d => d.Index_in_Company).ToList())
@@ -73,16 +82,23 @@ namespace OrdersProgress
             panel1.Enabled = false;
             progressBar1.Visible = true;
             Application.DoEvents();
+            bool bNeed_Supervisor_Confirmation = dgvRequestItems.Rows.Cast<DataGridViewRow>()
+                .Any(d => Convert.ToBoolean(d.Cells["colNeed_Supervisor_Confirmation"].Value));
 
             Models.Warehouse_Request wr = new Models.Warehouse_Request
             {
-                Company_Index=Stack.Company_Index,
+                Company_Index = Stack.Company_Index,
                 UserLevel_Index = Stack.UserLevel_Index,
                 Unit_Name = Program.dbOperations.GetUser_LevelAsync(Stack.UserLevel_Index).Unit_Name,
                 User_Index = Stack.UserIndex,
                 User_Name = Stack.UserName,
                 DateTime_mi = DateTime.Now,
                 DateTime_sh = Stack_Methods.Miladi_to_Shamsi_YYYYMMDD(DateTime.Now),
+                Need_Supervisor_Confirmation = bNeed_Supervisor_Confirmation,
+
+                // برای شروع کار باید سرپرست با درخواست دهنده یکسان باشد
+                Supervisor_Confirmer_Index = Stack.UserIndex,
+                Supervisor_Confirmer_LevelIndex = Stack.UserLevel_Index
             };
 
             Application.DoEvents();
@@ -117,7 +133,7 @@ namespace OrdersProgress
             Stack.bx = true;
         }
 
-        private void BtnCancel_Click(object sender, EventArgs e)
+        private void BtnReturn_Click(object sender, EventArgs e)
         {
             Close();
         }
@@ -222,7 +238,8 @@ namespace OrdersProgress
                 }
             }
 
-            dgvWarehouseItems.DataSource = lstItems1;
+            long category_index = Program.dbOperations.GetCategoryAsync(cmbCategories.Text, Stack.Company_Index).Index;
+            dgvWarehouseItems.DataSource = lstItems1.Where(d=>d.Category_Index == category_index).ToList();
 
             //System.Threading.Thread.Sleep(500);
             Application.DoEvents();
@@ -300,27 +317,29 @@ namespace OrdersProgress
             long item_index = Convert.ToInt64(dgvWarehouseItems.CurrentRow.Cells["Index"].Value);
             Models.Item item = Program.dbOperations.GetItem(item_index);
             int iRow = dgvRequestItems.Rows.Add();
-            dgvRequestItems["colRow",iRow].Value = iRow+1;
-            dgvRequestItems["colItem_Index",iRow].Value = item.Index;
-            dgvRequestItems["colItem_SmallCode", iRow].Value = item.Code_Small;
-            dgvRequestItems["colItem_Name", iRow].Value = item.Name_Samll;
-            dgvRequestItems["colQuantity", iRow].Value = numericUpDown1.Value;
-            dgvRequestItems["colItem_Unit", iRow].Value = item.Unit;
+            DataGridViewRow row = dgvRequestItems.Rows[iRow];
+            //row.Tag = item;
+            row.Cells["colRow"].Value = iRow+1;
+            row.Cells["colItem_Index"].Value = item.Index;
+            row.Cells["colItem_SmallCode"].Value = item.Code_Small;
+            row.Cells["colItem_Name"].Value = item.Name_Samll;
+            row.Cells["colQuantity"].Value = numericUpDown1.Value;
+            row.Cells["colItem_Unit"].Value = item.Unit;
             if(lstCostCenter_Code.Any())    // کد مرکز هزینه
-                dgvRequestItems["colCostCenter_Index", iRow].Value = lstCostCenter_Code[cmbCostCenters.SelectedIndex];
+                row.Cells["colCostCenter_Index"].Value = lstCostCenter_Code[cmbCostCenters.SelectedIndex];
+            // رابطه بین دسته کالا و سطح کاربری در هنگام درخواست کالا از انبار
             Models.UL_Request_Category urc = Program.dbOperations.GetAllUL_Request_CategoriesAsync
                 (Stack.Company_Index, Stack.UserLevel_Index).FirstOrDefault(d => d.Category_Index == item.Category_Index);
             if (urc != null)
             {
-                dgvRequestItems["colNeed_Supervisor_Confirmation", iRow].Value = urc.Need_Supervisor_Confirmation;
-                //dgvRequestItems["colNeed_Manager_Confirmation", iRow].Value = urc.Need_Manager_Confirmation;
+                //row.Cells["colNeed_Supervisor_Confirmation"].Value = urc.Need_Supervisor_Confirmation;
+                //row.Cells["colNeed_Manager_Confirmation"].Value = urc.Need_Manager_Confirmation;
             }
         }
 
         private void DgvRequestItems_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
-
             if(dgvRequestItems.Columns[e.ColumnIndex].Name.Equals("colRemove"))
             {
                 dgvRequestItems.CurrentCell = null;

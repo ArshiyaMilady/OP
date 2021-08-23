@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(M1120_WarehouseRequest_AddNew));
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.btnSave = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnReturn = new System.Windows.Forms.Button();
             this.dgvRequestItems = new System.Windows.Forms.DataGridView();
             this.colRow = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCostCenter_Index = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -70,6 +70,8 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.label8 = new System.Windows.Forms.Label();
+            this.cmbCategories = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRequestItems)).BeginInit();
@@ -100,7 +102,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox4.Controls.Add(this.btnSave);
-            this.groupBox4.Controls.Add(this.btnCancel);
+            this.groupBox4.Controls.Add(this.btnReturn);
             this.groupBox4.Controls.Add(this.dgvRequestItems);
             this.groupBox4.Location = new System.Drawing.Point(3, 284);
             this.groupBox4.Name = "groupBox4";
@@ -120,17 +122,17 @@
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.BtnSave_Click);
             // 
-            // btnCancel
+            // btnReturn
             // 
-            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(6, 73);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 28);
-            this.btnCancel.TabIndex = 75;
-            this.btnCancel.Text = "انصراف";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
+            this.btnReturn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnReturn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnReturn.Location = new System.Drawing.Point(6, 73);
+            this.btnReturn.Name = "btnReturn";
+            this.btnReturn.Size = new System.Drawing.Size(75, 28);
+            this.btnReturn.TabIndex = 75;
+            this.btnReturn.Text = "بازگشت";
+            this.btnReturn.UseVisualStyleBackColor = true;
+            this.btnReturn.Click += new System.EventHandler(this.BtnReturn_Click);
             // 
             // dgvRequestItems
             // 
@@ -227,9 +229,9 @@
             // 
             // colRemove
             // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Red;
-            this.colRemove.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Red;
+            this.colRemove.DefaultCellStyle = dataGridViewCellStyle3;
             this.colRemove.HeaderText = " ";
             this.colRemove.Name = "colRemove";
             this.colRemove.ReadOnly = true;
@@ -390,11 +392,11 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvWarehouseItems.BackgroundColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.dgvWarehouseItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvWarehouseItems.Location = new System.Drawing.Point(6, 43);
+            this.dgvWarehouseItems.Location = new System.Drawing.Point(6, 25);
             this.dgvWarehouseItems.Name = "dgvWarehouseItems";
             this.dgvWarehouseItems.ReadOnly = true;
             this.dgvWarehouseItems.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvWarehouseItems.Size = new System.Drawing.Size(593, 126);
+            this.dgvWarehouseItems.Size = new System.Drawing.Size(593, 144);
             this.dgvWarehouseItems.TabIndex = 57;
             this.dgvWarehouseItems.TabStop = false;
             this.dgvWarehouseItems.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvWarehouseItems_RowEnter);
@@ -406,13 +408,15 @@
             this.groupBox2.Controls.Add(this.btnSearch);
             this.groupBox2.Controls.Add(this.txtST_Name);
             this.groupBox2.Controls.Add(this.txtST_SmallCode);
+            this.groupBox2.Controls.Add(this.cmbCategories);
             this.groupBox2.Controls.Add(this.cmbST_Name);
             this.groupBox2.Controls.Add(this.cmbST_SmallCode);
+            this.groupBox2.Controls.Add(this.label8);
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Location = new System.Drawing.Point(604, 33);
+            this.groupBox2.Location = new System.Drawing.Point(604, 25);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(242, 135);
+            this.groupBox2.Size = new System.Drawing.Size(242, 143);
             this.groupBox2.TabIndex = 21;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "جستجو";
@@ -420,7 +424,7 @@
             // btnShowAll
             // 
             this.btnShowAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnShowAll.Location = new System.Drawing.Point(154, 103);
+            this.btnShowAll.Location = new System.Drawing.Point(154, 113);
             this.btnShowAll.Name = "btnShowAll";
             this.btnShowAll.Size = new System.Drawing.Size(79, 26);
             this.btnShowAll.TabIndex = 56;
@@ -431,7 +435,7 @@
             // btnSearch
             // 
             this.btnSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnSearch.Location = new System.Drawing.Point(6, 103);
+            this.btnSearch.Location = new System.Drawing.Point(6, 113);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(79, 26);
             this.btnSearch.TabIndex = 50;
@@ -443,7 +447,7 @@
             // 
             this.txtST_Name.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtST_Name.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtST_Name.Location = new System.Drawing.Point(7, 63);
+            this.txtST_Name.Location = new System.Drawing.Point(7, 58);
             this.txtST_Name.Name = "txtST_Name";
             this.txtST_Name.Size = new System.Drawing.Size(109, 22);
             this.txtST_Name.TabIndex = 45;
@@ -453,7 +457,7 @@
             // 
             this.txtST_SmallCode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtST_SmallCode.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtST_SmallCode.Location = new System.Drawing.Point(7, 34);
+            this.txtST_SmallCode.Location = new System.Drawing.Point(7, 29);
             this.txtST_SmallCode.Name = "txtST_SmallCode";
             this.txtST_SmallCode.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.txtST_SmallCode.Size = new System.Drawing.Size(109, 22);
@@ -470,7 +474,7 @@
             "شامل",
             "شروع شود با",
             "برابر باشد با"});
-            this.cmbST_Name.Location = new System.Drawing.Point(122, 61);
+            this.cmbST_Name.Location = new System.Drawing.Point(122, 56);
             this.cmbST_Name.Name = "cmbST_Name";
             this.cmbST_Name.Size = new System.Drawing.Size(91, 23);
             this.cmbST_Name.TabIndex = 40;
@@ -485,7 +489,7 @@
             "شامل",
             "شروع شود با",
             "برابر باشد با"});
-            this.cmbST_SmallCode.Location = new System.Drawing.Point(122, 32);
+            this.cmbST_SmallCode.Location = new System.Drawing.Point(122, 27);
             this.cmbST_SmallCode.Name = "cmbST_SmallCode";
             this.cmbST_SmallCode.Size = new System.Drawing.Size(91, 23);
             this.cmbST_SmallCode.TabIndex = 30;
@@ -495,7 +499,7 @@
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(213, 64);
+            this.label5.Location = new System.Drawing.Point(213, 59);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(23, 15);
             this.label5.TabIndex = 29;
@@ -506,7 +510,7 @@
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(213, 35);
+            this.label3.Location = new System.Drawing.Point(213, 30);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(22, 15);
             this.label3.TabIndex = 29;
@@ -540,11 +544,33 @@
             this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BackgroundWorker1_DoWork);
             this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BackgroundWorker1_RunWorkerCompleted);
             // 
+            // label8
+            // 
+            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(186, 88);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(50, 15);
+            this.label8.TabIndex = 29;
+            this.label8.Text = "دستۀ کالا :";
+            // 
+            // cmbCategories
+            // 
+            this.cmbCategories.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbCategories.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbCategories.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbCategories.FormattingEnabled = true;
+            this.cmbCategories.Location = new System.Drawing.Point(7, 85);
+            this.cmbCategories.Name = "cmbCategories";
+            this.cmbCategories.Size = new System.Drawing.Size(173, 23);
+            this.cmbCategories.TabIndex = 40;
+            // 
             // M1120_WarehouseRequest_AddNew
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.btnCancel;
+            this.CancelButton = this.btnReturn;
             this.ClientSize = new System.Drawing.Size(858, 389);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.progressBar1);
@@ -596,7 +622,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.DataGridView dgvRequestItems;
-        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Button btnReturn;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ProgressBar progressBar1;
@@ -613,5 +639,7 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn colNeed_Supervisor_Confirmation;
         private System.Windows.Forms.DataGridViewCheckBoxColumn colNeed_Manager_Confirmation;
         private System.Windows.Forms.DataGridViewButtonColumn colRemove;
+        private System.Windows.Forms.ComboBox cmbCategories;
+        private System.Windows.Forms.Label label8;
     }
 }

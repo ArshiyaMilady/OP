@@ -31,7 +31,9 @@ namespace OrdersProgress
             //dgvData.DataSource = Program.dbOperations.GetAllItem_PropertiesAsync(Stack.Company_Index);
             //dgvData.DataSource = Program.dbOperations.GetAllCategoriesAsync(Stack.Company_Index);
             //dgvData.DataSource = Program.dbOperations.GetAllWarehousesAsync(Stack.Company_Index,false);
-            dgvData.DataSource = Program.dbOperations.GetAllUL_Confirm_UL_RequestsAsync(Stack.Company_Index);
+            //dgvData.DataSource = Program.dbOperations.GetAllUL_Confirm_UL_RequestsAsync(Stack.Company_Index);
+            dgvData.DataSource = Program.dbOperations.GetAllUL_Request_CategoriesAsync(Stack.Company_Index);
+            //dgvData.DataSource = Program.dbOperations.GetAllWarehouse_RequestsAsync(Stack.Company_Index);
             //dgvData.DataSource = Program.dbOperations.GetAllItemsAsync(Stack.Company_Index,0,100);
             //dgvData.DataSource = Program.dbOperations.GetAllLoginHistorysAsync(Stack.Company_Index)
             //    .OrderByDescending(d=>d.DateTime_mi).ToList();
@@ -49,6 +51,10 @@ namespace OrdersProgress
 
         private void Button1_Click(object sender, EventArgs e)
         {
+            #region حذف رابطه سطح کاربری-دسته کالا -سرپرست در درخواست کالا از انبار
+            //Program.dbOperations.DeleteAllUL_Request_CategoriesAsync();
+            #endregion
+
             #region دسته بندی اولیه : نامشخص
             //List<Models.Item> lstItems = Program.dbOperations.GetAllItemsAsync(Stack.Company_Index, 0, 100);
             //foreach (Models.Item item in lstItems)

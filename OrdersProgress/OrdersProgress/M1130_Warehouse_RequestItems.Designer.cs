@@ -36,10 +36,9 @@
             this.radConfirmedRequests = new System.Windows.Forms.RadioButton();
             this.radRequests_Need_Confirmation = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.cmbST_OrderId = new System.Windows.Forms.ComboBox();
             this.btnShowAll = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
-            this.txtST_OrderId = new System.Windows.Forms.TextBox();
+            this.txtST_RequestIndex = new System.Windows.Forms.TextBox();
             this.txtST_OrderTitle = new System.Windows.Forms.TextBox();
             this.txtST_CustomerName = new System.Windows.Forms.TextBox();
             this.cmbST_OrderTitle = new System.Windows.Forms.ComboBox();
@@ -99,9 +98,9 @@
             this.panel2.Controls.Add(this.radMyRequests);
             this.panel2.Controls.Add(this.radConfirmedRequests);
             this.panel2.Controls.Add(this.radRequests_Need_Confirmation);
-            this.panel2.Location = new System.Drawing.Point(557, 107);
+            this.panel2.Location = new System.Drawing.Point(600, 107);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(283, 94);
+            this.panel2.Size = new System.Drawing.Size(240, 94);
             this.panel2.TabIndex = 51;
             this.panel2.Visible = false;
             // 
@@ -109,7 +108,7 @@
             // 
             this.radMyRequests.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.radMyRequests.AutoSize = true;
-            this.radMyRequests.Location = new System.Drawing.Point(168, 38);
+            this.radMyRequests.Location = new System.Drawing.Point(125, 38);
             this.radMyRequests.Name = "radMyRequests";
             this.radMyRequests.Size = new System.Drawing.Size(109, 23);
             this.radMyRequests.TabIndex = 0;
@@ -121,7 +120,7 @@
             // 
             this.radConfirmedRequests.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.radConfirmedRequests.AutoSize = true;
-            this.radConfirmedRequests.Location = new System.Drawing.Point(72, 67);
+            this.radConfirmedRequests.Location = new System.Drawing.Point(29, 67);
             this.radConfirmedRequests.Name = "radConfirmedRequests";
             this.radConfirmedRequests.Size = new System.Drawing.Size(206, 23);
             this.radConfirmedRequests.TabIndex = 0;
@@ -133,7 +132,7 @@
             // 
             this.radRequests_Need_Confirmation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.radRequests_Need_Confirmation.AutoSize = true;
-            this.radRequests_Need_Confirmation.Location = new System.Drawing.Point(107, 9);
+            this.radRequests_Need_Confirmation.Location = new System.Drawing.Point(64, 9);
             this.radRequests_Need_Confirmation.Name = "radRequests_Need_Confirmation";
             this.radRequests_Need_Confirmation.Size = new System.Drawing.Size(169, 23);
             this.radRequests_Need_Confirmation.TabIndex = 0;
@@ -144,10 +143,9 @@
             // groupBox1
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.cmbST_OrderId);
             this.groupBox1.Controls.Add(this.btnShowAll);
             this.groupBox1.Controls.Add(this.btnSearch);
-            this.groupBox1.Controls.Add(this.txtST_OrderId);
+            this.groupBox1.Controls.Add(this.txtST_RequestIndex);
             this.groupBox1.Controls.Add(this.txtST_OrderTitle);
             this.groupBox1.Controls.Add(this.txtST_CustomerName);
             this.groupBox1.Controls.Add(this.cmbST_OrderTitle);
@@ -155,37 +153,23 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Location = new System.Drawing.Point(557, 3);
+            this.groupBox1.Location = new System.Drawing.Point(600, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(284, 88);
+            this.groupBox1.Size = new System.Drawing.Size(241, 88);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "جستجو";
             // 
-            // cmbST_OrderId
-            // 
-            this.cmbST_OrderId.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmbST_OrderId.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbST_OrderId.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbST_OrderId.FormattingEnabled = true;
-            this.cmbST_OrderId.Items.AddRange(new object[] {
-            "شامل",
-            "شروع شود با",
-            "برابر باشد با"});
-            this.cmbST_OrderId.Location = new System.Drawing.Point(105, 25);
-            this.cmbST_OrderId.Name = "cmbST_OrderId";
-            this.cmbST_OrderId.Size = new System.Drawing.Size(90, 23);
-            this.cmbST_OrderId.TabIndex = 10;
-            // 
             // btnShowAll
             // 
             this.btnShowAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnShowAll.Location = new System.Drawing.Point(196, 56);
+            this.btnShowAll.Location = new System.Drawing.Point(153, 56);
             this.btnShowAll.Name = "btnShowAll";
             this.btnShowAll.Size = new System.Drawing.Size(79, 26);
             this.btnShowAll.TabIndex = 35;
             this.btnShowAll.Text = "نمایش همه";
             this.btnShowAll.UseVisualStyleBackColor = true;
+            this.btnShowAll.Click += new System.EventHandler(this.BtnShowAll_Click);
             // 
             // btnSearch
             // 
@@ -196,22 +180,23 @@
             this.btnSearch.TabIndex = 30;
             this.btnSearch.Text = "جستجو";
             this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.BtnSearch_Click);
             // 
-            // txtST_OrderId
+            // txtST_RequestIndex
             // 
-            this.txtST_OrderId.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtST_OrderId.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtST_OrderId.Location = new System.Drawing.Point(7, 26);
-            this.txtST_OrderId.Name = "txtST_OrderId";
-            this.txtST_OrderId.Size = new System.Drawing.Size(92, 22);
-            this.txtST_OrderId.TabIndex = 15;
-            this.txtST_OrderId.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtST_RequestIndex.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtST_RequestIndex.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtST_RequestIndex.Location = new System.Drawing.Point(64, 26);
+            this.txtST_RequestIndex.Name = "txtST_RequestIndex";
+            this.txtST_RequestIndex.Size = new System.Drawing.Size(85, 22);
+            this.txtST_RequestIndex.TabIndex = 15;
+            this.txtST_RequestIndex.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txtST_OrderTitle
             // 
             this.txtST_OrderTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtST_OrderTitle.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtST_OrderTitle.Location = new System.Drawing.Point(6, 55);
+            this.txtST_OrderTitle.Location = new System.Drawing.Point(-37, 55);
             this.txtST_OrderTitle.Name = "txtST_OrderTitle";
             this.txtST_OrderTitle.Size = new System.Drawing.Size(103, 22);
             this.txtST_OrderTitle.TabIndex = 15;
@@ -222,7 +207,7 @@
             // 
             this.txtST_CustomerName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtST_CustomerName.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtST_CustomerName.Location = new System.Drawing.Point(6, 84);
+            this.txtST_CustomerName.Location = new System.Drawing.Point(-37, 84);
             this.txtST_CustomerName.Name = "txtST_CustomerName";
             this.txtST_CustomerName.Size = new System.Drawing.Size(103, 22);
             this.txtST_CustomerName.TabIndex = 25;
@@ -239,7 +224,7 @@
             "شامل",
             "شروع شود با",
             "برابر باشد با"});
-            this.cmbST_OrderTitle.Location = new System.Drawing.Point(114, 54);
+            this.cmbST_OrderTitle.Location = new System.Drawing.Point(71, 54);
             this.cmbST_OrderTitle.Name = "cmbST_OrderTitle";
             this.cmbST_OrderTitle.Size = new System.Drawing.Size(91, 23);
             this.cmbST_OrderTitle.TabIndex = 10;
@@ -255,7 +240,7 @@
             "شامل",
             "شروع شود با",
             "برابر باشد با"});
-            this.cmbST_CustomerName.Location = new System.Drawing.Point(114, 83);
+            this.cmbST_CustomerName.Location = new System.Drawing.Point(71, 83);
             this.cmbST_CustomerName.Name = "cmbST_CustomerName";
             this.cmbST_CustomerName.Size = new System.Drawing.Size(91, 23);
             this.cmbST_CustomerName.TabIndex = 20;
@@ -266,7 +251,7 @@
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(198, 28);
+            this.label1.Location = new System.Drawing.Point(155, 28);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(83, 15);
             this.label1.TabIndex = 29;
@@ -277,7 +262,7 @@
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(208, 57);
+            this.label5.Location = new System.Drawing.Point(165, 57);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(72, 15);
             this.label5.TabIndex = 29;
@@ -289,7 +274,7 @@
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(209, 86);
+            this.label3.Location = new System.Drawing.Point(166, 86);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(55, 15);
             this.label3.TabIndex = 29;
@@ -298,10 +283,10 @@
             // 
             // label2
             // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.Maroon;
-            this.label2.Location = new System.Drawing.Point(181, 6);
+            this.label2.Location = new System.Drawing.Point(228, 4);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(366, 18);
             this.label2.TabIndex = 3;
@@ -321,9 +306,9 @@
             // btnImportOrdersFromExcel
             // 
             this.btnImportOrdersFromExcel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnImportOrdersFromExcel.Location = new System.Drawing.Point(557, 252);
+            this.btnImportOrdersFromExcel.Location = new System.Drawing.Point(600, 252);
             this.btnImportOrdersFromExcel.Name = "btnImportOrdersFromExcel";
-            this.btnImportOrdersFromExcel.Size = new System.Drawing.Size(283, 31);
+            this.btnImportOrdersFromExcel.Size = new System.Drawing.Size(240, 31);
             this.btnImportOrdersFromExcel.TabIndex = 45;
             this.btnImportOrdersFromExcel.Text = "دریافت اطلاعات سفارش های موجود از فایل اکسل";
             this.btnImportOrdersFromExcel.UseVisualStyleBackColor = true;
@@ -332,7 +317,7 @@
             // btnAddNew
             // 
             this.btnAddNew.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAddNew.Location = new System.Drawing.Point(448, 287);
+            this.btnAddNew.Location = new System.Drawing.Point(491, 287);
             this.btnAddNew.Name = "btnAddNew";
             this.btnAddNew.Size = new System.Drawing.Size(103, 29);
             this.btnAddNew.TabIndex = 45;
@@ -344,7 +329,7 @@
             // btnCostCenters
             // 
             this.btnCostCenters.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCostCenters.Location = new System.Drawing.Point(339, 287);
+            this.btnCostCenters.Location = new System.Drawing.Point(383, 287);
             this.btnCostCenters.Name = "btnCostCenters";
             this.btnCostCenters.Size = new System.Drawing.Size(89, 29);
             this.btnCostCenters.TabIndex = 45;
@@ -374,8 +359,10 @@
             this.dgvData.Name = "dgvData";
             this.dgvData.ReadOnly = true;
             this.dgvData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvData.Size = new System.Drawing.Size(548, 255);
+            this.dgvData.Size = new System.Drawing.Size(591, 255);
             this.dgvData.TabIndex = 50;
+            this.dgvData.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvData_CellMouseDown);
+            this.dgvData.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvData_MouseDown);
             // 
             // contextMenuStrip1
             // 
@@ -423,6 +410,7 @@
             this.tsmiDelete.Size = new System.Drawing.Size(180, 22);
             this.tsmiDelete.Text = "حذف";
             this.tsmiDelete.Visible = false;
+            this.tsmiDelete.Click += new System.EventHandler(this.TsmiDelete_Click);
             // 
             // tsmiCancel
             // 
@@ -500,8 +488,7 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button btnShowAll;
         private System.Windows.Forms.Button btnSearch;
-        private System.Windows.Forms.TextBox txtST_OrderId;
-        private System.Windows.Forms.ComboBox cmbST_OrderId;
+        private System.Windows.Forms.TextBox txtST_RequestIndex;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnReturn;

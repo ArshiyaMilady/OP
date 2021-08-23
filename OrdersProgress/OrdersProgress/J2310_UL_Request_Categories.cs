@@ -15,6 +15,8 @@ namespace OrdersProgress
     {
         long ul_index;
         List<Models.Category> lstCats = new List<Models.Category>();
+        List<Models.User_Level> lstULs = new List<Models.User_Level>();
+        List<Models.UL_Request_Category> lstUL_CRs = new List<Models.UL_Request_Category>();
 
         public J2310_UL_Request_Categories(long _ul_index)
         {
@@ -25,62 +27,53 @@ namespace OrdersProgress
 
         private void J2310_UL_Request_Categories_Shown(object sender, EventArgs e)
         {
-            dgvData.DataSource = GetData();
+            //dgvCats.DataSource = GetData();
+            GetData();
             ShowData();
         }
 
-        private List<Models.Category> GetData()
+        private void GetData()
         {
-            if (!lstCats.Any())
-            {
-                //if (Stack.UserLevel_Type == 1)
-                lstCats = Program.dbOperations.GetAllCategoriesAsync(Stack.Company_Index).ToList();
-            }
+            dgvCats.DataSource = Program.dbOperations.GetAllCategoriesAsync(Stack.Company_Index);
+            if(dgvCats.Rows.Count > 0) dgvCats.CurrentCell = dgvCats["Name", 0];
 
-            foreach (Models.Category cat in lstCats)
-            {
-                Models.UL_Request_Category urc = null;
-                if ((urc = Program.dbOperations.GetAllUL_Request_CategoriesAsync(Stack.Company_Index, ul_index)
-                    .FirstOrDefault(d => d.Category_Index == cat.Index)) != null)
-                {
-                    cat.C_B1 = true;
-                    cat.Need_Supervisor_Confirmation = urc.Need_Supervisor_Confirmation;
-                    cat.Need_Manager_Confirmation = urc.Need_Manager_Confirmation;
-                }
-            }
+            dgvULs.DataSource = Program.dbOperations.GetAllUser_LevelsAsync(Stack.Company_Index)
+                .Where(d=>d.Index!=ul_index).ToList();
+            if (dgvULs.Rows.Count > 0) dgvULs.CurrentCell = dgvULs["Description", 0];
 
-            return lstCats.OrderByDescending(d => d.C_B1).ToList();
+            foreach (Models.UL_Request_Category ulrc in Program.dbOperations
+                .GetAllUL_Request_CategoriesAsync(Stack.Company_Index, ul_index))
+            {
+                PutData_in_dgvUL_RC(ulrc);
+            }
+        }
+
+        private void PutData_in_dgvUL_RC(Models.UL_Request_Category ul_rc)
+        {
+            int iRow = dgvUL_RC.Rows.Add();
+            DataGridViewRow row = dgvUL_RC.Rows[iRow];
+            row.Tag = ul_rc;
+            row.Cells["colCategory_Name"].Value = Program.dbOperations.GetCategoryAsync(ul_rc.Category_Index).Name;
+            if(ul_rc.Supervisor_UL_Index>0)
+                row.Cells["colSupervisor_UL_Description"].Value = Program.dbOperations.GetUser_LevelAsync(ul_rc.Supervisor_UL_Index).Description;
         }
 
         private void ShowData()
         {
-            #region ترجمه سر ستونها و مخفی کردن بعضی ستونها
-            foreach (DataGridViewColumn col in dgvData.Columns)
+            #region جدول دسته ها
+            foreach (DataGridViewColumn col in dgvCats.Columns)
             {
                 switch (col.Name)
                 {
-                    case "C_B1":
-                        col.HeaderText = "انتخاب";
-                        col.Width = 50;
-                        break;
+                    //case "C_B1":
+                    //    col.HeaderText = "انتخاب";
+                    //    col.Width = 50;
+                    //    break;
                     case "Name":
                         col.HeaderText = "نام دسته";
                         col.ReadOnly = true;
                         col.Width = 200;
                         break;
-                    //case "Description":
-                    //    col.HeaderText = "شرح";
-                    //    col.ReadOnly = true;
-                    //    col.Width = 200;
-                    //    break;
-                    case "Need_Supervisor_Confirmation":
-                        col.HeaderText = "نیاز به تأیید سرپرست؟";
-                        col.Width = 100;
-                        break;
-                    //case "Need_Manager_Confirmation":
-                    //    col.HeaderText = "نیاز به تأیید مدیریت";
-                    //    col.Width = 100;
-                    //    break;
 
                     default: col.Visible = false; break;
                 }
@@ -89,6 +82,30 @@ namespace OrdersProgress
                 else col.DefaultCellStyle.BackColor = Color.White;
             }
             #endregion
+
+            #region جدول سطوح کاربری
+
+            foreach (DataGridViewColumn col in dgvULs.Columns)
+            {
+                switch (col.Name)
+                {
+                    //case "C_B1":
+                    //    col.HeaderText = "انتخاب";
+                    //    col.Width = 50;
+                    //    break;
+                    case "Description":
+                        col.HeaderText = "سطح کاربری سرپرست";
+                        col.ReadOnly = true;
+                        col.Width = 200;
+                        break;
+                    default: col.Visible = false; break;
+                }
+
+                if (col.ReadOnly) col.DefaultCellStyle.BackColor = Color.WhiteSmoke;
+                else col.DefaultCellStyle.BackColor = Color.White;
+            }
+            #endregion
+
         }
 
         private void BtnReturn_Click(object sender, EventArgs e)
@@ -104,7 +121,7 @@ namespace OrdersProgress
             panel1.Enabled = false;
             Application.DoEvents();
 
-            List<Models.Category> lstCats1 = (List<Models.Category>)dgvData.DataSource;
+            List<Models.Category> lstCats1 = (List<Models.Category>)dgvCats.DataSource;
 
             #region حذف شود : قبلا بوده است، اما در جدول انتخاب نشده است 
             if (Program.dbOperations.GetAllUL_Request_CategoriesAsync(Stack.Company_Index, ul_index).Any())
@@ -133,8 +150,8 @@ namespace OrdersProgress
                         Company_Index = Stack.Company_Index,
                         User_Level_Index = ul_index,
                         Category_Index = cat.Index,
-                        Need_Supervisor_Confirmation = cat.Need_Supervisor_Confirmation,
-                        Need_Manager_Confirmation = cat.Need_Manager_Confirmation,
+                        //Need_Supervisor_Confirmation = cat.Need_Supervisor_Confirmation,
+                        //Need_Manager_Confirmation = cat.Need_Manager_Confirmation,
                     }) ;
                 }
             }
@@ -154,12 +171,51 @@ namespace OrdersProgress
         {
             bChooseAll = !bChooseAll;
 
-            foreach (DataGridViewRow row in dgvData.Rows.Cast<DataGridViewRow>())
+            foreach (DataGridViewRow row in dgvCats.Rows.Cast<DataGridViewRow>())
                 row.Cells["C_B1"].Value = bChooseAll;
             if (bChooseAll) btnChooseAll.Text = "عدم انتخاب همه";
             else btnChooseAll.Text = "انتخاب همه";
         }
 
+        private void CheckBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            //dgvULs.Enabled = !checkBox1.Checked;
+        }
+
+        private void BtnAddNew_Click(object sender, EventArgs e)
+        {
+            //try
+            {
+                long cat_index = Convert.ToInt64(dgvCats.CurrentRow.Cells["Index"].Value);
+                long supervisor_ul_index = checkBox1.Checked ? 0 : Convert.ToInt64(dgvULs.CurrentRow.Cells["Index"].Value);
+                long ul_cr_index = Program.dbOperations.AddUL_Request_Category(
+                    new Models.UL_Request_Category {
+                        User_Level_Index = ul_index,
+                        Category_Index = cat_index,
+                        Supervisor_UL_Index = supervisor_ul_index,
+                    });
+
+                PutData_in_dgvUL_RC(Program.dbOperations.GetUL_Request_CategoryAsync(ul_cr_index));
+            }
+            //catch { }
+        }
+
+        private void DgvUL_RC_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
+
+            if(dgvUL_RC.Columns[e.ColumnIndex].Name.Equals("colRemove"))
+            {
+                if (MessageBox.Show("آیا از حذف مورد انتخاب شده ، اطمینان دارید؟"
+                    , "اخطار", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
+
+                DataGridViewRow row = dgvUL_RC.Rows[e.RowIndex];
+                Models.UL_Request_Category ulrc = (Models.UL_Request_Category)row.Tag;
+                Program.dbOperations.DeleteUL_Request_CategoryAsync(ulrc);
+                dgvUL_RC.CurrentCell = null;
+                dgvUL_RC.Rows.Remove(row);
+            }
+        }
 
 
 

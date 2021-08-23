@@ -184,6 +184,7 @@ namespace OrdersProgress.Models
     }
 
     // هر سطح کاربری درخواست کدام دسته از کالاها را می تواند از انبار داشته باشد
+    // و در صورتیکه این درخواست نیاز به تأیید سرپرست داشته باشد، سطح کاربری سرپرست باید مشخص شود
     public class UL_Request_Category
     {
         [PrimaryKey, AutoIncrement]
@@ -192,8 +193,9 @@ namespace OrdersProgress.Models
         public long Company_Index { get; set; }
         public long User_Level_Index { get; set; }  // شناسه سطح کاربری
         public long Category_Index { get; set; }    // شناسه دسته
-        public bool Need_Supervisor_Confirmation { get; set; }    // آیا نیاز به تأیید سرپرست می باشد
-        public bool Need_Manager_Confirmation { get; set; }    // آیا نیاز به تأیید مدیر می باشد
+        public long Supervisor_UL_Index { get; set; }  //  سطح کاربری سرپرست 
+        //public bool Need_Supervisor_Confirmation { get; set; }    // آیا نیاز به تأیید سرپرست می باشد
+        //public bool Need_Manager_Confirmation { get; set; }    // آیا نیاز به تأیید مدیر می باشد
 
         public bool C_B1 { get; set; }    // کمکی
     }
@@ -1215,6 +1217,7 @@ namespace OrdersProgress.Models
 
         #region تأییدیه سرپرست و مدیر در صورت نیاز به آنها
         public bool Need_Supervisor_Confirmation { get; set; }  // نیاز به تأیید سرپرست دارد؟
+        public long Supervisor_Confirmer_LevelIndex { get; set; }    // شناسه سطح کاربری سرپرست تأیید کننده
         public long Supervisor_Confirmer_Index { get; set; }    // شناسه سرپرست تأیید کننده
         public string Supervisor_Confirmer_Name { get; set; }    // نام سرپرست تأیید کننده
         public bool Need_Manager_Confirmation { get; set; }     // نیاز به تأیید مدیر دارد؟
