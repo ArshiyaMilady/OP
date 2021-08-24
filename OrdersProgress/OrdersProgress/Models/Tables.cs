@@ -1214,9 +1214,10 @@ namespace OrdersProgress.Models
         //public string Manager_Confirmer_Name { get; set; }    // نام مدیر تأیید کننده
         #endregion
 
-        public bool Sent_to_Warehouse { get; set; } // مراحل تأیید درخواست کامل شده و درخواست به انبار ارسال گردید
-        public bool Request_Completed { get; set; } // درخواست توسط انبار تحویل داده شد
         public bool Request_Canceled{ get; set; }   // درخواست توسط سرپرستی کنسل شده است
+        public bool Sent_to_Warehouse { get; set; } // مراحل تأیید درخواست کامل شده و درخواست به انبار ارسال گردید
+        public bool Request_Ready_to_Get { get; set; }   // درخواست آماده تحویل می باشد
+        public bool Request_Completed { get; set; } // درخواست توسط انبار تحویل داده شد
     }
 
     // ردیف های موجود در حواله یا رسید انبار
@@ -1224,6 +1225,7 @@ namespace OrdersProgress.Models
     {
         [PrimaryKey, AutoIncrement]
         public long Id { get; set; }
+        public bool C_B1 { get; set; }  // کمکی
         public long Company_Index { get; set; }
         public long Index { get; set; }
         public long Warehouse_Request_Index { get; set; }
@@ -1239,12 +1241,11 @@ namespace OrdersProgress.Models
 
         #region آیا تأیید سرپرست یا مدیر نیاز می باشد
         public bool Need_Supervisor_Confirmation { get; set; }  // نیاز به تأیید سرپرست دارد؟
-        public long Supervisor_Confirmer_LevelIndex { get; set; }    // شناسه سطح کاربری سرپرست که باید این مورد را تأیید نماید
+        //public long Supervisor_Confirmer_LevelIndex { get; set; }    // شناسه سطح کاربری سرپرست که باید این مورد را تأیید نماید
         #endregion
 
-        //public double Quantity_Confirmed { get; set; }   // تعداد تأیید شده نهایی
+        public bool Canceled { get; set; }  // آیا این ردیف لغو شده است؟
 
-        public bool C_B1 { get; set; }
         public bool C_B2 { get; set; }
         public bool C_B3 { get; set; }
     }
@@ -1261,8 +1262,8 @@ namespace OrdersProgress.Models
         public long User_Level_Index { get; set; }    // شناسۀ شخصی که عملی را انجام داده است
 
         public DateTime DateTime_mi { get; set; }   // زمان انجام به میلادی
-        public string DateTime_sh { get; set; }     // زمان انجام به شمسی
-
+        public string Date_sh { get; set; }     // تاریخ انجام به شمسی
+        public string Time { get; set; }        // زمان انجام به شمسی
         // اگر نیاز به ذکر توضیحی باشد مانند علت عدم تأیید و ... ، این توضیح در فیلد ذخیره می شود
         public string Description { get; set; }
     }

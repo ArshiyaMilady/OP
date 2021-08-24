@@ -80,9 +80,11 @@ namespace OrdersProgress
             return (pc.GetYear(dtMiladi).ToString() + Between + sMonth + Between + sDay);
         }
 
-        public static string NowTime_HHMMSSFFF(string between = ":")
+        public static string NowTime_HHMMSSFFF(string between = ":", bool HasMillisecond = true)
         {
-            string sDT = DateTime.Now.TimeOfDay.ToString(@"hh\:mm\:ss") + ":" + DateTime.Now.Millisecond;
+            string sDT = DateTime.Now.TimeOfDay.ToString(@"hh\:mm\:ss");
+            if(HasMillisecond)
+                sDT = sDT + ":" + DateTime.Now.Millisecond;
             if (!between.Equals(":")) sDT = sDT.Replace(":", between);
             return sDT;
         }

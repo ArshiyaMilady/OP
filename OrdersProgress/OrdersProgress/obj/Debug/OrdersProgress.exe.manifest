@@ -67,14 +67,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="OrdersProgress.exe" size="2800120">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="OrdersProgress.exe" size="2809336">
       <assemblyIdentity name="OrdersProgress" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>+ypSh2YzJCVPotUgoerWwAWYLkTpI9/y4tWi2hy4WDw=</dsig:DigestValue>
+        <dsig:DigestValue>Jdomt3HPqkpiHgNoxYcmMi7goByrBNwXi+mEd2WL4Ec=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

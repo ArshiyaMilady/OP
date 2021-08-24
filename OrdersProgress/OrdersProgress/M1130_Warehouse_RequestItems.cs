@@ -70,6 +70,11 @@ namespace OrdersProgress
 
         private void GetData(bool ForceReset=false)
         {
+            if (ForceReset)
+            {
+                lstRequests_need_confirmation = new List<Models.Warehouse_Request>();
+            }
+
             if((!lstRequests_need_confirmation.Any() && !lstRequests_mine.Any() 
                 && !lstRequests_passed.Any()) || ForceReset)
             {
@@ -91,25 +96,30 @@ namespace OrdersProgress
                     }
                     #endregion
 
-                    //List<Models.UL_Request_Category> lstULRC = Program.dbOperations
-                    //    .GetAllUL_Request_CategoriesAsync(Stack.Company_Index, Stack.UserLevel_Index);
-                    
-                    // تمام دسته کالاهایی که کاربر جاری می تواند تأیید نماید
-                    List<long> lstCategories_UserLevel_Can_Confirm = Program.dbOperations
+                    List<Models.UL_Request_Category> lstULRC = Program.dbOperations
                         .GetAllUL_Request_CategoriesAsync(Stack.Company_Index)
-                        .Where(d=>d.Supervisor_UL_Index == Stack.UserLevel_Index)
+                        .Where(d => d.Supervisor_UL_Index == Stack.UserLevel_Index)
+                        .ToList();
+
+                    // تمام دسته کالاهایی که کاربر جاری می تواند تأیید نماید
+                    List<long> lstCategories_UserLevel_Can_Confirm = lstULRC
                         .Select(d=>d.Category_Index).Distinct().ToList();
 
-                    // شناسه سطوح کاربرانی که درخواستهای آنها نیاز به تأیید سطح کاربر جاری دارد
-                    List<long> lstRequests_Need_Confirmation = Program.dbOperations.GetAllWarehouse_Request_RowsAsync
-                        (Stack.Company_Index).Where(d=>lstCategories_UserLevel_Can_Confirm.Contains(d.Item_Category_Index))
-                        //.Where(j => j.Supervisor_Confirmer_LevelIndex == Stack.UserLevel_Index)
-                        .Select(n=> n.Warehouse_Request_Index).ToList();
-
-                    // درخواستهای در انتظار تأیید
-                    lstRequests_need_confirmation = Program.dbOperations.GetAllWarehouse_RequestsAsync(Stack.Company_Index)
-                        .Where(d => d.Need_Supervisor_Confirmation).Where(j => !j.Sent_to_Warehouse)
-                        .Where(n => lstRequests_Need_Confirmation.Contains(n.Index)).ToList();
+                    // تعیین درخواستهای در انتظار تأیید
+                    foreach (Models.Warehouse_Request_Row wr_row in Program.dbOperations
+                        .GetAllWarehouse_Request_RowsAsync(Stack.Company_Index)
+                        .Where(d=>d.Need_Supervisor_Confirmation)
+                        .Where(j=>lstCategories_UserLevel_Can_Confirm.Contains(j.Item_Category_Index)).ToList())
+                    {
+                        // اگر درخواست وارد لیست نشده باشد
+                        if (!lstRequests_need_confirmation.Any(d => d.Index == wr_row.Warehouse_Request_Index))
+                        {
+                            Models.Warehouse_Request wr = Program.dbOperations.GetWarehouse_RequestAsync(wr_row.Warehouse_Request_Index);
+                            if (lstULRC.Any(d => (d.Category_Index == wr_row.Item_Category_Index)
+                                 && (d.User_Level_Index == wr.UserLevel_Index)))
+                                lstRequests_need_confirmation.Add(wr);
+                        }
+                    }
 
                     // شناسه درخواستهایی که توسط کاربر جاری در تاریخچه تأیید شده اند
                     List<long> lstConfirmed_in_History = Program.dbOperations.GetAllWarehouse_Request_HistorysAsync
@@ -228,6 +238,22 @@ namespace OrdersProgress
         private void BtnShowAll_Click(object sender, EventArgs e)
         {
             RadRequests_CheckedChanged(null, null);
+        }
+
+        private void TsmiRequestDetails_Click(object sender, EventArgs e)
+        {
+            long request_index = Convert.ToInt64(dgvData.CurrentRow.Cells["Index"].Value);
+            new M1134_Warehouse_RequestItem_Rows(request_index).ShowDialog();
+        }
+
+        private void TsmiRequestHistory_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void DgvData_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            TsmiRequestDetails_Click(null, null);
         }
 
         private void TsmiDelete_Click(object sender, EventArgs e)

@@ -56,11 +56,7 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiOrderHistory = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiOrderDetails = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiWarehouseChecklist = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiChangeOrderLevel = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiDelete = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiCancel = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiChangeOrder = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
@@ -361,6 +357,7 @@
             this.dgvData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvData.Size = new System.Drawing.Size(591, 255);
             this.dgvData.TabIndex = 50;
+            this.dgvData.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvData_CellDoubleClick);
             this.dgvData.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvData_CellMouseDown);
             this.dgvData.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvData_MouseDown);
             // 
@@ -369,62 +366,32 @@
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiOrderHistory,
             this.tsmiOrderDetails,
-            this.tsmiWarehouseChecklist,
-            this.tsmiChangeOrderLevel,
-            this.tsmiDelete,
-            this.tsmiCancel,
-            this.tsmiChangeOrder});
+            this.tsmiDelete});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 158);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(191, 70);
             // 
             // tsmiOrderHistory
             // 
             this.tsmiOrderHistory.Name = "tsmiOrderHistory";
-            this.tsmiOrderHistory.Size = new System.Drawing.Size(180, 22);
-            this.tsmiOrderHistory.Text = "تاریخچه سفارش";
+            this.tsmiOrderHistory.Size = new System.Drawing.Size(190, 22);
+            this.tsmiOrderHistory.Text = "تاریخچه درخواست";
+            this.tsmiOrderHistory.Click += new System.EventHandler(this.TsmiRequestHistory_Click);
             // 
             // tsmiOrderDetails
             // 
             this.tsmiOrderDetails.Name = "tsmiOrderDetails";
-            this.tsmiOrderDetails.Size = new System.Drawing.Size(180, 22);
-            this.tsmiOrderDetails.Text = "مشاهده جزییات سفارش";
-            // 
-            // tsmiWarehouseChecklist
-            // 
-            this.tsmiWarehouseChecklist.Name = "tsmiWarehouseChecklist";
-            this.tsmiWarehouseChecklist.Size = new System.Drawing.Size(180, 22);
-            this.tsmiWarehouseChecklist.Text = "مشاهده چک لیست انبار";
-            this.tsmiWarehouseChecklist.Visible = false;
-            // 
-            // tsmiChangeOrderLevel
-            // 
-            this.tsmiChangeOrderLevel.Name = "tsmiChangeOrderLevel";
-            this.tsmiChangeOrderLevel.Size = new System.Drawing.Size(180, 22);
-            this.tsmiChangeOrderLevel.Text = "تغییر وضعیت سفارش";
-            this.tsmiChangeOrderLevel.Visible = false;
+            this.tsmiOrderDetails.Size = new System.Drawing.Size(190, 22);
+            this.tsmiOrderDetails.Text = "مشاهده جزییات درخواست";
+            this.tsmiOrderDetails.Click += new System.EventHandler(this.TsmiRequestDetails_Click);
             // 
             // tsmiDelete
             // 
             this.tsmiDelete.Name = "tsmiDelete";
-            this.tsmiDelete.Size = new System.Drawing.Size(180, 22);
+            this.tsmiDelete.Size = new System.Drawing.Size(190, 22);
             this.tsmiDelete.Text = "حذف";
             this.tsmiDelete.Visible = false;
             this.tsmiDelete.Click += new System.EventHandler(this.TsmiDelete_Click);
-            // 
-            // tsmiCancel
-            // 
-            this.tsmiCancel.Name = "tsmiCancel";
-            this.tsmiCancel.Size = new System.Drawing.Size(180, 22);
-            this.tsmiCancel.Text = "لغو سفارش";
-            this.tsmiCancel.Visible = false;
-            // 
-            // tsmiChangeOrder
-            // 
-            this.tsmiChangeOrder.Name = "tsmiChangeOrder";
-            this.tsmiChangeOrder.Size = new System.Drawing.Size(180, 22);
-            this.tsmiChangeOrder.Text = "تغییر سفارش";
-            this.tsmiChangeOrder.Visible = false;
             // 
             // pictureBox1
             // 
@@ -465,6 +432,7 @@
             this.Controls.Add(this.panel1);
             this.Name = "M1130_Warehouse_RequestItems";
             this.Text = "   درخواست کالا از انبار";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.M1130_Warehouse_RequestItems_Load);
             this.Shown += new System.EventHandler(this.M1130_Warehouse_RequestItems_Shown);
             this.panel1.ResumeLayout(false);
@@ -504,16 +472,12 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem tsmiOrderHistory;
         private System.Windows.Forms.ToolStripMenuItem tsmiOrderDetails;
-        private System.Windows.Forms.ToolStripMenuItem tsmiWarehouseChecklist;
-        private System.Windows.Forms.ToolStripMenuItem tsmiChangeOrderLevel;
-        private System.Windows.Forms.ToolStripMenuItem tsmiDelete;
-        private System.Windows.Forms.ToolStripMenuItem tsmiCancel;
-        private System.Windows.Forms.ToolStripMenuItem tsmiChangeOrder;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.RadioButton radMyRequests;
         private System.Windows.Forms.Button btnAddNew;
         private System.Windows.Forms.Button btnCostCenters;
+        private System.Windows.Forms.ToolStripMenuItem tsmiDelete;
     }
 }

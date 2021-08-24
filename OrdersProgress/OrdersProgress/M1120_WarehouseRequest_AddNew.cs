@@ -85,6 +85,7 @@ namespace OrdersProgress
             bool bNeed_Supervisor_Confirmation = dgvRequestItems.Rows.Cast<DataGridViewRow>()
                 .Any(d => Convert.ToBoolean(d.Cells["colNeed_Supervisor_Confirmation"].Value));
 
+            #region ثبت درخواست
             Models.Warehouse_Request wr = new Models.Warehouse_Request
             {
                 Company_Index = Stack.Company_Index,
@@ -93,15 +94,18 @@ namespace OrdersProgress
                 User_Index = Stack.UserIndex,
                 User_Name = Stack.UserName,
                 DateTime_mi = DateTime.Now,
-                DateTime_sh = Stack_Methods.Miladi_to_Shamsi_YYYYMMDD(DateTime.Now),
+                DateTime_sh = Stack_Methods.DateTimeNow_Shamsi(),
                 Need_Supervisor_Confirmation = bNeed_Supervisor_Confirmation,
 
                 // برای شروع کار باید سرپرست با درخواست دهنده یکسان باشد
                 //Supervisor_Confirmer_Index = Stack.UserIndex,
                 //Supervisor_Confirmer_LevelIndex = Stack.UserLevel_Index
             };
+            #endregion
 
             Application.DoEvents();
+
+            #region تهیه ردیف های درخواست
             long wr_index = Program.dbOperations.AddWarehouse_RequestAsync(wr,Stack.Company_Index);
 
             for (int i = 0; i < dgvRequestItems.Rows.Count; i++)
@@ -126,10 +130,16 @@ namespace OrdersProgress
                         Item_Category_Index = item.Category_Index,
                         Quantity = Convert.ToDouble(row.Cells["colQuantity"].Value),
                         Need_Supervisor_Confirmation = Convert.ToBoolean(row.Cells["colNeed_Supervisor_Confirmation"].Value),
-                        Supervisor_Confirmer_LevelIndex = Convert.ToInt64(row.Cells["colSupervisor_Confirmer_LevelIndex"].Value),
+                        //Supervisor_Confirmer_LevelIndex = Convert.ToInt64(row.Cells["colSupervisor_Confirmer_LevelIndex"].Value),
                     });
                 Application.DoEvents();
             }
+            #endregion
+
+            Application.DoEvents();
+
+            // ثبت درخواست در تاریخچه
+            new ThisProject().Create_RequestHistory(wr, "درخواست ثبت گردید");
 
             progressBar1.Visible = false;
             panel1.Enabled = true;
@@ -339,7 +349,7 @@ namespace OrdersProgress
             if (urc != null)
             {
                 row.Cells["colNeed_Supervisor_Confirmation"].Value = urc.Supervisor_UL_Index > 0;
-                row.Cells["colSupervisor_Confirmer_LevelIndex"].Value = urc.Supervisor_UL_Index;
+                //row.Cells["colSupervisor_Confirmer_LevelIndex"].Value = urc.Supervisor_UL_Index;
             }
         }
 
