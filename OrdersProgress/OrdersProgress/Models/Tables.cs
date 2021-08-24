@@ -31,9 +31,9 @@ namespace OrdersProgress.Models
 
         // false : رزرو کالاها از انبار به صورت دستی
         // true : رزرو کالاها از انبار به صورت اتوماتیک
-        public bool Warehouse_Booking { get; set; }
+        public bool Warehouse_AutomaticBooking { get; set; }
         // بعد از گذشت زمان رزرو درخواست منقضی شده و کالای رزرو شده به موجودی قابل استفاده انبار بر میگردد
-        public long Warehouse_Booking_MaxTime { get; set; } // حداکثر زمانی که (به ساعت) یک کالا می تواند رزرو شود
+        public long Warehouse_Booking_MaxHours { get; set; } // حداکثر زمانی که (به ساعت) یک کالا می تواند رزرو شود
 
         public string C_S1 { get; set; }
         public string C_S2 { get; set; }
@@ -132,18 +132,6 @@ namespace OrdersProgress.Models
         public long Index { get; set; }
         public long MainUL_Index { get; set; }  // سطح کاربر مذکور
         public long UL_Index { get; set; }  // مابقی سطوح کاربری
-    }
-
-    // برای تأیید درخواست ها به انبار چه سطح کاربری ، سرپرست سرپرست سطح کاربری دیگر به حساب می آید
-    public class UL_Confirm_UL_Request
-    {
-        [PrimaryKey, AutoIncrement]
-        public long Id { get; set; }
-        public long Company_Index { get; set; }
-        public bool C_B1 { get; set; }  // فیلد کمکی
-        public long Index { get; set; }
-        public long UL_Index { get; set; }  // سطح کاربر مذکور
-        public long Supervisor_UL_Index { get; set; }  //  سطح کاربری سرپرست 
     }
 
     // UL = User_Level هر کاربر می تواند دارای یک یا چند سطح کاربری باشد
@@ -936,6 +924,7 @@ namespace OrdersProgress.Models
         public string Description { get; set; }    // شرح دسته
         public bool Need_Supervisor_Confirmation { get; set; }    // واقعا کمکی
         public bool Need_Manager_Confirmation { get; set; }    // واقعا کمکی
+
     }
 
     // کالا : رجوع به فایل اکسل کدها و موجودی انبار
@@ -1217,12 +1206,12 @@ namespace OrdersProgress.Models
 
         #region تأییدیه سرپرست و مدیر در صورت نیاز به آنها
         public bool Need_Supervisor_Confirmation { get; set; }  // نیاز به تأیید سرپرست دارد؟
-        public long Supervisor_Confirmer_LevelIndex { get; set; }    // شناسه سطح کاربری سرپرست تأیید کننده
-        public long Supervisor_Confirmer_Index { get; set; }    // شناسه سرپرست تأیید کننده
-        public string Supervisor_Confirmer_Name { get; set; }    // نام سرپرست تأیید کننده
-        public bool Need_Manager_Confirmation { get; set; }     // نیاز به تأیید مدیر دارد؟
-        public long Manager_Confirmer_Index { get; set; }    // شناسه مدیر تأیید کننده
-        public string Manager_Confirmer_Name { get; set; }    // نام مدیر تأیید کننده
+        //public long Supervisor_Confirmer_LevelIndex { get; set; }    // شناسه سطح کاربری سرپرست تأیید کننده
+        //public long Supervisor_Confirmer_Index { get; set; }    // شناسه سرپرست تأیید کننده
+        //public string Supervisor_Confirmer_Name { get; set; }    // نام سرپرست تأیید کننده
+        //public bool Need_Manager_Confirmation { get; set; }     // نیاز به تأیید مدیر دارد؟
+        //public long Manager_Confirmer_Index { get; set; }    // شناسه مدیر تأیید کننده
+        //public string Manager_Confirmer_Name { get; set; }    // نام مدیر تأیید کننده
         #endregion
 
         public bool Sent_to_Warehouse { get; set; } // مراحل تأیید درخواست کامل شده و درخواست به انبار ارسال گردید
@@ -1238,17 +1227,19 @@ namespace OrdersProgress.Models
         public long Company_Index { get; set; }
         public long Index { get; set; }
         public long Warehouse_Request_Index { get; set; }
+        public long Warehouse_Request_Index_in_Company { get; set; }    // شناسه (کد) درخواست در شرکت
         public long CostCenter_Index { get; set; }  // کد مرکز هزینه
         public long Item_Index { get; set; }
         public string Item_SmallCode { get; set; }    // کد کوچک کالا
         public string Item_Name { get; set; }
+        public long Item_Category_Index { get; set; }   // شناسه دسته محصول کالا
         public double Quantity { get; set; }   // تعداد کالا در ردیف
         public string Item_Unit { get; set; }   // واحد شمارش کالا
         public string Description { get; set; }
 
         #region آیا تأیید سرپرست یا مدیر نیاز می باشد
         public bool Need_Supervisor_Confirmation { get; set; }  // نیاز به تأیید سرپرست دارد؟
-        public bool Need_Manager_Confirmation { get; set; }     // نیاز به تأیید مدیر دارد؟
+        public long Supervisor_Confirmer_LevelIndex { get; set; }    // شناسه سطح کاربری سرپرست که باید این مورد را تأیید نماید
         #endregion
 
         //public double Quantity_Confirmed { get; set; }   // تعداد تأیید شده نهایی

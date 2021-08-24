@@ -27,7 +27,6 @@ namespace OrdersProgress.Models
             _db.CreateTableAsync<UL_Feature>().Wait();
             _db.CreateTableAsync<User_Level_UL_Feature>().Wait();
             _db.CreateTableAsync<UL_See_OL>().Wait();
-            _db.CreateTableAsync<UL_Confirm_UL_Request>().Wait();
             _db.CreateTableAsync<UL_Request_Category>().Wait();
             _db.CreateTableAsync<User_File>().Wait();
             _db.CreateTableAsync<Order>().Wait();
@@ -382,61 +381,6 @@ namespace OrdersProgress.Models
         }
         #endregion UL_See_UL
 
-        // ********** UL_Confirm_UL_Request *************
-        #region UL_Confirm_UL_Request
-        public List<UL_Confirm_UL_Request> GetAllUL_Confirm_UL_RequestsAsync(long company_index, long UL_index = 0, long Supervisor_UL_index = 0)
-        {
-            List<UL_Confirm_UL_Request> lstUCUR = _db.Table<UL_Confirm_UL_Request>()
-                .Where(b => b.Company_Index == company_index).ToListAsync().Result;
-            if (UL_index > 0)
-                lstUCUR = lstUCUR.Where(d=>d.UL_Index == UL_index).ToList();
-            if (Supervisor_UL_index > 0)
-                lstUCUR = lstUCUR.Where(d => d.Supervisor_UL_Index == Supervisor_UL_index).ToList();
-
-            return lstUCUR;
-        }
-
-        public UL_Confirm_UL_Request GetUL_Confirm_UL_RequestAsync(long index)
-        {
-            return _db.Table<UL_Confirm_UL_Request>().FirstOrDefaultAsync(d => d.Index == index).Result;
-        }
-
-        public long AddUL_Confirm_UL_RequestAsync(UL_Confirm_UL_Request ul_Confirm_UL_Request)
-        {
-            ul_Confirm_UL_Request.Index = GetNewIndex_UL_Confirm_UL_Request();
-            _db.InsertAsync(ul_Confirm_UL_Request);
-            return ul_Confirm_UL_Request.Index;
-        }
-
-        public long AddUL_Confirm_UL_Request(UL_Confirm_UL_Request ul_Confirm_UL_Request)
-        {
-            ul_Confirm_UL_Request.Index = GetNewIndex_UL_Confirm_UL_Request();
-            _db.InsertAsync(ul_Confirm_UL_Request).Wait();
-            return ul_Confirm_UL_Request.Index;
-        }
-
-        public int DeleteUL_Confirm_UL_RequestAsync(UL_Confirm_UL_Request ul_Confirm_UL_Request)
-        {
-            return _db.DeleteAsync(ul_Confirm_UL_Request).Result;
-        }
-
-        public int DeleteAllUL_Confirm_UL_RequestsAsync()
-        {
-            return _db.DeleteAllAsync<UL_Confirm_UL_Request>().Result;
-        }
-
-        public int UpdateUL_Confirm_UL_RequestAsync(UL_Confirm_UL_Request ul_Confirm_UL_Request)
-        {
-            return _db.UpdateAsync(ul_Confirm_UL_Request).Result;
-        }
-
-        public long GetNewIndex_UL_Confirm_UL_Request()
-        {
-            if (_db.Table<UL_Confirm_UL_Request>().ToListAsync().Result.Any())
-                return _db.Table<UL_Confirm_UL_Request>().ToListAsync().Result.Max(d => d.Index) + 1;
-            else return 1;
-        }
-        #endregion UL_Confirm_UL_Request
 
         // ********** User_UL *************
         #region User_UL

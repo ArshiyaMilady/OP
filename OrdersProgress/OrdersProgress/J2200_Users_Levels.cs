@@ -373,12 +373,6 @@ namespace OrdersProgress
             new J2310_UL_Request_Categories(user_level_index).ShowDialog();
         }
 
-        private void TsmiUL_Confirm_UL_Request_Click(object sender, EventArgs e)
-        {
-            long user_level_index = Convert.ToInt64(dgvData.CurrentRow.Cells["Index"].Value);
-            new J2320_UL_Confirm_UL_Requests(user_level_index).ShowDialog();
-        }
-
         private void BtnShowAll_Click(object sender, EventArgs e)
         {
             dgvData.DataSource = GetData();

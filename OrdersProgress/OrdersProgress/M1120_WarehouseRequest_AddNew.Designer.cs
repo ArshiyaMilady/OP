@@ -28,23 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(M1120_WarehouseRequest_AddNew));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnReturn = new System.Windows.Forms.Button();
             this.dgvRequestItems = new System.Windows.Forms.DataGridView();
-            this.colRow = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCostCenter_Index = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colItem_Index = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colItem_SmallCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colItem_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colItem_Unit = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colNeed_Supervisor_Confirmation = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.colNeed_Manager_Confirmation = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.colRemove = new System.Windows.Forms.DataGridViewButtonColumn();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.cmbCostCenters = new System.Windows.Forms.ComboBox();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
@@ -63,15 +53,26 @@
             this.btnSearch = new System.Windows.Forms.Button();
             this.txtST_Name = new System.Windows.Forms.TextBox();
             this.txtST_SmallCode = new System.Windows.Forms.TextBox();
+            this.cmbCategories = new System.Windows.Forms.ComboBox();
             this.cmbST_Name = new System.Windows.Forms.ComboBox();
             this.cmbST_SmallCode = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.label8 = new System.Windows.Forms.Label();
-            this.cmbCategories = new System.Windows.Forms.ComboBox();
+            this.colRow = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCostCenter_Index = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colItem_Index = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colItem_SmallCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colItem_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colItem_Unit = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colItem_Category_Index = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colNeed_Supervisor_Confirmation = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colSupervisor_Confirmer_LevelIndex = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colRemove = new System.Windows.Forms.DataGridViewButtonColumn();
             this.panel1.SuspendLayout();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRequestItems)).BeginInit();
@@ -150,8 +151,9 @@
             this.colItem_Name,
             this.colQuantity,
             this.colItem_Unit,
+            this.colItem_Category_Index,
             this.colNeed_Supervisor_Confirmation,
-            this.colNeed_Manager_Confirmation,
+            this.colSupervisor_Confirmer_LevelIndex,
             this.colRemove});
             this.dgvRequestItems.Location = new System.Drawing.Point(6, 24);
             this.dgvRequestItems.Name = "dgvRequestItems";
@@ -161,83 +163,6 @@
             this.dgvRequestItems.TabIndex = 0;
             this.dgvRequestItems.TabStop = false;
             this.dgvRequestItems.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvRequestItems_CellContentClick);
-            // 
-            // colRow
-            // 
-            this.colRow.HeaderText = "ردیف";
-            this.colRow.Name = "colRow";
-            this.colRow.ReadOnly = true;
-            this.colRow.Width = 50;
-            // 
-            // colCostCenter_Index
-            // 
-            this.colCostCenter_Index.HeaderText = "کد مرکز هزینه";
-            this.colCostCenter_Index.Name = "colCostCenter_Index";
-            this.colCostCenter_Index.ReadOnly = true;
-            this.colCostCenter_Index.Width = 120;
-            // 
-            // colItem_Index
-            // 
-            this.colItem_Index.HeaderText = "Item_Index ";
-            this.colItem_Index.Name = "colItem_Index";
-            this.colItem_Index.ReadOnly = true;
-            this.colItem_Index.Visible = false;
-            // 
-            // colItem_SmallCode
-            // 
-            this.colItem_SmallCode.HeaderText = "کد کالا";
-            this.colItem_SmallCode.Name = "colItem_SmallCode";
-            this.colItem_SmallCode.ReadOnly = true;
-            // 
-            // colItem_Name
-            // 
-            this.colItem_Name.HeaderText = "شرح کالا";
-            this.colItem_Name.Name = "colItem_Name";
-            this.colItem_Name.ReadOnly = true;
-            this.colItem_Name.Width = 300;
-            // 
-            // colQuantity
-            // 
-            this.colQuantity.HeaderText = "تعداد";
-            this.colQuantity.Name = "colQuantity";
-            this.colQuantity.ReadOnly = true;
-            this.colQuantity.Width = 50;
-            // 
-            // colItem_Unit
-            // 
-            this.colItem_Unit.HeaderText = "واحد";
-            this.colItem_Unit.Name = "colItem_Unit";
-            this.colItem_Unit.ReadOnly = true;
-            // 
-            // colNeed_Supervisor_Confirmation
-            // 
-            this.colNeed_Supervisor_Confirmation.HeaderText = "Need_Supervisor_Confirmation";
-            this.colNeed_Supervisor_Confirmation.Name = "colNeed_Supervisor_Confirmation";
-            this.colNeed_Supervisor_Confirmation.ReadOnly = true;
-            this.colNeed_Supervisor_Confirmation.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colNeed_Supervisor_Confirmation.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.colNeed_Supervisor_Confirmation.Visible = false;
-            // 
-            // colNeed_Manager_Confirmation
-            // 
-            this.colNeed_Manager_Confirmation.HeaderText = "Need_Manager_Confirmation";
-            this.colNeed_Manager_Confirmation.Name = "colNeed_Manager_Confirmation";
-            this.colNeed_Manager_Confirmation.ReadOnly = true;
-            this.colNeed_Manager_Confirmation.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colNeed_Manager_Confirmation.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.colNeed_Manager_Confirmation.Visible = false;
-            // 
-            // colRemove
-            // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Red;
-            this.colRemove.DefaultCellStyle = dataGridViewCellStyle3;
-            this.colRemove.HeaderText = " ";
-            this.colRemove.Name = "colRemove";
-            this.colRemove.ReadOnly = true;
-            this.colRemove.Text = "حذف";
-            this.colRemove.UseColumnTextForButtonValue = true;
-            this.colRemove.Width = 50;
             // 
             // groupBox3
             // 
@@ -464,6 +389,17 @@
             this.txtST_SmallCode.TabIndex = 34;
             this.txtST_SmallCode.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // cmbCategories
+            // 
+            this.cmbCategories.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbCategories.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbCategories.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbCategories.FormattingEnabled = true;
+            this.cmbCategories.Location = new System.Drawing.Point(7, 85);
+            this.cmbCategories.Name = "cmbCategories";
+            this.cmbCategories.Size = new System.Drawing.Size(173, 23);
+            this.cmbCategories.TabIndex = 40;
+            // 
             // cmbST_Name
             // 
             this.cmbST_Name.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -493,6 +429,17 @@
             this.cmbST_SmallCode.Name = "cmbST_SmallCode";
             this.cmbST_SmallCode.Size = new System.Drawing.Size(91, 23);
             this.cmbST_SmallCode.TabIndex = 30;
+            // 
+            // label8
+            // 
+            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(186, 88);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(50, 15);
+            this.label8.TabIndex = 29;
+            this.label8.Text = "دستۀ کالا :";
             // 
             // label5
             // 
@@ -544,27 +491,87 @@
             this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BackgroundWorker1_DoWork);
             this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BackgroundWorker1_RunWorkerCompleted);
             // 
-            // label8
+            // colRow
             // 
-            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(186, 88);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(50, 15);
-            this.label8.TabIndex = 29;
-            this.label8.Text = "دستۀ کالا :";
+            this.colRow.HeaderText = "ردیف";
+            this.colRow.Name = "colRow";
+            this.colRow.ReadOnly = true;
+            this.colRow.Width = 50;
             // 
-            // cmbCategories
+            // colCostCenter_Index
             // 
-            this.cmbCategories.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmbCategories.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbCategories.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbCategories.FormattingEnabled = true;
-            this.cmbCategories.Location = new System.Drawing.Point(7, 85);
-            this.cmbCategories.Name = "cmbCategories";
-            this.cmbCategories.Size = new System.Drawing.Size(173, 23);
-            this.cmbCategories.TabIndex = 40;
+            this.colCostCenter_Index.HeaderText = "کد مرکز هزینه";
+            this.colCostCenter_Index.Name = "colCostCenter_Index";
+            this.colCostCenter_Index.ReadOnly = true;
+            this.colCostCenter_Index.Width = 120;
+            // 
+            // colItem_Index
+            // 
+            this.colItem_Index.HeaderText = "Item_Index ";
+            this.colItem_Index.Name = "colItem_Index";
+            this.colItem_Index.ReadOnly = true;
+            this.colItem_Index.Visible = false;
+            // 
+            // colItem_SmallCode
+            // 
+            this.colItem_SmallCode.HeaderText = "کد کالا";
+            this.colItem_SmallCode.Name = "colItem_SmallCode";
+            this.colItem_SmallCode.ReadOnly = true;
+            // 
+            // colItem_Name
+            // 
+            this.colItem_Name.HeaderText = "شرح کالا";
+            this.colItem_Name.Name = "colItem_Name";
+            this.colItem_Name.ReadOnly = true;
+            this.colItem_Name.Width = 300;
+            // 
+            // colQuantity
+            // 
+            this.colQuantity.HeaderText = "تعداد";
+            this.colQuantity.Name = "colQuantity";
+            this.colQuantity.ReadOnly = true;
+            this.colQuantity.Width = 50;
+            // 
+            // colItem_Unit
+            // 
+            this.colItem_Unit.HeaderText = "واحد";
+            this.colItem_Unit.Name = "colItem_Unit";
+            this.colItem_Unit.ReadOnly = true;
+            // 
+            // colItem_Category_Index
+            // 
+            this.colItem_Category_Index.HeaderText = "شناسه دستۀ کالا";
+            this.colItem_Category_Index.Name = "colItem_Category_Index";
+            this.colItem_Category_Index.ReadOnly = true;
+            this.colItem_Category_Index.Visible = false;
+            // 
+            // colNeed_Supervisor_Confirmation
+            // 
+            this.colNeed_Supervisor_Confirmation.HeaderText = "Need_Supervisor_Confirmation";
+            this.colNeed_Supervisor_Confirmation.Name = "colNeed_Supervisor_Confirmation";
+            this.colNeed_Supervisor_Confirmation.ReadOnly = true;
+            this.colNeed_Supervisor_Confirmation.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colNeed_Supervisor_Confirmation.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.colNeed_Supervisor_Confirmation.Visible = false;
+            // 
+            // colSupervisor_Confirmer_LevelIndex
+            // 
+            this.colSupervisor_Confirmer_LevelIndex.HeaderText = "شناسه سطح کاربری سرپرست تأیید کننده";
+            this.colSupervisor_Confirmer_LevelIndex.Name = "colSupervisor_Confirmer_LevelIndex";
+            this.colSupervisor_Confirmer_LevelIndex.ReadOnly = true;
+            this.colSupervisor_Confirmer_LevelIndex.Visible = false;
+            // 
+            // colRemove
+            // 
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Red;
+            this.colRemove.DefaultCellStyle = dataGridViewCellStyle1;
+            this.colRemove.HeaderText = " ";
+            this.colRemove.Name = "colRemove";
+            this.colRemove.ReadOnly = true;
+            this.colRemove.Text = "حذف";
+            this.colRemove.UseColumnTextForButtonValue = true;
+            this.colRemove.Width = 50;
             // 
             // M1120_WarehouseRequest_AddNew
             // 
@@ -629,6 +636,8 @@
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.ComboBox cmbCostCenters;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ComboBox cmbCategories;
+        private System.Windows.Forms.Label label8;
         private System.Windows.Forms.DataGridViewTextBoxColumn colRow;
         private System.Windows.Forms.DataGridViewTextBoxColumn colCostCenter_Index;
         private System.Windows.Forms.DataGridViewTextBoxColumn colItem_Index;
@@ -636,10 +645,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colItem_Name;
         private System.Windows.Forms.DataGridViewTextBoxColumn colQuantity;
         private System.Windows.Forms.DataGridViewTextBoxColumn colItem_Unit;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colItem_Category_Index;
         private System.Windows.Forms.DataGridViewCheckBoxColumn colNeed_Supervisor_Confirmation;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn colNeed_Manager_Confirmation;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colSupervisor_Confirmer_LevelIndex;
         private System.Windows.Forms.DataGridViewButtonColumn colRemove;
-        private System.Windows.Forms.ComboBox cmbCategories;
-        private System.Windows.Forms.Label label8;
     }
 }

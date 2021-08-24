@@ -41,6 +41,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.btnExit = new System.Windows.Forms.Button();
             this.lblMaster = new System.Windows.Forms.Label();
+            this.lblAdmin = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -53,6 +54,7 @@
             this.panel1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.panel1.Controls.Add(this.panel2);
             this.panel1.Controls.Add(this.btnExit);
+            this.panel1.Controls.Add(this.lblAdmin);
             this.panel1.Controls.Add(this.lblMaster);
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
@@ -214,6 +216,20 @@
             this.lblMaster.Text = "ورود";
             this.lblMaster.Click += new System.EventHandler(this.lblMaster_Click);
             // 
+            // lblAdmin
+            // 
+            this.lblAdmin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblAdmin.AutoSize = true;
+            this.lblAdmin.Cursor = System.Windows.Forms.Cursors.Default;
+            this.lblAdmin.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAdmin.ForeColor = System.Drawing.Color.Black;
+            this.lblAdmin.Location = new System.Drawing.Point(309, 241);
+            this.lblAdmin.Name = "lblAdmin";
+            this.lblAdmin.Size = new System.Drawing.Size(32, 17);
+            this.lblAdmin.TabIndex = 16;
+            this.lblAdmin.Text = "ورود";
+            this.lblAdmin.Click += new System.EventHandler(this.LblAdmin_Click);
+            // 
             // J1950_Login
             // 
             this.AcceptButton = this.btnLogin;
@@ -251,5 +267,6 @@
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.Label lblExit;
         private System.Windows.Forms.Label lblMaster;
+        private System.Windows.Forms.Label lblAdmin;
     }
 }

@@ -188,6 +188,14 @@ namespace OrdersProgress
             {
                 long cat_index = Convert.ToInt64(dgvCats.CurrentRow.Cells["Index"].Value);
                 long supervisor_ul_index = checkBox1.Checked ? 0 : Convert.ToInt64(dgvULs.CurrentRow.Cells["Index"].Value);
+                if (Program.dbOperations.GetAllUL_Request_CategoriesAsync
+                   (Stack.Company_Index, ul_index).Any(d => (d.Category_Index==cat_index)
+                   && (d.Supervisor_UL_Index == supervisor_ul_index)))
+                {
+                    MessageBox.Show("این مورد قبلا ثبت شده است","خطا");
+                    return;
+                }
+
                 long ul_cr_index = Program.dbOperations.AddUL_Request_Category(
                     new Models.UL_Request_Category {
                         Company_Index = Stack.Company_Index,

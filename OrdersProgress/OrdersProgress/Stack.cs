@@ -21,6 +21,10 @@ namespace OrdersProgress
         public static long UserLevel_Index = -1;
         public static long Company_Index = 1;
 
+        // false : رزرو کالاها از انبار به صورت دستی
+        // true : رزرو کالاها از انبار به صورت اتوماتیک
+        public static bool bWarehouse_Booking_MaxHours = false;
+
 
         //public static string UserName = "admin";
         // سطح دسترسی کاربری که با نرم افزار کار می کند 
@@ -29,7 +33,7 @@ namespace OrdersProgress
         // امکانات کاربر وارد شده را در خود نگه می دارد
         public static List<string> lstUser_ULF_UniquePhrase = new List<string>();
 
-        public static string OrderIndex;   // شناسه سفارشی که در حال مورد استفاده قرار گرفته است
+        //public static string OrderIndex;   // شناسه سفارشی که در حال مورد استفاده قرار گرفته است
 
         public static string Standard_Salt = "hvfhf pgri ih";  // کلمه "ارباب حلقه ها" وقتی کیبورد انگلیسی است
         //public static string Standard_Salt = ";hchfghk;h";  // کلمه "کازابلانکا" وقتی کیبورد انگلیسی است
@@ -110,6 +114,8 @@ namespace OrdersProgress
                 Stack.UserLevel_Index = Program.dbOperations.GetAllUser_ULsAsync(Stack.Company_Index, Stack.UserIndex).First().UL_Index;
                 Stack.UserLevel_Type = Program.dbOperations.GetUser_LevelAsync(Stack.UserLevel_Index).Type;
             }
+
+            Stack.bWarehouse_Booking_MaxHours = Program.dbOperations.GetCompanyAsync(user.Company_Index).Warehouse_AutomaticBooking;
 
             return ((Stack.UserIndex > 0) && (Stack.UserLevel_Index > 0) && (Stack.UserLevel_Type >= 0));
         }

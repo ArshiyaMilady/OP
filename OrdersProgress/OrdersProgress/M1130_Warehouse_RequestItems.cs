@@ -31,7 +31,10 @@ namespace OrdersProgress
 
             // اگر کاربر، ادمین ، کاربر ارشد یا سرپرست واحد باشد
             panel2.Visible = (Stack.UserLevel_Type != 0)
-                || Program.dbOperations.GetAllUL_Confirm_UL_RequestsAsync(Stack.Company_Index, 0, Stack.UserLevel_Index).Any();
+                || Program.dbOperations.GetAllUL_Request_CategoriesAsync(Stack.Company_Index)
+                    .Any(d=>d.Supervisor_UL_Index == Stack.UserLevel_Index);
+            //panel2.Visible = (Stack.UserLevel_Type != 0)
+            //    || Program.dbOperations.GetAllUL_Confirm_UL_RequestsAsync(Stack.Company_Index, 0, Stack.UserLevel_Index).Any();
             just_show_myRequests = !panel2.Visible;
             //MessageBox.Show(just_show_myRequests.ToString());
 
@@ -88,14 +91,25 @@ namespace OrdersProgress
                     }
                     #endregion
 
-                        // شناسه سطوح کاربرانی که درخواستهای آنها نیاز به تأیید سطح کاربر جاری دارد
-                        List<long> lstULs_Need_Confirmation = Program.dbOperations.GetAllUL_Confirm_UL_RequestsAsync
-                        (Stack.Company_Index, 0, Stack.UserLevel_Index).Select(d => d.UL_Index).ToList();
+                    //List<Models.UL_Request_Category> lstULRC = Program.dbOperations
+                    //    .GetAllUL_Request_CategoriesAsync(Stack.Company_Index, Stack.UserLevel_Index);
+                    
+                    // تمام دسته کالاهایی که کاربر جاری می تواند تأیید نماید
+                    List<long> lstCategories_UserLevel_Can_Confirm = Program.dbOperations
+                        .GetAllUL_Request_CategoriesAsync(Stack.Company_Index)
+                        .Where(d=>d.Supervisor_UL_Index == Stack.UserLevel_Index)
+                        .Select(d=>d.Category_Index).Distinct().ToList();
+
+                    // شناسه سطوح کاربرانی که درخواستهای آنها نیاز به تأیید سطح کاربر جاری دارد
+                    List<long> lstRequests_Need_Confirmation = Program.dbOperations.GetAllWarehouse_Request_RowsAsync
+                        (Stack.Company_Index).Where(d=>lstCategories_UserLevel_Can_Confirm.Contains(d.Item_Category_Index))
+                        //.Where(j => j.Supervisor_Confirmer_LevelIndex == Stack.UserLevel_Index)
+                        .Select(n=> n.Warehouse_Request_Index).ToList();
 
                     // درخواستهای در انتظار تأیید
                     lstRequests_need_confirmation = Program.dbOperations.GetAllWarehouse_RequestsAsync(Stack.Company_Index)
                         .Where(d => d.Need_Supervisor_Confirmation).Where(j => !j.Sent_to_Warehouse)
-                        .Where(n => lstULs_Need_Confirmation.Contains(n.Supervisor_Confirmer_LevelIndex)).ToList();
+                        .Where(n => lstRequests_Need_Confirmation.Contains(n.Index)).ToList();
 
                     // شناسه درخواستهایی که توسط کاربر جاری در تاریخچه تأیید شده اند
                     List<long> lstConfirmed_in_History = Program.dbOperations.GetAllWarehouse_Request_HistorysAsync

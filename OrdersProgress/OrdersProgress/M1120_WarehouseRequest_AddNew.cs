@@ -97,8 +97,8 @@ namespace OrdersProgress
                 Need_Supervisor_Confirmation = bNeed_Supervisor_Confirmation,
 
                 // برای شروع کار باید سرپرست با درخواست دهنده یکسان باشد
-                Supervisor_Confirmer_Index = Stack.UserIndex,
-                Supervisor_Confirmer_LevelIndex = Stack.UserLevel_Index
+                //Supervisor_Confirmer_Index = Stack.UserIndex,
+                //Supervisor_Confirmer_LevelIndex = Stack.UserLevel_Index
             };
 
             Application.DoEvents();
@@ -111,18 +111,22 @@ namespace OrdersProgress
                 long cost_center_index = 0;
                 if (lstCostCenter_Code.Any())
                     cost_center_index = lstCostCenter_Code[cmbCostCenters.SelectedIndex];
-
+                Models.Item item = (Models.Item)row.Tag;
                 Program.dbOperations.AddWarehouse_Request_RowAsync(
                     new Models.Warehouse_Request_Row
                     {
+                        Company_Index = Stack.Company_Index,
                         Warehouse_Request_Index = wr_index,
+                        Warehouse_Request_Index_in_Company = wr.Index_in_Company,
                         CostCenter_Index = cost_center_index,
-                        Item_Index = Convert.ToInt64(row.Cells["colItem_Index"].Value),
-                        Item_SmallCode = Convert.ToString(row.Cells["colItem_Index"].Value),
-                        Item_Name = Convert.ToString(row.Cells["colItem_Name"].Value),
-                        Item_Unit = Convert.ToString(row.Cells["colItem_Unit"].Value),
+                        Item_Index = item.Index, // Convert.ToInt64(row.Cells["colItem_Index"].Value),
+                        Item_SmallCode =item.Code_Small, // Convert.ToString(row.Cells["colItem_Index"].Value),
+                        Item_Name = item.Name_Samll,    // Convert.ToString(row.Cells["colItem_Name"].Value),
+                        Item_Unit =item.Unit,   // Convert.ToString(row.Cells["colItem_Unit"].Value),
+                        Item_Category_Index = item.Category_Index,
                         Quantity = Convert.ToDouble(row.Cells["colQuantity"].Value),
                         Need_Supervisor_Confirmation = Convert.ToBoolean(row.Cells["colNeed_Supervisor_Confirmation"].Value),
+                        Supervisor_Confirmer_LevelIndex = Convert.ToInt64(row.Cells["colSupervisor_Confirmer_LevelIndex"].Value),
                     });
                 Application.DoEvents();
             }
@@ -304,6 +308,7 @@ namespace OrdersProgress
                 return;
             }
 
+            // موجودی قابل برداشت = موجودی انبار - رزرو شده ها
             decimal qExistence = Convert.ToDecimal(dgvWarehouseItems.CurrentRow.Cells["C_D1"].Value);
             if (numericUpDown1.Value > qExistence)
             {
@@ -318,13 +323,14 @@ namespace OrdersProgress
             Models.Item item = Program.dbOperations.GetItem(item_index);
             int iRow = dgvRequestItems.Rows.Add();
             DataGridViewRow row = dgvRequestItems.Rows[iRow];
-            //row.Tag = item;
+            row.Tag = item;
             row.Cells["colRow"].Value = iRow+1;
             row.Cells["colItem_Index"].Value = item.Index;
             row.Cells["colItem_SmallCode"].Value = item.Code_Small;
             row.Cells["colItem_Name"].Value = item.Name_Samll;
             row.Cells["colQuantity"].Value = numericUpDown1.Value;
             row.Cells["colItem_Unit"].Value = item.Unit;
+            row.Cells["colItem_Category_Index"].Value = item.Category_Index;
             if(lstCostCenter_Code.Any())    // کد مرکز هزینه
                 row.Cells["colCostCenter_Index"].Value = lstCostCenter_Code[cmbCostCenters.SelectedIndex];
             // رابطه بین دسته کالا و سطح کاربری در هنگام درخواست کالا از انبار
@@ -332,8 +338,8 @@ namespace OrdersProgress
                 (Stack.Company_Index, Stack.UserLevel_Index).FirstOrDefault(d => d.Category_Index == item.Category_Index);
             if (urc != null)
             {
-                //row.Cells["colNeed_Supervisor_Confirmation"].Value = urc.Need_Supervisor_Confirmation;
-                //row.Cells["colNeed_Manager_Confirmation"].Value = urc.Need_Manager_Confirmation;
+                row.Cells["colNeed_Supervisor_Confirmation"].Value = urc.Supervisor_UL_Index > 0;
+                row.Cells["colSupervisor_Confirmer_LevelIndex"].Value = urc.Supervisor_UL_Index;
             }
         }
 

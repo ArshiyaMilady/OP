@@ -175,12 +175,6 @@
     <Compile Include="J2310_UL_Request_Categories.Designer.cs">
       <DependentUpon>J2310_UL_Request_Categories.cs</DependentUpon>
     </Compile>
-    <Compile Include="J2320_UL_Confirm_UL_Requests.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="J2320_UL_Confirm_UL_Requests.Designer.cs">
-      <DependentUpon>J2320_UL_Confirm_UL_Requests.cs</DependentUpon>
-    </Compile>
     <Compile Include="K1100_Categories.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -318,6 +312,12 @@
     </Compile>
     <Compile Include="M1130_Warehouse_RequestItems.Designer.cs">
       <DependentUpon>M1130_Warehouse_RequestItems.cs</DependentUpon>
+    </Compile>
+    <Compile Include="M1134_Warehouse_RequestItem_Rows.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="M1134_Warehouse_RequestItem_Rows.Designer.cs">
+      <DependentUpon>M1134_Warehouse_RequestItem_Rows.cs</DependentUpon>
     </Compile>
     <Compile Include="M1140_CostCenters.cs">
       <SubType>Form</SubType>
@@ -464,9 +464,6 @@
     <EmbeddedResource Include="J2310_UL_Request_Categories.resx">
       <DependentUpon>J2310_UL_Request_Categories.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="J2320_UL_Confirm_UL_Requests.resx">
-      <DependentUpon>J2320_UL_Confirm_UL_Requests.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="K1100_Categories.resx">
       <DependentUpon>K1100_Categories.cs</DependentUpon>
     </EmbeddedResource>
@@ -535,6 +532,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="M1130_Warehouse_RequestItems.resx">
       <DependentUpon>M1130_Warehouse_RequestItems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="M1134_Warehouse_RequestItem_Rows.resx">
+      <DependentUpon>M1134_Warehouse_RequestItem_Rows.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="M1140_CostCenters.resx">
       <DependentUpon>M1140_CostCenters.cs</DependentUpon>

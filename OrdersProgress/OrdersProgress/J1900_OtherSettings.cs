@@ -19,7 +19,7 @@ namespace OrdersProgress
 
         private void J1900_OtherSettings_Load(object sender, EventArgs e)
         {
-            chkAutomaticWarehouseBooking.Checked = Program.dbOperations.GetCompanyAsync(Stack.Company_Index).Warehouse_Booking;
+            chkAutomaticWarehouseBooking.Checked = Program.dbOperations.GetCompanyAsync(Stack.Company_Index).Warehouse_AutomaticBooking;
         }
 
         private void BtnReturn_Click(object sender, EventArgs e)
@@ -29,7 +29,16 @@ namespace OrdersProgress
 
         private void BtnSave_Click(object sender, EventArgs e)
         {
+            if (MessageBox.Show("آیا از ثبت تغییرات اطمینان دارید؟", ""
+                , MessageBoxButtons.YesNo) != DialogResult.Yes) return;
 
+            if(Stack.bWarehouse_Booking_MaxHours != chkAutomaticWarehouseBooking.Checked)
+            {
+                Models.Company company = Program.dbOperations.GetCompanyAsync(Stack.Company_Index);
+                company.Warehouse_AutomaticBooking = chkAutomaticWarehouseBooking.Checked;
+                Program.dbOperations.UpdateCompanyAsync(company);
+                Stack.bWarehouse_Booking_MaxHours = chkAutomaticWarehouseBooking.Checked;
+            }
         }
     }
 }
