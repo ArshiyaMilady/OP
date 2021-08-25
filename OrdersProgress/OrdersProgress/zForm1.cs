@@ -55,8 +55,9 @@ namespace OrdersProgress
             #region حذف رابطه سطح کاربری-دسته کالا -سرپرست در درخواست کالا از انبار
             //Program.dbOperations.DeleteAllUL_Request_CategoriesAsync();
 
-            //Program.dbOperations.DeleteAllWarehouse_Request_RowsAsync();
-            //Program.dbOperations.DeleteAllWarehouse_RequestsAsync();
+            Program.dbOperations.DeleteAllWarehouse_Request_RowsAsync();
+            Program.dbOperations.DeleteAllWarehouse_RequestsAsync();
+            Program.dbOperations.DeleteAllWarehouse_Request_HistorysAsync();
             #endregion
 
             #region دسته بندی اولیه : نامشخص

@@ -25,9 +25,10 @@ namespace OrdersProgress
         private void M1132_Warehouse_Request_History_Shown(object sender, EventArgs e)
         {
             dgvData.DataSource = Program.dbOperations.GetAllWarehouse_Request_HistorysAsync
-                (Stack.Company_Index, warehouse_request_index).OrderByDescending(d=>d.DateTime_mi).ToList();
+                (Stack.Company_Index, warehouse_request_index).OrderByDescending(d=>d.DateTime_mi)
+                .ThenByDescending(d=>d.Id).ToList();
 
-            ShowData
+            ShowData();
         }
 
         private void ShowData()
@@ -37,35 +38,25 @@ namespace OrdersProgress
             {
                 switch (col.Name)
                 {
-                    case "CostCenter_Index":
-                        col.HeaderText = "مرکز هزینه";
+                    case "User_Name":
+                        col.HeaderText = "نام کاربر";
                         col.ReadOnly = true;
                         col.Width = 150;
                         break;
-                    case "Item_SmallCode":
-                        col.HeaderText = "کد کالا";
+                    case "Date_sh":
+                        col.HeaderText = "تاریخ";
                         col.ReadOnly = true;
                         col.Width = 100;
                         break;
-                    case "Item_Name":
-                        col.HeaderText = "نام کالا";
-                        col.Width = 150;
-                        col.ReadOnly = true;
-                        break;
-                    case "Quantity":
-                        col.HeaderText = "تعداد";
-                        col.ReadOnly = true;
-                        col.Width = 50;
-                        break;
-                    case "Item_Unit":
-                        col.HeaderText = "واحد";
-                        col.ReadOnly = true;
+                    case "Time":
+                        col.HeaderText = "زمان";
                         col.Width = 100;
+                        col.ReadOnly = true;
                         break;
                     case "Description":
                         col.HeaderText = "توضیحات";
                         //col.ReadOnly = true;
-                        col.Width = 200;
+                        col.Width = 300;
                         break;
                     default: col.Visible = false; break;
                 }

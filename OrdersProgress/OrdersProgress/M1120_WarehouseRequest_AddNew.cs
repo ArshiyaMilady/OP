@@ -138,8 +138,15 @@ namespace OrdersProgress
 
             Application.DoEvents();
 
+            if (Program.dbOperations.GetAllWarehouse_Request_RowsAsync(Stack.Company_Index, wr.Index)
+                .Any(d => d.Need_Supervisor_Confirmation))
+                wr.Status_Description = "درخواست ثبت گردید";
+            else wr.Status_Description = "درخواست ثبت و به انبار ارسال گردید";
+
+            // ثبت وضعیت درخواست
+            Program.dbOperations.UpdateWarehouse_RequestAsync(wr);
             // ثبت درخواست در تاریخچه
-            new ThisProject().Create_RequestHistory(wr, "درخواست ثبت گردید");
+            new ThisProject().Create_RequestHistory(wr, wr.Status_Description);
 
             progressBar1.Visible = false;
             panel1.Enabled = true;

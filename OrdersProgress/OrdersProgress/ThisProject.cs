@@ -249,11 +249,11 @@ namespace OrdersProgress
         public void Create_RequestHistory(Models.Warehouse_Request wr,string description=null)
         {
             #region ثبت درخواست در تاریخچه
-            Program.dbOperations.AddWarehouse_Request_HistoryAsync(
+            Program.dbOperations.AddWarehouse_Request_History(
                 new Models.Warehouse_Request_History
                 {
                     Company_Index = Stack.Company_Index,// wr.Company_Index,
-                    Warehouse_Request_Index = wr.Index_in_Company,
+                    Warehouse_Request_Index = wr.Index,
                     User_Index = Stack.UserIndex,// wr.User_Index,
                     User_Level_Index = Stack.UserLevel_Index, // wr.UserLevel_Index,
                     User_Name = Stack.UserName, //  wr.User_Name,

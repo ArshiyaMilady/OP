@@ -1241,6 +1241,9 @@ namespace OrdersProgress.Models
 
         #region آیا تأیید سرپرست یا مدیر نیاز می باشد
         public bool Need_Supervisor_Confirmation { get; set; }  // نیاز به تأیید سرپرست دارد؟
+
+        // با توجه به اینکه ممکن است چند نفر بتوانند درخواست را تأیید نمایند (مانند سرپرست 
+        // و سرپرستِ سرپرست). پس نمی توان فیلد زیر را ملاک تأیید کننده قرار داد
         //public long Supervisor_Confirmer_LevelIndex { get; set; }    // شناسه سطح کاربری سرپرست که باید این مورد را تأیید نماید
         #endregion
 
@@ -1261,11 +1264,11 @@ namespace OrdersProgress.Models
         public string User_Name { get; set; }     // نام شخصی که عملی را انجام داده است
         public long User_Level_Index { get; set; }    // شناسۀ شخصی که عملی را انجام داده است
 
+        // اگر نیاز به ذکر توضیحی باشد مانند علت عدم تأیید و ... ، این توضیح در فیلد ذخیره می شود
+        public string Description { get; set; }
         public DateTime DateTime_mi { get; set; }   // زمان انجام به میلادی
         public string Date_sh { get; set; }     // تاریخ انجام به شمسی
         public string Time { get; set; }        // زمان انجام به شمسی
-        // اگر نیاز به ذکر توضیحی باشد مانند علت عدم تأیید و ... ، این توضیح در فیلد ذخیره می شود
-        public string Description { get; set; }
     }
 
     // سند رسید یا حواله انبار

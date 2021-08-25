@@ -2973,7 +2973,14 @@ namespace OrdersProgress.Models
         {
             warehouse_Request_History.Index = GetNewIndex_Warehouse_Request_History();
             _db.InsertAsync(warehouse_Request_History);
-            return warehouse_Request_History.Id;
+            return warehouse_Request_History.Index;
+        }
+
+        public long AddWarehouse_Request_History(Warehouse_Request_History warehouse_Request_History)
+        {
+            warehouse_Request_History.Index = GetNewIndex_Warehouse_Request_History();
+            _db.InsertAsync(warehouse_Request_History).Wait();
+            return warehouse_Request_History.Index;
         }
 
         public int DeleteWarehouse_Request_HistoryAsync(Warehouse_Request_History warehouse_Request_History)

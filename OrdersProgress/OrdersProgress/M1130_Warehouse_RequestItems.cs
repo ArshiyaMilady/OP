@@ -242,13 +242,14 @@ namespace OrdersProgress
 
         private void TsmiRequestDetails_Click(object sender, EventArgs e)
         {
-            long request_index = Convert.ToInt64(dgvData.CurrentRow.Cells["Index"].Value);
-            new M1134_Warehouse_RequestItem_Rows(request_index).ShowDialog();
+            long warehouse_request_index = Convert.ToInt64(dgvData.CurrentRow.Cells["Index"].Value);
+            new M1134_Warehouse_RequestItem_Rows(warehouse_request_index).ShowDialog();
         }
 
         private void TsmiRequestHistory_Click(object sender, EventArgs e)
         {
-
+            long warehouse_request_index = Convert.ToInt64(dgvData.CurrentRow.Cells["Index"].Value);
+            new M1132_Warehouse_Request_History(warehouse_request_index).ShowDialog();
         }
 
         private void DgvData_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
