@@ -51,6 +51,7 @@ namespace OrdersProgress
             if (cmbCategories.Items.Count > 0) cmbCategories.SelectedIndex = 0;
             #endregion
 
+            #region مراکز هزینه در کامبوباکس
             foreach (Models.CostCenter cc in Program.dbOperations.GetAllCostCentersAsync(Stack.Company_Index, 1)
                .Where(d=>!d.Description.Equals("?") && !d.Description.Equals("؟"))
                .OrderBy(d => d.Index_in_Company).ToList())
@@ -59,7 +60,7 @@ namespace OrdersProgress
                 cmbCostCenters.Items.Add(cc.Index_in_Company + " - " + cc.Description);
             }
             if (cmbCostCenters.Items.Count > 0) cmbCostCenters.SelectedIndex = 0;
-
+            #endregion
 
             cmbST_Name.SelectedIndex = 0;
             cmbST_SmallCode.SelectedIndex = 0;
@@ -130,7 +131,7 @@ namespace OrdersProgress
                         Item_Category_Index = item.Category_Index,
                         Quantity = Convert.ToDouble(row.Cells["colQuantity"].Value),
                         Need_Supervisor_Confirmation = Convert.ToBoolean(row.Cells["colNeed_Supervisor_Confirmation"].Value),
-                        //Supervisor_Confirmer_LevelIndex = Convert.ToInt64(row.Cells["colSupervisor_Confirmer_LevelIndex"].Value),
+                        Supervisor_Confirmer_LevelIndex = Convert.ToInt64(row.Cells["colSupervisor_Confirmer_LevelIndex"].Value),
                     });
                 Application.DoEvents();
             }
@@ -237,9 +238,9 @@ namespace OrdersProgress
 
         private void BtnSearch_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtST_Name.Text)
-                && string.IsNullOrWhiteSpace(txtST_SmallCode.Text))
-                return;
+            //if (string.IsNullOrWhiteSpace(txtST_Name.Text)
+            //    && string.IsNullOrWhiteSpace(txtST_SmallCode.Text))
+            //    return;
 
             panel1.Enabled = false;
             Application.DoEvents();
@@ -259,8 +260,17 @@ namespace OrdersProgress
                 }
             }
 
-            long category_index = Program.dbOperations.GetCategoryAsync(cmbCategories.Text, Stack.Company_Index).Index;
-            dgvWarehouseItems.DataSource = lstItems1.Where(d=>d.Category_Index == category_index).ToList();
+            #region جستجو در دسته های مجاز
+            if (cmbCategories.SelectedIndex == 0)
+            {
+                dgvWarehouseItems.DataSource = lstItems1;
+            }
+            else
+            {
+                long category_index = Program.dbOperations.GetCategoryAsync(cmbCategories.Text, Stack.Company_Index).Index;
+                dgvWarehouseItems.DataSource = lstItems1.Where(d => d.Category_Index == category_index).ToList();
+            }
+            #endregion
 
             //System.Threading.Thread.Sleep(500);
             Application.DoEvents();
@@ -356,7 +366,7 @@ namespace OrdersProgress
             if (urc != null)
             {
                 row.Cells["colNeed_Supervisor_Confirmation"].Value = urc.Supervisor_UL_Index > 0;
-                //row.Cells["colSupervisor_Confirmer_LevelIndex"].Value = urc.Supervisor_UL_Index;
+                row.Cells["colSupervisor_Confirmer_LevelIndex"].Value = urc.Supervisor_UL_Index;
             }
         }
 

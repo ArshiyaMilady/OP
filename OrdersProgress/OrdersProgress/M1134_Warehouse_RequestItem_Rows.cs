@@ -138,7 +138,7 @@ namespace OrdersProgress
         private void BtnConfirm_Click(object sender, EventArgs e)
         {
             CancelButton = null;
-            #region بررسی خالی نبودن ستون توضیحات برای موارد انتخاب نشده
+            #region بررسی خالی نبودن ستون توضیحات برای موارد تأیید نشده
             for (int i = 0; i < dgvData.Rows.Count; i++)
             {
                 DataGridViewRow row = dgvData.Rows[i];
@@ -194,9 +194,13 @@ namespace OrdersProgress
                     Models.UL_Request_Category urc = Program.dbOperations.GetAllUL_Request_CategoriesAsync
                         (Stack.Company_Index, Stack.UserLevel_Index).FirstOrDefault(d => d.Category_Index == wr_row.Item_Category_Index);
                     if (urc != null)
+                    {
                         wr_row.Need_Supervisor_Confirmation = urc.Supervisor_UL_Index > 0;
-                    else wr_row.Need_Supervisor_Confirmation = false;
-
+                    }
+                    else
+                    {
+                        wr_row.Need_Supervisor_Confirmation = false;
+                    }
                     //Any_Confirmed = true;
                 }
                 else

@@ -1244,7 +1244,7 @@ namespace OrdersProgress.Models
 
         // با توجه به اینکه ممکن است چند نفر بتوانند درخواست را تأیید نمایند (مانند سرپرست 
         // و سرپرستِ سرپرست). پس نمی توان فیلد زیر را ملاک تأیید کننده قرار داد
-        //public long Supervisor_Confirmer_LevelIndex { get; set; }    // شناسه سطح کاربری سرپرست که باید این مورد را تأیید نماید
+        public long Supervisor_Confirmer_LevelIndex { get; set; }    // شناسه سطح کاربری سرپرست که باید این مورد را تأیید نماید
         #endregion
 
         public bool Canceled { get; set; }  // آیا این ردیف لغو شده است؟

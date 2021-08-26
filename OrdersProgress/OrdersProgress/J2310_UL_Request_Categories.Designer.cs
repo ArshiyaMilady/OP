@@ -40,11 +40,11 @@
             this.btnReturn = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.dgvUL_RC = new System.Windows.Forms.DataGridView();
+            this.dgvULs = new System.Windows.Forms.DataGridView();
+            this.dgvCats = new System.Windows.Forms.DataGridView();
             this.colCategory_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colSupervisor_UL_Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colRemove = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.dgvULs = new System.Windows.Forms.DataGridView();
-            this.dgvCats = new System.Windows.Forms.DataGridView();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUL_RC)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvULs)).BeginInit();
@@ -188,33 +188,6 @@
             this.dgvUL_RC.TabIndex = 93;
             this.dgvUL_RC.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvUL_RC_CellContentClick);
             // 
-            // colCategory_Name
-            // 
-            this.colCategory_Name.HeaderText = "نام دسته";
-            this.colCategory_Name.Name = "colCategory_Name";
-            this.colCategory_Name.ReadOnly = true;
-            this.colCategory_Name.Width = 250;
-            // 
-            // colSupervisor_UL_Description
-            // 
-            this.colSupervisor_UL_Description.HeaderText = "سطح کاربری";
-            this.colSupervisor_UL_Description.Name = "colSupervisor_UL_Description";
-            this.colSupervisor_UL_Description.ReadOnly = true;
-            this.colSupervisor_UL_Description.Width = 250;
-            // 
-            // colRemove
-            // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Red;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.colRemove.DefaultCellStyle = dataGridViewCellStyle1;
-            this.colRemove.HeaderText = " ";
-            this.colRemove.Name = "colRemove";
-            this.colRemove.ReadOnly = true;
-            this.colRemove.Text = "حذف";
-            this.colRemove.UseColumnTextForButtonValue = true;
-            this.colRemove.Width = 50;
-            // 
             // dgvULs
             // 
             this.dgvULs.AllowUserToAddRows = false;
@@ -239,6 +212,33 @@
             this.dgvCats.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvCats.Size = new System.Drawing.Size(391, 186);
             this.dgvCats.TabIndex = 93;
+            // 
+            // colCategory_Name
+            // 
+            this.colCategory_Name.HeaderText = "نام دسته";
+            this.colCategory_Name.Name = "colCategory_Name";
+            this.colCategory_Name.ReadOnly = true;
+            this.colCategory_Name.Width = 250;
+            // 
+            // colSupervisor_UL_Description
+            // 
+            this.colSupervisor_UL_Description.HeaderText = "سطح کاربری سرپرست";
+            this.colSupervisor_UL_Description.Name = "colSupervisor_UL_Description";
+            this.colSupervisor_UL_Description.ReadOnly = true;
+            this.colSupervisor_UL_Description.Width = 250;
+            // 
+            // colRemove
+            // 
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Red;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.colRemove.DefaultCellStyle = dataGridViewCellStyle1;
+            this.colRemove.HeaderText = " ";
+            this.colRemove.Name = "colRemove";
+            this.colRemove.ReadOnly = true;
+            this.colRemove.Text = "حذف";
+            this.colRemove.UseColumnTextForButtonValue = true;
+            this.colRemove.Width = 50;
             // 
             // J2310_UL_Request_Categories
             // 
@@ -273,9 +273,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView dgvUL_RC;
         private System.Windows.Forms.Button btnAddNew;
+        private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.DataGridViewTextBoxColumn colCategory_Name;
         private System.Windows.Forms.DataGridViewTextBoxColumn colSupervisor_UL_Description;
         private System.Windows.Forms.DataGridViewButtonColumn colRemove;
-        private System.Windows.Forms.CheckBox checkBox1;
     }
 }

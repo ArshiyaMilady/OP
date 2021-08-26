@@ -32,9 +32,9 @@ namespace OrdersProgress
             //dgvData.DataSource = Program.dbOperations.GetAllCategoriesAsync(Stack.Company_Index);
             //dgvData.DataSource = Program.dbOperations.GetAllWarehousesAsync(Stack.Company_Index,false);
             //dgvData.DataSource = Program.dbOperations.GetAllUL_Confirm_UL_RequestsAsync(Stack.Company_Index);
-            //dgvData.DataSource = Program.dbOperations.GetAllUL_Request_CategoriesAsync(Stack.Company_Index);
+            dgvData.DataSource = Program.dbOperations.GetAllUL_Request_CategoriesAsync(Stack.Company_Index);
             //dgvData.DataSource = Program.dbOperations.GetAllWarehouse_RequestsAsync(Stack.Company_Index);
-            dgvData.DataSource = Program.dbOperations.GetAllWarehouse_Request_RowsAsync(Stack.Company_Index);
+            //dgvData.DataSource = Program.dbOperations.GetAllWarehouse_Request_RowsAsync(Stack.Company_Index);
             //dgvData.DataSource = Program.dbOperations.GetAllItemsAsync(Stack.Company_Index,0,100);
             //dgvData.DataSource = Program.dbOperations.GetAllLoginHistorysAsync(Stack.Company_Index)
             //    .OrderByDescending(d=>d.DateTime_mi).ToList();

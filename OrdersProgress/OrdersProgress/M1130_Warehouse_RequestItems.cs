@@ -96,10 +96,17 @@ namespace OrdersProgress
                     }
                     #endregion
 
+                    #region درخواستهایی که نیاز به تأیید دارند
+                    // تمام روابط سطح کاربری-سرپرست تأییدکننده 
                     List<Models.UL_Request_Category> lstULRC = Program.dbOperations
                         .GetAllUL_Request_CategoriesAsync(Stack.Company_Index)
-                        .Where(d => d.Supervisor_UL_Index == Stack.UserLevel_Index)
-                        .ToList();
+                        .Where(d => d.Supervisor_UL_Index == Stack.UserLevel_Index).ToList();
+
+                    // تمام روابط مربوط به سطح کاربری سرپرست 
+                    lstULRC.AddRange(Program.dbOperations
+                        .GetAllUL_Request_CategoriesAsync(Stack.Company_Index)
+                        .Where(d => (d.User_Level_Index == Stack.UserLevel_Index)
+                            && (d.Supervisor_UL_Index == 0)).ToList());
 
                     // تمام دسته کالاهایی که کاربر جاری می تواند تأیید نماید
                     List<long> lstCategories_UserLevel_Can_Confirm = lstULRC
@@ -111,23 +118,30 @@ namespace OrdersProgress
                         .Where(d=>d.Need_Supervisor_Confirmation)
                         .Where(j=>lstCategories_UserLevel_Can_Confirm.Contains(j.Item_Category_Index)).ToList())
                     {
-                        // اگر درخواست وارد لیست نشده باشد
+                        // اگر درخواست وارد لیست نشده باشد، آنرا وارد لیست می کند
                         if (!lstRequests_need_confirmation.Any(d => d.Index == wr_row.Warehouse_Request_Index))
                         {
-                            Models.Warehouse_Request wr = Program.dbOperations.GetWarehouse_RequestAsync(wr_row.Warehouse_Request_Index);
                             if (lstULRC.Any(d => (d.Category_Index == wr_row.Item_Category_Index)
-                                 && (d.User_Level_Index == wr.UserLevel_Index)))
+                                 && (d.Supervisor_UL_Index == wr_row.Supervisor_Confirmer_LevelIndex)))
+                            {
+                                Models.Warehouse_Request wr = Program.dbOperations.GetWarehouse_RequestAsync(wr_row.Warehouse_Request_Index);
                                 lstRequests_need_confirmation.Add(wr);
+                            }
                         }
                     }
+                    #endregion
 
+                    #region درخواستهایی که توسط کاربر جاری تأیید شده اند
                     // شناسه درخواستهایی که توسط کاربر جاری در تاریخچه تأیید شده اند
                     List<long> lstConfirmed_in_History = Program.dbOperations.GetAllWarehouse_Request_HistorysAsync
-                        (Stack.Company_Index).Where(d => d.User_Index == Stack.UserIndex).Select(d => d.Warehouse_Request_Index).ToList();
+                        (Stack.Company_Index).Where(d => d.User_Index == Stack.UserIndex)
+                        .Select(d => d.Warehouse_Request_Index).ToList();
 
                     // درخواستهایی که توسط کاربر جاری تأیید یا عدم تأیید شده اند
                     lstRequests_passed = Program.dbOperations.GetAllWarehouse_RequestsAsync
-                        (Stack.Company_Index).Where(d => lstConfirmed_in_History.Contains(d.User_Index)).ToList();
+                        (Stack.Company_Index).Where(d=>d.User_Index!=Stack.UserIndex)
+                        .Where(d => lstConfirmed_in_History.Contains(d.Index)).ToList();
+                    #endregion
                 }
             }
         }
