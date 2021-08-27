@@ -173,103 +173,103 @@ namespace OrdersProgress
                 msg = "آیا از تأیید یا عدم تأیید موارد درخواست اطمینان دارید؟";
             else if (!Any_Confirmed && Any_Canceled)
                 msg = "آیا از لغو موارد درخواست اطمینان دارید؟";
-
-            if (MessageBox.Show(msg, "", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
             #endregion
 
-
-            #region تعیین وضعیت ردیف های درخواست
-
-            for (int i = 0; i < dgvData.Rows.Count; i++)
+            if (MessageBox.Show(msg, "", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                DataGridViewRow row = dgvData.Rows[i];
-                long wr_row_index = Convert.ToInt64(row.Cells["Index"].Value);
-                bool bC_B1 = Convert.ToBoolean(row.Cells["C_B1"].Value);
-                string cancel_description = bC_B1 ? null : row.Cells["Description"].Value.ToString();
+                #region تعیین وضعیت ردیف های درخواست
 
-                Models.Warehouse_Request_Row wr_row = Program.dbOperations.GetWarehouse_Request_RowAsync(wr_row_index);
-
-                if (bC_B1)
+                for (int i = 0; i < dgvData.Rows.Count; i++)
                 {
-                    Models.UL_Request_Category urc = Program.dbOperations.GetAllUL_Request_CategoriesAsync
-                        (Stack.Company_Index, Stack.UserLevel_Index).FirstOrDefault(d => d.Category_Index == wr_row.Item_Category_Index);
-                    if (urc != null)
+                    DataGridViewRow row = dgvData.Rows[i];
+                    long wr_row_index = Convert.ToInt64(row.Cells["Index"].Value);
+                    bool bC_B1 = Convert.ToBoolean(row.Cells["C_B1"].Value);
+                    string cancel_description = bC_B1 ? null : row.Cells["Description"].Value.ToString();
+
+                    Models.Warehouse_Request_Row wr_row = Program.dbOperations.GetWarehouse_Request_RowAsync(wr_row_index);
+
+                    if (bC_B1)
                     {
-                        wr_row.Need_Supervisor_Confirmation = urc.Supervisor_UL_Index > 0;
+                        Models.UL_Request_Category urc = Program.dbOperations.GetAllUL_Request_CategoriesAsync
+                            (Stack.Company_Index, Stack.UserLevel_Index).FirstOrDefault(d => d.Category_Index == wr_row.Item_Category_Index);
+                        if (urc != null)
+                        {
+                            wr_row.Need_Supervisor_Confirmation = urc.Supervisor_UL_Index > 0;
+                        }
+                        else
+                        {
+                            wr_row.Need_Supervisor_Confirmation = false;
+                        }
+                        //Any_Confirmed = true;
                     }
                     else
                     {
                         wr_row.Need_Supervisor_Confirmation = false;
+                        wr_row.Canceled = true;
+                        wr_row.Description = cancel_description;
+
+                        //Any_Canceled = true;
                     }
-                    //Any_Confirmed = true;
+
+                    Program.dbOperations.UpdateWarehouse_Request_RowAsync(wr_row);
                 }
-                else
-                {
-                    wr_row.Need_Supervisor_Confirmation = false;
-                    wr_row.Canceled = true;
-                    wr_row.Description = cancel_description;
+                #endregion
 
-                    //Any_Canceled = true;
-                }
+                #region تعیین وضعیت درخواست
+                string wr_History_Description = null;
+                if (Any_Confirmed && !Any_Canceled)
+                    wr_History_Description = "تمام موارد مربوطه توسط " + Stack.UserName + " تأیید شدند";
+                else if (Any_Confirmed && Any_Canceled)
+                    wr_History_Description = "بعضی از موارد مربوطه توسط " + Stack.UserName + " لغو شدند";
+                else if (!Any_Confirmed && Any_Canceled)
+                    wr_History_Description = "تمام موارد مربوطه توسط " + Stack.UserName + " لغو شد";
 
-                Program.dbOperations.UpdateWarehouse_Request_RowAsync(wr_row);
-            }
-            #endregion
-
-            #region تعیین وضعیت درخواست
-            string wr_History_Description = null;
-            if (Any_Confirmed && !Any_Canceled)
-                wr_History_Description = "تمام موارد مربوطه توسط " + Stack.UserName + " تأیید شدند";
-            else if (Any_Confirmed && Any_Canceled)
-                wr_History_Description = "بعضی از موارد مربوطه توسط " + Stack.UserName + " لغو شدند";
-            else if (!Any_Confirmed && Any_Canceled)
-                wr_History_Description = "تمام موارد مربوطه توسط " + Stack.UserName + " لغو شد";
-
-            // اگر وضعیت تمام ردیف های درخواست مشخص شده باشد
-            Models.Warehouse_Request wr = Program.dbOperations.GetWarehouse_RequestAsync(warehouse_request_index);
-
-            // ثبت درخواست در تاریخچه
-            new ThisProject().Create_RequestHistory(wr, wr_History_Description);
-
-            wr_History_Description = null;
-
-            if (!Program.dbOperations.GetAllWarehouse_Request_RowsAsync
-                (Stack.Company_Index, warehouse_request_index).Any(d => d.Need_Supervisor_Confirmation))
-            {
-                // اگر تمام ردیف ها کنسل شده باشند = ردیف کنسل نشده ای نباشد
-                if (!Program.dbOperations.GetAllWarehouse_Request_RowsAsync
-                    (Stack.Company_Index, warehouse_request_index).Any(d => !d.Canceled))
-                {
-                    wr.Request_Canceled = true;
-                    wr.Status_Description = "درخواست لغو گردید.برای اطلاعات بیشتر به تاریخچه مراجعه نمایید";
-                    wr_History_Description = "درخواست کاملا لغو گردید";
-                }
-                // اگر بعضی از موارد کنسل شده باشند
-                else if (Program.dbOperations.GetAllWarehouse_Request_RowsAsync
-                    (Stack.Company_Index, warehouse_request_index).Any(d => d.Canceled))
-                {
-                    wr.Sent_to_Warehouse = true;
-                    wr.Status_Description = "بعضی از موارد درخواست لغو شدند.به انبار ارسال شد.اطلاعات بیشتر در تاریخچه";
-                    wr_History_Description = "در خواست به انبار ارسال شد";
-                }
-                // اگر تمام موارد تأیید شده باشند
-                else
-                {
-                    wr.Sent_to_Warehouse = true;
-                    wr.Status_Description = "تمام موارد درخواست تأیید شدند.به انبار مراجعه نمایید";
-                    wr_History_Description = "در خواست به انبار ارسال شد";
-                }
+                // اگر وضعیت تمام ردیف های درخواست مشخص شده باشد
+                Models.Warehouse_Request wr = Program.dbOperations.GetWarehouse_RequestAsync(warehouse_request_index);
 
                 // ثبت درخواست در تاریخچه
                 new ThisProject().Create_RequestHistory(wr, wr_History_Description);
-            }
-            else
-            {
-                wr.Status_Description = "در حال انجام مراحل تأیید";
-            }
 
-            Program.dbOperations.UpdateWarehouse_RequestAsync(wr);
-            #endregion
+                wr_History_Description = null;
+
+                if (!Program.dbOperations.GetAllWarehouse_Request_RowsAsync
+                    (Stack.Company_Index, warehouse_request_index).Any(d => d.Need_Supervisor_Confirmation))
+                {
+                    // اگر تمام ردیف ها کنسل شده باشند = ردیف کنسل نشده ای نباشد
+                    if (!Program.dbOperations.GetAllWarehouse_Request_RowsAsync
+                        (Stack.Company_Index, warehouse_request_index).Any(d => !d.Canceled))
+                    {
+                        wr.Request_Canceled = true;
+                        wr.Status_Description = "درخواست لغو گردید.برای اطلاعات بیشتر به تاریخچه مراجعه نمایید";
+                        wr_History_Description = "درخواست کاملا لغو گردید";
+                    }
+                    // اگر بعضی از موارد کنسل شده باشند
+                    else if (Program.dbOperations.GetAllWarehouse_Request_RowsAsync
+                        (Stack.Company_Index, warehouse_request_index).Any(d => d.Canceled))
+                    {
+                        wr.Sent_to_Warehouse = true;
+                        wr.Status_Description = "بعضی از موارد درخواست لغو شدند.به انبار ارسال شد.اطلاعات بیشتر در تاریخچه";
+                        wr_History_Description = "در خواست به انبار ارسال شد";
+                    }
+                    // اگر تمام موارد تأیید شده باشند
+                    else
+                    {
+                        wr.Sent_to_Warehouse = true;
+                        wr.Status_Description = "تمام موارد درخواست تأیید شدند.به انبار مراجعه نمایید";
+                        wr_History_Description = "در خواست به انبار ارسال شد";
+                    }
+
+                    // ثبت درخواست در تاریخچه
+                    new ThisProject().Create_RequestHistory(wr, wr_History_Description);
+                }
+                else
+                {
+                    wr.Status_Description = "در حال انجام مراحل تأیید";
+                }
+
+                Program.dbOperations.UpdateWarehouse_RequestAsync(wr);
+                #endregion
+            }
 
             CancelButton = btnReturn;
         }
