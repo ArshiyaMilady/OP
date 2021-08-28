@@ -65,6 +65,8 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.textBox10 = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -80,13 +82,13 @@
             this.panel1.Controls.Add(this.panel2);
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(452, 433);
+            this.panel1.Size = new System.Drawing.Size(452, 469);
             this.panel1.TabIndex = 2;
             // 
             // btnSave
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSave.Location = new System.Drawing.Point(308, 401);
+            this.btnSave.Location = new System.Drawing.Point(308, 437);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(141, 28);
             this.btnSave.TabIndex = 90;
@@ -99,7 +101,7 @@
             // 
             this.btnReturn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnReturn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnReturn.Location = new System.Drawing.Point(3, 401);
+            this.btnReturn.Location = new System.Drawing.Point(3, 437);
             this.btnReturn.Name = "btnReturn";
             this.btnReturn.Size = new System.Drawing.Size(75, 28);
             this.btnReturn.TabIndex = 95;
@@ -120,8 +122,10 @@
             this.panel2.Controls.Add(this.label4);
             this.panel2.Controls.Add(this.label13);
             this.panel2.Controls.Add(this.label12);
+            this.panel2.Controls.Add(this.label15);
             this.panel2.Controls.Add(this.label14);
             this.panel2.Controls.Add(this.label11);
+            this.panel2.Controls.Add(this.textBox10);
             this.panel2.Controls.Add(this.label9);
             this.panel2.Controls.Add(this.textBox9);
             this.panel2.Controls.Add(this.label6);
@@ -142,7 +146,7 @@
             this.panel2.Controls.Add(this.textBox1);
             this.panel2.Location = new System.Drawing.Point(3, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(446, 393);
+            this.panel2.Size = new System.Drawing.Size(446, 429);
             this.panel2.TabIndex = 1;
             // 
             // chkBookable
@@ -150,7 +154,7 @@
             this.chkBookable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.chkBookable.AutoSize = true;
             this.chkBookable.Enabled = false;
-            this.chkBookable.Location = new System.Drawing.Point(9, 361);
+            this.chkBookable.Location = new System.Drawing.Point(9, 397);
             this.chkBookable.Name = "chkBookable";
             this.chkBookable.Size = new System.Drawing.Size(114, 23);
             this.chkBookable.TabIndex = 80;
@@ -164,7 +168,7 @@
             this.chkSalable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.chkSalable.AutoSize = true;
             this.chkSalable.Enabled = false;
-            this.chkSalable.Location = new System.Drawing.Point(177, 361);
+            this.chkSalable.Location = new System.Drawing.Point(177, 397);
             this.chkSalable.Name = "chkSalable";
             this.chkSalable.Size = new System.Drawing.Size(161, 23);
             this.chkSalable.TabIndex = 75;
@@ -176,7 +180,7 @@
             this.chkEnable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.chkEnable.AutoSize = true;
             this.chkEnable.Enabled = false;
-            this.chkEnable.Location = new System.Drawing.Point(386, 361);
+            this.chkEnable.Location = new System.Drawing.Point(386, 397);
             this.chkEnable.Name = "chkEnable";
             this.chkEnable.Size = new System.Drawing.Size(50, 23);
             this.chkEnable.TabIndex = 70;
@@ -202,7 +206,7 @@
             this.cmbWarehouses.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbWarehouses.Enabled = false;
             this.cmbWarehouses.FormattingEnabled = true;
-            this.cmbWarehouses.Location = new System.Drawing.Point(68, 230);
+            this.cmbWarehouses.Location = new System.Drawing.Point(68, 258);
             this.cmbWarehouses.Name = "cmbWarehouses";
             this.cmbWarehouses.Size = new System.Drawing.Size(272, 27);
             this.cmbWarehouses.TabIndex = 45;
@@ -211,7 +215,7 @@
             // 
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(345, 328);
+            this.label4.Location = new System.Drawing.Point(345, 355);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(55, 19);
             this.label4.TabIndex = 0;
@@ -231,7 +235,7 @@
             // 
             this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(345, 233);
+            this.label12.Location = new System.Drawing.Point(345, 261);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(39, 19);
             this.label12.TabIndex = 0;
@@ -284,7 +288,7 @@
             // 
             this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(345, 265);
+            this.label6.Location = new System.Drawing.Point(345, 292);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(89, 19);
             this.label6.TabIndex = 0;
@@ -331,7 +335,7 @@
             this.textBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox4.Location = new System.Drawing.Point(68, 327);
+            this.textBox4.Location = new System.Drawing.Point(68, 354);
             this.textBox4.Name = "textBox4";
             this.textBox4.ReadOnly = true;
             this.textBox4.Size = new System.Drawing.Size(272, 26);
@@ -343,7 +347,7 @@
             this.textBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox6.Location = new System.Drawing.Point(68, 264);
+            this.textBox6.Location = new System.Drawing.Point(68, 291);
             this.textBox6.Name = "textBox6";
             this.textBox6.ReadOnly = true;
             this.textBox6.Size = new System.Drawing.Size(272, 26);
@@ -376,7 +380,7 @@
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(345, 296);
+            this.label3.Location = new System.Drawing.Point(345, 323);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(57, 19);
             this.label3.TabIndex = 0;
@@ -396,7 +400,7 @@
             this.textBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox3.Location = new System.Drawing.Point(68, 295);
+            this.textBox3.Location = new System.Drawing.Point(68, 322);
             this.textBox3.Name = "textBox3";
             this.textBox3.ReadOnly = true;
             this.textBox3.Size = new System.Drawing.Size(272, 26);
@@ -406,7 +410,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(12, 266);
+            this.label7.Location = new System.Drawing.Point(12, 293);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(48, 19);
             this.label7.TabIndex = 0;
@@ -474,7 +478,7 @@
             this.pictureBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.pictureBox1.BackColor = System.Drawing.SystemColors.Window;
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(192, 175);
+            this.pictureBox1.Location = new System.Drawing.Point(192, 193);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(49, 54);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -487,12 +491,35 @@
             this.timer1.Interval = 400;
             this.timer1.Tick += new System.EventHandler(this.Timer1_Tick);
             // 
+            // textBox10
+            // 
+            this.textBox10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox10.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBox10.Location = new System.Drawing.Point(68, 228);
+            this.textBox10.Name = "textBox10";
+            this.textBox10.ReadOnly = true;
+            this.textBox10.Size = new System.Drawing.Size(272, 26);
+            this.textBox10.TabIndex = 40;
+            this.textBox10.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBox10.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox6_KeyPress);
+            // 
+            // label15
+            // 
+            this.label15.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(345, 229);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(84, 19);
+            this.label15.TabIndex = 0;
+            this.label15.Text = "مقدار سفارش :";
+            // 
             // K1302_Item_Details
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnReturn;
-            this.ClientSize = new System.Drawing.Size(451, 433);
+            this.ClientSize = new System.Drawing.Size(451, 469);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -545,5 +572,7 @@
         private System.Windows.Forms.TextBox textBox9;
         private System.Windows.Forms.CheckBox chkBookable;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.TextBox textBox10;
     }
 }

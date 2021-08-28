@@ -86,7 +86,8 @@ namespace OrdersProgress
                 textBox6.Text = item.Weight.ToString();
                 textBox7.Text = item.FixedPrice.ToString();
                 textBox8.Text = item.SalesPrice.ToString();
-                textBox9.Text = item.Wh_OrderPoint.ToString();
+                textBox9.Text = item.Wh_OrderPoint.ToString();      // نقطه سفارش
+                textBox10.Text = item.Wh_OrderQuantity.ToString();  // مقدار سفارش
                 chkEnable.Checked = item.Enable;
                 chkSalable.Checked = item.Salable;
                 chkBookable.Checked = item.Bookable;
@@ -180,6 +181,13 @@ namespace OrdersProgress
                 MessageBox.Show("نقطه سفارش کالا باید به صورت عددی قابل قبول وارد شود", "خطا");
                 bEverythingOK = false;
             }
+
+            if (string.IsNullOrWhiteSpace(textBox10.Text)) textBox10.Text = "0";
+            else if (!double.TryParse(textBox10.Text,out double d10))
+            {
+                MessageBox.Show("مقدار سفارش کالا باید به صورت عددی قابل قبول وارد شود", "خطا");
+                bEverythingOK = false;
+            }
             #endregion
 
             if(bEverythingOK)
@@ -202,7 +210,10 @@ namespace OrdersProgress
                 if (string.IsNullOrWhiteSpace(textBox8.Text)) textBox8.Text = "0";
                 item.SalesPrice = Convert.ToInt64(textBox8.Text);
                 item.Warehouse_Index = Program.dbOperations.GetWarehouseAsync(Stack.Company_Index, cmbWarehouses.Text).Index;
+                if (string.IsNullOrWhiteSpace(textBox9.Text)) textBox9.Text = "0";
                 item.Wh_OrderPoint = Convert.ToDouble(textBox9.Text);
+                if (string.IsNullOrWhiteSpace(textBox10.Text)) textBox10.Text = "0";
+                item.Wh_OrderQuantity = Convert.ToDouble(textBox10.Text);
                 item.Enable = chkEnable.Checked;
                 item.Salable = chkSalable.Checked;
                 item.Bookable = chkBookable.Checked;

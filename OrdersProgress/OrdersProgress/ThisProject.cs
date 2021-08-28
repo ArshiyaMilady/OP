@@ -266,6 +266,40 @@ namespace OrdersProgress
 
         }
 
+        public double Booking(Models.Warehouse_Request_Row wr_row)
+        {
+            Models.Item item = Program.dbOperations.GetItem(wr_row.Item_Index);
+            if (item.Wh_Quantity_Real == 0) return 0;   // هیچ تعدادی رزرو نشد
+
+            // مقداری که می توان از انبار رزرو نمود
+            double Q1 = item.Wh_Quantity_Real - item.Wh_Quantity_Booking;
+            if (Q1 <= 0) return 0;   // هیچ تعدادی رزرو نشد
+
+            if (Q1 >= wr_row.Quantity)
+            {
+                double Q2 = item.Wh_Quantity_Booking;
+                item.Wh_Quantity_Booking = Q2 + wr_row.Quantity;    // به اندازۀ تعداد کالا به رزروها اضافه می کند
+                wr_row.Ready_to_Get = true; // کالا آماده دریافت می باشد
+            }
+            else if ((Q1>0) && (Q1 < wr_row.Quantity))
+            {
+                double Q2 = item.Wh_Quantity_Booking;
+                item.Wh_Quantity_Booking = Q2 + wr_row.Quantity;    // به اندازۀ تعداد کالا به رزروها اضافه می کند
+                                                                    //wr_row.Ready_to_Get = true; // کالا آماده دریافت می باشد
+
+                ///// درخواست خرید کالا پر شود و غیره /////
+                ///// این درخواست به چه تعداد پر شود؟ به تعداد مابه التفاوت موجودی و درخواست؟ یا به 
+                ///// تعداد مابه التفاوت + نقطه سفارش؟ یا دو درخواست پر شود هم مابه التفاوت و هم نقطه سفارش
+
+
+                return wr_row.Quantity - Q1;
+            }
+
+
+            Program.dbOperations.UpdateItem(item);
+
+            return 0;
+        }
 
         // ایجاد یک فایل اکسل از یک دیتاگرید- در این تابع فقط ستونها 
         // و ردیفهای مرئی و قابل مشاهده در فایل اکسل می آیند

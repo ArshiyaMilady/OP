@@ -966,11 +966,16 @@ namespace OrdersProgress.Models
         public long SalesPrice { get; set; }  // قیمت فروش (بدون تخفیف) یک عدد کالا
 
         public long Warehouse_Index { get; set; }   // شناسه انبار
+
         public double Wh_OrderPoint { get; set; }   // نقطه سفارش
+        // هرگاه کالا به نقطه سفارش برسد باید به اندازۀ مقدار سفارش، درخواست خرید از طرف انبار داده شود
+        public double Wh_OrderQuantity { get; set; }   // مقدار سفارش
+
         // موجودی کالا در انبار
         public double Wh_Quantity_Real { get; set; }   // موجودی واقعی
         // برای نگهداری تغییراتی که هنوز تأیید نشده است  = رزرو شده ها
         public double Wh_Quantity_Booking { get; set; }
+
         public double Wh_Quantity_x { get; set; }
         //public string Wh_Location { get; set; }     // مکان کالا در انبار
         public string Unit { get; set; }
@@ -1249,6 +1254,7 @@ namespace OrdersProgress.Models
         #endregion
 
         public bool Canceled { get; set; }  // آیا این ردیف لغو شده است؟
+        public bool Ready_to_Get { get; set; }   // درخواست آماده تحویل می باشد
 
         public bool C_B2 { get; set; }
         public bool C_B3 { get; set; }

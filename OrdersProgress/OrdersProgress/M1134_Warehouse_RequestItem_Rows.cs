@@ -305,9 +305,10 @@ namespace OrdersProgress
         }
 
         // رزرو کالا در انبار - تعداد رزروها را بر می گرداند
-        private double Booking(Models.Warehouse_Request_Row wr_row)
+        private void AutoBooking(Models.Warehouse_Request_Row wr_row)
         {
-
+            if(Program.dbOperations.GetCompanyAsync(Stack.Company_Index).Warehouse_AutomaticBooking)
+            { }
         }
 
 

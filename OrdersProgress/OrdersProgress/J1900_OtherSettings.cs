@@ -19,7 +19,11 @@ namespace OrdersProgress
 
         private void J1900_OtherSettings_Load(object sender, EventArgs e)
         {
-            chkAutomaticWarehouseBooking.Checked = Program.dbOperations.GetCompanyAsync(Stack.Company_Index).Warehouse_AutomaticBooking;
+            Models.Company company = Program.dbOperations.GetCompanyAsync(Stack.Company_Index);
+            chkAutomaticWarehouseBooking.Checked = company.Warehouse_AutomaticBooking;
+            numericUpDown1.Value = company.Warehouse_Booking_MaxHours;
+            if (company.Warehouse_AutomaticBooking)
+                panel2.Enabled = true;
         }
 
         private void BtnReturn_Click(object sender, EventArgs e)
@@ -36,9 +40,15 @@ namespace OrdersProgress
             {
                 Models.Company company = Program.dbOperations.GetCompanyAsync(Stack.Company_Index);
                 company.Warehouse_AutomaticBooking = chkAutomaticWarehouseBooking.Checked;
+                company.Warehouse_Booking_MaxHours = (long)numericUpDown1.Value;
                 Program.dbOperations.UpdateCompanyAsync(company);
                 Stack.bWarehouse_Booking_MaxHours = chkAutomaticWarehouseBooking.Checked;
             }
+        }
+
+        private void ChkAutomaticWarehouseBooking_CheckedChanged(object sender, EventArgs e)
+        {
+            panel2.Enabled = chkAutomaticWarehouseBooking.Checked;
         }
     }
 }
