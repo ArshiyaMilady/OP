@@ -302,7 +302,7 @@
             // btnImportOrdersFromExcel
             // 
             this.btnImportOrdersFromExcel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnImportOrdersFromExcel.Location = new System.Drawing.Point(600, 252);
+            this.btnImportOrdersFromExcel.Location = new System.Drawing.Point(600, 207);
             this.btnImportOrdersFromExcel.Name = "btnImportOrdersFromExcel";
             this.btnImportOrdersFromExcel.Size = new System.Drawing.Size(240, 31);
             this.btnImportOrdersFromExcel.TabIndex = 45;
@@ -369,26 +369,26 @@
             this.tsmiDelete});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.contextMenuStrip1.Size = new System.Drawing.Size(191, 70);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(204, 70);
             // 
             // tsmiOrderHistory
             // 
             this.tsmiOrderHistory.Name = "tsmiOrderHistory";
-            this.tsmiOrderHistory.Size = new System.Drawing.Size(190, 22);
+            this.tsmiOrderHistory.Size = new System.Drawing.Size(203, 22);
             this.tsmiOrderHistory.Text = "تاریخچه درخواست";
             this.tsmiOrderHistory.Click += new System.EventHandler(this.TsmiRequestHistory_Click);
             // 
             // tsmiOrderDetails
             // 
             this.tsmiOrderDetails.Name = "tsmiOrderDetails";
-            this.tsmiOrderDetails.Size = new System.Drawing.Size(190, 22);
+            this.tsmiOrderDetails.Size = new System.Drawing.Size(203, 22);
             this.tsmiOrderDetails.Text = "مشاهده جزییات درخواست";
             this.tsmiOrderDetails.Click += new System.EventHandler(this.TsmiRequestDetails_Click);
             // 
             // tsmiDelete
             // 
             this.tsmiDelete.Name = "tsmiDelete";
-            this.tsmiDelete.Size = new System.Drawing.Size(190, 22);
+            this.tsmiDelete.Size = new System.Drawing.Size(203, 22);
             this.tsmiDelete.Text = "حذف";
             this.tsmiDelete.Visible = false;
             this.tsmiDelete.Click += new System.EventHandler(this.TsmiDelete_Click);

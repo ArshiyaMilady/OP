@@ -98,6 +98,12 @@ namespace OrdersProgress
 
                     #region درخواستهایی که نیاز به تأیید دارند
                     // تمام روابط سطح کاربری-سرپرست تأییدکننده 
+                    //List<Models.UL_Request_Category> lstULRC = new List<Models.UL_Request_Category>();
+
+                    //lstULRC.AddRange(Program.dbOperations
+                    //    .GetAllUL_Request_CategoriesAsync(Stack.Company_Index)
+                    //    .Where(d => d.Supervisor_UL_Index == Stack.UserLevel_Index).ToList());
+
                     List<Models.UL_Request_Category> lstULRC = Program.dbOperations
                         .GetAllUL_Request_CategoriesAsync(Stack.Company_Index)
                         .Where(d => d.Supervisor_UL_Index == Stack.UserLevel_Index).ToList();
@@ -130,7 +136,8 @@ namespace OrdersProgress
                         if (!lstRequests_need_confirmation.Any(d => d.Index == wr_row.Warehouse_Request_Index))
                         {
                             if (lstULRC.Any(d => (d.Category_Index == wr_row.Item_Category_Index)
-                                 && (d.Supervisor_UL_Index == wr_row.Supervisor_Confirmer_LevelIndex)))
+                                 && ((d.Supervisor_UL_Index == wr_row.Supervisor_Confirmer_LevelIndex)
+                                 || (d.Supervisor_UL_Index ==0))))
                             {
                                 Models.Warehouse_Request wr = Program.dbOperations.GetWarehouse_RequestAsync(wr_row.Warehouse_Request_Index);
                                 lstRequests_need_confirmation.Add(wr);
