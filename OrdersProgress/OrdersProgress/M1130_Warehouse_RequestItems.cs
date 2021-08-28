@@ -101,12 +101,20 @@ namespace OrdersProgress
                     List<Models.UL_Request_Category> lstULRC = Program.dbOperations
                         .GetAllUL_Request_CategoriesAsync(Stack.Company_Index)
                         .Where(d => d.Supervisor_UL_Index == Stack.UserLevel_Index).ToList();
+                    //MessageBox.Show(Program.dbOperations
+                    //    .GetAllUL_Request_CategoriesAsync(Stack.Company_Index)
+                    //    .Where(d => d.Supervisor_UL_Index == Stack.UserLevel_Index)
+                    //    .Count().ToString());
 
                     // تمام روابط مربوط به سطح کاربری سرپرست 
                     lstULRC.AddRange(Program.dbOperations
                         .GetAllUL_Request_CategoriesAsync(Stack.Company_Index)
                         .Where(d => (d.User_Level_Index == Stack.UserLevel_Index)
                             && (d.Supervisor_UL_Index == 0)).ToList());
+                    //MessageBox.Show(Program.dbOperations
+                    //    .GetAllUL_Request_CategoriesAsync(Stack.Company_Index)
+                    //    .Where(d => (d.User_Level_Index == Stack.UserLevel_Index)
+                    //        && (d.Supervisor_UL_Index == 0)).Count().ToString());
 
                     // تمام دسته کالاهایی که کاربر جاری می تواند تأیید نماید
                     List<long> lstCategories_UserLevel_Can_Confirm = lstULRC
