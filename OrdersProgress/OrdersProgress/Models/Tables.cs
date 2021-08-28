@@ -1237,7 +1237,8 @@ namespace OrdersProgress.Models
         public long Item_Category_Index { get; set; }   // شناسه دسته محصول کالا
         public double Quantity { get; set; }   // تعداد کالا در ردیف
         public string Item_Unit { get; set; }   // واحد شمارش کالا
-        public string Description { get; set; }
+        public string Status_Description { get; set; }  // وضعیت ردیف
+        public string Reason_of_Cancelling { get; set; }    // علت عدم تأیید
 
         #region آیا تأیید سرپرست یا مدیر نیاز می باشد
         public bool Need_Supervisor_Confirmation { get; set; }  // نیاز به تأیید سرپرست دارد؟

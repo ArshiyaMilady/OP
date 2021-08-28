@@ -20,7 +20,7 @@ namespace OrdersProgress
         private void ZForm1_Shown(object sender, EventArgs e)
         {
             //MessageBox.Show(Stack.UserLevel_Type.ToString());
-            //dgvData.DataSource = Program.dbOperations.GetAllCompaniesAsync();// Stack.Company_Index);
+            dgvData.DataSource = Program.dbOperations.GetAllCompaniesAsync();// Stack.Company_Index);
             //dgvData.DataSource = Program.dbOperations.GetAllUL_FeaturesAsync(Stack.Company_Index);
             //dgvData.DataSource = Program.dbOperations.GetAllUser_Level_UL_FeaturesAsync(Stack.Company_Index);
             //dgvData.DataSource = Program.dbOperations.GetAllOrder_Item_PropertiesAsync();
@@ -34,7 +34,7 @@ namespace OrdersProgress
             //dgvData.DataSource = Program.dbOperations.GetAllUL_Confirm_UL_RequestsAsync(Stack.Company_Index);
             //dgvData.DataSource = Program.dbOperations.GetAllUL_Request_CategoriesAsync(Stack.Company_Index);
             //dgvData.DataSource = Program.dbOperations.GetAllWarehouse_RequestsAsync(Stack.Company_Index);
-            dgvData.DataSource = Program.dbOperations.GetAllWarehouse_Request_RowsAsync(Stack.Company_Index);
+            //dgvData.DataSource = Program.dbOperations.GetAllWarehouse_Request_RowsAsync(Stack.Company_Index);
             //dgvData.DataSource = Program.dbOperations.GetAllItemsAsync(Stack.Company_Index,0,100);
             //dgvData.DataSource = Program.dbOperations.GetAllLoginHistorysAsync(Stack.Company_Index)
             //    .OrderByDescending(d=>d.DateTime_mi).ToList();
@@ -52,12 +52,18 @@ namespace OrdersProgress
 
         private void Button1_Click(object sender, EventArgs e)
         {
+            #region تغییر نام شرکت
+            //Models.Company company = Program.dbOperations.GetCompanyAsync(1);
+            //company.Real_Name = "داریا نگارۀ هوشمند";
+            //Program.dbOperations.UpdateCompanyAsync(company);
+            #endregion
+
             #region حذف رابطه سطح کاربری-دسته کالا -سرپرست در درخواست کالا از انبار
             //Program.dbOperations.DeleteAllUL_Request_CategoriesAsync();
 
-            Program.dbOperations.DeleteAllWarehouse_Request_RowsAsync();
-            Program.dbOperations.DeleteAllWarehouse_RequestsAsync();
-            Program.dbOperations.DeleteAllWarehouse_Request_HistorysAsync();
+            //Program.dbOperations.DeleteAllWarehouse_Request_RowsAsync();
+            //Program.dbOperations.DeleteAllWarehouse_RequestsAsync();
+            //Program.dbOperations.DeleteAllWarehouse_Request_HistorysAsync();
             #endregion
 
             #region دسته بندی اولیه : نامشخص

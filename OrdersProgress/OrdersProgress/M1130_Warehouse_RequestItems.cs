@@ -16,6 +16,7 @@ namespace OrdersProgress
         List<Models.Warehouse_Request> lstRequests_mine = new List<Models.Warehouse_Request>();
         List<Models.Warehouse_Request> lstRequests_passed = new List<Models.Warehouse_Request>();
         bool just_show_myRequests = false;
+        bool bForceReset = false;
 
         public M1130_Warehouse_RequestItems()
         {
@@ -52,15 +53,21 @@ namespace OrdersProgress
 
         private void BackgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
-            GetData();
+            GetData(bForceReset);
         }
 
         private void BackgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            if (just_show_myRequests)
-                 radMyRequests.Checked = true;
-            else radRequests_Need_Confirmation.Checked = true;
-            
+            if (bForceReset)
+            {
+                RadRequests_CheckedChanged(null, null);
+            }
+            else
+            {
+                if (just_show_myRequests)
+                    radMyRequests.Checked = true;
+                else radRequests_Need_Confirmation.Checked = true;
+            }
 
            ShowData();
 
@@ -98,29 +105,15 @@ namespace OrdersProgress
 
                     #region درخواستهایی که نیاز به تأیید دارند
                     // تمام روابط سطح کاربری-سرپرست تأییدکننده 
-                    //List<Models.UL_Request_Category> lstULRC = new List<Models.UL_Request_Category>();
-
-                    //lstULRC.AddRange(Program.dbOperations
-                    //    .GetAllUL_Request_CategoriesAsync(Stack.Company_Index)
-                    //    .Where(d => d.Supervisor_UL_Index == Stack.UserLevel_Index).ToList());
-
                     List<Models.UL_Request_Category> lstULRC = Program.dbOperations
                         .GetAllUL_Request_CategoriesAsync(Stack.Company_Index)
                         .Where(d => d.Supervisor_UL_Index == Stack.UserLevel_Index).ToList();
-                    //MessageBox.Show(Program.dbOperations
-                    //    .GetAllUL_Request_CategoriesAsync(Stack.Company_Index)
-                    //    .Where(d => d.Supervisor_UL_Index == Stack.UserLevel_Index)
-                    //    .Count().ToString());
 
                     // تمام روابط مربوط به سطح کاربری سرپرست 
                     lstULRC.AddRange(Program.dbOperations
                         .GetAllUL_Request_CategoriesAsync(Stack.Company_Index)
                         .Where(d => (d.User_Level_Index == Stack.UserLevel_Index)
                             && (d.Supervisor_UL_Index == 0)).ToList());
-                    //MessageBox.Show(Program.dbOperations
-                    //    .GetAllUL_Request_CategoriesAsync(Stack.Company_Index)
-                    //    .Where(d => (d.User_Level_Index == Stack.UserLevel_Index)
-                    //        && (d.Supervisor_UL_Index == 0)).Count().ToString());
 
                     // تمام دسته کالاهایی که کاربر جاری می تواند تأیید نماید
                     List<long> lstCategories_UserLevel_Can_Confirm = lstULRC
@@ -272,7 +265,15 @@ namespace OrdersProgress
         private void TsmiRequestDetails_Click(object sender, EventArgs e)
         {
             long warehouse_request_index = Convert.ToInt64(dgvData.CurrentRow.Cells["Index"].Value);
-            new M1134_Warehouse_RequestItem_Rows(warehouse_request_index).ShowDialog();
+            new M1134_Warehouse_RequestItem_Rows(warehouse_request_index
+                ,radRequests_Need_Confirmation.Checked).ShowDialog();
+
+            if(Stack.bx)
+            {
+                bForceReset = true;
+                if (!backgroundWorker1.IsBusy)
+                    backgroundWorker1.RunWorkerAsync();
+            }
         }
 
         private void TsmiRequestHistory_Click(object sender, EventArgs e)

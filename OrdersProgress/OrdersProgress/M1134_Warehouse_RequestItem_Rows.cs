@@ -13,16 +13,19 @@ namespace OrdersProgress
     public partial class M1134_Warehouse_RequestItem_Rows : X210_ExampleForm_Normal
     {
         long warehouse_request_index;
+        bool bConfirm_is_Possible = false;  // آیا امکان تغییر در فرم وجود داشته باشد
         bool bAnything_to_Confirm = false;  // آیا چیزی برای تأیید وجود دارد؟
         // تمام دسته کالاهایی که کاربر جاری می تواند تأیید نماید
         List<long> lstCategories_UserLevel_Can_Confirm = new List<long>();
         List<Models.Warehouse_Request_Row> lstRows = new List<Models.Warehouse_Request_Row>();
 
-        public M1134_Warehouse_RequestItem_Rows(long _warehouse_request_index)
+        public M1134_Warehouse_RequestItem_Rows(long _warehouse_request_index,bool _bConfirm_is_Possible = true)
         {
             InitializeComponent();
 
             warehouse_request_index = _warehouse_request_index;
+            bConfirm_is_Possible = _bConfirm_is_Possible;
+            Stack.bx = false;   // آیا تغییری (تأیید یا عدم تأییدی) اتفاق افتاده است؟
 
             if(!backgroundWorker1.IsBusy)
                 backgroundWorker1.RunWorkerAsync();
@@ -65,6 +68,8 @@ namespace OrdersProgress
                     }
                     // بعد از تغییر لیست سطرها
                     bAnything_to_Confirm = lstRows.Any(d => d.Need_Supervisor_Confirmation);
+
+                    bAnything_to_Confirm = bAnything_to_Confirm && bConfirm_is_Possible;
                 }
             }
         }
@@ -119,10 +124,15 @@ namespace OrdersProgress
                         col.ReadOnly = true;
                         col.Width = 100;
                         break;
-                    case "Description":
-                        col.HeaderText = "توضیحات";
+                    case "Reason_of_Cancelling":
+                        col.HeaderText = "علت عدم تأیید";
                         col.Width = 200;
                         col.ReadOnly = !bAnything_to_Confirm;
+                        break;
+                    case "Status_Description":
+                        col.HeaderText = "وضعیت";
+                        col.Width = 200;
+                        col.ReadOnly = true;
                         break;
                     default: col.Visible = false; break;
                 }
@@ -147,11 +157,12 @@ namespace OrdersProgress
                 string des = null;
                 if (!bC_B1)
                 {
-                    if (row.Cells["Description"].Value != null) des = row.Cells["Description"].Value.ToString();
+                    if (row.Cells["Reason_of_Cancelling"].Value != null) des 
+                            = row.Cells["Reason_of_Cancelling"].Value.ToString();
                     if (string.IsNullOrEmpty(des))
                     {
                         row.DefaultCellStyle.ForeColor = Color.Red;
-                        MessageBox.Show("لطفا برای موارد انتخاب نشده، علت عدم تأیید خود را در ستون توضیحات ثبت نمایید");
+                        MessageBox.Show("لطفا برای موارد انتخاب نشده، علت عدم تأیید خود را در ستون مربوطه ثبت نمایید");
                         return;
                     }
                 }
@@ -184,21 +195,32 @@ namespace OrdersProgress
                     DataGridViewRow row = dgvData.Rows[i];
                     long wr_row_index = Convert.ToInt64(row.Cells["Index"].Value);
                     bool bC_B1 = Convert.ToBoolean(row.Cells["C_B1"].Value);
-                    string cancel_description = bC_B1 ? null : row.Cells["Description"].Value.ToString();
+                    string cancel_description = bC_B1 ? null : row.Cells["Reason_of_Cancelling"].Value.ToString();
 
                     Models.Warehouse_Request_Row wr_row = Program.dbOperations.GetWarehouse_Request_RowAsync(wr_row_index);
 
                     if (bC_B1)
                     {
-                        Models.UL_Request_Category urc = Program.dbOperations.GetAllUL_Request_CategoriesAsync
-                            (Stack.Company_Index, Stack.UserLevel_Index).FirstOrDefault(d => d.Category_Index == wr_row.Item_Category_Index);
+                        Models.UL_Request_Category urc = Program.dbOperations
+                            .GetAllUL_Request_CategoriesAsync(Stack.Company_Index, Stack.UserLevel_Index)
+                            .FirstOrDefault(d => d.Category_Index == wr_row.Item_Category_Index);
                         if (urc != null)
                         {
                             wr_row.Need_Supervisor_Confirmation = urc.Supervisor_UL_Index > 0;
+                            wr_row.Supervisor_Confirmer_LevelIndex = urc.Supervisor_UL_Index;
+                            if (urc.Supervisor_UL_Index > 0)
+                            {
+                                wr_row.Status_Description = "در انتظار تأیید "
+                                    + Program.dbOperations.GetUser_LevelAsync(urc.Supervisor_UL_Index).Description;
+                            }
+                            else
+                                wr_row.Status_Description = "تأیید شده است";
                         }
                         else
                         {
                             wr_row.Need_Supervisor_Confirmation = false;
+                            wr_row.Supervisor_Confirmer_LevelIndex = 0;
+                            wr_row.Status_Description = "تأیید شده است";
                         }
                         //Any_Confirmed = true;
                     }
@@ -206,7 +228,10 @@ namespace OrdersProgress
                     {
                         wr_row.Need_Supervisor_Confirmation = false;
                         wr_row.Canceled = true;
-                        wr_row.Description = cancel_description;
+                        wr_row.Reason_of_Cancelling = cancel_description;
+                        wr_row.Status_Description = "توسط "
+                            + Program.dbOperations.GetUser_LevelAsync(Stack.UserLevel_Index).Description
+                            + "لغو گردید";
 
                         //Any_Canceled = true;
                     }
@@ -220,7 +245,7 @@ namespace OrdersProgress
                 if (Any_Confirmed && !Any_Canceled)
                     wr_History_Description = "تمام موارد مربوطه توسط " + Stack.UserName + " تأیید شدند";
                 else if (Any_Confirmed && Any_Canceled)
-                    wr_History_Description = "بعضی از موارد مربوطه توسط " + Stack.UserName + " لغو شدند";
+                    wr_History_Description = "بعضی از موارد توسط " + Stack.UserName + " لغو شدند";
                 else if (!Any_Confirmed && Any_Canceled)
                     wr_History_Description = "تمام موارد مربوطه توسط " + Stack.UserName + " لغو شد";
 
@@ -269,12 +294,21 @@ namespace OrdersProgress
 
                 Program.dbOperations.UpdateWarehouse_RequestAsync(wr);
                 #endregion
+
+                MessageBox.Show("ثبت اطلاعات با موفقیت انجام شد");
+                Stack.bx = true;
+                Close();
+                return;
             }
 
             CancelButton = btnReturn;
         }
 
+        // رزرو کالا در انبار - تعداد رزروها را بر می گرداند
+        private double Booking(Models.Warehouse_Request_Row wr_row)
+        {
 
+        }
 
 
 
