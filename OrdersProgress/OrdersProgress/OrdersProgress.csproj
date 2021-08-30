@@ -109,11 +109,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="J1900_OtherSettings.cs">
+    <Compile Include="J1900_Settings_Warehouse.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="J1900_OtherSettings.Designer.cs">
-      <DependentUpon>J1900_OtherSettings.cs</DependentUpon>
+    <Compile Include="J1900_Settings_Warehouse.Designer.cs">
+      <DependentUpon>J1900_Settings_Warehouse.cs</DependentUpon>
     </Compile>
     <Compile Include="J1950_Login.cs">
       <SubType>Form</SubType>
@@ -434,8 +434,8 @@
     <Compile Include="J2204_User_UL.Designer.cs">
       <DependentUpon>J2204_User_UL.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="J1900_OtherSettings.resx">
-      <DependentUpon>J1900_OtherSettings.cs</DependentUpon>
+    <EmbeddedResource Include="J1900_Settings_Warehouse.resx">
+      <DependentUpon>J1900_Settings_Warehouse.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="J1950_Login.resx">
       <DependentUpon>J1950_Login.cs</DependentUpon>

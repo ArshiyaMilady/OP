@@ -54,7 +54,10 @@ namespace OrdersProgress
             #endregion
 
             if (Stack.UserLevel_Type == 1)
+            {
+                //tabControl1.Visible = true;
                 toolStripStatusLabel.Text = "";
+            }
             else
                 toolStripStatusLabel.Text = Program.dbOperations.GetUserAsync(Stack.UserIndex).Real_Name + " / "
                     + Program.dbOperations.GetUser_LevelAsync(Stack.UserLevel_Index).Description;
@@ -85,7 +88,7 @@ namespace OrdersProgress
             //if (Stack.UserName.Equals("real_admin"))
             {
                 Stack.lstUser_ULF_UniquePhrase = Program.dbOperations
-                    .GetAllUL_FeaturesAsync(Stack.Company_Index).Select(d => d.Unique_Phrase).ToList();
+                    .GetAllUL_FeaturesAsync(Stack.Company_Index,0).Select(d => d.Unique_Phrase).ToList();
 
                 //MessageBox.Show(Stack.UserLevel_Type.ToString());
             }
@@ -104,55 +107,19 @@ namespace OrdersProgress
             }
             #endregion
 
-            #region قابل مشاهده بودن یا نبودن منوها و زیرمنوها
+            // قابل مشاهده بودن یا نبودن منوها و زیرمنوها
+            //Initial_Menus_Settings();
             
-            #region منوی ابزارهای جانبی و زیرمنوهایش
-            tsmiInternalFeatures.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jk0000");
-
-            tsmiUsers.Visible = (Stack.UserLevel_Type == 1) || Stack.lstUser_ULF_UniquePhrase.Contains("jk0900");
-            tsmiUsers_Show_Change.Visible = (Stack.UserLevel_Type == 1) || Stack.lstUser_ULF_UniquePhrase.Contains("jk1000");
-            if(!Stack.lstUser_ULF_UniquePhrase.Contains("jk1000")) tsmiUsers_Show_Change.ShortcutKeys = Keys.None;
-            tsmiUsersLevels.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jk2000");
-            tsmiUserLevelsFeatures.Visible= Stack.lstUser_ULF_UniquePhrase.Contains("dj1000");
-
-            tsmiOrdersFeatures.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jl3000");
-            tsmiOrdersLevels.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jl3100");
-            tsmiOrders_and_Details.Visible = Stack.UserLevel_Type == 1;
-            tsmiLoginsHistory.Visible = (Stack.UserLevel_Type == 1) || Stack.lstUser_ULF_UniquePhrase.Contains("jk4000");
-
-            tsmiOtherSettings.Visible = Stack.UserLevel_Type == 1;
-            #endregion
-
-            #region منوی سفارشها و زیرمنوهایش
-            tsmiOrders.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jm0000");
-            tsmiNewOrder.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jm1000");
-            tsmiShowOrders.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jm2000");
-            tsmiCustomers.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jm3000");
-            #endregion
-
-            #region منوی انبار و زیرمنوهایش
-            tsmiWarehouse.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jq0000");
-            tsmiWarehouseItems.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jq3000");
-            tsmiWarehouses.Visible= Stack.lstUser_ULF_UniquePhrase.Contains("jq4000");
-            tsmiWarehouse_RequestItems.Visible= Stack.lstUser_ULF_UniquePhrase.Contains("jq5000");
-            #endregion
-
-            #region منوی تعریف محصولات و زیرمنوهایش
-            tsmiProducts.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jn0000");
-            tsmiProperties.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jn1000");
-            tsmiItems.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jn2000");
-            tsmiCategories.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jn3000");
-            #endregion
-
-            #endregion
+            // قابل مشاهده بودن یا نبودن تب ها و گروه ها
+            Initial_TabControl_Settings();
 
             Application.DoEvents();
-            menuStrip.Visible = true;
+            //menuStrip.Visible = true;
             statusStrip.Visible = true;
             menuStrip.Enabled = true;
             btnClose.Enabled = true;
 
-            if (Stack.UserLevel_Type==1) new zForm1().ShowDialog();
+            //if (Stack.UserLevel_Type==1) new zForm1().ShowDialog();
 
         }
 
@@ -581,14 +548,214 @@ namespace OrdersProgress
             new K1100_Categories().ShowDialog();
         }
 
-        private void TsmiOtherSettings_Click(object sender, EventArgs e)
+        private void TsmiSettings_Warehouse_Click(object sender, EventArgs e)
         {
-            new J1900_OtherSettings().ShowDialog();
+            new J1900_Settings_Warehouse().ShowDialog();
        }
 
         private void TsmiWarehouse_RequestItems_Click(object sender, EventArgs e)
         {
             new M1130_Warehouse_RequestItems().ShowDialog();
         }
+
+
+        // نمایش یا مخفی کردن منوها و زیرمنوها
+        private void Initial_Menus_Settings()
+        {
+            #region منوی ابزارهای جانبی و زیرمنوهایش
+            tsmiInternalFeatures.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jk0000");
+
+            tsmiUsers.Visible = (Stack.UserLevel_Type == 1) || Stack.lstUser_ULF_UniquePhrase.Contains("jk0900");
+            tsmiUsers_Show_Change.Visible = (Stack.UserLevel_Type == 1) || Stack.lstUser_ULF_UniquePhrase.Contains("jk1000");
+            if (!Stack.lstUser_ULF_UniquePhrase.Contains("jk1000")) tsmiUsers_Show_Change.ShortcutKeys = Keys.None;
+            tsmiUsersLevels.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jk2000");
+            tsmiUserLevelsFeatures.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("dj1000");
+
+            tsmiOrdersFeatures.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jl3000");
+            tsmiOrdersLevels.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jl3100");
+            tsmiOrders_and_Details.Visible = Stack.UserLevel_Type == 1;
+            tsmiLoginsHistory.Visible = (Stack.UserLevel_Type == 1) || Stack.lstUser_ULF_UniquePhrase.Contains("jk4000");
+
+            tsmiSettings_Warehouse.Visible = Stack.UserLevel_Type == 1;
+            #endregion
+
+            #region منوی سفارشها و زیرمنوهایش
+            tsmiOrders.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jm0000");
+            tsmiNewOrder.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jm1000");
+            tsmiShowOrders.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jm2000");
+            tsmiCustomers.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jm3000");
+            #endregion
+
+            #region منوی انبار و زیرمنوهایش
+            tsmiWarehouse.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jq0000");
+            tsmiWarehouseItems.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jq3000");
+            tsmiWarehouses.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jq4000");
+            tsmiWarehouse_RequestItems.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jq5000");
+            #endregion
+
+            #region منوی تعریف محصولات و زیرمنوهایش
+            tsmiProducts.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jn0000");
+            tsmiProperties.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jn1000");
+            tsmiItems.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jn2000");
+            tsmiCategories.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jn3000");
+            #endregion
+
+            Application.DoEvents();
+            menuStrip.Visible = true;
+        }
+
+        // نمایش یا مخفی کردن تب ها و گروه ها
+        private void Initial_TabControl_Settings()
+        {
+            #region تب ابزارهای جانبی
+            if (!Stack.lstUser_ULF_UniquePhrase.Contains("jk0000"))
+                tabControl1.TabPages.Remove(tpInternalFeatures);
+
+            grpUsers.Visible = (Stack.UserLevel_Type == 1) || Stack.lstUser_ULF_UniquePhrase.Contains("jk0900");
+            btnUsers_Show_Change.Visible = (Stack.UserLevel_Type == 1) || Stack.lstUser_ULF_UniquePhrase.Contains("jk1000");
+            //if (!Stack.lstUser_ULF_UniquePhrase.Contains("jk1000")) btnUsers_Show_Change.ShortcutKeys = Keys.None;
+            btnUsersLevels.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jk2000");
+            btnUserLevelsFeatures.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("dj1000");
+
+            grpOrdersFeatures.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jl3000");
+            btnOrdersLevels.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jl3100");
+            btnOrders_and_Details.Visible = Stack.UserLevel_Type == 1;
+            btnLoginsHistory.Visible = (Stack.UserLevel_Type == 1) || Stack.lstUser_ULF_UniquePhrase.Contains("jk4000");
+
+            btnSettings_Warehouse.Visible = Stack.UserLevel_Type == 1;
+            #endregion
+
+            #region تب سفارشها
+            if (!Stack.lstUser_ULF_UniquePhrase.Contains("jm0000"))
+                tabControl1.TabPages.Remove(tpOrders);
+
+            btnNewOrder.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jm1000");
+            btnShowOrders.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jm2000");
+            btnCustomers.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jm3000");
+            #endregion
+
+            #region تب انبار
+            //if (!Stack.lstUser_ULF_UniquePhrase.Contains("jq0000"))
+            //    tabControl1.TabPages.Remove(tpWarehouse);
+
+            grpWarehouse.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jq0000");
+            btnWarehouseItems.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jq3000");
+            btnWarehouses.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jq4000");
+            btnWarehouse_RequestItems.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jq5000");
+
+            grpProducts.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jn0000");
+            btnProperties.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jn1000");
+            btnItems.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jn2000");
+            btnCategories.Visible = Stack.lstUser_ULF_UniquePhrase.Contains("jn3000");
+            #endregion
+
+            Application.DoEvents();
+            tabControl1.Visible = true;
+        }
+
+        private void BtnUsers_Show_Change_Click(object sender, EventArgs e)
+        {
+            new J2000_Users().ShowDialog();
+        }
+
+        private void BtnUsersLevels_Click(object sender, EventArgs e)
+        {
+            new J2200_Users_Levels().ShowDialog();
+        }
+
+        private void BtnUserLevelsFeatures_Click(object sender, EventArgs e)
+        {
+            new J2210_UL_Features().ShowDialog();
+        }
+
+        private void BtnLoginsHistory_Click(object sender, EventArgs e)
+        {
+            new J1960_LoginsHistory().ShowDialog();
+        }
+
+        private void BtnOrdersLevels_Click(object sender, EventArgs e)
+        {
+            new L1110_Order_Levels().ShowDialog();
+        }
+
+        private void BtnOrders_and_Details_Click(object sender, EventArgs e)
+        {
+            new L0900_Orders_and_Details().ShowDialog();
+        }
+
+        private void BtnSettings_Warehouse_Click(object sender, EventArgs e)
+        {
+            new J1900_Settings_Warehouse().ShowDialog();
+        }
+
+        private void BtnNewOrder_Click(object sender, EventArgs e)
+        {
+            new L2100_OneOrder().ShowDialog();
+        }
+
+        private void BtnShowOrders_Click(object sender, EventArgs e)
+        {
+            new L1000_Orders().ShowDialog();
+        }
+
+        private void BtnCustomers_Click(object sender, EventArgs e)
+        {
+            new L3100_Customers().ShowDialog();
+        }
+
+        private void BtnOrdersPriority_Click(object sender, EventArgs e)
+        {
+            new M2100_OrdersPriority().ShowDialog();
+        }
+
+        private void BtnWarehouseItems_Click(object sender, EventArgs e)
+        {
+            new M1110_WarehouseItems().ShowDialog();
+        }
+
+        private void BtnWarehouses_Click(object sender, EventArgs e)
+        {
+            new M1100_Warehouses().ShowDialog();
+        }
+
+        private void BtnWarehouse_RequestItems_Click(object sender, EventArgs e)
+        {
+            new M1130_Warehouse_RequestItems().ShowDialog();
+        }
+
+        private void BtnItems_Click(object sender, EventArgs e)
+        {
+            new K1300_Items().ShowDialog();
+        }
+
+        private void BtnProperties_Click(object sender, EventArgs e)
+        {
+            new K1200_Properties().ShowDialog();
+        }
+
+        private void BtnCategories_Click(object sender, EventArgs e)
+        {
+            new K1100_Categories().ShowDialog();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //
     }
 }

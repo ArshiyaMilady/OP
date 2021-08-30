@@ -163,6 +163,18 @@ namespace OrdersProgress.Models
                 return _db.Table<User>().Where(b => b.Company_Index == company_index).ToListAsync().Result;
         }
 
+        //public List<User> GetAllUsers(long company_index, int activeType = 1)
+        //{
+        //    var res = _db.Table<User>().Where(b => b.Company_Index == company_index).ToListAsync();
+        //    res.Wait();
+        //    if (activeType == -1)
+        //        return res.Result.Where(d => !d.Active).ToList();
+        //    else if (activeType == 1)
+        //        return res.Result.Where(d => d.Active).ToList();
+        //    else
+        //        return res.Result.ToList();
+        //}
+
         public User GetUserAsync(long UserIndex)
         {
             return _db.Table<User>().FirstOrDefaultAsync(d => d.Index == UserIndex).Result;

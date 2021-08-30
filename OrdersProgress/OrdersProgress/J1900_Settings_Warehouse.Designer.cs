@@ -1,6 +1,6 @@
 ﻿namespace OrdersProgress
 {
-    partial class J1900_OtherSettings
+    partial class J1900_Settings_Warehouse
     {
         /// <summary>
         /// Required designer variable.
@@ -153,7 +153,7 @@
             this.Controls.Add(this.panel1);
             this.Name = "J1900_OtherSettings";
             this.Text = "   تنظیمات برنامه";
-            this.Load += new System.EventHandler(this.J1900_OtherSettings_Load);
+            this.Load += new System.EventHandler(this.J1900_Settings_Warehouse_Load);
             this.panel1.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

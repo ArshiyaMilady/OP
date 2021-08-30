@@ -40,8 +40,8 @@
             this.txtNM = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnExit = new System.Windows.Forms.Button();
-            this.lblMaster = new System.Windows.Forms.Label();
             this.lblAdmin = new System.Windows.Forms.Label();
+            this.lblMaster = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -202,33 +202,32 @@
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.BtnExit_Click);
             // 
-            // lblMaster
-            // 
-            this.lblMaster.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lblMaster.AutoSize = true;
-            this.lblMaster.Cursor = System.Windows.Forms.Cursors.Default;
-            this.lblMaster.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMaster.ForeColor = System.Drawing.Color.Black;
-            this.lblMaster.Location = new System.Drawing.Point(5, 241);
-            this.lblMaster.Name = "lblMaster";
-            this.lblMaster.Size = new System.Drawing.Size(32, 17);
-            this.lblMaster.TabIndex = 16;
-            this.lblMaster.Text = "ورود";
-            this.lblMaster.Click += new System.EventHandler(this.lblMaster_Click);
-            // 
             // lblAdmin
             // 
-            this.lblAdmin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblAdmin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblAdmin.AutoSize = true;
             this.lblAdmin.Cursor = System.Windows.Forms.Cursors.Default;
             this.lblAdmin.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAdmin.ForeColor = System.Drawing.Color.Black;
-            this.lblAdmin.Location = new System.Drawing.Point(309, 241);
+            this.lblAdmin.Location = new System.Drawing.Point(3, 242);
             this.lblAdmin.Name = "lblAdmin";
             this.lblAdmin.Size = new System.Drawing.Size(32, 17);
             this.lblAdmin.TabIndex = 16;
             this.lblAdmin.Text = "ورود";
             this.lblAdmin.Click += new System.EventHandler(this.LblAdmin_Click);
+            // 
+            // lblMaster
+            // 
+            this.lblMaster.AutoSize = true;
+            this.lblMaster.Cursor = System.Windows.Forms.Cursors.Default;
+            this.lblMaster.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMaster.ForeColor = System.Drawing.Color.Black;
+            this.lblMaster.Location = new System.Drawing.Point(3, 4);
+            this.lblMaster.Name = "lblMaster";
+            this.lblMaster.Size = new System.Drawing.Size(32, 17);
+            this.lblMaster.TabIndex = 16;
+            this.lblMaster.Text = "ورود";
+            this.lblMaster.Click += new System.EventHandler(this.lblMaster_Click);
             // 
             // J1950_Login
             // 

@@ -10,14 +10,14 @@ using System.Windows.Forms;
 
 namespace OrdersProgress
 {
-    public partial class J1900_OtherSettings : X210_ExampleForm_Normal
+    public partial class J1900_Settings_Warehouse : X210_ExampleForm_Normal
     {
-        public J1900_OtherSettings()
+        public J1900_Settings_Warehouse()
         {
             InitializeComponent();
         }
 
-        private void J1900_OtherSettings_Load(object sender, EventArgs e)
+        private void J1900_Settings_Warehouse_Load(object sender, EventArgs e)
         {
             Models.Company company = Program.dbOperations.GetCompanyAsync(Stack.Company_Index);
             chkAutomaticWarehouseBooking.Checked = company.Warehouse_AutomaticBooking;

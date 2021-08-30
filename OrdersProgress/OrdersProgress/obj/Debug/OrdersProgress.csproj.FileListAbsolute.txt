@@ -1718,7 +1718,6 @@ E:\BOX\D\OrderProgress\OrdersProgress\OrdersProgress\OrdersProgress\obj\Debug\Or
 E:\BOX\D\OrderProgress\OrdersProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.K1100_Categories.resources
 E:\BOX\D\OrderProgress\OrdersProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.J2310_UL_Request_Categories.resources
 E:\BOX\D\OrderProgress\OrdersProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.J2202_UL_See_UL_Orders.resources
-D:\Desktop\BOX\Personal\D\OrderProgress\OrderProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.J1900_OtherSettings.resources
 D:\Desktop\BOX\Personal\D\OrderProgress\OrderProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.J2202_UL_See_UL_Orders.resources
 D:\Desktop\BOX\Personal\D\OrderProgress\OrderProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.J2310_UL_Request_Categories.resources
 D:\Desktop\BOX\Personal\D\OrderProgress\OrderProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.K1100_Categories.resources
@@ -1733,3 +1732,4 @@ D:\Desktop\BOX\Personal\D\OrderProgress\OrderProgress\OrdersProgress\OrdersProgr
 D:\Desktop\BOX\Personal\D\OrderProgress\OrderProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.M1132_Warehouse_Request_History.resources
 E:\BOX\D\OrderProgress\OrdersProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.M1132_Warehouse_Request_History.resources
 E:\BOX\D\OrderProgress\OrdersProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.M1134_Warehouse_RequestItem_Rows.resources
+D:\Desktop\BOX\Personal\D\OrderProgress\OrderProgress\OrdersProgress\OrdersProgress\obj\Debug\OrdersProgress.J1900_Settings_Warehouse.resources
