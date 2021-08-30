@@ -82,7 +82,7 @@
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnOrdersLevels = new System.Windows.Forms.Button();
             this.btnOrders_and_Details = new System.Windows.Forms.Button();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.grpSettings = new System.Windows.Forms.GroupBox();
             this.btnSettings_Warehouse = new System.Windows.Forms.Button();
             this.tpOrders = new System.Windows.Forms.TabPage();
             this.flowLayoutPanel4 = new System.Windows.Forms.FlowLayoutPanel();
@@ -104,6 +104,7 @@
             this.btnItems = new System.Windows.Forms.Button();
             this.btnProperties = new System.Windows.Forms.Button();
             this.btnCategories = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -114,7 +115,7 @@
             this.flowLayoutPanel2.SuspendLayout();
             this.grpOrdersFeatures.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
-            this.groupBox3.SuspendLayout();
+            this.grpSettings.SuspendLayout();
             this.tpOrders.SuspendLayout();
             this.flowLayoutPanel4.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -125,6 +126,7 @@
             this.flowLayoutPanel7.SuspendLayout();
             this.grpProducts.SuspendLayout();
             this.flowLayoutPanel10.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -137,9 +139,9 @@
             this.tsmiOrders,
             this.tsmiWarehouse,
             this.tsmiProducts});
-            this.menuStrip.Location = new System.Drawing.Point(0, 239);
+            this.menuStrip.Location = new System.Drawing.Point(0, 267);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(864, 27);
+            this.menuStrip.Size = new System.Drawing.Size(871, 27);
             this.menuStrip.TabIndex = 0;
             this.menuStrip.Text = "MenuStrip";
             // 
@@ -415,9 +417,9 @@
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel});
-            this.statusStrip.Location = new System.Drawing.Point(0, 266);
+            this.statusStrip.Location = new System.Drawing.Point(0, 294);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(864, 22);
+            this.statusStrip.Size = new System.Drawing.Size(871, 22);
             this.statusStrip.TabIndex = 2;
             this.statusStrip.Text = "StatusStrip";
             // 
@@ -437,7 +439,7 @@
             this.pictureBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(76, 238);
+            this.pictureBox1.Location = new System.Drawing.Point(79, 252);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(31, 27);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -450,7 +452,7 @@
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnClose.Enabled = false;
-            this.btnClose.Location = new System.Drawing.Point(0, 265);
+            this.btnClose.Location = new System.Drawing.Point(0, 293);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(45, 23);
             this.btnClose.TabIndex = 7;
@@ -460,28 +462,25 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabControl1.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
             this.tabControl1.Controls.Add(this.tpInternalFeatures);
             this.tabControl1.Controls.Add(this.tpOrders);
             this.tabControl1.Controls.Add(this.tpWarehouse);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tabControl1.Location = new System.Drawing.Point(0, -2);
+            this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.RightToLeftLayout = true;
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(862, 195);
+            this.tabControl1.Size = new System.Drawing.Size(871, 191);
             this.tabControl1.TabIndex = 9;
-            this.tabControl1.Visible = false;
             // 
             // tpInternalFeatures
             // 
             this.tpInternalFeatures.Controls.Add(this.flowLayoutPanel1);
-            this.tpInternalFeatures.Location = new System.Drawing.Point(4, 31);
+            this.tpInternalFeatures.Location = new System.Drawing.Point(4, 28);
             this.tpInternalFeatures.Name = "tpInternalFeatures";
             this.tpInternalFeatures.Padding = new System.Windows.Forms.Padding(3);
-            this.tpInternalFeatures.Size = new System.Drawing.Size(854, 160);
+            this.tpInternalFeatures.Size = new System.Drawing.Size(863, 159);
             this.tpInternalFeatures.TabIndex = 0;
             this.tpInternalFeatures.Text = "ابزارهای جانبی";
             this.tpInternalFeatures.UseVisualStyleBackColor = true;
@@ -490,17 +489,17 @@
             // 
             this.flowLayoutPanel1.Controls.Add(this.grpUsers);
             this.flowLayoutPanel1.Controls.Add(this.grpOrdersFeatures);
-            this.flowLayoutPanel1.Controls.Add(this.groupBox3);
+            this.flowLayoutPanel1.Controls.Add(this.grpSettings);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(848, 154);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(857, 153);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // grpUsers
             // 
             this.grpUsers.Controls.Add(this.flowLayoutPanel2);
-            this.grpUsers.Location = new System.Drawing.Point(664, 3);
+            this.grpUsers.Location = new System.Drawing.Point(673, 3);
             this.grpUsers.Name = "grpUsers";
             this.grpUsers.Size = new System.Drawing.Size(181, 151);
             this.grpUsers.TabIndex = 0;
@@ -585,7 +584,7 @@
             // grpOrdersFeatures
             // 
             this.grpOrdersFeatures.Controls.Add(this.flowLayoutPanel3);
-            this.grpOrdersFeatures.Location = new System.Drawing.Point(486, 3);
+            this.grpOrdersFeatures.Location = new System.Drawing.Point(495, 3);
             this.grpOrdersFeatures.Name = "grpOrdersFeatures";
             this.grpOrdersFeatures.Size = new System.Drawing.Size(172, 151);
             this.grpOrdersFeatures.TabIndex = 0;
@@ -633,15 +632,15 @@
             this.btnOrders_and_Details.UseVisualStyleBackColor = false;
             this.btnOrders_and_Details.Click += new System.EventHandler(this.BtnOrders_and_Details_Click);
             // 
-            // groupBox3
+            // grpSettings
             // 
-            this.groupBox3.Controls.Add(this.btnSettings_Warehouse);
-            this.groupBox3.Location = new System.Drawing.Point(320, 3);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(160, 151);
-            this.groupBox3.TabIndex = 1;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "تنظیمات";
+            this.grpSettings.Controls.Add(this.btnSettings_Warehouse);
+            this.grpSettings.Location = new System.Drawing.Point(329, 3);
+            this.grpSettings.Name = "grpSettings";
+            this.grpSettings.Size = new System.Drawing.Size(160, 151);
+            this.grpSettings.TabIndex = 1;
+            this.grpSettings.TabStop = false;
+            this.grpSettings.Text = "تنظیمات";
             // 
             // btnSettings_Warehouse
             // 
@@ -661,10 +660,10 @@
             // 
             this.tpOrders.BackColor = System.Drawing.Color.Transparent;
             this.tpOrders.Controls.Add(this.flowLayoutPanel4);
-            this.tpOrders.Location = new System.Drawing.Point(4, 31);
+            this.tpOrders.Location = new System.Drawing.Point(4, 28);
             this.tpOrders.Name = "tpOrders";
             this.tpOrders.Padding = new System.Windows.Forms.Padding(3);
-            this.tpOrders.Size = new System.Drawing.Size(854, 160);
+            this.tpOrders.Size = new System.Drawing.Size(863, 159);
             this.tpOrders.TabIndex = 1;
             this.tpOrders.Text = "سفارشها";
             this.tpOrders.UseVisualStyleBackColor = true;
@@ -676,13 +675,13 @@
             this.flowLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel4.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutPanel4.Name = "flowLayoutPanel4";
-            this.flowLayoutPanel4.Size = new System.Drawing.Size(848, 154);
+            this.flowLayoutPanel4.Size = new System.Drawing.Size(857, 153);
             this.flowLayoutPanel4.TabIndex = 1;
             // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.flowLayoutPanel5);
-            this.groupBox4.Location = new System.Drawing.Point(660, 3);
+            this.groupBox4.Location = new System.Drawing.Point(669, 3);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(185, 151);
             this.groupBox4.TabIndex = 1;
@@ -762,9 +761,9 @@
             // tpWarehouse
             // 
             this.tpWarehouse.Controls.Add(this.flowLayoutPanel6);
-            this.tpWarehouse.Location = new System.Drawing.Point(4, 31);
+            this.tpWarehouse.Location = new System.Drawing.Point(4, 28);
             this.tpWarehouse.Name = "tpWarehouse";
-            this.tpWarehouse.Size = new System.Drawing.Size(854, 160);
+            this.tpWarehouse.Size = new System.Drawing.Size(863, 159);
             this.tpWarehouse.TabIndex = 2;
             this.tpWarehouse.Text = "انبار و قطعات";
             this.tpWarehouse.UseVisualStyleBackColor = true;
@@ -777,14 +776,14 @@
             this.flowLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel6.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel6.Name = "flowLayoutPanel6";
-            this.flowLayoutPanel6.Size = new System.Drawing.Size(854, 160);
+            this.flowLayoutPanel6.Size = new System.Drawing.Size(863, 159);
             this.flowLayoutPanel6.TabIndex = 2;
             // 
             // grpWarehouse
             // 
             this.grpWarehouse.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.grpWarehouse.Controls.Add(this.flowLayoutPanel7);
-            this.grpWarehouse.Location = new System.Drawing.Point(671, 3);
+            this.grpWarehouse.Location = new System.Drawing.Point(680, 3);
             this.grpWarehouse.Name = "grpWarehouse";
             this.grpWarehouse.Size = new System.Drawing.Size(180, 156);
             this.grpWarehouse.TabIndex = 1;
@@ -850,7 +849,7 @@
             // grpProducts
             // 
             this.grpProducts.Controls.Add(this.flowLayoutPanel10);
-            this.grpProducts.Location = new System.Drawing.Point(497, 3);
+            this.grpProducts.Location = new System.Drawing.Point(506, 3);
             this.grpProducts.Name = "grpProducts";
             this.grpProducts.Size = new System.Drawing.Size(168, 156);
             this.grpProducts.TabIndex = 2;
@@ -915,14 +914,24 @@
             this.btnCategories.UseVisualStyleBackColor = false;
             this.btnCategories.Click += new System.EventHandler(this.BtnCategories_Click);
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.tabControl1);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(871, 191);
+            this.panel1.TabIndex = 11;
+            this.panel1.Visible = false;
+            // 
             // J1000_MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.CancelButton = this.btnClose;
-            this.ClientSize = new System.Drawing.Size(864, 288);
-            this.Controls.Add(this.tabControl1);
+            this.ClientSize = new System.Drawing.Size(871, 316);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.menuStrip);
@@ -950,7 +959,7 @@
             this.flowLayoutPanel2.ResumeLayout(false);
             this.grpOrdersFeatures.ResumeLayout(false);
             this.flowLayoutPanel3.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
+            this.grpSettings.ResumeLayout(false);
             this.tpOrders.ResumeLayout(false);
             this.flowLayoutPanel4.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
@@ -961,6 +970,7 @@
             this.flowLayoutPanel7.ResumeLayout(false);
             this.grpProducts.ResumeLayout(false);
             this.flowLayoutPanel10.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1015,7 +1025,7 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
         private System.Windows.Forms.Button btnUsers_Show_Change;
         private System.Windows.Forms.Button btnUsersLevels;
-        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.GroupBox grpSettings;
         private System.Windows.Forms.Button btnUserLevelsFeatures;
         private System.Windows.Forms.Button btnLoginsHistory;
         private System.Windows.Forms.GroupBox grpOrdersFeatures;
@@ -1042,6 +1052,7 @@
         private System.Windows.Forms.Button btnItems;
         private System.Windows.Forms.Button btnProperties;
         private System.Windows.Forms.Button btnCategories;
+        private System.Windows.Forms.Panel panel1;
     }
 }
 
